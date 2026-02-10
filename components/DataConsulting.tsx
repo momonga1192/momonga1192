@@ -30,7 +30,7 @@ const DataConsulting: React.FC = () => {
       <Helmet>
         <title>データ活用支援 | Arcle</title>
         <meta name="description" content="データに語らせ、未来を拓く。ArcleのBIツール導入、データ基盤構築、KPI設計・モニタリング、データリテラシー研修で、データドリブンな意思決定を実現します。" />
-        <link rel="canonical" href="https://arcle.jp/data-consulting" />
+        <link rel="canonical" href="https://arcle.net/data-consulting" />
       </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

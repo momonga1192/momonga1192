@@ -30,7 +30,7 @@ const GenAI: React.FC = () => {
       <Helmet>
         <title>生成AI活用支援 | Arcle</title>
         <meta name="description" content="AIと共に、創造の先へ。ArcleのChatGPT導入支援、社内独自ボット開発、プロンプト研修、業務自動化で、生成AIをビジネスの力に変えます。" />
-        <link rel="canonical" href="https://arcle.jp/gen-ai" />
+        <link rel="canonical" href="https://arcle.net/gen-ai" />
       </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

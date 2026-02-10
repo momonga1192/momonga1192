@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://arcle.jp/</loc>
+    <loc>https://arcle.net/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://arcle.jp/josys</loc>
+    <loc>https://arcle.net/josys</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://arcle.jp/data-consulting</loc>
+    <loc>https://arcle.net/data-consulting</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://arcle.jp/gen-ai</loc>
+    <loc>https://arcle.net/gen-ai</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://arcle.jp/web-production</loc>
+    <loc>https://arcle.net/web-production</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://arcle.jp/contact</loc>
+    <loc>https://arcle.net/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

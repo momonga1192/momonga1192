@@ -30,7 +30,7 @@ const WebProduction: React.FC = () => {
       <Helmet>
         <title>Web制作 | Arcle</title>
         <meta name="description" content="想いをカタチに、世界へ届ける。Arcleのコーポレートサイト制作、UI/UXデザイン、CMS導入・開発、SEO・高速化で、ビジネスを加速するWebサイトを構築します。" />
-        <link rel="canonical" href="https://arcle.jp/web-production" />
+        <link rel="canonical" href="https://arcle.net/web-production" />
       </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

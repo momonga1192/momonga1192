@@ -32,7 +32,7 @@ const ContactForm: React.FC = () => {
       <Helmet>
         <title>お問い合わせ | Arcle</title>
         <meta name="description" content="Arcleへのご相談・お見積りのご依頼はこちら。ITコンサルティング、情シス代行、データ活用支援、生成AI活用支援、Web制作について、お気軽にお問い合わせください。" />
-        <link rel="canonical" href="https://arcle.jp/contact" />
+        <link rel="canonical" href="https://arcle.net/contact" />
       </Helmet>
       {/* Hero Section - More refined and minimal */}
       <section className="relative pt-24 pb-16 overflow-hidden">

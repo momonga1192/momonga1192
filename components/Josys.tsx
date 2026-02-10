@@ -30,7 +30,7 @@ const Josys: React.FC = () => {
       <Helmet>
         <title>情シス代行サービス | Arcle</title>
         <meta name="description" content="ITの専門家を、必要な時だけ。Arcleの情シス代行サービスは、ITヘルプデスク、システム導入・DX推進、セキュリティ・資産管理、クラウド・インフラ支援を包括的にサポートします。" />
-        <link rel="canonical" href="https://arcle.jp/josys" />
+        <link rel="canonical" href="https://arcle.net/josys" />
       </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
