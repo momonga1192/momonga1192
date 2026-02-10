@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Check, ArrowRight, Monitor, Smartphone, Layout, Code, Search, PenTool } from 'lucide-react';
 
 const WebProduction: React.FC = () => {
@@ -26,6 +27,11 @@ const WebProduction: React.FC = () => {
 
   return (
     <div className="pt-24 pb-20 bg-white">
+      <Helmet>
+        <title>Web制作 | Arcle</title>
+        <meta name="description" content="想いをカタチに、世界へ届ける。Arcleのコーポレートサイト制作、UI/UXデザイン、CMS導入・開発、SEO・高速化で、ビジネスを加速するWebサイトを構築します。" />
+        <link rel="canonical" href="https://arcle.jp/web-production" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -99,10 +105,12 @@ const WebProduction: React.FC = () => {
             </div>
             <div className="relative reveal-hidden delay-200">
               <div className="aspect-square rounded-2xl bg-gradient-to-br from-teal-50 to-white relative overflow-hidden flex items-center justify-center p-8">
-                <img 
-                  src="/images/web_production.png" 
-                  alt="Web Production Illustration" 
+                <img
+                  src="/images/web_production.png"
+                  alt="Web制作のイラスト：デザイン・スマホ対応・CMS開発"
                   className="w-full h-full object-contain mix-blend-multiply"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>

@@ -4,4 +4,7 @@ export { OpeningOverlay } from './OpeningOverlay';
 export { ScrollAnimationCanvas } from './ScrollAnimationCanvas';
 export { default as Home } from './Home';
 export { default as Josys } from './Josys';
+export { default as DataConsulting } from './DataConsulting';
+export { default as GenAI } from './GenAI';
+export { default as WebProduction } from './WebProduction';
 export { default as ContactForm } from './ContactForm';

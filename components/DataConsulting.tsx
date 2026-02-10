@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Check, ArrowRight, BarChart, PieChart, TrendingUp, Database, Activity, Search } from 'lucide-react';
 
 const DataConsulting: React.FC = () => {
@@ -26,6 +27,11 @@ const DataConsulting: React.FC = () => {
 
   return (
     <div className="pt-24 pb-20 bg-white">
+      <Helmet>
+        <title>データ活用支援 | Arcle</title>
+        <meta name="description" content="データに語らせ、未来を拓く。ArcleのBIツール導入、データ基盤構築、KPI設計・モニタリング、データリテラシー研修で、データドリブンな意思決定を実現します。" />
+        <link rel="canonical" href="https://arcle.jp/data-consulting" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -99,10 +105,12 @@ const DataConsulting: React.FC = () => {
             </div>
             <div className="relative reveal-hidden delay-200">
               <div className="aspect-square rounded-2xl bg-gradient-to-br from-indigo-50 to-white relative overflow-hidden flex items-center justify-center p-8">
-                <img 
-                  src="/images/data_consulting.png" 
-                  alt="Data Consulting Illustration" 
+                <img
+                  src="/images/data_consulting.png"
+                  alt="データコンサルティングのイラスト：データの散在・可視化・意思決定の改善"
                   className="w-full h-full object-contain mix-blend-multiply"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>

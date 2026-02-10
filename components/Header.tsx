@@ -72,13 +72,13 @@ export const Header: React.FC = () => {
   return (
     <header className={headerClass}>
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="relative group z-50">
+        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="relative group z-50" aria-label="Arcle トップページへ">
           <span className="font-en text-2xl font-semibold tracking-wider text-gray-900">Arcle</span>
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-900 transition-all duration-300 group-hover:w-full"></span>
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8 items-center">
+        <nav className="hidden md:flex space-x-8 items-center" aria-label="メインナビゲーション">
           {navItems.map((item) => (
             <div key={item.label} className="relative group">
               <a 
@@ -119,7 +119,7 @@ export const Header: React.FC = () => {
         </nav>
 
         {/* Mobile Menu Button */}
-        <button className="md:hidden z-50 text-gray-800" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle Menu">
+        <button className="md:hidden z-50 text-gray-800" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label={isMenuOpen ? 'メニューを閉じる' : 'メニューを開く'} aria-expanded={isMenuOpen}>
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
@@ -144,7 +144,7 @@ export const Header: React.FC = () => {
                     {item.label}
                   </a>
                   {item.subItems && (
-                    <button onClick={() => toggleDropdown(item.label)} className="p-1">
+                    <button onClick={() => toggleDropdown(item.label)} className="p-1" aria-label={`${item.label}のサブメニューを${activeDropdown === item.label ? '閉じる' : '開く'}`} aria-expanded={activeDropdown === item.label}>
                       {activeDropdown === item.label ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                     </button>
                   )}

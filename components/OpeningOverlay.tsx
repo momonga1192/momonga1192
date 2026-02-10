@@ -107,11 +107,13 @@ export const OpeningOverlay: React.FC<OpeningOverlayProps> = ({ onComplete }) =>
   if (!canvasRef) return null;
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className={`fixed inset-0 z-[100] bg-white transition-opacity duration-[400ms] flex items-center justify-center ${isFading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+      aria-hidden="true"
+      role="presentation"
     >
-      <canvas ref={canvasRef} className="absolute inset-0" />
+      <canvas ref={canvasRef} className="absolute inset-0" aria-hidden="true" />
     </div>
   );
 };

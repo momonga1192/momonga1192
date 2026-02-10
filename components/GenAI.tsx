@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Check, ArrowRight, Bot, MessageSquare, Zap, Lock, Code, Cpu } from 'lucide-react';
 
 const GenAI: React.FC = () => {
@@ -26,6 +27,11 @@ const GenAI: React.FC = () => {
 
   return (
     <div className="pt-24 pb-20 bg-white">
+      <Helmet>
+        <title>生成AI活用支援 | Arcle</title>
+        <meta name="description" content="AIと共に、創造の先へ。ArcleのChatGPT導入支援、社内独自ボット開発、プロンプト研修、業務自動化で、生成AIをビジネスの力に変えます。" />
+        <link rel="canonical" href="https://arcle.jp/gen-ai" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -99,10 +105,12 @@ const GenAI: React.FC = () => {
             </div>
             <div className="relative reveal-hidden delay-200">
               <div className="aspect-square rounded-2xl bg-gradient-to-br from-purple-50 to-white relative overflow-hidden flex items-center justify-center p-8">
-                <img 
-                  src="/images/gen_ai.png" 
-                  alt="Generative AI Illustration" 
+                <img
+                  src="/images/gen_ai.png"
+                  alt="生成AI活用支援のイラスト：ChatGPT導入・AIボット開発・業務自動化"
                   className="w-full h-full object-contain mix-blend-multiply"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>

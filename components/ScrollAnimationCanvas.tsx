@@ -186,9 +186,11 @@ export const ScrollAnimationCanvas: React.FC<ScrollAnimationCanvasProps> = ({ st
   }, [startAnimation]);
 
   return (
-    <canvas 
-      ref={canvasRef} 
+    <canvas
+      ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
+      aria-hidden="true"
+      role="presentation"
     />
   );
 };

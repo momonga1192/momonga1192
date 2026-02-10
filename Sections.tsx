@@ -147,7 +147,7 @@ export const Hero: React.FC<HeroProps> = ({ isLoaded }) => {
 
   return (
     <section ref={containerRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-transparent">
-      <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`} />
+      <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`} aria-hidden="true" role="presentation" />
       <div ref={textRef} className="relative z-10 text-center px-4 will-change-transform mt-10">
         <h1 className={`font-en text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 mb-6 leading-tight drop-shadow-sm ${isLoaded ? 'animate-hero-reveal' : 'opacity-0'}`}>
           Connecting Arcs
@@ -158,7 +158,7 @@ export const Hero: React.FC<HeroProps> = ({ isLoaded }) => {
           Technology × Strategy × Future
         </p>
       </div>
-      <div ref={scrollIndicatorRef} className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+      <div ref={scrollIndicatorRef} className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`} aria-hidden="true">
         <ArrowDown size={24} className="text-gray-400" />
       </div>
       <style>{`
@@ -192,9 +192,10 @@ export const Philosophy: React.FC = () => {
               「個」の弧をつなぎ、<br/>「縁」という円を描く。
             </h3>
             <div className="space-y-6 text-gray-600 leading-loose">
-              <p>Arcle（アークル）という社名には、2つの意味が込められています。ひとつは、Arc（弧）。それは、光る個性や専門性を持った私たち一人ひとりの技術者を表します。</p>
-              <p>もうひとつは、Circle（円）。個々の弧が重なり合い、繋がり合うことで、完璧な円環＝「縁」を生み出します。</p>
-              <p>ITコンサルティングを通じて、断絶されたシステムや組織を滑らかに繋ぎ、終わりのない価値の循環を社会に創り出します。</p>
+              <p>Arcle（アークル）という社名には、2つの意味が込められています。</p>
+              <p>ひとつは、<strong className="text-gray-800 font-medium">Arc（弧）</strong>。光る個性や専門性を持った、一人ひとりの技術者を表しています。</p>
+              <p>もうひとつは、<strong className="text-gray-800 font-medium">Circle（円）</strong>。個々の弧が重なり合い、繋がり合うことで、完璧な円環 ── 「縁」を生み出します。</p>
+              <p>ITコンサルティングを通じて、断絶されたシステムや組織を滑らかに繋ぎ、終わりのない価値の循環を社会に創り出すこと。それが私たちの使命です。</p>
             </div>
             
             {/* Notice */}
@@ -306,7 +307,7 @@ export const Services: React.FC = () => {
                         href={service.link}
                         className={`inline-flex items-center text-sm font-bold uppercase tracking-widest ${service.color} hover:opacity-70 transition-opacity group`}
                       >
-                        View More
+                        詳しく見る
                         <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                       </a>
                     </div>
@@ -339,10 +340,12 @@ export const Profile: React.FC = () => {
               <div className="w-full md:w-2/5 p-10 md:p-14 bg-gradient-to-b from-white/50 to-blue-50/30 flex flex-col items-center md:items-start border-b md:border-b-0 md:border-r border-gray-100">
                 <div className="relative mb-8 group">
                   <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden relative z-10 border-4 border-white shadow-lg">
-                     <img 
-                       src="/images/Gemini_Generated_Image_guortkguortkguor.png" 
-                       alt="Yuta Kurihara" 
+                     <img
+                       src="/images/Gemini_Generated_Image_guortkguortkguor.png"
+                       alt="Arcle代表 栗原勇太のプロフィール写真"
                        className="w-full h-full object-cover"
+                       loading="lazy"
+                       decoding="async"
                      />
                   </div>
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 md:w-96 md:h-96 border border-blue-200 rounded-full animate-[spin_10s_linear_infinite]" />

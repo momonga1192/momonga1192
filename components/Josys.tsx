@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Check, ArrowRight, Shield, Cpu, Users, Zap, BarChart, Globe } from 'lucide-react';
 
 const Josys: React.FC = () => {
@@ -26,6 +27,11 @@ const Josys: React.FC = () => {
 
   return (
     <div className="pt-24 pb-20 bg-white">
+      <Helmet>
+        <title>情シス代行サービス | Arcle</title>
+        <meta name="description" content="ITの専門家を、必要な時だけ。Arcleの情シス代行サービスは、ITヘルプデスク、システム導入・DX推進、セキュリティ・資産管理、クラウド・インフラ支援を包括的にサポートします。" />
+        <link rel="canonical" href="https://arcle.jp/josys" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -99,10 +105,12 @@ const Josys: React.FC = () => {
             </div>
             <div className="relative reveal-hidden delay-200">
               <div className="aspect-square rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 relative overflow-hidden flex items-center justify-center p-8">
-                <img 
-                  src="/images/josys_problems.png" 
-                  alt="IT Problems Illustration" 
+                <img
+                  src="/images/josys_problems.png"
+                  alt="IT業務の課題を表すイラスト：専門知識不足・リソース不足・セキュリティ不安"
                   className="w-full h-full object-contain mix-blend-multiply"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
