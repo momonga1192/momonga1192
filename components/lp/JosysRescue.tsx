@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Check, Headphones, ShieldCheck, Settings, Wifi, AlertTriangle, HelpCircle, ChevronDown } from 'lucide-react';
+import { ArrowRight, Check, Headphones, ShieldCheck, Settings, Wifi, AlertTriangle, HelpCircle, ChevronDown, Shield, Server, Monitor, Cloud, Lock, Database, Globe, Cpu, Key, BarChart3, MessageCircle, LifeBuoy } from 'lucide-react';
 
 const JosysRescue: React.FC = () => {
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -87,13 +87,47 @@ const JosysRescue: React.FC = () => {
             <div className="lg:w-1/2 reveal-hidden transition-all duration-1000 delay-300 ease-out">
               <div className="relative">
                 <div className="absolute inset-0 bg-blue-400 rounded-3xl blur-2xl opacity-20 animate-pulse" />
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-                  <img 
-                    src="/images/lp/josys_rescue_hero_v2.jpg" 
-                    alt="Professional IT Support" 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent" />
+                <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-gradient-to-br from-blue-800/80 via-indigo-800/60 to-blue-900/80 backdrop-blur-sm">
+                  {/* 装飾的な背景要素 */}
+                  <div className="absolute top-8 right-8 w-32 h-32 bg-blue-400/15 rounded-full blur-2xl" />
+                  <div className="absolute bottom-12 left-8 w-40 h-40 bg-indigo-400/10 rounded-full blur-3xl" />
+                  <div className="absolute top-1/4 left-1/4 w-20 h-20 bg-cyan-400/10 rounded-full blur-xl" />
+                  {/* 装飾的グリッドライン */}
+                  <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+                  {/* メインアイコンコンポジション */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative">
+                      {/* メインシールド */}
+                      <div className="w-28 h-28 bg-white/10 rounded-3xl shadow-2xl shadow-blue-900/30 flex items-center justify-center border border-white/20 backdrop-blur-md">
+                        <Shield className="w-14 h-14 text-blue-200" />
+                      </div>
+                      {/* サブアイコン：Server（右上） */}
+                      <div className="absolute -top-5 -right-6 w-14 h-14 bg-white/10 rounded-2xl shadow-lg shadow-blue-900/20 flex items-center justify-center border border-white/15 backdrop-blur-md">
+                        <Server className="w-7 h-7 text-indigo-300" />
+                      </div>
+                      {/* サブアイコン：Headphones（左下） */}
+                      <div className="absolute -bottom-4 -left-8 w-12 h-12 bg-white/10 rounded-xl shadow-lg shadow-blue-900/20 flex items-center justify-center border border-white/15 backdrop-blur-md">
+                        <Headphones className="w-6 h-6 text-cyan-300" />
+                      </div>
+                      {/* サブアイコン：Settings（右下） */}
+                      <div className="absolute -bottom-6 right-0 w-11 h-11 bg-white/10 rounded-xl shadow-lg shadow-blue-900/20 flex items-center justify-center border border-white/15 backdrop-blur-md">
+                        <Settings className="w-5 h-5 text-blue-300" />
+                      </div>
+                      {/* サブアイコン：Monitor（左上） */}
+                      <div className="absolute -top-3 -left-10 w-10 h-10 bg-white/10 rounded-lg shadow-md flex items-center justify-center border border-white/10 backdrop-blur-md">
+                        <Monitor className="w-5 h-5 text-indigo-200" />
+                      </div>
+                      {/* 装飾的リング */}
+                      <div className="absolute -inset-12 border border-white/5 rounded-full" />
+                      <div className="absolute -inset-20 border border-white/[0.03] rounded-full" />
+                      {/* 装飾的ドット */}
+                      <div className="absolute -top-14 left-1/2 w-2 h-2 bg-blue-300/40 rounded-full" />
+                      <div className="absolute top-1/2 -right-16 w-1.5 h-1.5 bg-indigo-300/30 rounded-full" />
+                      <div className="absolute -bottom-12 left-0 w-2 h-2 bg-cyan-300/30 rounded-full" />
+                    </div>
+                  </div>
+                  {/* 下部グラデーションオーバーレイ */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 to-transparent" />
                 </div>
               </div>
             </div>
@@ -173,7 +207,18 @@ const JosysRescue: React.FC = () => {
                 titleEn: 'IT Helpdesk',
                 desc: 'PCトラブルからソフト操作まで、チャット・電話で即対応。「PCが動かない」「設定が分からない」もすぐに解決します。',
                 color: 'blue',
-                image: '/images/lp/josys_rescue_it_helpdesk.jpg',
+                gradientFrom: 'from-blue-50',
+                gradientTo: 'to-cyan-50/50',
+                mainIcon: Headphones,
+                mainIconColor: 'text-blue-600',
+                subIcons: [
+                  { icon: MessageCircle, color: 'text-blue-500', position: '-top-3 -right-4', size: 'w-11 h-11', iconSize: 'w-5 h-5', rounded: 'rounded-xl' },
+                  { icon: Monitor, color: 'text-cyan-500', position: '-bottom-2 -left-5', size: 'w-10 h-10', iconSize: 'w-5 h-5', rounded: 'rounded-lg' },
+                  { icon: LifeBuoy, color: 'text-indigo-400', position: '-bottom-4 right-2', size: 'w-9 h-9', iconSize: 'w-4 h-4', rounded: 'rounded-lg' },
+                ],
+                bgAccent1: 'bg-blue-100/40',
+                bgAccent2: 'bg-cyan-100/30',
+                borderAccent: 'border-blue-100/50',
                 reverse: false
               },
               {
@@ -183,7 +228,18 @@ const JosysRescue: React.FC = () => {
                 titleEn: 'Security',
                 desc: '情報漏洩リスクの診断から、対策の実施・運用まで。ウイルス対策・アクセス制御・バックアップ体制を整えます。',
                 color: 'indigo',
-                image: '/images/lp/josys_rescue_security.jpg',
+                gradientFrom: 'from-indigo-50',
+                gradientTo: 'to-purple-50/50',
+                mainIcon: ShieldCheck,
+                mainIconColor: 'text-indigo-600',
+                subIcons: [
+                  { icon: Lock, color: 'text-indigo-500', position: '-top-3 -right-5', size: 'w-11 h-11', iconSize: 'w-5 h-5', rounded: 'rounded-xl' },
+                  { icon: Key, color: 'text-purple-500', position: '-bottom-3 -left-4', size: 'w-10 h-10', iconSize: 'w-5 h-5', rounded: 'rounded-lg' },
+                  { icon: Database, color: 'text-indigo-400', position: '-bottom-5 right-1', size: 'w-9 h-9', iconSize: 'w-4 h-4', rounded: 'rounded-lg' },
+                ],
+                bgAccent1: 'bg-indigo-100/40',
+                bgAccent2: 'bg-purple-100/30',
+                borderAccent: 'border-indigo-100/50',
                 reverse: true
               },
               {
@@ -193,7 +249,18 @@ const JosysRescue: React.FC = () => {
                 titleEn: 'SaaS Management',
                 desc: '導入選定・アカウント管理・コスト最適化をまるっと代行。「誰が何を使っているか」を可視化し、無駄を削減します。',
                 color: 'purple',
-                image: '/images/lp/josys_rescue_saas.jpg',
+                gradientFrom: 'from-purple-50',
+                gradientTo: 'to-pink-50/50',
+                mainIcon: Settings,
+                mainIconColor: 'text-purple-600',
+                subIcons: [
+                  { icon: Cloud, color: 'text-purple-500', position: '-top-4 -right-4', size: 'w-11 h-11', iconSize: 'w-5 h-5', rounded: 'rounded-xl' },
+                  { icon: BarChart3, color: 'text-pink-500', position: '-bottom-2 -left-5', size: 'w-10 h-10', iconSize: 'w-5 h-5', rounded: 'rounded-lg' },
+                  { icon: Globe, color: 'text-purple-400', position: '-bottom-4 right-3', size: 'w-9 h-9', iconSize: 'w-4 h-4', rounded: 'rounded-lg' },
+                ],
+                bgAccent1: 'bg-purple-100/40',
+                bgAccent2: 'bg-pink-100/30',
+                borderAccent: 'border-purple-100/50',
                 reverse: false
               },
               {
@@ -203,7 +270,18 @@ const JosysRescue: React.FC = () => {
                 titleEn: 'Network & Infra',
                 desc: '社内Wi-Fiからクラウド環境まで安定稼働を支援。「ネットが遅い」「VPNが繋がらない」といったお困りごとも解消します。',
                 color: 'teal',
-                image: '/images/lp/josys_rescue_infra.jpg',
+                gradientFrom: 'from-teal-50',
+                gradientTo: 'to-emerald-50/50',
+                mainIcon: Wifi,
+                mainIconColor: 'text-teal-600',
+                subIcons: [
+                  { icon: Server, color: 'text-teal-500', position: '-top-3 -right-5', size: 'w-11 h-11', iconSize: 'w-5 h-5', rounded: 'rounded-xl' },
+                  { icon: Cpu, color: 'text-emerald-500', position: '-bottom-3 -left-4', size: 'w-10 h-10', iconSize: 'w-5 h-5', rounded: 'rounded-lg' },
+                  { icon: Globe, color: 'text-teal-400', position: '-bottom-5 right-2', size: 'w-9 h-9', iconSize: 'w-4 h-4', rounded: 'rounded-lg' },
+                ],
+                bgAccent1: 'bg-teal-100/40',
+                bgAccent2: 'bg-emerald-100/30',
+                borderAccent: 'border-teal-100/50',
                 reverse: true
               },
             ].map((item, index) => (
@@ -214,12 +292,31 @@ const JosysRescue: React.FC = () => {
                 <div className="lg:w-1/2">
                   <div className="relative group">
                     <div className={`absolute -inset-4 bg-${item.color}-500/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                    <div className="relative rounded-[2rem] overflow-hidden shadow-xl border border-gray-100">
-                      <img 
-                        src={item.image} 
-                        alt={item.title} 
-                        className="w-full aspect-[4/3] object-cover transform group-hover:scale-105 transition-transform duration-700"
-                      />
+                    <div className={`relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 bg-gradient-to-br ${item.gradientFrom} ${item.gradientTo}`}>
+                      {/* 装飾的な背景要素 */}
+                      <div className={`absolute top-6 right-6 w-24 h-24 ${item.bgAccent1} rounded-full blur-xl`} />
+                      <div className={`absolute bottom-8 left-8 w-32 h-32 ${item.bgAccent2} rounded-full blur-2xl`} />
+                      <div className="absolute top-1/3 right-1/3 w-16 h-16 bg-white/20 rounded-full blur-lg" />
+                      {/* 装飾的ドットパターン */}
+                      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+                      {/* メインアイコンコンポジション */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative">
+                          {/* 装飾リング */}
+                          <div className={`absolute -inset-8 border ${item.borderAccent} rounded-full`} />
+                          <div className="absolute -inset-14 border border-gray-100/30 rounded-full" />
+                          {/* メインアイコン */}
+                          <div className={`w-20 h-20 bg-white rounded-2xl shadow-lg shadow-gray-200/50 flex items-center justify-center border ${item.borderAccent} group-hover:scale-105 transition-transform duration-500`}>
+                            <item.mainIcon className={`w-10 h-10 ${item.mainIconColor}`} />
+                          </div>
+                          {/* サブアイコン群 */}
+                          {item.subIcons.map((sub, si) => (
+                            <div key={si} className={`absolute ${sub.position} ${sub.size} bg-white ${sub.rounded} shadow-md flex items-center justify-center border border-gray-50 group-hover:scale-110 transition-transform duration-500`} style={{ transitionDelay: `${si * 75}ms` }}>
+                              <sub.icon className={`${sub.iconSize} ${sub.color}`} />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

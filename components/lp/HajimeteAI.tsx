@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Check, ShieldCheck, Lightbulb, Bot, GraduationCap, ChevronDown, MessageCircleQuestion, Lock, AlertTriangle } from 'lucide-react';
+import { ArrowRight, Check, ShieldCheck, Lightbulb, Bot, GraduationCap, ChevronDown, MessageCircleQuestion, Lock, AlertTriangle, Brain, Sparkles, MessageSquare, Zap, FileCheck, Users, BookOpen, Target, Code, Database, Shield, Cpu } from 'lucide-react';
 
 const HajimeteAI: React.FC = () => {
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -89,13 +89,51 @@ const HajimeteAI: React.FC = () => {
             <div className="lg:w-1/2 reveal-hidden transition-all duration-1000 delay-300 ease-out">
               <div className="relative">
                 <div className="absolute inset-0 bg-purple-400 rounded-3xl blur-2xl opacity-20 animate-pulse" />
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-[4/3]">
-                  <img 
-                    src="/images/lp/hajimete_ai_hero_v2.jpg" 
-                    alt="AI Integration Support" 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-purple-900/40 to-transparent" />
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-[4/3] bg-gradient-to-br from-white/10 via-purple-500/10 to-indigo-500/10 backdrop-blur-sm">
+                  {/* Decorative blurred orbs */}
+                  <div className="absolute top-8 right-8 w-32 h-32 bg-purple-300/20 rounded-full blur-2xl" />
+                  <div className="absolute bottom-12 left-8 w-40 h-40 bg-indigo-300/15 rounded-full blur-3xl" />
+                  <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-violet-400/10 rounded-full blur-xl -translate-x-1/2 -translate-y-1/2" />
+
+                  {/* Subtle grid pattern */}
+                  <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
+                  {/* Main icon composition */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative">
+                      {/* Central brain icon with glass card */}
+                      <div className="w-32 h-32 bg-white/15 backdrop-blur-md rounded-3xl shadow-2xl shadow-purple-900/20 flex items-center justify-center border border-white/20 ring-1 ring-white/10 ring-offset-2 ring-offset-transparent">
+                        <Brain className="w-16 h-16 text-white drop-shadow-lg" />
+                      </div>
+
+                      {/* Sparkles - top right */}
+                      <div className="absolute -top-5 -right-5 w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl shadow-lg shadow-purple-900/10 flex items-center justify-center border border-white/25 animate-bounce" style={{ animationDuration: '3s' }}>
+                        <Sparkles className="w-7 h-7 text-yellow-200 drop-shadow" />
+                      </div>
+
+                      {/* Bot - bottom left */}
+                      <div className="absolute -bottom-4 -left-8 w-13 h-13 bg-white/15 backdrop-blur-md rounded-xl shadow-lg shadow-purple-900/10 flex items-center justify-center border border-white/20 animate-bounce" style={{ animationDuration: '4s', animationDelay: '0.5s' }}>
+                        <Bot className="w-6 h-6 text-purple-200 drop-shadow" />
+                      </div>
+
+                      {/* MessageSquare - top left */}
+                      <div className="absolute -top-8 -left-6 w-11 h-11 bg-white/15 backdrop-blur-md rounded-xl shadow-md flex items-center justify-center border border-white/20 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>
+                        <MessageSquare className="w-5 h-5 text-indigo-200 drop-shadow" />
+                      </div>
+
+                      {/* Zap - bottom right */}
+                      <div className="absolute -bottom-6 -right-3 w-10 h-10 bg-white/15 backdrop-blur-md rounded-lg shadow-md flex items-center justify-center border border-white/20 animate-bounce" style={{ animationDuration: '3.8s', animationDelay: '1.5s' }}>
+                        <Zap className="w-5 h-5 text-amber-200 drop-shadow" />
+                      </div>
+
+                      {/* Decorative ring */}
+                      <div className="absolute -inset-10 border border-white/[0.08] rounded-full" />
+                      <div className="absolute -inset-20 border border-white/[0.04] rounded-full" />
+                    </div>
+                  </div>
+
+                  {/* Bottom gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 to-transparent" />
                 </div>
               </div>
             </div>
@@ -166,8 +204,18 @@ const HajimeteAI: React.FC = () => {
                 desc: 'セキュリティポリシー策定・利用ガイドラインで安心して使える環境を構築。情報漏洩リスクを最小限に抑え、組織的な利用を実現します。',
                 icon: ShieldCheck,
                 color: 'purple',
-                image: '/images/lp/ai_safe_setup.jpg',
-                reverse: false
+                reverse: false,
+                mainIcon: Shield,
+                subIcons: [
+                  { icon: FileCheck, position: '-top-4 -right-4', size: 'w-12 h-12', iconSize: 'w-6 h-6', rounded: 'rounded-2xl', color: 'text-emerald-500' },
+                  { icon: Lock, position: '-bottom-3 -left-5', size: 'w-11 h-11', iconSize: 'w-5 h-5', rounded: 'rounded-xl', color: 'text-purple-500' },
+                  { icon: Check, position: 'top-1 -left-8', size: 'w-9 h-9', iconSize: 'w-4 h-4', rounded: 'rounded-lg', color: 'text-green-500' }
+                ],
+                gradient: 'from-purple-50 via-white to-emerald-50/40',
+                orbColors: ['bg-purple-100/40', 'bg-emerald-100/30'],
+                mainIconColor: 'text-purple-600',
+                borderColor: 'border-purple-100/50',
+                shadowColor: 'shadow-purple-100/50'
               },
               {
                 title: 'AI Proposal',
@@ -175,8 +223,18 @@ const HajimeteAI: React.FC = () => {
                 desc: '「あなたの業務のここにAIが使えます」を具体的にご提案。現場の課題をヒアリングし、即効性のある活用シーンを可視化します。',
                 icon: Lightbulb,
                 color: 'indigo',
-                image: '/images/lp/ai_proposal.jpg',
-                reverse: true
+                reverse: true,
+                mainIcon: Target,
+                subIcons: [
+                  { icon: Lightbulb, position: '-top-4 -right-3', size: 'w-12 h-12', iconSize: 'w-6 h-6', rounded: 'rounded-2xl', color: 'text-amber-500' },
+                  { icon: Zap, position: '-bottom-3 -right-5', size: 'w-10 h-10', iconSize: 'w-5 h-5', rounded: 'rounded-xl', color: 'text-indigo-500' },
+                  { icon: Sparkles, position: '-top-2 -left-6', size: 'w-9 h-9', iconSize: 'w-4 h-4', rounded: 'rounded-lg', color: 'text-violet-400' }
+                ],
+                gradient: 'from-indigo-50 via-white to-amber-50/30',
+                orbColors: ['bg-indigo-100/40', 'bg-amber-100/30'],
+                mainIconColor: 'text-indigo-600',
+                borderColor: 'border-indigo-100/50',
+                shadowColor: 'shadow-indigo-100/50'
               },
               {
                 title: 'Custom Bot',
@@ -184,8 +242,18 @@ const HajimeteAI: React.FC = () => {
                 desc: '社内資料を学習したRAGチャットボット。自社専用のAIアシスタントが、ナレッジの検索性向上と業務効率化を強力にサポートします。',
                 icon: Bot,
                 color: 'pink',
-                image: '/images/lp/ai_custom_bot.jpg',
-                reverse: false
+                reverse: false,
+                mainIcon: Cpu,
+                subIcons: [
+                  { icon: Bot, position: '-top-4 -right-4', size: 'w-12 h-12', iconSize: 'w-6 h-6', rounded: 'rounded-2xl', color: 'text-pink-500' },
+                  { icon: Database, position: '-bottom-3 -left-5', size: 'w-11 h-11', iconSize: 'w-5 h-5', rounded: 'rounded-xl', color: 'text-rose-500' },
+                  { icon: Code, position: 'top-0 -left-7', size: 'w-9 h-9', iconSize: 'w-4 h-4', rounded: 'rounded-lg', color: 'text-fuchsia-400' }
+                ],
+                gradient: 'from-pink-50 via-white to-rose-50/40',
+                orbColors: ['bg-pink-100/40', 'bg-rose-100/30'],
+                mainIconColor: 'text-pink-600',
+                borderColor: 'border-pink-100/50',
+                shadowColor: 'shadow-pink-100/50'
               },
               {
                 title: 'Prompt Training',
@@ -193,20 +261,51 @@ const HajimeteAI: React.FC = () => {
                 desc: 'AIから望む回答を引き出すコツを、実践形式でレクチャー。社員一人ひとりのAI活用スキルを底上げし、定着化を支援します。',
                 icon: GraduationCap,
                 color: 'blue',
-                image: '/images/lp/ai_training.jpg',
-                reverse: true
+                reverse: true,
+                mainIcon: BookOpen,
+                subIcons: [
+                  { icon: GraduationCap, position: '-top-4 -right-3', size: 'w-12 h-12', iconSize: 'w-6 h-6', rounded: 'rounded-2xl', color: 'text-blue-500' },
+                  { icon: Users, position: '-bottom-3 -left-5', size: 'w-11 h-11', iconSize: 'w-5 h-5', rounded: 'rounded-xl', color: 'text-sky-500' },
+                  { icon: MessageSquare, position: '-top-2 -left-7', size: 'w-9 h-9', iconSize: 'w-4 h-4', rounded: 'rounded-lg', color: 'text-cyan-400' }
+                ],
+                gradient: 'from-blue-50 via-white to-sky-50/40',
+                orbColors: ['bg-blue-100/40', 'bg-sky-100/30'],
+                mainIconColor: 'text-blue-600',
+                borderColor: 'border-blue-100/50',
+                shadowColor: 'shadow-blue-100/50'
               }
             ].map((item, index) => (
               <div key={index} className={`flex flex-col ${item.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 lg:gap-24 reveal-hidden`}>
                 <div className="lg:w-1/2">
                   <div className="relative group">
                     <div className={`absolute -inset-4 bg-${item.color}-500/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                    <div className="relative rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 aspect-video">
-                      <img 
-                        src={item.image} 
-                        alt={item.sub} 
-                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                      />
+                    <div className={`relative rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 aspect-video bg-gradient-to-br ${item.gradient}`}>
+                      {/* Decorative orbs */}
+                      <div className={`absolute top-4 right-4 w-20 h-20 ${item.orbColors[0]} rounded-full blur-xl`} />
+                      <div className={`absolute bottom-6 left-6 w-28 h-28 ${item.orbColors[1]} rounded-full blur-2xl`} />
+
+                      {/* Subtle dot pattern */}
+                      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #6b21a8 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+
+                      {/* Icon composition */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative group-hover:scale-105 transition-transform duration-700">
+                          {/* Decorative ring */}
+                          <div className={`absolute -inset-8 border ${item.borderColor} rounded-full opacity-60`} />
+
+                          {/* Main icon card */}
+                          <div className={`w-20 h-20 bg-white rounded-2xl shadow-lg ${item.shadowColor} flex items-center justify-center border ${item.borderColor}`}>
+                            <item.mainIcon className={`w-10 h-10 ${item.mainIconColor}`} />
+                          </div>
+
+                          {/* Sub icons */}
+                          {item.subIcons.map((sub, i) => (
+                            <div key={i} className={`absolute ${sub.position} ${sub.size} bg-white ${sub.rounded} shadow-md flex items-center justify-center border border-gray-50`}>
+                              <sub.icon className={`${sub.iconSize} ${sub.color}`} />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
