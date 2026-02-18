@@ -150,12 +150,16 @@ export const Hero: React.FC<HeroProps> = ({ isLoaded }) => {
       <canvas ref={canvasRef} className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`} aria-hidden="true" role="presentation" />
       <div ref={textRef} className="relative z-10 text-center px-4 will-change-transform mt-10">
         <h1 className={`font-en text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 mb-6 leading-tight drop-shadow-sm ${isLoaded ? 'animate-hero-reveal' : 'opacity-0'}`}>
+          <span className="sr-only">Arcle - 愛知県一宮市のITコンサルティング</span>
           Connecting Arcs
           <br />
           <span className="text-slate-400 inline-block mt-2">Creating Circles</span>
         </h1>
-        <p className={`text-slate-600 text-sm md:text-lg tracking-[0.2em] uppercase mt-8 font-medium ${isLoaded ? 'animate-hero-reveal delay-300' : 'opacity-0'}`}>
-          Technology × Strategy × Future
+        <p className={`text-slate-700 text-base md:text-xl mt-6 font-medium max-w-2xl mx-auto leading-relaxed ${isLoaded ? 'animate-hero-reveal delay-300' : 'opacity-0'}`}>
+          中小企業のDX推進を支援するITコンサルティング
+        </p>
+        <p className={`text-slate-500 text-sm md:text-base mt-3 max-w-xl mx-auto ${isLoaded ? 'animate-hero-reveal delay-300' : 'opacity-0'}`}>
+          情シス代行・データ活用・生成AI・Web制作で経営課題を解決
         </p>
       </div>
       <div ref={scrollIndicatorRef} className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`} aria-hidden="true">
@@ -458,5 +462,64 @@ export const Flow: React.FC = () => {
   );
 };
 
-// --- 6. Contact Section ---
+// --- 6. FAQ Section ---
+
+const faqItems = [
+  {
+    question: "Arcle（アークル）はどんな会社ですか？",
+    answer: "Arcleは愛知県一宮市を拠点とするITコンサルティング企業です。中小企業や個人事業主のお客様を中心に、情シス代行、データ活用支援（Tableau・PowerBI）、生成AI導入支援（ChatGPT等）、Web制作の4つのサービスを提供し、DX推進をサポートしています。"
+  },
+  {
+    question: "情シス代行とはどのようなサービスですか？",
+    answer: "情シス代行は、IT専任担当者がいない企業様に代わって、IT部門の役割を担うサービスです。PCトラブル対応、SaaS導入・管理、セキュリティ対策、社内ネットワーク構築など、日々のIT業務を包括的にサポートします。月額5万円〜のライトプランから、IT戦略コンサルティングを含むプレミアムプランまでご用意しています。"
+  },
+  {
+    question: "対応エリアはどこですか？",
+    answer: "現在、新規のご依頼は愛知県一宮市近郊の企業様を中心に承っております。訪問サポートは一宮市近郊は無料で、その他エリアは別途交通費をいただいております。リモート対応が可能な業務については、エリアを問わずご相談いただけます。"
+  },
+  {
+    question: "相談や見積りは無料ですか？",
+    answer: "はい、初回のご相談・お見積りは無料です。お問い合わせフォームよりご連絡いただければ、通常2営業日以内に担当よりご連絡いたします。現状の課題やご要望をヒアリングし、最適なソリューションをご提案します。"
+  },
+  {
+    question: "生成AI（ChatGPT等）の導入支援はどのような内容ですか？",
+    answer: "ChatGPT Enterprise/Team版の導入支援、セキュリティポリシー・利用ガイドライン策定、社内独自AIチャットボット（RAG）開発、プロンプトエンジニアリング研修、業務プロセスへのAI組み込み・自動化など、導入から定着・独自開発まで包括的に支援します。月額5万円〜のスタータープランからご利用いただけます。"
+  },
+  {
+    question: "データ活用支援ではどのようなツールを使いますか？",
+    answer: "主にTableauやPowerBIといったBIツールを活用し、経営ダッシュボードの構築やデータ分析基盤の設計を行います。代表の栗原はTableau Certified Data AnalystおよびDATA Saberの資格を保有しており、データの収集・統合から可視化・分析まで一貫してサポートします。"
+  }
+];
+
+export const FAQ: React.FC = () => {
+  const { elementRef, isVisible } = useIntersectionObserver();
+
+  return (
+    <section id="faq" className="py-24 bg-gray-50 relative overflow-hidden">
+      <div className="container mx-auto px-6 max-w-4xl relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-xs font-bold tracking-widest text-gray-400 uppercase font-en mb-3">FAQ</h2>
+          <h3 className="text-3xl md:text-4xl font-bold text-gray-900">よくあるご質問</h3>
+        </div>
+        <div ref={elementRef} className={`space-y-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          {faqItems.map((item, index) => (
+            <details key={index} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+              <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                <h4 className="text-base md:text-lg font-bold text-gray-900 pr-4">{item.question}</h4>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 group-open:bg-blue-600 group-open:text-white transition-colors">
+                  <svg className="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </span>
+              </summary>
+              <div className="px-6 pb-6">
+                <p className="text-gray-600 leading-relaxed">{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// --- 7. Contact Section ---
 export { Contact } from './components/Contact';

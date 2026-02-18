@@ -28,9 +28,25 @@ const DataConsulting: React.FC = () => {
   return (
     <div className="pt-24 pb-20 bg-white">
       <Helmet>
-        <title>データ活用支援 | Arcle</title>
-        <meta name="description" content="データに語らせ、未来を拓く。ArcleのBIツール導入、データ基盤構築、KPI設計・モニタリング、データリテラシー研修で、データドリブンな意思決定を実現します。" />
+        <title>データ活用支援・BIツール導入 | Tableau・PowerBI - Arcle</title>
+        <meta name="description" content="Arcleのデータ活用支援サービス。Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計・モニタリング、データリテラシー研修で中小企業のデータドリブン経営を実現。愛知県一宮市。" />
         <link rel="canonical" href="https://arcle.net/data-consulting" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://arcle.net/" },
+            { "@type": "ListItem", "position": 2, "name": "データ活用支援", "item": "https://arcle.net/data-consulting" }
+          ]
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "データ活用支援サービス",
+          "provider": { "@type": "Organization", "name": "Arcle" },
+          "description": "Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計で中小企業のデータドリブン経営を実現",
+          "areaServed": { "@type": "City", "name": "一宮市" }
+        })}</script>
       </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

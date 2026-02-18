@@ -28,9 +28,30 @@ const GenAI: React.FC = () => {
   return (
     <div className="pt-24 pb-20 bg-white">
       <Helmet>
-        <title>生成AI活用支援 | Arcle</title>
-        <meta name="description" content="AIと共に、創造の先へ。ArcleのChatGPT導入支援、社内独自ボット開発、プロンプト研修、業務自動化で、生成AIをビジネスの力に変えます。" />
+        <title>生成AI活用支援・ChatGPT導入 | RAGチャットボット開発 - Arcle</title>
+        <meta name="description" content="Arcleの生成AI活用支援。ChatGPT Enterprise導入支援、社内独自RAGチャットボット開発、AI利用ガイドライン策定、プロンプトエンジニアリング研修、業務自動化。中小企業のAI活用を月額5万円〜で支援。愛知県一宮市。" />
         <link rel="canonical" href="https://arcle.net/gen-ai" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://arcle.net/" },
+            { "@type": "ListItem", "position": 2, "name": "生成AI活用支援", "item": "https://arcle.net/gen-ai" }
+          ]
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "生成AI活用支援サービス",
+          "provider": { "@type": "Organization", "name": "Arcle" },
+          "description": "ChatGPT Enterprise導入、社内独自RAGチャットボット開発、プロンプト研修、業務AI自動化を支援",
+          "areaServed": { "@type": "City", "name": "一宮市" },
+          "offers": [
+            { "@type": "Offer", "name": "導入支援プラン", "price": "50000", "priceCurrency": "JPY" },
+            { "@type": "Offer", "name": "活用定着プラン", "price": "200000", "priceCurrency": "JPY" },
+            { "@type": "Offer", "name": "独自開発プラン", "price": "500000", "priceCurrency": "JPY" }
+          ]
+        })}</script>
       </Helmet>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

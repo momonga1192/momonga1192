@@ -31,10 +31,14 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-2">
             <span className="font-en text-2xl font-bold tracking-wider" aria-label="Arcle">Arcle</span>
             <p className="text-gray-400 text-sm mt-4 leading-relaxed">
-              Connecting Arcs, Creating Circles.<br />
-              テクノロジーとデザインで、<br />
-              ビジネスの新たな可能性をつなぎます。
+              中小企業のDX推進を支援するITコンサルティング。<br />
+              情シス代行・データ活用・生成AI・Web制作で<br />
+              経営課題を解決します。
             </p>
+            <address className="text-gray-500 text-xs mt-4 not-italic leading-relaxed">
+              〒491-0835 愛知県一宮市あずら2丁目8<br />
+              代表: 栗原 勇太
+            </address>
           </div>
           
           <nav aria-label="会社情報">

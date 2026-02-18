@@ -30,9 +30,17 @@ const ContactForm: React.FC = () => {
   return (
     <div className="pt-24 pb-0 bg-white">
       <Helmet>
-        <title>お問い合わせ | Arcle</title>
-        <meta name="description" content="Arcleへのご相談・お見積りのご依頼はこちら。ITコンサルティング、情シス代行、データ活用支援、生成AI活用支援、Web制作について、お気軽にお問い合わせください。" />
+        <title>お問い合わせ・無料相談 | ITコンサルティングのArcle</title>
+        <meta name="description" content="Arcleへのご相談・お見積りは無料です。ITコンサルティング、情シス代行、データ活用支援（Tableau・PowerBI）、生成AI導入支援、Web制作について、お気軽にお問い合わせください。通常2営業日以内にご連絡します。" />
         <link rel="canonical" href="https://arcle.net/contact" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://arcle.net/" },
+            { "@type": "ListItem", "position": 2, "name": "お問い合わせ", "item": "https://arcle.net/contact" }
+          ]
+        })}</script>
       </Helmet>
       {/* Hero Section - More refined and minimal */}
       <section className="relative pt-24 pb-16 overflow-hidden">
