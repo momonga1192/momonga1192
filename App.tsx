@@ -8,6 +8,10 @@ import DataConsulting from './components/DataConsulting';
 import GenAI from './components/GenAI';
 import WebProduction from './components/WebProduction';
 import ContactForm from './components/ContactForm';
+import JosysRescue from './components/lp/JosysRescue';
+import Mieruka from './components/lp/Mieruka';
+import HajimeteAI from './components/lp/HajimeteAI';
+import WebMadoguchi from './components/lp/WebMadoguchi';
 
 // --- Scroll to top on route change ---
 const ScrollToTop: React.FC = () => {
@@ -42,6 +46,10 @@ const AppContent: React.FC = () => {
           <Route path="/gen-ai" element={<GenAI />} />
           <Route path="/web-production" element={<WebProduction />} />
           <Route path="/contact" element={<ContactForm />} />
+          <Route path="/lp/josys-rescue" element={<JosysRescue />} />
+          <Route path="/lp/mieruka" element={<Mieruka />} />
+          <Route path="/lp/hajimete-ai" element={<HajimeteAI />} />
+          <Route path="/lp/web-madoguchi" element={<WebMadoguchi />} />
         </Routes>
       </main>
       <Footer />
