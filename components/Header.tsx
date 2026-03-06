@@ -18,6 +18,7 @@ const navItems: NavItem[] = [
       { label: 'Web制作', href: '/web-production' },
     ]
   },
+  { label: 'Articles', href: '/articles' },
   { label: 'Contact', href: '/contact' },
 ];
 

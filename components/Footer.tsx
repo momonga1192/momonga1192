@@ -46,6 +46,7 @@ export const Footer: React.FC = () => {
             <div className="flex flex-col space-y-4">
               <a href="#philosophy" onClick={(e) => handleNavigation(e, '#philosophy')} className="text-sm text-gray-400 hover:text-white transition-colors cursor-pointer">理念</a>
               <a href="#profile" onClick={(e) => handleNavigation(e, '#profile')} className="text-sm text-gray-400 hover:text-white transition-colors cursor-pointer">プロフィール</a>
+              <a href="/articles" onClick={(e) => handleNavigation(e, '/articles')} className="text-sm text-gray-400 hover:text-white transition-colors cursor-pointer">記事一覧</a>
               <a href="/contact" onClick={(e) => handleNavigation(e, '/contact')} className="text-sm text-gray-400 hover:text-white transition-colors cursor-pointer">お問い合わせ</a>
             </div>
           </nav>
