@@ -12,6 +12,10 @@ import JosysRescue from './components/lp/JosysRescue';
 import Mieruka from './components/lp/Mieruka';
 import HajimeteAI from './components/lp/HajimeteAI';
 import WebMadoguchi from './components/lp/WebMadoguchi';
+import ArticlesIndex from './components/articles/ArticlesIndex';
+import ArticleJosysGuide from './components/articles/ArticleJosysGuide';
+import ArticleBIToolChoice from './components/articles/ArticleBIToolChoice';
+import ArticleChatGPTPolicy from './components/articles/ArticleChatGPTPolicy';
 
 // --- Scroll to top on route change ---
 const ScrollToTop: React.FC = () => {
@@ -46,6 +50,10 @@ const AppContent: React.FC = () => {
           <Route path="/gen-ai" element={<GenAI />} />
           <Route path="/web-production" element={<WebProduction />} />
           <Route path="/contact" element={<ContactForm />} />
+          <Route path="/articles" element={<ArticlesIndex />} />
+          <Route path="/articles/ichinomiya-josys-outsourcing-guide" element={<ArticleJosysGuide />} />
+          <Route path="/articles/sme-bi-tableau-powerbi" element={<ArticleBIToolChoice />} />
+          <Route path="/articles/chatgpt-security-policy-sme" element={<ArticleChatGPTPolicy />} />
           <Route path="/lp/josys-rescue" element={<JosysRescue />} />
           <Route path="/lp/mieruka" element={<Mieruka />} />
           <Route path="/lp/hajimete-ai" element={<HajimeteAI />} />
