@@ -61,8 +61,8 @@ const WebProduction: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="reveal-hidden transition-all duration-1000 ease-out">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+            <div className="lg:w-1/2 text-left reveal-hidden transition-all duration-1000 ease-out">
               <span className="inline-block py-1 px-3 rounded-full bg-teal-50 text-teal-600 text-xs font-en font-semibold tracking-widest uppercase mb-6 border border-teal-100">
                 Web Production
               </span>
@@ -74,7 +74,7 @@ const WebProduction: React.FC = () => {
                   世界へ届ける。
                 </span>
               </h1>
-              <p className="text-xl text-gray-500 mb-12 leading-relaxed max-w-2xl font-light">
+              <p className="text-xl text-gray-500 mb-12 leading-relaxed font-light">
                 Webサイトは、企業の「顔」であり、最強の「営業マン」です。<br />
                 デザインと技術の力で、ブランドの価値を最大化します。
               </p>
@@ -86,6 +86,19 @@ const WebProduction: React.FC = () => {
                 <a href="#services" className="group inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 border border-gray-200 rounded-full font-medium hover:bg-gray-50 transition-all duration-300">
                   サービス詳細を見る
                 </a>
+              </div>
+            </div>
+            <div className="lg:w-1/2 reveal-hidden transition-all duration-1000 delay-300 ease-out">
+              <div className="relative">
+                <div className="absolute inset-0 bg-teal-400 rounded-3xl blur-2xl opacity-10 animate-pulse" />
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-100 aspect-[4/3] bg-gradient-to-br from-teal-50 via-white to-teal-100">
+                  <div className="absolute top-10 right-16 w-32 h-32 rounded-full bg-teal-100/60 blur-xl" />
+                  <div className="absolute bottom-16 left-10 w-24 h-24 rounded-full bg-teal-200/40 blur-lg" />
+                  <div className="absolute top-1/4 left-1/3 w-12 h-12 rounded-full bg-teal-50/80" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Monitor className="w-32 h-32 text-teal-300/60" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -148,23 +161,69 @@ const WebProduction: React.FC = () => {
             <p className="text-gray-500 max-w-2xl mx-auto">戦略立案からデザイン、実装、運用まで。ワンストップでWeb制作を支援します。</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto space-y-24">
             {[
-              { title: "Corporate Site", sub: "コーポレートサイト制作", desc: "企業の信頼性を高め、ブランディングを強化するサイトを構築。", icon: Monitor, color: "teal" },
-              { title: "UI/UX Design", sub: "UI/UXデザイン", desc: "ユーザー視点に立った、使いやすく美しいインターフェースを設計。", icon: Layout, color: "indigo" },
-              { title: "CMS Dev", sub: "CMS導入・開発", desc: "WordPressやヘッドレスCMSを導入し、更新しやすい環境を整備。", icon: Code, color: "blue" },
-              { title: "SEO / Performance", sub: "SEO・高速化", desc: "検索エンジン対策と表示速度の最適化で、集客とUXを向上。", icon: Search, color: "green" }
+              { 
+                title: "Corporate Site", 
+                sub: "コーポレートサイト制作", 
+                desc: "企業の信頼性を高め、ブランディングを強化するサイトを構築。ステークホルダーに響く、本質的な価値を伝えるデザインを追求します。", 
+                icon: Monitor, 
+                color: "teal",
+                reverse: false
+              },
+              {
+                title: "UI/UX Design",
+                sub: "UI/UXデザイン",
+                desc: "ユーザー視点に立った、使いやすく美しいインターフェースを設計。直感的な操作感と、目的達成までのスムーズな動線を実現します。",
+                icon: Layout,
+                color: "indigo",
+                reverse: true
+              },
+              {
+                title: "CMS Dev",
+                sub: "CMS導入・開発",
+                desc: "WordPressやヘッドレスCMSを導入し、更新しやすい環境を整備。社内のナレッジを迅速に発信できる、自律的なサイト運営を支えます。",
+                icon: Code,
+                color: "blue",
+                reverse: false
+              },
+              {
+                title: "SEO / Performance",
+                sub: "SEO・高速化",
+                desc: "検索エンジン対策と表示速度の最適化で、集客とUXを向上。テクニカルな最適化からコンテンツ戦略まで、包括的にサポートします。",
+                icon: Search,
+                color: "green",
+                reverse: true
+              }
             ].map((item, index) => (
-              <div key={index} className="group bg-white p-10 rounded-2xl border border-gray-100 hover:border-teal-200 hover:shadow-xl transition-all duration-500 reveal-hidden">
-                <div className="flex justify-between items-start mb-8">
-                  <div className={`w-14 h-14 rounded-2xl bg-${item.color}-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
-                    <item.icon className={`w-7 h-7 text-${item.color}-600`} />
+              <div key={index} className={`flex flex-col ${item.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 lg:gap-24 reveal-hidden`}>
+                <div className="lg:w-1/2">
+                  <div className="relative group">
+                    <div className={`absolute -inset-4 bg-${item.color}-500/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                    <div className={`relative rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 aspect-video flex items-center justify-center bg-gradient-to-br from-${item.color}-50 via-white to-${item.color}-100/50`}>
+                      <item.icon className={`w-20 h-20 text-${item.color}-300/60 transform group-hover:scale-110 transition-transform duration-700`} />
+                    </div>
                   </div>
-                  <span className="text-xs font-en font-bold text-gray-300 group-hover:text-teal-600 transition-colors duration-300">0{index + 1}</span>
                 </div>
-                <h3 className="text-2xl font-en font-bold text-gray-900 mb-1">{item.title}</h3>
-                <p className="text-sm font-bold text-gray-400 mb-4">{item.sub}</p>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+                <div className="lg:w-1/2">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={`w-12 h-12 rounded-xl bg-${item.color}-50 flex items-center justify-center`}>
+                      <item.icon className={`w-6 h-6 text-${item.color}-600`} />
+                    </div>
+                    <span className="text-sm font-en font-bold text-gray-300">0{index + 1}</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-teal-600 mb-2">{item.sub}</h3>
+                  <h4 className="text-3xl font-en font-bold text-gray-900 mb-6">{item.title}</h4>
+                  <p className="text-gray-600 leading-relaxed text-lg mb-8">{item.desc}</p>
+                  <ul className="space-y-4">
+                    {['徹底した競合調査と分析', '完全オーダーメイドのデザイン', '最新技術を用いた高品質な実装'].map((feature, i) => (
+                      <li key={i} className="flex items-center text-gray-700">
+                        <Check className="w-5 h-5 text-teal-500 mr-3" />
+                        <span className="font-medium">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>

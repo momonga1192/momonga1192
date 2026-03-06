@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* Safelist: dynamic classes used via template literals (bg-${color}-50 etc.) */
+@source inline("bg-blue-50 bg-blue-100/50 bg-blue-300/60 bg-blue-500/10 text-blue-600 text-blue-300/60 from-blue-50 to-blue-100/50 bg-indigo-50 bg-indigo-100/50 bg-indigo-300/60 bg-indigo-500/10 text-indigo-600 text-indigo-300/60 from-indigo-50 to-indigo-100/50 bg-purple-50 bg-purple-100/50 bg-purple-300/60 bg-purple-500/10 text-purple-600 text-purple-300/60 from-purple-50 to-purple-100/50 bg-teal-50 bg-teal-100/50 bg-teal-300/60 bg-teal-500/10 text-teal-600 text-teal-300/60 from-teal-50 to-teal-100/50 bg-pink-50 bg-pink-100/50 bg-pink-300/60 bg-pink-500/10 text-pink-600 text-pink-300/60 from-pink-50 to-pink-100/50 bg-green-50 bg-green-100/50 bg-green-300/60 bg-green-500/10 text-green-600 text-green-300/60 from-green-50 to-green-100/50");
+
+/* Fonts */
+@theme {
+  --font-sans: 'Noto Sans JP', sans-serif;
+  --font-en: 'Outfit', sans-serif;
+}
+
+/* Base styles (moved from index.html) */
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: #ffffff;
+  color: #1a202c;
+  overflow-x: hidden;
+}
+
+.font-en {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Reveal animations */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

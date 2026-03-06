@@ -62,8 +62,8 @@ const Josys: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="reveal-hidden transition-all duration-1000 ease-out">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+            <div className="lg:w-1/2 text-left reveal-hidden transition-all duration-1000 ease-out">
               <span className="inline-block py-1 px-3 rounded-full bg-blue-50 text-blue-600 text-xs font-en font-semibold tracking-widest uppercase mb-6 border border-blue-100">
                 Information Systems Outsourcing
               </span>
@@ -75,7 +75,7 @@ const Josys: React.FC = () => {
                   必要な時だけ。
                 </span>
               </h1>
-              <p className="text-xl text-gray-500 mb-12 leading-relaxed max-w-2xl font-light">
+              <p className="text-xl text-gray-500 mb-12 leading-relaxed font-light">
                 あなたの会社の「見えない情シス部門」として。<br />
                 技術と信頼で、ビジネスの成長を足元から支えます。
               </p>
@@ -87,6 +87,19 @@ const Josys: React.FC = () => {
                 <a href="#services" className="group inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 border border-gray-200 rounded-full font-medium hover:bg-gray-50 transition-all duration-300">
                   サービス詳細を見る
                 </a>
+              </div>
+            </div>
+            <div className="lg:w-1/2 reveal-hidden transition-all duration-1000 delay-300 ease-out">
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-400 rounded-3xl blur-2xl opacity-10 animate-pulse" />
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-100 aspect-[4/3] bg-gradient-to-br from-blue-50 via-white to-blue-100">
+                  <div className="absolute top-10 right-16 w-32 h-32 rounded-full bg-blue-100/60 blur-xl" />
+                  <div className="absolute bottom-16 left-10 w-24 h-24 rounded-full bg-blue-200/40 blur-lg" />
+                  <div className="absolute top-1/4 left-1/3 w-12 h-12 rounded-full bg-blue-50/80" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Shield className="w-32 h-32 text-blue-300/60" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -149,47 +162,69 @@ const Josys: React.FC = () => {
             <p className="text-gray-500 max-w-2xl mx-auto">貴社のIT環境を包括的にサポート。課題に合わせて最適なソリューションを提供します。</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto space-y-24">
             {[
               { 
                 title: "IT Helpdesk", 
                 sub: "ITヘルプデスク", 
                 desc: "PC操作からトラブル対応まで、チャットや電話で迅速に解決。社員の生産性を守り、業務の停滞を防ぎます。緊急時は優先対応で即座にサポート。", 
                 icon: Users, 
-                color: "blue" 
+                color: "blue",
+                reverse: false
               },
-              { 
-                title: "System Integration", 
-                sub: "システム導入・DX推進", 
-                desc: "業務効率化ツールの選定から導入、運用定着まで一貫サポート。DX戦略の立案・実行を通じて、デジタル化による競争力強化を実現します。", 
-                icon: Cpu, 
-                color: "indigo" 
+              {
+                title: "System Integration",
+                sub: "システム導入・DX推進",
+                desc: "業務効率化ツールの選定から導入、運用定着まで一貫サポート。DX戦略の立案・実行を通じて、デジタル化による競争力強化を実現します。",
+                icon: Cpu,
+                color: "indigo",
+                reverse: true
               },
-              { 
-                title: "Security & Asset", 
-                sub: "セキュリティ・資産管理", 
-                desc: "情報漏洩対策やアクセス管理などのセキュリティ強化と、ITライセンス・アカウントの一元管理でコストとリスクを最適化します。", 
-                icon: Shield, 
-                color: "purple" 
+              {
+                title: "Security & Asset",
+                sub: "セキュリティ・資産管理",
+                desc: "情報漏洩対策やアクセス管理などのセキュリティ強化と、ITライセンス・アカウントの一元管理でコストとリスクを最適化します。",
+                icon: Shield,
+                color: "purple",
+                reverse: false
               },
-              { 
-                title: "Cloud & Infra", 
-                sub: "クラウド・インフラ支援", 
-                desc: "M365やGoogle Workspaceなどクラウドサービスの選定・導入・運用を包括サポート。サーバー・ネットワーク環境の最適化も実現します。", 
-                icon: Globe, 
-                color: "teal" 
+              {
+                title: "Cloud & Infra",
+                sub: "クラウド・インフラ支援",
+                desc: "M365やGoogle Workspaceなどクラウドサービスの選定・導入・運用を包括サポート。サーバー・ネットワーク環境の最適化も実現します。",
+                icon: Globe,
+                color: "teal",
+                reverse: true
               }
             ].map((item, index) => (
-              <div key={index} className="group bg-white p-10 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-500 reveal-hidden">
-                <div className="flex justify-between items-start mb-8">
-                  <div className={`w-14 h-14 rounded-2xl bg-${item.color}-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
-                    <item.icon className={`w-7 h-7 text-${item.color}-600`} />
+              <div key={index} className={`flex flex-col ${item.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 lg:gap-24 reveal-hidden`}>
+                <div className="lg:w-1/2">
+                  <div className="relative group">
+                    <div className={`absolute -inset-4 bg-${item.color}-500/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                    <div className={`relative rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 aspect-video flex items-center justify-center bg-gradient-to-br from-${item.color}-50 via-white to-${item.color}-100/50`}>
+                      <item.icon className={`w-20 h-20 text-${item.color}-300/60 transform group-hover:scale-110 transition-transform duration-700`} />
+                    </div>
                   </div>
-                  <span className="text-xs font-en font-bold text-gray-300 group-hover:text-blue-600 transition-colors duration-300">0{index + 1}</span>
                 </div>
-                <h3 className="text-2xl font-en font-bold text-gray-900 mb-1">{item.title}</h3>
-                <p className="text-sm font-bold text-gray-400 mb-4">{item.sub}</p>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+                <div className="lg:w-1/2">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={`w-12 h-12 rounded-xl bg-${item.color}-50 flex items-center justify-center`}>
+                      <item.icon className={`w-6 h-6 text-${item.color}-600`} />
+                    </div>
+                    <span className="text-sm font-en font-bold text-gray-300">0{index + 1}</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-blue-600 mb-2">{item.sub}</h3>
+                  <h4 className="text-3xl font-en font-bold text-gray-900 mb-6">{item.title}</h4>
+                  <p className="text-gray-600 leading-relaxed text-lg mb-8">{item.desc}</p>
+                  <ul className="space-y-4">
+                    {['24時間365日の監視体制', '専門スタッフによる迅速対応', 'コスト削減の具体案提示'].map((feature, i) => (
+                      <li key={i} className="flex items-center text-gray-700">
+                        <Check className="w-5 h-5 text-blue-500 mr-3" />
+                        <span className="font-medium">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>

@@ -62,8 +62,8 @@ const GenAI: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="reveal-hidden transition-all duration-1000 ease-out">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+            <div className="lg:w-1/2 text-left reveal-hidden transition-all duration-1000 ease-out">
               <span className="inline-block py-1 px-3 rounded-full bg-purple-50 text-purple-600 text-xs font-en font-semibold tracking-widest uppercase mb-6 border border-purple-100">
                 Generative AI
               </span>
@@ -75,7 +75,7 @@ const GenAI: React.FC = () => {
                   創造の先へ。
                 </span>
               </h1>
-              <p className="text-xl text-gray-500 mb-12 leading-relaxed max-w-2xl font-light">
+              <p className="text-xl text-gray-500 mb-12 leading-relaxed font-light">
                 生成AIは、単なるツールではありません。<br />
                 ビジネスの常識を覆し、圧倒的な生産性を生み出す「パートナー」です。
               </p>
@@ -87,6 +87,19 @@ const GenAI: React.FC = () => {
                 <a href="#services" className="group inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 border border-gray-200 rounded-full font-medium hover:bg-gray-50 transition-all duration-300">
                   サービス詳細を見る
                 </a>
+              </div>
+            </div>
+            <div className="lg:w-1/2 reveal-hidden transition-all duration-1000 delay-300 ease-out">
+              <div className="relative">
+                <div className="absolute inset-0 bg-purple-400 rounded-3xl blur-2xl opacity-10 animate-pulse" />
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-100 aspect-[4/3] bg-gradient-to-br from-purple-50 via-white to-purple-100">
+                  <div className="absolute top-10 right-16 w-32 h-32 rounded-full bg-purple-100/60 blur-xl" />
+                  <div className="absolute bottom-16 left-10 w-24 h-24 rounded-full bg-purple-200/40 blur-lg" />
+                  <div className="absolute top-1/4 left-1/3 w-12 h-12 rounded-full bg-purple-50/80" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Bot className="w-32 h-32 text-purple-300/60" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -149,23 +162,69 @@ const GenAI: React.FC = () => {
             <p className="text-gray-500 max-w-2xl mx-auto">導入支援から独自開発まで。貴社のAIトランスフォーメーションを加速させます。</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto space-y-24">
             {[
-              { title: "ChatGPT Intro", sub: "ChatGPT導入支援", desc: "Enterprise版やTeam版の導入、ガイドライン策定をサポート。", icon: MessageSquare, color: "purple" },
-              { title: "Custom Bot Dev", sub: "社内独自ボット開発", desc: "社内データを学習させたRAG（検索拡張生成）ボットを構築。", icon: Bot, color: "indigo" },
-              { title: "Prompt Eng.", sub: "プロンプト研修", desc: "AIから望む回答を引き出すための技術を、実践形式でレクチャー。", icon: Zap, color: "pink" },
-              { title: "AI Automation", sub: "業務自動化", desc: "APIを活用し、既存の業務フローにAIを組み込んで自動化を実現。", icon: Cpu, color: "blue" }
+              { 
+                title: "ChatGPT Intro", 
+                sub: "ChatGPT導入支援", 
+                desc: "Enterprise版やTeam版の導入、ガイドライン策定をサポート。安全な利用環境を構築し、社内のAI活用を加速させます。", 
+                icon: MessageSquare, 
+                color: "purple",
+                reverse: false
+              },
+              {
+                title: "Custom Bot Dev",
+                sub: "社内独自ボット開発",
+                desc: "社内データを学習させたRAG（検索拡張生成）ボットを構築。社内のナレッジアクセスを劇的に効率化します。",
+                icon: Bot,
+                color: "indigo",
+                reverse: true
+              },
+              {
+                title: "Prompt Eng.",
+                sub: "プロンプト研修",
+                desc: "AIから望む回答を引き出すための技術を、実践形式でレクチャー。社員一人ひとりのAI活用能力を底上げします。",
+                icon: Zap,
+                color: "pink",
+                reverse: false
+              },
+              {
+                title: "AI Automation",
+                sub: "業務自動化",
+                desc: "APIを活用し、既存の業務フローにAIを組み込んで自動化を実現。単純作業から解放され、コア業務に集中できる環境を作ります。",
+                icon: Cpu,
+                color: "blue",
+                reverse: true
+              }
             ].map((item, index) => (
-              <div key={index} className="group bg-white p-10 rounded-2xl border border-gray-100 hover:border-purple-200 hover:shadow-xl transition-all duration-500 reveal-hidden">
-                <div className="flex justify-between items-start mb-8">
-                  <div className={`w-14 h-14 rounded-2xl bg-${item.color}-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
-                    <item.icon className={`w-7 h-7 text-${item.color}-600`} />
+              <div key={index} className={`flex flex-col ${item.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 lg:gap-24 reveal-hidden`}>
+                <div className="lg:w-1/2">
+                  <div className="relative group">
+                    <div className={`absolute -inset-4 bg-${item.color}-500/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                    <div className={`relative rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 aspect-video flex items-center justify-center bg-gradient-to-br from-${item.color}-50 via-white to-${item.color}-100/50`}>
+                      <item.icon className={`w-20 h-20 text-${item.color}-300/60 transform group-hover:scale-110 transition-transform duration-700`} />
+                    </div>
                   </div>
-                  <span className="text-xs font-en font-bold text-gray-300 group-hover:text-purple-600 transition-colors duration-300">0{index + 1}</span>
                 </div>
-                <h3 className="text-2xl font-en font-bold text-gray-900 mb-1">{item.title}</h3>
-                <p className="text-sm font-bold text-gray-400 mb-4">{item.sub}</p>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+                <div className="lg:w-1/2">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={`w-12 h-12 rounded-xl bg-${item.color}-50 flex items-center justify-center`}>
+                      <item.icon className={`w-6 h-6 text-${item.color}-600`} />
+                    </div>
+                    <span className="text-sm font-en font-bold text-gray-300">0{index + 1}</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-purple-600 mb-2">{item.sub}</h3>
+                  <h4 className="text-3xl font-en font-bold text-gray-900 mb-6">{item.title}</h4>
+                  <p className="text-gray-600 leading-relaxed text-lg mb-8">{item.desc}</p>
+                  <ul className="space-y-4">
+                    {['最新のAIモデルに対応', 'セキュアな導入プロセスの徹底', '継続的な活用ロードマップ提示'].map((feature, i) => (
+                      <li key={i} className="flex items-center text-gray-700">
+                        <Check className="w-5 h-5 text-purple-500 mr-3" />
+                        <span className="font-medium">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>

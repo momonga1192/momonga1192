@@ -57,8 +57,8 @@ const DataConsulting: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="reveal-hidden transition-all duration-1000 ease-out">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+            <div className="lg:w-1/2 text-left reveal-hidden transition-all duration-1000 ease-out">
               <span className="inline-block py-1 px-3 rounded-full bg-indigo-50 text-indigo-600 text-xs font-en font-semibold tracking-widest uppercase mb-6 border border-indigo-100">
                 Data Consulting
               </span>
@@ -70,7 +70,7 @@ const DataConsulting: React.FC = () => {
                   未来を拓く。
                 </span>
               </h1>
-              <p className="text-xl text-gray-500 mb-12 leading-relaxed max-w-2xl font-light">
+              <p className="text-xl text-gray-500 mb-12 leading-relaxed font-light">
                 埋もれたデータは、磨けば輝く「原石」です。<br />
                 確かな分析と可視化で、意思決定のスピードと精度を劇的に高めます。
               </p>
@@ -82,6 +82,19 @@ const DataConsulting: React.FC = () => {
                 <a href="#services" className="group inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 border border-gray-200 rounded-full font-medium hover:bg-gray-50 transition-all duration-300">
                   サービス詳細を見る
                 </a>
+              </div>
+            </div>
+            <div className="lg:w-1/2 reveal-hidden transition-all duration-1000 delay-300 ease-out">
+              <div className="relative">
+                <div className="absolute inset-0 bg-indigo-400 rounded-3xl blur-2xl opacity-10 animate-pulse" />
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-100 aspect-[4/3] bg-gradient-to-br from-indigo-50 via-white to-indigo-100">
+                  <div className="absolute top-10 right-16 w-32 h-32 rounded-full bg-indigo-100/60 blur-xl" />
+                  <div className="absolute bottom-16 left-10 w-24 h-24 rounded-full bg-indigo-200/40 blur-lg" />
+                  <div className="absolute top-1/4 left-1/3 w-12 h-12 rounded-full bg-indigo-50/80" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <BarChart className="w-32 h-32 text-indigo-300/60" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -144,23 +157,69 @@ const DataConsulting: React.FC = () => {
             <p className="text-gray-500 max-w-2xl mx-auto">データの収集から分析、活用まで。フェーズに合わせた最適な支援を提供します。</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto space-y-24">
             {[
-              { title: "BI Implementation", sub: "BIツール導入", desc: "TableauやPowerBI等の導入・設定から、ダッシュボード構築まで支援。", icon: BarChart, color: "indigo" },
-              { title: "Data Platform", sub: "データ基盤構築", desc: "社内に散在するデータを統合し、分析しやすい環境を整備。", icon: Database, color: "blue" },
-              { title: "KPI Design", sub: "KPI設計・モニタリング", desc: "ビジネスゴールに直結する指標を設計し、常に現状を把握できる仕組みを構築。", icon: TrendingUp, color: "purple" },
-              { title: "Data Literacy", sub: "データリテラシー研修", desc: "社員一人ひとりがデータを活用できるよう、教育・定着をサポート。", icon: PieChart, color: "teal" }
+              { 
+                title: "BI Implementation", 
+                sub: "BIツール導入", 
+                desc: "TableauやPowerBI等の導入・設定から、ダッシュボード構築まで支援。データの収集から可視化まで、スムーズな立ち上げを実現します。", 
+                icon: BarChart, 
+                color: "indigo",
+                reverse: false
+              },
+              {
+                title: "Data Platform",
+                sub: "データ基盤構築",
+                desc: "社内に散在するデータを統合し、分析しやすい環境を整備。一元化された高品質なデータによって、分析の精度とスピードを向上させます。",
+                icon: Database,
+                color: "blue",
+                reverse: true
+              },
+              {
+                title: "KPI Design",
+                sub: "KPI設計・モニタリング",
+                desc: "ビジネスゴールに直結する指標を設計し、常に現状を把握できる仕組みを構築。全社で共有可能な「客観的な指標」を確立します。",
+                icon: TrendingUp,
+                color: "purple",
+                reverse: false
+              },
+              {
+                title: "Data Literacy",
+                sub: "データリテラシー研修",
+                desc: "社員一人ひとりがデータを読み解き、自律的に活用できるよう、分析マインドと実務スキルの両面から定着をサポートします。",
+                icon: PieChart,
+                color: "teal",
+                reverse: true
+              }
             ].map((item, index) => (
-              <div key={index} className="group bg-white p-10 rounded-2xl border border-gray-100 hover:border-indigo-200 hover:shadow-xl transition-all duration-500 reveal-hidden">
-                <div className="flex justify-between items-start mb-8">
-                  <div className={`w-14 h-14 rounded-2xl bg-${item.color}-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
-                    <item.icon className={`w-7 h-7 text-${item.color}-600`} />
+              <div key={index} className={`flex flex-col ${item.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 lg:gap-24 reveal-hidden`}>
+                <div className="lg:w-1/2">
+                  <div className="relative group">
+                    <div className={`absolute -inset-4 bg-${item.color}-500/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                    <div className={`relative rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 aspect-video flex items-center justify-center bg-gradient-to-br from-${item.color}-50 via-white to-${item.color}-100/50`}>
+                      <item.icon className={`w-20 h-20 text-${item.color}-300/60 transform group-hover:scale-110 transition-transform duration-700`} />
+                    </div>
                   </div>
-                  <span className="text-xs font-en font-bold text-gray-300 group-hover:text-indigo-600 transition-colors duration-300">0{index + 1}</span>
                 </div>
-                <h3 className="text-2xl font-en font-bold text-gray-900 mb-1">{item.title}</h3>
-                <p className="text-sm font-bold text-gray-400 mb-4">{item.sub}</p>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+                <div className="lg:w-1/2">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={`w-12 h-12 rounded-xl bg-${item.color}-50 flex items-center justify-center`}>
+                      <item.icon className={`w-6 h-6 text-${item.color}-600`} />
+                    </div>
+                    <span className="text-sm font-en font-bold text-gray-300">0{index + 1}</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-indigo-600 mb-2">{item.sub}</h3>
+                  <h4 className="text-3xl font-en font-bold text-gray-900 mb-6">{item.title}</h4>
+                  <p className="text-gray-600 leading-relaxed text-lg mb-8">{item.desc}</p>
+                  <ul className="space-y-4">
+                    {['ビジネス課題に直結した分析設計', '実務で使いこなせる操作研修', '持続可能なデータ運用体制の構築'].map((feature, i) => (
+                      <li key={i} className="flex items-center text-gray-700">
+                        <Check className="w-5 h-5 text-indigo-500 mr-3" />
+                        <span className="font-medium">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>
