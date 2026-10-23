@@ -30,7 +30,7 @@ const ScrollToTop: React.FC = () => {
 
 // --- Main App Component ---
 
-const AppContent: React.FC = () => {
+export const AppContent: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
