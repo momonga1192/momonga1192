@@ -35,13 +35,13 @@ const HajimeteAI: React.FC = () => {
       <Helmet>
         <title>はじめてのAI導入 | ChatGPT導入・生成AI活用支援 - Arcle</title>
         <meta name="description" content="はじめてのAI導入は愛知県一宮市のArcleが提供する生成AI活用支援サービス。ChatGPT Enterprise導入、AI利用ガイドライン策定、社内RAGチャットボット開発、プロンプト研修を月額5万円〜で提供。" />
-        <link rel="canonical" href="https://arcle.net/lp/hajimete-ai" />
+        <link rel="canonical" href="https://www.arcle.net/lp/hajimete-ai" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://arcle.net/" },
-            { "@type": "ListItem", "position": 2, "name": "はじめてのAI導入", "item": "https://arcle.net/lp/hajimete-ai" }
+            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://www.arcle.net/" },
+            { "@type": "ListItem", "position": 2, "name": "はじめてのAI導入", "item": "https://www.arcle.net/lp/hajimete-ai" }
           ]
         })}</script>
         <script type="application/ld+json">{JSON.stringify({

@@ -28,13 +28,13 @@ const JosysRescue: React.FC = () => {
       <Helmet>
         <title>情シスレスキュー | IT専任者がいない企業のためのIT代行サービス - Arcle</title>
         <meta name="description" content="情シスレスキューは愛知県一宮市のArcleが提供するIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額5万円〜で包括サポート。IT専任者がいない中小企業の味方です。" />
-        <link rel="canonical" href="https://arcle.net/lp/josys-rescue" />
+        <link rel="canonical" href="https://www.arcle.net/lp/josys-rescue" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://arcle.net/" },
-            { "@type": "ListItem", "position": 2, "name": "情シスレスキュー", "item": "https://arcle.net/lp/josys-rescue" }
+            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://www.arcle.net/" },
+            { "@type": "ListItem", "position": 2, "name": "情シスレスキュー", "item": "https://www.arcle.net/lp/josys-rescue" }
           ]
         })}</script>
         <script type="application/ld+json">{JSON.stringify({

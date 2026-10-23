@@ -10,7 +10,7 @@ const ArticleJosysGuide: React.FC = () => {
           name="description"
           content="一宮市で情シス代行を検討する中小企業向けに、比較ポイント、費用目安、導入ステップを実務目線で解説します。"
         />
-        <link rel="canonical" href="https://arcle.net/articles/ichinomiya-josys-outsourcing-guide" />
+        <link rel="canonical" href="https://www.arcle.net/articles/ichinomiya-josys-outsourcing-guide" />
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',

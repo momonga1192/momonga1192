@@ -35,13 +35,13 @@ const WebMadoguchi: React.FC = () => {
       <Helmet>
         <title>ウェブの窓口 | ホームページ制作・リニューアル - Arcle</title>
         <meta name="description" content="ウェブの窓口は愛知県一宮市のArcleが提供するWeb制作サービス。コーポレートサイト・LP制作、WordPress導入、SEO内部対策、保守運用を10万円〜で提供。スマホ対応・デザインリニューアルもお任せ。" />
-        <link rel="canonical" href="https://arcle.net/lp/web-madoguchi" />
+        <link rel="canonical" href="https://www.arcle.net/lp/web-madoguchi" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://arcle.net/" },
-            { "@type": "ListItem", "position": 2, "name": "ウェブの窓口", "item": "https://arcle.net/lp/web-madoguchi" }
+            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://www.arcle.net/" },
+            { "@type": "ListItem", "position": 2, "name": "ウェブの窓口", "item": "https://www.arcle.net/lp/web-madoguchi" }
           ]
         })}</script>
         <script type="application/ld+json">{JSON.stringify({

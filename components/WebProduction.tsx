@@ -30,13 +30,13 @@ const WebProduction: React.FC = () => {
       <Helmet>
         <title>Web制作・ホームページ制作 | コーポレートサイト・LP - Arcle</title>
         <meta name="description" content="愛知県一宮市のArcleが提供するWeb制作サービス。コーポレートサイト・LP制作、UI/UXデザイン、WordPress等CMS導入、SEO内部対策・パフォーマンス最適化。10万円〜の明確な料金体系。" />
-        <link rel="canonical" href="https://arcle.net/web-production" />
+        <link rel="canonical" href="https://www.arcle.net/web-production" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://arcle.net/" },
-            { "@type": "ListItem", "position": 2, "name": "Web制作", "item": "https://arcle.net/web-production" }
+            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://www.arcle.net/" },
+            { "@type": "ListItem", "position": 2, "name": "Web制作", "item": "https://www.arcle.net/web-production" }
           ]
         })}</script>
         <script type="application/ld+json">{JSON.stringify({

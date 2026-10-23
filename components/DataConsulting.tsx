@@ -30,13 +30,13 @@ const DataConsulting: React.FC = () => {
       <Helmet>
         <title>データ活用支援・BIツール導入 | Tableau・PowerBI - Arcle</title>
         <meta name="description" content="Arcleのデータ活用支援サービス。Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計・モニタリング、データリテラシー研修で中小企業のデータドリブン経営を実現。愛知県一宮市。" />
-        <link rel="canonical" href="https://arcle.net/data-consulting" />
+        <link rel="canonical" href="https://www.arcle.net/data-consulting" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://arcle.net/" },
-            { "@type": "ListItem", "position": 2, "name": "データ活用支援", "item": "https://arcle.net/data-consulting" }
+            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://www.arcle.net/" },
+            { "@type": "ListItem", "position": 2, "name": "データ活用支援", "item": "https://www.arcle.net/data-consulting" }
           ]
         })}</script>
         <script type="application/ld+json">{JSON.stringify({

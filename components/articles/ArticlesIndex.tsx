@@ -35,7 +35,7 @@ const ArticlesIndex: React.FC = () => {
           name="description"
           content="ArcleのITコンサルティング記事一覧です。情シス代行、データ活用、生成AI導入の実務ノウハウを発信しています。"
         />
-        <link rel="canonical" href="https://arcle.net/articles" />
+        <link rel="canonical" href="https://www.arcle.net/articles" />
       </Helmet>
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-5xl">

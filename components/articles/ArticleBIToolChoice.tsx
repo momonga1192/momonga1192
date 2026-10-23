@@ -10,7 +10,7 @@ const ArticleBIToolChoice: React.FC = () => {
           name="description"
           content="中小企業のBI導入で迷いやすいTableauとPower BIの選び方を、目的・予算・運用体制の観点で比較します。"
         />
-        <link rel="canonical" href="https://arcle.net/articles/sme-bi-tableau-powerbi" />
+        <link rel="canonical" href="https://www.arcle.net/articles/sme-bi-tableau-powerbi" />
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',

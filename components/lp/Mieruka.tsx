@@ -35,13 +35,13 @@ const Mieruka: React.FC = () => {
       <Helmet>
         <title>ミエルカ | データ見える化サービス（Tableau・PowerBI導入） - Arcle</title>
         <meta name="description" content="ミエルカは愛知県一宮市のArcleが提供するデータ見える化サービス。Tableau・PowerBI導入、経営ダッシュボード構築、データ基盤設計で中小企業のデータドリブン経営を実現。無料データ診断実施中。" />
-        <link rel="canonical" href="https://arcle.net/lp/mieruka" />
+        <link rel="canonical" href="https://www.arcle.net/lp/mieruka" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://arcle.net/" },
-            { "@type": "ListItem", "position": 2, "name": "ミエルカ", "item": "https://arcle.net/lp/mieruka" }
+            { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://www.arcle.net/" },
+            { "@type": "ListItem", "position": 2, "name": "ミエルカ", "item": "https://www.arcle.net/lp/mieruka" }
           ]
         })}</script>
         <script type="application/ld+json">{JSON.stringify({

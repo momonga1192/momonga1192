@@ -10,7 +10,7 @@ const ArticleChatGPTPolicy: React.FC = () => {
           name="description"
           content="中小企業がChatGPTを安全に導入するために必要な社内ルールを、情報管理・権限・運用フローの観点で整理します。"
         />
-        <link rel="canonical" href="https://arcle.net/articles/chatgpt-security-policy-sme" />
+        <link rel="canonical" href="https://www.arcle.net/articles/chatgpt-security-policy-sme" />
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',
