@@ -16,6 +16,8 @@ import ArticlesIndex from './components/articles/ArticlesIndex';
 import ArticleJosysGuide from './components/articles/ArticleJosysGuide';
 import ArticleBIToolChoice from './components/articles/ArticleBIToolChoice';
 import ArticleChatGPTPolicy from './components/articles/ArticleChatGPTPolicy';
+import WorksIndex from './components/works/WorksIndex';
+import WorkDetail from './components/works/WorkDetail';
 
 // --- Scroll to top on route change ---
 const ScrollToTop: React.FC = () => {
@@ -54,6 +56,8 @@ const AppContent: React.FC = () => {
           <Route path="/articles/ichinomiya-josys-outsourcing-guide" element={<ArticleJosysGuide />} />
           <Route path="/articles/sme-bi-tableau-powerbi" element={<ArticleBIToolChoice />} />
           <Route path="/articles/chatgpt-security-policy-sme" element={<ArticleChatGPTPolicy />} />
+          <Route path="/works" element={<WorksIndex />} />
+          <Route path="/works/:slug" element={<WorkDetail />} />
           <Route path="/lp/josys-rescue" element={<JosysRescue />} />
           <Route path="/lp/mieruka" element={<Mieruka />} />
           <Route path="/lp/hajimete-ai" element={<HajimeteAI />} />
