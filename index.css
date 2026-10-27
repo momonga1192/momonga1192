@@ -62,3 +62,20 @@ body {
   --color-coral: #F07A5A;
   --font-head: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
 }
+
+/* 作例を横に流す（Web制作ページ） */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 70s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .marquee { overflow-x: auto; }
+}

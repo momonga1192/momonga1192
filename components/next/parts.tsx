@@ -30,7 +30,7 @@ export const SectionHead: React.FC<{
   <div className={`mb-12 md:mb-16 ${center ? 'text-center' : ''}`}>
     <p className={`font-en text-sm font-semibold tracking-[0.2em] uppercase ${enClass}`}>{en}</p>
     <h2 className="font-head text-[26px] md:text-[38px] font-bold leading-snug text-sumi mt-2 [word-break:auto-phrase]">{title}</h2>
-    {lead && <p className={`mt-4 text-sumi-muted leading-[1.9] ${center ? 'max-w-2xl mx-auto' : 'max-w-2xl'}`}>{lead}</p>}
+    {lead && <p className={`mt-4 text-sumi-muted leading-[1.9] [word-break:auto-phrase] ${center ? 'max-w-2xl mx-auto' : 'max-w-2xl'}`}>{lead}</p>}
   </div>
 );
 

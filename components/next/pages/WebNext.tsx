@@ -73,6 +73,46 @@ const flow = [
 
 const areas = ['愛知県', '岐阜県', '三重県'];
 
+// 作例（public/samples）。画像は各作例のファーストビュー
+const samples = [
+  { slug: 'hazuki-kensetsu', name: '葉月建設株式会社', type: '建設業', plan: 'スタンダード' },
+  { slug: 'komorebi-day', name: 'デイサービス こもれび', type: '介護', plan: 'ライト' },
+  { slug: 'hair-lien', name: 'hair salon Lien', type: '美容室', plan: 'スタンダード' },
+  { slug: 'niji-atelier', name: 'こどもアトリエ にじいろ', type: '幼児・小学生向け教室', plan: 'ライト' },
+  { slug: 'hiiragi-tax', name: 'ひいらぎ税理士事務所', type: '税理士事務所', plan: 'スタンダード' },
+  { slug: 'kappo-yururi', name: '割烹 ゆるり', type: '飲食店', plan: 'ライト' },
+  { slug: 'aoba-dental', name: 'あおば通り歯科クリニック', type: '歯科医院', plan: 'スタンダード' },
+  { slug: 'manabiya-ippo', name: '個別指導塾 まなびや一歩', type: '学習塾', plan: 'ライト' },
+  { slug: 'inaho-setsubi', name: '稲穂設備工業株式会社', type: '設備工事業', plan: 'ライト' },
+  { slug: 'salon-nagi', name: 'リラクゼーションサロン 凪', type: 'リラクゼーション', plan: 'オーダーメイド' },
+  { slug: 'sakurazaka-sr', name: 'さくら坂社会保険労務士事務所', type: '社会保険労務士', plan: 'スタンダード' }
+];
+
+const SampleCard: React.FC<{ sample: (typeof samples)[number]; hidden?: boolean }> = ({ sample, hidden }) => (
+  <li className="w-[280px] md:w-[360px] shrink-0" aria-hidden={hidden || undefined}>
+    <a href={`/samples/${sample.slug}`} tabIndex={hidden ? -1 : undefined} className="group block rounded-[28px] bg-white border border-warm-line p-3 hover:shadow-[0_16px_40px_rgb(31_36_48/0.08)] hover:-translate-y-1 transition-all">
+      <div className="rounded-[18px] overflow-hidden border border-warm-line bg-cream">
+        <div className="flex gap-1.5 px-3 py-2 border-b border-warm-line" aria-hidden="true">
+          <span className="w-2 h-2 rounded-full bg-coral/60" />
+          <span className="w-2 h-2 rounded-full bg-mustard/70" />
+          <span className="w-2 h-2 rounded-full bg-svc-web/50" />
+        </div>
+        <img src={`/images/samples/${sample.slug}.webp`} alt={hidden ? '' : `${sample.name}の作例サイトのトップページ`} width={800} height={500} className="block w-full aspect-[8/5] object-cover object-top" loading="lazy" />
+      </div>
+      <div className="px-2 pt-4 pb-2">
+        <p className="flex items-center gap-2 text-xs">
+          <span className={`rounded-full px-2.5 py-0.5 font-bold ${service.tint} ${service.text}`}>{sample.plan}</span>
+          <span className="text-sumi-muted">{sample.type}</span>
+        </p>
+        <p className="font-head font-bold mt-2 flex items-center justify-between gap-2">
+          {sample.name}
+          <ArrowRight className={`w-4 h-4 shrink-0 ${service.text} group-hover:translate-x-1 transition-transform`} />
+        </p>
+      </div>
+    </a>
+  </li>
+);
+
 const faqs = [
   {
     q: '本当に初期費用は0円ですか？',
@@ -283,19 +323,19 @@ const WebNext: React.FC = () => (
       </div>
     </section>
 
-    <section className="py-20 md:py-28 bg-white">
+    <section className={`py-20 md:py-28 ${service.tint}`}>
       <div className="max-w-6xl mx-auto px-5">
-        <div className={`relative overflow-hidden rounded-[40px] p-8 md:p-12 ${service.tint}`}>
-          <div className={`absolute -right-16 -top-16 w-64 h-64 rounded-full ${service.dot}`} aria-hidden="true" />
-          <div className="relative flex flex-col md:flex-row md:items-center gap-8">
-            <div className="flex-1">
-              <SectionHead en="Samples" title="業種別の作例をご覧ください" enClass={service.text} />
-              <p className="text-sumi-muted leading-[1.9]">建設・介護・保育・教室・美容・飲食・士業など、11件の作例をご用意しています。<br className="hidden md:block" />気に入ったデザインをもとに、御社の情報と写真でお作りします。</p>
-              <p className="text-xs text-sumi-muted mt-4">※作例の会社名・人物・連絡先はすべて架空のものです。</p>
-            </div>
-            <a href='/samples' className={`${button} shrink-0`}>作例を見る<ArrowRight className="w-4 h-4" /></a>
-          </div>
-        </div>
+        <SectionHead en="Samples" title="業種別の作例をご覧ください" lead="建設・介護・保育・教室・美容・飲食・士業など、11件の作例をご用意しています。気に入ったデザインをもとに、御社の情報と写真でお作りします。" enClass={service.text} center />
+      </div>
+      <div className="marquee overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+        <ul className="marquee-track flex w-max gap-5 md:gap-6 pr-5 md:pr-6 py-4">
+          {samples.map((s) => <SampleCard key={s.slug} sample={s} />)}
+          {samples.map((s) => <SampleCard key={`${s.slug}-copy`} sample={s} hidden />)}
+        </ul>
+      </div>
+      <div className="max-w-6xl mx-auto px-5 mt-10 text-center">
+        <a href='/samples' className={button}>作例をすべて見る<ArrowRight className="w-4 h-4" /></a>
+        <p className="text-xs text-sumi-muted mt-5">※作例の会社名・人物・連絡先はすべて架空のものです。</p>
       </div>
     </section>
 
