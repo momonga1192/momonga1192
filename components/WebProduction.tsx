@@ -389,6 +389,31 @@ const WebProduction: React.FC = () => {
         </div>
       </section>
 
+      {/* Samples Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="rounded-3xl bg-gray-900 text-white px-8 py-12 md:px-14 md:py-14 flex flex-col md:flex-row md:items-center gap-8 reveal-hidden">
+            <div className="flex-1">
+              <span className="text-teal-400 font-en tracking-widest text-xs font-bold uppercase mb-3 block">Samples</span>
+              <h2 className="text-2xl md:text-4xl font-bold mb-4">業種別の作例をご覧ください</h2>
+              <p className="text-gray-400 leading-relaxed">
+                建設・介護・保育・教室・美容・飲食・士業など、11件の作例をご用意しています。
+                <br className="hidden md:block" />
+                気に入ったデザインをもとに、御社の情報と写真でお作りします。
+              </p>
+              <p className="text-xs text-gray-500 mt-4">※作例の会社名・人物・連絡先はすべて架空のものです。</p>
+            </div>
+            <a
+              href="/samples"
+              className="group shrink-0 inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 rounded-full font-bold hover:bg-teal-50 transition-colors"
+            >
+              作例を見る
+              <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Comparison Section */}
       <section className="py-32 bg-white">
         <div className="container mx-auto px-6">

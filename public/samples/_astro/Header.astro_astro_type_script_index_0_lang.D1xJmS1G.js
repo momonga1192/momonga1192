@@ -1,0 +1,1 @@
+var e=document.getElementById(`mobile-menu`),t=document.querySelector(`.menu-toggle`),n=n=>{e?.classList.toggle(`hidden`,!n),t?.setAttribute(`aria-expanded`,String(n)),document.body.style.overflow=n?`hidden`:``};t?.addEventListener(`click`,()=>n(!0)),document.querySelector(`.menu-close`)?.addEventListener(`click`,()=>n(!1));
