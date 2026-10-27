@@ -6,19 +6,19 @@
 /* Fonts */
 @theme {
   --font-sans: 'Noto Sans JP', sans-serif;
-  --font-en: 'Outfit', sans-serif;
+  --font-en: 'Outfit', 'Noto Sans JP', sans-serif;
 }
 
 /* Base styles (moved from index.html) */
 body {
   font-family: 'Noto Sans JP', sans-serif;
-  background-color: #ffffff;
-  color: #1a202c;
+  background-color: #FAF8F4;
+  color: #1F2430;
   overflow-x: hidden;
 }
 
 .font-en {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
 }
 
 /* Custom scrollbar */
@@ -45,4 +45,20 @@ body {
 .reveal-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* リニューアル（A案「やさしいテクノロジー」）の色と書体 */
+@theme {
+  --color-cream: #FAF8F4;
+  --color-cream-dark: #F2EEE6;
+  --color-sumi: #1F2430;
+  --color-sumi-muted: #5E6472;
+  --color-warm-line: #E4DED3;
+  --color-svc-josys: #3B6FE0;
+  --color-svc-data: #5B5BD6;
+  --color-svc-ai: #8E5BD0;
+  --color-svc-web: #1E9C8C;
+  --color-mustard: #F2B544;
+  --color-coral: #F07A5A;
+  --font-head: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
 }

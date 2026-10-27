@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { Header, Footer, OpeningOverlay, ScrollAnimationCanvas } from './components';
-import Home from './components/Home';
-import Josys from './components/Josys';
-import DataConsulting from './components/DataConsulting';
-import GenAI from './components/GenAI';
-import WebProduction from './components/WebProduction';
 import ContactForm from './components/ContactForm';
 import JosysRescue from './components/lp/JosysRescue';
 import Mieruka from './components/lp/Mieruka';
@@ -18,6 +12,23 @@ import ArticleBIToolChoice from './components/articles/ArticleBIToolChoice';
 import ArticleChatGPTPolicy from './components/articles/ArticleChatGPTPolicy';
 import WorksIndex from './components/works/WorksIndex';
 import WorkDetail from './components/works/WorkDetail';
+import HomeNext from './components/next/HomeNext';
+import ServicesNext from './components/next/pages/ServicesNext';
+import CompanyNext from './components/next/pages/CompanyNext';
+import MessageNext from './components/next/pages/MessageNext';
+import FlowNext from './components/next/pages/FlowNext';
+import JosysNext from './components/next/pages/JosysNext';
+import DataNext from './components/next/pages/DataNext';
+import GenAINext from './components/next/pages/GenAINext';
+import WebNext from './components/next/pages/WebNext';
+import NextHeader from './components/next/NextHeader';
+import NextFooter from './components/next/NextFooter';
+
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
 
 // --- Scroll to top on route change ---
 const ScrollToTop: React.FC = () => {
@@ -28,46 +39,64 @@ const ScrollToTop: React.FC = () => {
   return null;
 };
 
+// --- SPA pageview tracking (GA4) ---
+const TrackPageView: React.FC = () => {
+  const location = useLocation();
+  const measurementId = (import.meta as any).env?.VITE_GA_MEASUREMENT_ID as string | undefined;
+
+  useEffect(() => {
+    if (!measurementId || typeof window === 'undefined' || typeof window.gtag !== 'function') {
+      return;
+    }
+
+    window.gtag('event', 'page_view', {
+      page_title: document.title,
+      page_location: window.location.href,
+      page_path: `${location.pathname}${location.search}`,
+      send_to: measurementId
+    });
+  }, [location.pathname, location.search, measurementId]);
+
+  return null;
+};
+
 // --- Main App Component ---
 
-export const AppContent: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
-
-  return (
-    <div className="relative min-h-screen bg-white selection:bg-gray-200 selection:text-black overflow-hidden">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[200] focus:top-4 focus:left-4 focus:bg-white focus:text-gray-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg focus:text-sm focus:font-medium">
-        メインコンテンツへスキップ
-      </a>
-      {isHomePage && <OpeningOverlay onComplete={() => setIsLoading(false)} />}
-      <ScrollAnimationCanvas startAnimation={!isLoading || !isHomePage} />
-      <ScrollToTop />
-      <Header />
-      <main id="main-content" className="relative z-10">
-        <Routes>
-          <Route path="/" element={<Home isLoaded={!isLoading} />} />
-          <Route path="/josys" element={<Josys />} />
-          <Route path="/data-consulting" element={<DataConsulting />} />
-          <Route path="/gen-ai" element={<GenAI />} />
-          <Route path="/web-production" element={<WebProduction />} />
-          <Route path="/contact" element={<ContactForm />} />
-          <Route path="/articles" element={<ArticlesIndex />} />
-          <Route path="/articles/ichinomiya-josys-outsourcing-guide" element={<ArticleJosysGuide />} />
-          <Route path="/articles/sme-bi-tableau-powerbi" element={<ArticleBIToolChoice />} />
-          <Route path="/articles/chatgpt-security-policy-sme" element={<ArticleChatGPTPolicy />} />
-          <Route path="/works" element={<WorksIndex />} />
-          <Route path="/works/:slug" element={<WorkDetail />} />
-          <Route path="/lp/josys-rescue" element={<JosysRescue />} />
-          <Route path="/lp/mieruka" element={<Mieruka />} />
-          <Route path="/lp/hajimete-ai" element={<HajimeteAI />} />
-          <Route path="/lp/web-madoguchi" element={<WebMadoguchi />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
-  );
-};
+export const AppContent: React.FC = () => (
+  <div className="relative min-h-screen bg-cream text-sumi">
+    <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[200] focus:top-4 focus:left-4 focus:bg-white focus:text-gray-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg focus:text-sm focus:font-medium">
+      メインコンテンツへスキップ
+    </a>
+    <ScrollToTop />
+    <TrackPageView />
+    <NextHeader />
+    <main id="main-content">
+      <Routes>
+        <Route path="/" element={<HomeNext />} />
+        <Route path="/services" element={<ServicesNext />} />
+        <Route path="/josys" element={<JosysNext />} />
+        <Route path="/data-consulting" element={<DataNext />} />
+        <Route path="/gen-ai" element={<GenAINext />} />
+        <Route path="/web-production" element={<WebNext />} />
+        <Route path="/company" element={<CompanyNext />} />
+        <Route path="/company/message" element={<MessageNext />} />
+        <Route path="/flow" element={<FlowNext />} />
+        <Route path="/contact" element={<ContactForm />} />
+        <Route path="/articles" element={<ArticlesIndex />} />
+        <Route path="/articles/ichinomiya-josys-outsourcing-guide" element={<ArticleJosysGuide />} />
+        <Route path="/articles/sme-bi-tableau-powerbi" element={<ArticleBIToolChoice />} />
+        <Route path="/articles/chatgpt-security-policy-sme" element={<ArticleChatGPTPolicy />} />
+        <Route path="/works" element={<WorksIndex />} />
+        <Route path="/works/:slug" element={<WorkDetail />} />
+        <Route path="/lp/josys-rescue" element={<JosysRescue />} />
+        <Route path="/lp/mieruka" element={<Mieruka />} />
+        <Route path="/lp/hajimete-ai" element={<HajimeteAI />} />
+        <Route path="/lp/web-madoguchi" element={<WebMadoguchi />} />
+      </Routes>
+    </main>
+    <NextFooter />
+  </div>
+);
 
 const App: React.FC = () => {
   return (

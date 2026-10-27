@@ -8,6 +8,7 @@ export default defineConfig(() => {
       server: {
         port: 3000,
         host: '0.0.0.0',
+        allowedHosts: ['um350', 'um350.tail8b0118.ts.net'],
       },
       plugins: [tailwindcss(), react()],
       // react-helmet-async is CommonJS and fails on named imports from Node during prerender, so bundle it

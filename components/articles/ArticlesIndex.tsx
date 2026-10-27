@@ -1,8 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
+import { ContactCta, PageHeader } from '../next/parts';
+import { serviceByName, services, illust } from '../next/theme';
 
-const articles = [
+export const articles = [
   {
     title: '一宮市の中小企業向け 情シス代行の選び方',
     description: '情シス代行を検討する際の比較ポイント、費用感、失敗しない導入手順を解説します。',
@@ -28,7 +30,7 @@ const articles = [
 
 const ArticlesIndex: React.FC = () => {
   return (
-    <div className="pt-24 pb-20 bg-white min-h-screen">
+    <div className="bg-cream text-sumi">
       <Helmet>
         <title>記事一覧 | Arcle</title>
         <meta
@@ -37,35 +39,43 @@ const ArticlesIndex: React.FC = () => {
         />
         <link rel="canonical" href="https://www.arcle.net/articles" />
       </Helmet>
-      <section className="py-20">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <p className="text-sm font-en tracking-widest text-blue-600 uppercase mb-3">Articles</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">実務に使える記事</h1>
-          <p className="text-gray-600 mb-12">
-            中小企業のIT課題に向き合う現場目線で、導入判断に役立つ情報をまとめています。
-          </p>
-          <div className="space-y-6">
-            {articles.map((article) => (
-              <a
-                key={article.href}
-                href={article.href}
-                className="block border border-gray-200 rounded-2xl p-6 md:p-8 hover:border-blue-300 hover:bg-blue-50/30 transition-colors"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 text-gray-700">{article.tag}</span>
-                  <time className="text-xs text-gray-500">{article.published}</time>
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">{article.title}</h2>
-                <p className="text-gray-600 mb-4">{article.description}</p>
-                <span className="inline-flex items-center text-blue-600 font-medium">
-                  記事を読む
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </span>
-              </a>
-            ))}
+      <PageHeader
+        en="Articles"
+        title="実務に使える記事"
+        lead="中小企業のIT課題に向き合う現場目線で、導入判断に役立つ情報をまとめています。"
+        crumbs={[{ label: 'お役立ち記事' }]}
+      />
+      <section className="py-20 md:py-28 bg-white rounded-t-[48px] md:rounded-t-[80px]">
+        <div className="max-w-6xl mx-auto px-5">
+          <div className="grid md:grid-cols-3 gap-6">
+            {articles.map((article) => {
+              const service = serviceByName(article.tag) ?? services[0];
+              return (
+                <a
+                  key={article.href}
+                  href={article.href}
+                  className="group flex flex-col border border-warm-line rounded-[28px] bg-cream p-6 md:p-8 hover:shadow-[0_16px_40px_rgb(31_36_48/0.08)] transition-shadow"
+                >
+                  <div className={`rounded-full ${service.dot} aspect-square w-40 self-center mb-8 overflow-hidden`}>
+                    <img src={illust(`svc-${service.key}`)} alt="" className="w-full h-full object-contain" loading="lazy" />
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${service.tint} ${service.text}`}>{article.tag}</span>
+                    <time dateTime={article.published} className="font-en text-xs text-sumi-muted">{article.published}</time>
+                  </div>
+                  <h2 className="font-head text-xl font-bold leading-relaxed text-sumi mb-3 [word-break:auto-phrase]">{article.title}</h2>
+                  <p className="text-sumi-muted text-[15px] leading-[1.9] mb-6">{article.description}</p>
+                  <span className={`mt-auto pt-5 border-t border-warm-line inline-flex items-center font-bold ${service.text}`}>
+                    記事を読む
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </a>
+              );
+            })}
           </div>
         </div>
       </section>
+      <ContactCta />
     </div>
   );
 };

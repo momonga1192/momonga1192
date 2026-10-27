@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Arcle リニューアル｜色とイラストの試作</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF8F4;
+    --bg-alt: #F2EEE6;
+    --ink: #1F2430;
+    --muted: #5E6472;
+    --line: #E4DED3;
+    --josys: #3B6FE0;
+    --data: #5B5BD6;
+    --ai: #8E5BD0;
+    --web: #1E9C8C;
+    --mustard: #F2B544;
+    --coral: #F07A5A;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Noto Sans JP", sans-serif; line-height: 1.9; letter-spacing: .04em; font-feature-settings: "palt"; }
+  h1, h2, h3 { font-family: "Zen Kaku Gothic New", sans-serif; line-height: 1.45; margin: 0; }
+  .en { font-family: "Outfit", sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 72px 0; }
+  .label { font-size: 13px; color: var(--muted); font-weight: 700; margin-bottom: 8px; }
+  .title { font-size: 28px; margin-bottom: 32px; }
+  .note { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px; font-size: 14px; color: var(--muted); }
+
+  /* 色 */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+  .swatch { border-radius: 20px; overflow: hidden; background: #fff; border: 1px solid var(--line); }
+  .swatch div { height: 96px; }
+  .swatch p { margin: 0; padding: 10px 14px; font-size: 13px; line-height: 1.6; }
+  .swatch b { display: block; font-size: 14px; }
+
+  /* 試作ヒーロー */
+  .hero { position: relative; overflow: hidden; border-radius: 40px; background: var(--bg); border: 1px solid var(--line); }
+  .hero::before { content: ""; position: absolute; width: 520px; height: 520px; border-radius: 50%; background: color-mix(in srgb, var(--josys) 10%, transparent); right: -120px; top: -160px; }
+  .hero::after { content: ""; position: absolute; width: 260px; height: 260px; border-radius: 50%; background: color-mix(in srgb, var(--mustard) 25%, transparent); left: -80px; bottom: -120px; }
+  .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 1fr; gap: 32px; align-items: center; padding: 56px; }
+  .hero h1 { font-size: 40px; font-weight: 900; }
+  .hero h1 .ln { display: inline-block; }
+  .hero h1 .mk { background: linear-gradient(transparent 64%, color-mix(in srgb, var(--mustard) 55%, transparent) 64%); }
+  .hero p { color: var(--muted); }
+  .hero img { width: 100%; border-radius: 28px; display: block; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+  .btn-ink { background: var(--ink); color: #fff; }
+  .btn-line { border: 2px solid var(--ink); color: var(--ink); }
+
+  /* 事業カード */
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .card { border-radius: 28px; padding: 28px 24px 24px; background: #fff; border: 1px solid var(--line); position: relative; overflow: hidden; }
+  .card .dot { width: 56px; height: 56px; border-radius: 18px; margin-bottom: 20px; }
+  .card h3 { font-size: 20px; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--muted); margin: 0; }
+  .card .bar { position: absolute; left: 0; right: 0; top: 0; height: 6px; }
+  .card .more { margin-top: 18px; font-size: 13px; font-weight: 700; }
+
+  /* イラスト比較 */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .compare figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 16px; }
+  .compare figcaption { font-weight: 700; margin-bottom: 12px; }
+  .compare .grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 12px; }
+  .compare img { width: 100%; border-radius: 14px; display: block; background: var(--bg-alt); }
+  .compare .stack { display: grid; gap: 12px; }
+  .missing { padding: 40px; text-align: center; color: var(--muted); font-size: 13px; }
+
+  @media (max-width: 860px) {
+    .hero-inner, .compare, .compare .grid { grid-template-columns: 1fr; padding: 28px; }
+    .cards { grid-template-columns: 1fr 1fr; }
+    .hero h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+  <section>
+    <div class="wrap">
+      <p class="label">Arcle リニューアル A案「やさしいテクノロジー」</p>
+      <h1 style="font-size:36px">色とイラストの試作</h1>
+      <p class="note" style="margin-top:20px">イラストは同じ3場面を2つのタッチで描いています。A1（手描き線あり）とA2（線なしフラット）のどちらが良いか、または両方の良いところ取りなどのご希望をお聞かせください。</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <h2 class="title">1. イラストのタッチ比較</h2>
+      <div class="compare">
+        <figure>
+          <figcaption>A1：手描きの線があるやさしいタッチ</figcaption>
+          <div class="grid">
+            <img src="illustrations/a1-hero.png" alt="A1 ヒーロー" onerror="this.outerHTML='<div class=missing>生成中</div>'">
+            <div class="stack">
+              <img src="illustrations/a1-josys.png" alt="A1 情シス代行" onerror="this.outerHTML='<div class=missing>生成中</div>'">
+              <img src="illustrations/a1-trouble.png" alt="A1 お悩み" onerror="this.outerHTML='<div class=missing>生成中</div>'">
+            </div>
+          </div>
+        </figure>
+        <figure>
+          <figcaption>A2：線のないモダンなフラット</figcaption>
+          <div class="grid">
+            <img src="illustrations/a2-hero.png" alt="A2 ヒーロー" onerror="this.outerHTML='<div class=missing>生成中</div>'">
+            <div class="stack">
+              <img src="illustrations/a2-josys.png" alt="A2 情シス代行" onerror="this.outerHTML='<div class=missing>生成中</div>'">
+              <img src="illustrations/a2-trouble.png" alt="A2 お悩み" onerror="this.outerHTML='<div class=missing>生成中</div>'">
+            </div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--bg-alt)">
+    <div class="wrap">
+      <h2 class="title">2. トップページ冒頭のイメージ</h2>
+      <div style="display:grid;gap:32px">
+        <div class="hero">
+          <div class="hero-inner">
+            <div>
+              <p class="en" style="font-size:13px;color:var(--josys);font-weight:600">IT support for local business</p>
+              <h1><span class="ln">会社のITの「困った」を、</span><br><span class="ln"><span class="mk">まるごと</span>相談できる場所。</span></h1>
+              <p>PCやネットワークの管理から、データの見える化、生成AIの活用、ホームページまで。一宮市から、中小企業のIT部門としてお手伝いします。</p>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
+                <a class="btn btn-ink" href="#">無料で相談する →</a>
+                <a class="btn btn-line" href="#">サービスを見る</a>
+              </div>
+            </div>
+            <img src="illustrations/a1-hero.png" alt="" onerror="this.outerHTML='<div class=missing>A1 生成中</div>'">
+          </div>
+        </div>
+        <div class="hero">
+          <div class="hero-inner">
+            <div>
+              <p class="en" style="font-size:13px;color:var(--josys);font-weight:600">IT support for local business</p>
+              <h1><span class="ln">会社のITの「困った」を、</span><br><span class="ln"><span class="mk">まるごと</span>相談できる場所。</span></h1>
+              <p>PCやネットワークの管理から、データの見える化、生成AIの活用、ホームページまで。一宮市から、中小企業のIT部門としてお手伝いします。</p>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
+                <a class="btn btn-ink" href="#">無料で相談する →</a>
+                <a class="btn btn-line" href="#">サービスを見る</a>
+              </div>
+            </div>
+            <img src="illustrations/a2-hero.png" alt="" onerror="this.outerHTML='<div class=missing>A2 生成中</div>'">
+          </div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:20px">見出しの文言は仮です。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 class="title">3. 事業ごとの色</h2>
+      <div class="cards">
+        <div class="card"><span class="bar" style="background:var(--josys)"></span><div class="dot" style="background:color-mix(in srgb,var(--josys) 15%,#fff)"></div><h3>情シス代行</h3><p>PC・ネットワーク・Microsoft 365の管理をまるごと。</p><p class="more" style="color:var(--josys)">詳しく見る →</p></div>
+        <div class="card"><span class="bar" style="background:var(--data)"></span><div class="dot" style="background:color-mix(in srgb,var(--data) 15%,#fff)"></div><h3>データ活用</h3><p>散らばった数字を集めて、経営の判断に使える形に。</p><p class="more" style="color:var(--data)">詳しく見る →</p></div>
+        <div class="card"><span class="bar" style="background:var(--ai)"></span><div class="dot" style="background:color-mix(in srgb,var(--ai) 15%,#fff)"></div><h3>生成AI活用</h3><p>安全なルールづくりから、社内での使いこなしまで。</p><p class="more" style="color:var(--ai)">詳しく見る →</p></div>
+        <div class="card"><span class="bar" style="background:var(--web)"></span><div class="dot" style="background:color-mix(in srgb,var(--web) 15%,#fff)"></div><h3>Web制作</h3><p>初期費用0円、月額制でホームページを。</p><p class="more" style="color:var(--web)">詳しく見る →</p></div>
+      </div>
+      <p class="note" style="margin-top:20px">四角い部分には、事業ごとのイラストが入ります。</p>
+    </div>
+  </section>
+
+  <section style="background:var(--bg-alt)">
+    <div class="wrap">
+      <h2 class="title">4. 色見本</h2>
+      <div class="swatches">
+        <div class="swatch"><div style="background:var(--bg);border-bottom:1px solid var(--line)"></div><p><b>生成り</b>#FAF8F4 地の色</p></div>
+        <div class="swatch"><div style="background:var(--bg-alt)"></div><p><b>生成り（濃）</b>#F2EEE6 区切りの色</p></div>
+        <div class="swatch"><div style="background:var(--ink)"></div><p><b>墨</b>#1F2430 文字・ボタン</p></div>
+        <div class="swatch"><div style="background:var(--josys)"></div><p><b>青</b>#3B6FE0 情シス代行</p></div>
+        <div class="swatch"><div style="background:var(--data)"></div><p><b>藍</b>#5B5BD6 データ活用</p></div>
+        <div class="swatch"><div style="background:var(--ai)"></div><p><b>紫</b>#8E5BD0 生成AI</p></div>
+        <div class="swatch"><div style="background:var(--web)"></div><p><b>青緑</b>#1E9C8C Web制作</p></div>
+        <div class="swatch"><div style="background:var(--mustard)"></div><p><b>からし</b>#F2B544 差し色</p></div>
+        <div class="swatch"><div style="background:var(--coral)"></div><p><b>珊瑚</b>#F07A5A 差し色</p></div>
+      </div>
+      <p class="note" style="margin-top:20px">見出しは「Zen Kaku Gothic New」、本文は今と同じ「Noto Sans JP」、英字も今と同じ「Outfit」です。真っ白ではなく生成りを地にして、温かみを出します。</p>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,34 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { MapPin, User } from 'lucide-react';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import { ArrowRight, MapPin, User } from 'lucide-react';
+import { PageHeader, SectionHead } from './next/parts';
+import { illust, services } from './next/theme';
 
-const ContactForm: React.FC = () => {
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const { elementRef, isVisible } = useIntersectionObserver();
+const steps = ['お問い合わせ', '無料相談', 'ご提案・お見積り', 'ご契約・開始'];
+const contactColor = services[0];
 
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('reveal-visible');
-            entry.target.classList.remove('reveal-hidden');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    document.querySelectorAll('.reveal-hidden').forEach((el) => {
-      observerRef.current?.observe(el);
-    });
-
-    return () => observerRef.current?.disconnect();
-  }, []);
-
-  return (
-    <div className="pt-24 pb-0 bg-white">
+const ContactForm: React.FC = () => (
+  <div className="bg-cream text-sumi">
       <Helmet>
         <title>お問い合わせ・無料相談 | ITコンサルティングのArcle</title>
         <meta name="description" content="Arcleへのご相談・お見積りは無料です。ITコンサルティング、情シス代行、データ活用支援（Tableau・PowerBI）、生成AI導入支援、Web制作について、お気軽にお問い合わせください。通常2営業日以内にご連絡します。" />
@@ -42,41 +22,23 @@ const ContactForm: React.FC = () => {
           ]
         })}</script>
       </Helmet>
-      {/* Hero Section - More refined and minimal */}
-      <section className="relative pt-24 pb-16 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-50/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-slate-50/50 rounded-full blur-3xl translate-y-1/4 -translate-x-1/4" />
-        </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="reveal-hidden transition-all duration-1000 ease-out">
-              <h1 className="font-en text-sm font-bold tracking-[0.3em] text-blue-600 uppercase mb-4">
-                Contact
-              </h1>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight tracking-tight">
-                ビジネスの可能性を、<br />共に見つけましょう。
-              </h2>
-              <div className="w-12 h-1 bg-blue-600 mx-auto mb-8 rounded-full"></div>
-              <p className="text-gray-500 leading-relaxed max-w-xl mx-auto font-light">
-                ご相談や、お見積りのご依頼など、お気軽にお問い合わせください。<br />
-                通常2営業日以内に担当よりご連絡を差し上げます。
-              </p>
-            </div>
+    <PageHeader
+      en="Contact"
+      title={<>ビジネスの可能性を、<br />共に見つけましょう。</>}
+      lead={<>ご相談や、お見積りのご依頼など、お気軽にお問い合わせください。<br />通常2営業日以内に担当よりご連絡を差し上げます。</>}
+      crumbs={[{ label: 'お問い合わせ' }]}
+    />
+
+    <section className="py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)] gap-8 items-start">
+        <div className="min-w-0 rounded-[28px] bg-white border border-warm-line py-8 md:py-10 shadow-[0_16px_40px_rgb(31_36_48/0.08)]">
+          <div className="px-6 md:px-10">
+            <SectionHead en="Contact Form" title="お問い合わせフォーム" />
           </div>
-        </div>
-      </section>
-
-      {/* Google Form Section - Seamless integration */}
-      <section className="pb-24 bg-white relative">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto reveal-hidden">
-            {/* 
-              Card removed for a more "seamless" look. 
-              Using a subtle container with no shadow to blend into the page.
-            */}
-            <div className="w-full overflow-hidden min-h-[1400px]">
+          {/* Googleフォームの項目・検証・送信・完了表示をそのまま維持する。
+              別オリジンのiframe内には、このページからスタイルを適用できない。 */}
+          <div className="w-full min-h-[1450px]">
               <iframe
                 src="https://docs.google.com/forms/d/e/1FAIpQLSeaVdp87uj7uZLVKslQQZUImb0-tw678Ik49yPTE6p6xTy6ag/viewform?embedded=true"
                 width="100%"
@@ -90,65 +52,64 @@ const ContactForm: React.FC = () => {
               >
                 読み込んでいます…
               </iframe>
-            </div>
           </div>
         </div>
-      </section>
 
-      {/* Company Information Section - Same as top page */}
-      <section className="py-24 bg-gradient-to-br from-gray-50 to-blue-50/30 relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-30 -z-10 translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gray-100 rounded-full blur-3xl opacity-40 -z-10 -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+        <aside className="min-w-0 space-y-6" aria-label="ご相談のご案内">
+          <div className="rounded-[28px] bg-cream-dark p-7 md:p-8">
+            <img src={illust('flow-talk')} alt="" className="w-full max-w-[240px] mx-auto" loading="lazy" />
+            <p className={`mt-5 font-en text-sm font-semibold tracking-[0.2em] uppercase ${contactColor.text}`}>Process</p>
+            <h2 className="mt-2 font-head text-2xl font-bold [word-break:auto-phrase]">ご相談の流れ</h2>
+            <ol className="mt-6 space-y-4">
+              {steps.map((step, i) => (
+                <li key={step} className="flex items-center gap-4">
+                  <span className="shrink-0 w-9 h-9 rounded-full bg-mustard grid place-items-center font-en font-bold">{i + 1}</span>
+                  <span className="font-head font-bold">{step}</span>
+                </li>
+              ))}
+            </ol>
+            <a href="/flow" className={`mt-7 inline-flex items-center gap-2 text-sm font-bold ${contactColor.text} hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-svc-josys rounded-full`}>
+              ご相談の流れを見る<ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+          <a href="/flow#faq" className="group flex items-center justify-between gap-4 rounded-[28px] border border-warm-line bg-white p-7 font-head font-bold hover:shadow-[0_16px_40px_rgb(31_36_48/0.08)] transition-shadow focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-svc-josys">
+            よくあるご質問<ArrowRight className={`w-5 h-5 shrink-0 ${contactColor.text} group-hover:translate-x-1 transition-transform`} />
+          </a>
+        </aside>
+      </div>
+    </section>
 
-        <div className="container mx-auto px-6 max-w-6xl relative z-10">
-          <div 
-            ref={elementRef}
-            className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-          >
-            {/* Company Information Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-              <div className="grid md:grid-cols-2 gap-0">
-                {/* Left: Company Info */}
-                <div className="p-10 md:p-12">
-                  <h4 className="text-xl font-bold text-gray-900 mb-8 pb-4 border-b border-gray-100">
-                    事業者情報
-                  </h4>
-                  
-                  <div className="space-y-8 mb-10">
-                    <div className="flex items-start gap-4 group">
-                      <div className="flex-shrink-0 w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        <User className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-gray-500 mb-1">代表</div>
-                        <div className="text-lg font-bold text-gray-900">栗原 勇太</div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4 group">
-                      <div className="flex-shrink-0 w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        <MapPin className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-gray-500 mb-1">所在地</div>
-                        <div className="text-lg font-medium text-gray-900">
-                          〒491-0835<br />
-                          愛知県一宮市あずら2丁目8
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-8 border-t border-gray-100">
-                    <p className="text-sm text-gray-500 leading-relaxed">
-                      お客様のビジネス課題に寄り添い、最適なソリューションをご提案いたします。まずはお気軽にご相談ください。
-                    </p>
+    <section className="py-20 md:py-28 bg-cream-dark">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="bg-white rounded-[28px] border border-warm-line overflow-hidden">
+          <div className="grid md:grid-cols-2">
+            <div className="p-7 md:p-12">
+              <SectionHead en="Information" title="事業者情報" />
+              <dl className="space-y-8 mb-10">
+                <div className="flex items-start gap-4">
+                  <span className={`shrink-0 w-12 h-12 rounded-full grid place-items-center ${contactColor.dot} ${contactColor.text}`}>
+                    <User className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <dt className="text-sm text-sumi-muted mb-1">代表</dt>
+                    <dd className="text-lg font-bold">栗原 勇太</dd>
                   </div>
                 </div>
-
-                {/* Right: Google Map */}
-                <div className="h-[400px] md:h-auto bg-gray-100">
+                <div className="flex items-start gap-4">
+                  <span className={`shrink-0 w-12 h-12 rounded-full grid place-items-center ${contactColor.dot} ${contactColor.text}`}>
+                    <MapPin className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <dt className="text-sm text-sumi-muted mb-1">所在地</dt>
+                    <dd className="text-lg font-medium">〒491-0835<br />愛知県一宮市あずら2丁目8</dd>
+                  </div>
+                </div>
+              </dl>
+              <p className="pt-8 border-t border-warm-line text-sm text-sumi-muted leading-[1.9]">
+                お客様のビジネス課題に寄り添い、最適なソリューションをご提案いたします。まずはお気軽にご相談ください。
+              </p>
+            </div>
+            <div className="h-[400px] md:h-auto md:min-h-[400px] bg-cream">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3256.267!2d136.824421!3d35.285032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDE3JzA2LjEiTiAxMzbCsDQ5JzI3LjkiRQ!5e0!3m2!1sja!2sjp!4v1735565000000!5m2!1sja!2sjp&t=k&z=15"
                     width="100%"
@@ -160,16 +121,12 @@ const ContactForm: React.FC = () => {
                     title="Arcle 所在地"
                     className="w-full h-full"
                   ></iframe>
-                </div>
-              </div>
             </div>
           </div>
         </div>
-      </section>
-    </div>
-  );
-};
+      </div>
+    </section>
+  </div>
+);
 
 export default ContactForm;
-
-
