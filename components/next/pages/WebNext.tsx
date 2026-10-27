@@ -91,7 +91,7 @@ const samples = [
 
 const SampleCard: React.FC<{ sample: (typeof samples)[number]; hidden?: boolean }> = ({ sample, hidden }) => (
   <li className="w-[280px] md:w-[360px] shrink-0" aria-hidden={hidden || undefined}>
-    <a href={`/samples/${sample.slug}`} tabIndex={hidden ? -1 : undefined} className="group block rounded-[28px] bg-white border border-warm-line p-3 hover:shadow-[0_16px_40px_rgb(31_36_48/0.08)] hover:-translate-y-1 transition-all">
+    <a href={`/samples/${sample.slug}`} target="_blank" rel="noopener" tabIndex={hidden ? -1 : undefined} className="group block rounded-[28px] bg-white border border-warm-line p-3 hover:shadow-[0_16px_40px_rgb(31_36_48/0.08)] hover:-translate-y-1 transition-all">
       <div className="rounded-[18px] overflow-hidden border border-warm-line bg-cream">
         <div className="flex gap-1.5 px-3 py-2 border-b border-warm-line" aria-hidden="true">
           <span className="w-2 h-2 rounded-full bg-coral/60" />
@@ -326,7 +326,7 @@ const WebNext: React.FC = () => (
 
     <section className={`py-20 md:py-28 ${service.tint}`}>
       <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="Samples" title="業種別の作例をご覧ください" lead="建設・介護・保育・教室・美容・飲食・士業など、11件の作例をご用意しています。気に入ったデザインをもとに、御社の情報と写真でお作りします。" enClass={service.text} center />
+        <SectionHead en="Samples" title="業種別の作例をご覧ください" lead="建設・介護・保育・教室・美容・飲食・士業など、さまざまな業種の作例をご用意しています。気に入ったデザインをもとに、御社の情報と写真でお作りします。" enClass={service.text} center />
       </div>
       <div className="marquee overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
         <ul className="marquee-track flex w-max gap-5 md:gap-6 pr-5 md:pr-6 py-4">
@@ -335,7 +335,7 @@ const WebNext: React.FC = () => (
         </ul>
       </div>
       <div className="max-w-6xl mx-auto px-5 mt-10 text-center">
-        <a href='/samples' className={button}>作例をすべて見る<ArrowRight className="w-4 h-4" /></a>
+        <a href="/samples" target="_blank" rel="noopener" className={button}>作例をすべて見る<ArrowRight className="w-4 h-4" /></a>
         <p className="text-xs text-sumi-muted mt-5">※作例の会社名・人物・連絡先はすべて架空のものです。</p>
       </div>
     </section>

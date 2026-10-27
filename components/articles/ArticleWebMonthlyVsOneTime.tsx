@@ -155,7 +155,7 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
             <h2 className="font-head text-2xl md:text-[28px] font-bold text-svc-web [word-break:auto-phrase] mb-4">関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/website-company-guide-aichi-tokai" className="block text-svc-web hover:underline underline-offset-4 py-1">中小企業向け ホームページ制作会社の選び方</a>
-              <a href="/samples" className="block text-svc-web hover:underline underline-offset-4 py-1">業種別のホームページ作例を見る</a>
+              <a href="/samples" target="_blank" rel="noopener" className="block text-svc-web hover:underline underline-offset-4 py-1">業種別のホームページ作例を見る</a>
               <a href="/articles" className="block text-sumi-muted hover:text-sumi underline">記事一覧を見る</a>
             </div>
           </section>

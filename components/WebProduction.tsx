@@ -397,7 +397,7 @@ const WebProduction: React.FC = () => {
               <span className="text-teal-400 font-en tracking-widest text-xs font-bold uppercase mb-3 block">Samples</span>
               <h2 className="text-2xl md:text-4xl font-bold mb-4">業種別の作例をご覧ください</h2>
               <p className="text-gray-400 leading-relaxed">
-                建設・介護・保育・教室・美容・飲食・士業など、11件の作例をご用意しています。
+                建設・介護・保育・教室・美容・飲食・士業など、さまざまな業種の作例をご用意しています。
                 <br className="hidden md:block" />
                 気に入ったデザインをもとに、御社の情報と写真でお作りします。
               </p>
@@ -405,6 +405,8 @@ const WebProduction: React.FC = () => {
             </div>
             <a
               href="/samples"
+              target="_blank"
+              rel="noopener"
               className="group shrink-0 inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 rounded-full font-bold hover:bg-teal-50 transition-colors"
             >
               作例を見る
