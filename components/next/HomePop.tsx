@@ -9,6 +9,28 @@ import { articles } from '../articles/ArticlesIndex';
 // トップページのポップ版（太い輪郭線・ずらした影・ステッカー風のラベル・枠からはみ出すイラスト）
 const ticker = ['情シス代行', 'データ活用', '生成AI活用', 'Web制作', 'ご相談・お見積り無料', '東海エリアは訪問対応'];
 
+// ヒーローのイラストから切り出した部品（hero/base.webp に重ねる）。位置と幅は元画像 1200×816 に対する%
+// y は浮く高さ（部品の高さに対する%）、r は浮いたときの傾き、d は1往復の秒数、delay で動きをずらす
+type HeroPart = { name: string; left: number; top: number; width: number; y?: number; r?: number; d?: number; delay?: number; twinkle?: boolean };
+const heroParts: HeroPart[] = [
+  { name: 'cloud', left: 14.58, top: 2.82, width: 19, y: -10, r: -3, d: 5.2 },
+  { name: 'graph', left: 39.17, top: 0, width: 15.08, y: -9, r: 4, d: 4.2, delay: -1.2 },
+  { name: 'browser', left: 58.17, top: 1.72, width: 18.92, y: -9, r: -3, d: 4.8, delay: -2.6 },
+  { name: 'robot', left: 78, top: 3.43, width: 19.67, y: -10, r: 6, d: 3.4, delay: -0.6 },
+  { name: 'bubble-l', left: 3.83, top: 24.63, width: 12.58, y: -14, r: -5, d: 4.4, delay: -1.8 },
+  { name: 'bubble-r', left: 82.83, top: 36.15, width: 8, y: -16, r: 6, d: 3.8, delay: -3 },
+  { name: 'arrow-1', left: 32.17, top: 3.92, width: 11.17, y: -20, d: 3.6, delay: -0.4 },
+  { name: 'arrow-2', left: 53.75, top: 5.15, width: 6, y: -20, d: 3.6, delay: -1.4 },
+  { name: 'arrow-3', left: 76.83, top: 9.93, width: 5.25, y: -20, d: 3.6, delay: -2.4 },
+  { name: 'arrow-4', left: 71.42, top: 25.49, width: 9.33, y: -20, d: 3.6, delay: -1.9 },
+  { name: 'arrow-5', left: 50.25, top: 21.69, width: 11, y: -20, d: 3.6, delay: -0.9 },
+  { name: 'spark-1', left: 33.42, top: 11.52, width: 5.83, twinkle: true },
+  { name: 'spark-2', left: 53.67, top: 15.56, width: 4.92, twinkle: true, delay: -0.9 },
+  { name: 'spark-3', left: 54.42, top: 27.57, width: 6.08, twinkle: true, delay: -1.7 },
+  { name: 'spark-4', left: 69.5, top: 32.97, width: 6.33, twinkle: true, delay: -0.5 },
+  { name: 'spark-5', left: 5.25, top: 38.24, width: 6.17, twinkle: true, delay: -1.3 }
+];
+
 const HomePop: React.FC = () => {
   const cases = publishedWorks.slice(0, 3);
 
@@ -58,11 +80,34 @@ const HomePop: React.FC = () => {
           {/* 濃紺のカードから、イラストを上にはみ出させる */}
           <div className="group relative order-1 lg:order-none mt-14 lg:mt-36 lg:mb-10">
             <div className={`relative rounded-[36px] aspect-[16/11] bg-[radial-gradient(circle_at_15%_100%,rgb(30_156_140/0.6),transparent_55%),radial-gradient(circle_at_100%_0%,rgb(242_181_68/0.35),transparent_50%)] bg-sumi ${card}`} />
-            <img
-              src={illust('hero')}
-              alt="Arcleのスタッフと中小企業の社員が、PC・データ・AI・Webでつながっているイラスト"
-              className="pop-tilt absolute left-1/2 -bottom-[8%] lg:-bottom-[12%] w-[124%] md:w-[104%] lg:w-[128%] xl:w-[150%] max-w-none -translate-x-1/2 lg:-translate-x-[58%] xl:-translate-x-[57%] drop-shadow-[0_12px_18px_rgb(0_0_0/0.25)]"
-            />
+            {/* 人物と机を土台にして、雲・グラフ・画面・ロボットなどの部品をそれぞれふわふわ浮かせる */}
+            <div className="pop-tilt absolute left-1/2 -bottom-[8%] lg:-bottom-[12%] aspect-[1200/816] w-[124%] md:w-[104%] lg:w-[128%] xl:w-[150%] -translate-x-1/2 lg:-translate-x-[58%] xl:-translate-x-[57%] drop-shadow-[0_12px_18px_rgb(0_0_0/0.25)]">
+              <img
+                src={illust('hero/base')}
+                alt="Arcleのスタッフと中小企業の社員が、PC・データ・AI・Webでつながっているイラスト"
+                className="absolute inset-0 w-full h-full"
+              />
+              {heroParts.map((p) => (
+                <img
+                  key={p.name}
+                  src={illust(`hero/${p.name}`)}
+                  alt=""
+                  aria-hidden="true"
+                  className={`absolute ${p.twinkle ? 'pop-twinkle' : 'pop-drift'}`}
+                  style={
+                    {
+                      left: `${p.left}%`,
+                      top: `${p.top}%`,
+                      width: `${p.width}%`,
+                      animationDelay: p.delay ? `${p.delay}s` : undefined,
+                      '--drift-y': p.y ? `${p.y}%` : undefined,
+                      '--drift-r': p.r ? `${p.r}deg` : undefined,
+                      '--drift-d': p.d ? `${p.d}s` : undefined
+                    } as React.CSSProperties
+                  }
+                />
+              ))}
+            </div>
             <span className="pop-float absolute -right-2 bottom-[-18px] hidden lg:block rounded-2xl bg-white px-4 py-2 font-head font-bold text-sm border-[2.5px] border-sumi shadow-[4px_4px_0_#1F2430] rotate-[4deg] [animation-delay:-2s]">
               <MapPin className="inline w-4 h-4 -mt-0.5 mr-1 text-coral" strokeWidth={2.5} />
               東海エリアは訪問対応

@@ -89,6 +89,9 @@ body {
 
 /* ふわふわ浮く（Tailwind の rotate-* はそのまま効く。ずらしたいときは [animation-delay:-2s] など） */
 .pop-float { animation: pop-float 4s ease-in-out infinite; }
+/* イラストの部品が、それぞれのリズムで浮いて少し傾く。高さ・傾き・秒数は --drift-y / --drift-r / --drift-d で変える */
+@keyframes pop-drift { 50% { transform: translateY(var(--drift-y, -10%)) rotate(var(--drift-r, 0deg)); } }
+.pop-drift { animation: pop-drift var(--drift-d, 4s) ease-in-out infinite; }
 /* キラキラがまたたく */
 .pop-twinkle { animation: pop-twinkle 2.6s ease-in-out infinite; transform-origin: center; }
 /* 流れるテープ */
@@ -104,7 +107,7 @@ body {
 .js-motion .pop-reveal.is-in { animation: pop-in 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .pop-float, .pop-twinkle, .pop-ticker { animation: none; }
+  .pop-float, .pop-drift, .pop-twinkle, .pop-ticker { animation: none; }
   .pop-tilt:hover, .group:hover .pop-tilt, .pop-tilt-r:hover, .group:hover .pop-tilt-r { transform: none; }
   .pop-wiggle:hover, .group:hover .pop-wiggle { animation: none; }
   .js-motion .pop-reveal:not(.is-in) { opacity: 1; }
