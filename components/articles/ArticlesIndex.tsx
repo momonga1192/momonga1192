@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
-import { ContactCta, PageHeader } from '../next/parts';
+import { ContactCta, Mark, PageHeader, card, press } from '../next/parts';
 import { serviceByName, services, illust } from '../next/theme';
 
 export const articles = [
@@ -69,31 +69,32 @@ const ArticlesIndex: React.FC = () => {
       </Helmet>
       <PageHeader
         en="Articles"
-        title="実務に使える記事"
+        title={<><Mark>実務に使える</Mark>記事</>}
         lead="中小企業のIT課題に向き合う現場目線で、導入判断に役立つ情報をまとめています。"
         crumbs={[{ label: 'お役立ち記事' }]}
       />
-      <section className="py-20 md:py-28 bg-white rounded-t-[48px] md:rounded-t-[80px]">
+      <section className="py-20 md:py-28 bg-white">
         <div className="max-w-6xl mx-auto px-5">
-          <div className="grid md:grid-cols-3 gap-6">
-            {articles.map((article) => {
+          <div className="grid md:grid-cols-3 gap-8">
+            {articles.map((article, i) => {
               const service = serviceByName(article.tag) ?? services[0];
               return (
                 <a
                   key={article.href}
                   href={article.href}
-                  className="group flex flex-col border border-warm-line rounded-[28px] bg-cream p-6 md:p-8 hover:shadow-[0_16px_40px_rgb(31_36_48/0.08)] transition-shadow"
+                  className={`group pop-reveal flex flex-col rounded-[28px] bg-cream p-6 md:p-7 ${card} ${press}`}
+                  style={{ animationDelay: `${(i % 3) * 90}ms` }}
                 >
-                  <div className={`rounded-full ${service.dot} aspect-square w-40 self-center mb-8 overflow-hidden`}>
-                    <img src={illust(`svc-${service.key}`)} alt="" className="w-full h-full object-contain" loading="lazy" />
+                  <div className={`rounded-[20px] ${service.bg} aspect-[16/10] mb-6 border-[2.5px] border-sumi`}>
+                    <img src={illust(`svc-${service.key}`)} alt="" className={`${i % 2 ? 'pop-tilt-r' : 'pop-tilt'} w-full h-full object-contain p-3`} loading="lazy" />
                   </div>
                   <div className="flex flex-wrap items-center gap-3 mb-4">
-                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${service.tint} ${service.text}`}>{article.tag}</span>
+                    <span className={`pop-wiggle -rotate-3 text-xs font-bold px-3 py-1 rounded-lg text-white border-2 border-sumi ${service.bg}`}>{article.tag}</span>
                     <time dateTime={article.published} className="font-en text-xs text-sumi-muted">{article.published}</time>
                   </div>
-                  <h2 className="font-head text-xl font-bold leading-relaxed text-sumi mb-3 [word-break:auto-phrase]">{article.title}</h2>
+                  <h2 className="font-head text-xl md:text-[22px] font-black leading-snug text-sumi mb-3 [word-break:auto-phrase]">{article.title}</h2>
                   <p className="text-sumi-muted text-[15px] leading-[1.9] mb-6">{article.description}</p>
-                  <span className={`mt-auto pt-5 border-t border-warm-line inline-flex items-center font-bold ${service.text}`}>
+                  <span className={`mt-auto pt-5 border-t-2 border-dashed border-warm-line inline-flex items-center font-bold ${service.text}`}>
                     記事を読む
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </span>

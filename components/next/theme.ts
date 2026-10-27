@@ -1,7 +1,7 @@
 // リニューアル（A案）で共通に使う事業ごとの色・イラスト・文言
 // Tailwindが検出できるよう、クラス名は完全な文字列で持つ
 
-export const illust = (name: string) => `/images/illust/${name}.webp`;
+export const illust = (name: string) => `/images/illust-pop/${name}.webp`;
 
 export type ServiceKey = 'josys' | 'data' | 'ai' | 'web';
 

@@ -5,7 +5,7 @@ import { illust, services, type ServiceKey } from './theme';
 // 社名の由来（弧＝Arcをつないで円＝Circleにする）を、4事業の色の弧で表す
 export const Arcs: React.FC<{ className?: string }> = ({ className }) => (
   <svg viewBox="0 0 200 200" className={className} fill="none" aria-hidden="true">
-    {['#3B6FE0', '#5B5BD6', '#8E5BD0', '#1E9C8C'].map((color, i) => (
+    {['#3B6FE0', '#5B5BD6', '#8E5BD0', '#C8509F'].map((color, i) => (
       <path
         key={color}
         d="M 100 8 A 92 92 0 0 1 192 100"
@@ -20,23 +20,62 @@ export const Arcs: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+// ポップ版の共通の見た目：太い輪郭線とずらした影。press は押すと影の分だけ沈む
+export const card = 'border-[2.5px] border-sumi shadow-[6px_6px_0_#1F2430]';
+export const press = 'transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0_#1F2430]';
+
+// 4つの尖りのキラキラ。色は text-* で指定する
+export const Sparkle: React.FC<{ className?: string; still?: boolean }> = ({ className = '', still }) => (
+  <svg viewBox="0 0 24 24" className={`${still ? '' : 'pop-twinkle'} ${className}`} aria-hidden="true">
+    <path d="M12 0c.9 6.4 5.1 10.6 12 12-6.9 1.4-11.1 5.6-12 12-.9-6.4-5.1-10.6-12-12C6.9 10.6 11.1 6.4 12 0z" fill="currentColor" />
+  </svg>
+);
+
+// 傾けた黄色のラベル（作例のバナーの「CHECK!」と同じ形）
+export const Sticker: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
+  <span className={`inline-block -rotate-3 rounded-lg bg-mustard px-3 py-0.5 text-sumi shadow-[3px_3px_0_#1E9C8C] ${className}`}>{children}</span>
+);
+
+// 見出しの中の、いちばん伝えたい言葉に引くマーカー。1つの見出しに1か所まで
+export const Mark: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = 'bg-mustard' }) => (
+  <span className="relative inline-block isolate">
+    <span className={`absolute inset-x-[-0.15em] bottom-[0.06em] h-[0.42em] -skew-x-6 rounded-sm -z-10 ${className}`} aria-hidden="true" />
+    <span className="relative">{children}</span>
+  </span>
+);
+
+// 番号付きのカードの起点。アイコンの角丸タイルに番号のシールを貼り、目線の入口を1か所にまとめる
+export const IconTile: React.FC<{ icon: React.ReactNode; num?: number; bg: string; className?: string }> = ({ icon, num, bg, className = '' }) => (
+  <span className={`relative inline-grid place-items-center w-14 h-14 rounded-2xl text-white border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6 ${bg} ${className}`}>
+    {icon}
+    {num !== undefined && (
+      <span className="absolute -top-3 -right-3 grid place-items-center w-7 h-7 rounded-full bg-mustard text-sumi font-en font-black italic text-sm border-2 border-sumi rotate-6">{num}</span>
+    )}
+  </span>
+);
+
+// 英字ラベル（ステッカー）＋日本語見出し＋リード文。enClass はラベル横のキラキラの色
 export const SectionHead: React.FC<{
   en: string;
   title: React.ReactNode;
   lead?: string;
   center?: boolean;
   enClass?: string;
-}> = ({ en, title, lead, center, enClass = 'text-svc-josys' }) => (
-  <div className={`mb-12 md:mb-16 ${center ? 'text-center' : ''}`}>
-    <p className={`font-en text-sm font-semibold tracking-[0.2em] uppercase ${enClass}`}>{en}</p>
-    <h2 className="font-head text-[26px] md:text-[38px] font-bold leading-snug text-sumi mt-2 [word-break:auto-phrase]">{title}</h2>
-    {lead && <p className={`mt-4 text-sumi-muted leading-[1.9] [word-break:auto-phrase] ${center ? 'max-w-2xl mx-auto' : 'max-w-2xl'}`}>{lead}</p>}
+  dark?: boolean;
+}> = ({ en, title, lead, center, enClass = 'text-svc-josys', dark }) => (
+  <div className={`group pop-reveal mb-12 md:mb-16 ${center ? 'text-center' : ''}`}>
+    <span className="inline-flex items-center gap-2">
+      <Sticker className="pop-wiggle font-en text-sm font-black italic tracking-[0.12em] uppercase">{en}</Sticker>
+      <Sparkle className={`w-5 h-5 ${enClass}`} />
+    </span>
+    <h2 className={`font-head text-[28px] md:text-[46px] font-black leading-[1.35] tracking-[0.01em] mt-4 [word-break:auto-phrase] ${dark ? 'text-white' : 'text-sumi'}`}>{title}</h2>
+    {lead && <p className={`mt-4 leading-[1.9] [word-break:auto-phrase] max-w-2xl ${center ? 'mx-auto' : ''} ${dark ? 'text-white/75' : 'text-sumi-muted'}`}>{lead}</p>}
   </div>
 );
 
 type Crumb = { label: string; href?: string };
 
-// 下層ページの見出し。service を渡すとその事業の色になる
+// 下層ページの見出し。service を渡すとその事業の色になり、image は色の面から上にはみ出して置く
 export const PageHeader: React.FC<{
   en: string;
   title: React.ReactNode;
@@ -44,16 +83,16 @@ export const PageHeader: React.FC<{
   crumbs: Crumb[];
   service?: ServiceKey;
   image?: string;
-}> = ({ en, title, lead, crumbs, service, image }) => {
+  // 長いタイトル（記事・モデルケースなど）は compact で一回り小さくする
+  compact?: boolean;
+}> = ({ en, title, lead, crumbs, service, image, compact }) => {
   const s = services.find((item) => item.key === service);
   return (
-    <section className="relative overflow-hidden bg-cream">
-      <div className={`absolute -right-32 -top-48 w-[560px] h-[560px] rounded-full ${s ? s.tint : 'bg-svc-josys/8'}`} />
-      <div className="absolute -left-20 bottom-[-120px] w-[240px] h-[240px] rounded-full bg-mustard/20" />
-      <div className={`relative max-w-6xl mx-auto px-5 pt-8 pb-16 md:pb-20 grid gap-8 items-center ${image ? 'lg:grid-cols-[1.1fr_1fr]' : ''}`}>
+    <section className="relative bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px] border-b-[2.5px] border-sumi">
+      <div className={`relative max-w-6xl mx-auto px-5 pt-8 pb-16 md:pb-20 grid gap-14 lg:gap-10 items-center ${image ? 'lg:grid-cols-[1.1fr_1fr]' : ''}`}>
         <div className={image ? '' : 'max-w-3xl'}>
           <nav aria-label="パンくずリスト" className="flex flex-wrap items-center gap-1 text-xs text-sumi-muted mb-10">
-            <a href='/' className="hover:text-sumi">
+            <a href="/" className="hover:text-sumi">
               ホーム
             </a>
             {crumbs.map((crumb) => (
@@ -64,22 +103,32 @@ export const PageHeader: React.FC<{
                     {crumb.label}
                   </a>
                 ) : (
-                  <span className="text-sumi">{crumb.label}</span>
+                  <span className="text-sumi font-bold">{crumb.label}</span>
                 )}
               </React.Fragment>
             ))}
           </nav>
-          <p className={`font-en text-sm font-semibold tracking-[0.2em] uppercase ${s ? s.text : 'text-svc-josys'}`}>{en}</p>
-          <h1 className="font-head font-black text-[30px] md:text-[46px] leading-[1.4] mt-2 [word-break:auto-phrase]">{title}</h1>
+          <span className="group inline-flex items-center gap-2">
+            <Sticker className="pop-wiggle font-en text-sm font-black italic tracking-[0.12em] uppercase">{en}</Sticker>
+            <Sparkle className={`w-5 h-5 ${s ? s.text : 'text-svc-josys'}`} />
+          </span>
+          <h1 className={`font-head font-black leading-[1.4] tracking-[0.01em] mt-5 [word-break:auto-phrase] ${compact ? 'text-[26px] md:text-[38px]' : 'text-[31px] md:text-[50px]'}`}>{title}</h1>
           {lead && <div className="mt-6 text-[15px] md:text-[17px] leading-[2] text-sumi-muted max-w-2xl">{lead}</div>}
         </div>
-        {image && <img src={image} alt="" className="w-full max-w-[560px] justify-self-center" />}
+        {image && (
+          <div className="group relative mt-8 lg:mt-14 lg:mb-4 w-full max-w-[560px] justify-self-center">
+            <div className={`aspect-[16/11] rounded-[32px] ${s ? s.bg : 'bg-sumi'} ${card}`} />
+            {/* 横長でも正方形でも、上へのはみ出しが2割ほどに収まるよう高さで合わせる */}
+            <img src={image} alt="" className="pop-tilt absolute left-1/2 bottom-[4%] h-[118%] w-[108%] max-w-none -translate-x-1/2 object-contain object-bottom" />
+            <Sparkle className="absolute -top-6 right-[10%] w-8 h-8 text-mustard" />
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
-// 下層ページの最後に置く相談への誘導
+// 下層ページの最後に置く相談への誘導（濃紺の面にイラストをはみ出させる）
 export const ContactCta: React.FC<{ title?: React.ReactNode; body?: string }> = ({
   title = (
     <>
@@ -90,26 +139,46 @@ export const ContactCta: React.FC<{ title?: React.ReactNode; body?: string }> = 
   ),
   body = 'いまの困りごとをお聞きして、やるべきことの順番から一緒に整理します。ご相談・お見積りは無料です。'
 }) => (
-  <section className="py-20 md:py-28">
+  <section className="py-20 md:py-28 bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px]">
     <div className="max-w-6xl mx-auto px-5">
-      <div className="relative overflow-hidden rounded-[40px] bg-sumi text-white p-10 md:p-16 grid md:grid-cols-[1.3fr_1fr] gap-10 items-center">
-        <Arcs className="absolute -right-28 -bottom-28 w-96 h-96 opacity-60" />
+      <div className={`relative rounded-[40px] bg-sumi text-white p-10 md:p-16 grid md:grid-cols-[1.4fr_1fr] gap-10 items-center bg-[radial-gradient(circle_at_10%_100%,rgb(30_156_140/0.55),transparent_50%),radial-gradient(circle_at_100%_0%,rgb(242_181_68/0.3),transparent_45%)] ${card}`}>
+        <Sparkle className="absolute right-10 top-10 w-10 h-10 text-mustard" />
         <div className="relative">
-          <p className="font-en text-sm font-semibold tracking-[0.2em] uppercase text-mustard">Contact</p>
-          <h2 className="font-head text-[26px] md:text-[36px] font-bold leading-snug mt-3">{title}</h2>
+          <Sticker className="font-en text-sm font-black italic tracking-[0.12em] uppercase">Contact</Sticker>
+          <h2 className="font-head text-[26px] md:text-[34px] font-black leading-snug mt-5 [word-break:auto-phrase]">{title}</h2>
           <p className="mt-5 text-white/75 leading-[1.9]">{body}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="/contact" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-mustard text-sumi font-bold hover:bg-white transition-colors">
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <a href="/contact" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-mustard text-sumi font-black border-[2.5px] border-sumi shadow-[5px_5px_0_#1E9C8C] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#1E9C8C]">
               無料で相談する
               <ArrowRight className="w-4 h-4" />
             </a>
-            <a href='/flow' className="inline-flex items-center gap-2 px-7 py-4 rounded-full border-2 border-white/40 font-bold hover:border-white transition-colors">
+            <a href="/flow" className="inline-flex items-center gap-2 px-7 py-4 rounded-full border-2 border-white/50 font-bold hover:border-white hover:bg-white/10 transition-colors">
               ご相談の流れを見る
             </a>
           </div>
         </div>
-        <img src={illust('flow-talk')} alt="" className="relative hidden md:block w-full max-w-[320px] justify-self-center rounded-full bg-cream p-4" loading="lazy" />
+        <div className="group relative hidden md:block justify-self-center md:-my-24">
+          <img src={illust('flow-talk')} alt="" className="pop-float pop-tilt w-full max-w-[340px] drop-shadow-[0_12px_18px_rgb(0_0_0/0.25)]" loading="lazy" />
+        </div>
       </div>
     </div>
   </section>
+);
+
+// 斜めに流れるテープ。items を繰り返して横に流す
+export const Ticker: React.FC<{ items: string[]; className?: string; tone?: string }> = ({ items, className = '', tone = 'bg-mustard text-sumi' }) => (
+  <div className={`relative z-10 -rotate-[1.5deg] border-y-[2.5px] border-sumi py-3 overflow-hidden ${tone} ${className}`} aria-hidden="true">
+    <div className="pop-ticker flex w-max">
+      {[0, 1].map((n) => (
+        <div key={n} className="flex shrink-0">
+          {items.map((t) => (
+            <span key={t} className="flex items-center gap-5 pr-5 font-head font-black text-lg md:text-xl whitespace-nowrap">
+              {t}
+              <Sparkle still className="w-4 h-4" />
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
 );

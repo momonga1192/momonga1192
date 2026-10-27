@@ -16,7 +16,7 @@ import ArticleWebMonthlyVsOneTime from './components/articles/ArticleWebMonthlyV
 import ArticleWebCompanyGuide from './components/articles/ArticleWebCompanyGuide';
 import WorksIndex from './components/works/WorksIndex';
 import WorkDetail from './components/works/WorkDetail';
-import HomeNext from './components/next/HomeNext';
+import HomePop from './components/next/HomePop';
 import ServicesNext from './components/next/pages/ServicesNext';
 import CompanyNext from './components/next/pages/CompanyNext';
 import MessageNext from './components/next/pages/MessageNext';
@@ -26,6 +26,7 @@ import DataNext from './components/next/pages/DataNext';
 import GenAINext from './components/next/pages/GenAINext';
 import WebNext from './components/next/pages/WebNext';
 import NextHeader from './components/next/NextHeader';
+import PopMotion from './components/next/PopMotion';
 import NextFooter from './components/next/NextFooter';
 
 declare global {
@@ -73,10 +74,11 @@ export const AppContent: React.FC = () => (
     </a>
     <ScrollToTop />
     <TrackPageView />
+    <PopMotion />
     <NextHeader />
     <main id="main-content">
       <Routes>
-        <Route path="/" element={<HomeNext />} />
+        <Route path="/" element={<HomePop />} />
         <Route path="/services" element={<ServicesNext />} />
         <Route path="/josys" element={<JosysNext />} />
         <Route path="/data-consulting" element={<DataNext />} />

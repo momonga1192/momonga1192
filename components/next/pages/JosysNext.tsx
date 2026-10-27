@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Check, Cpu, Globe, Shield, Users, Zap } from 'lucide-react';
-import { ContactCta, PageHeader, SectionHead } from '../parts';
+import { ContactCta, IconTile, Mark, PageHeader, SectionHead, Sparkle, Ticker, card, press } from '../parts';
 import { illust, services } from '../theme';
 
 const service = services.find((s) => s.key === 'josys')!;
@@ -82,7 +82,7 @@ const plans = [
             ];
 
 const JosysNext: React.FC = () => (
-  <div className="bg-cream text-sumi">
+  <div className="bg-cream text-sumi overflow-x-clip">
       <Helmet>
         <title>情シス代行サービス | 愛知・東海の中小企業のIT担当を代行 - Arcle</title>
         <meta name="description" content="愛知・東海の中小企業向けの情シス代行サービス。IT専任担当者がいない会社に代わって、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額5万円〜で包括サポート。" />
@@ -115,11 +115,11 @@ const JosysNext: React.FC = () => (
       lead={
         <>
           <p>あなたの会社の「見えない情シス部門」として。<br />技術と信頼で、ビジネスの成長を足元から支えます。</p>
-          <div className="mt-8 flex flex-wrap gap-3 text-sm">
-            <a href='/contact' className="inline-flex items-center gap-2 rounded-full bg-sumi px-7 py-4 font-bold text-white hover:bg-svc-josys transition-colors">
+          <div className="mt-8 flex flex-wrap gap-4 text-sm">
+            <a href='/contact' className="inline-flex items-center gap-2 rounded-full bg-sumi px-7 py-4 font-bold text-white border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544]">
               まずは無料で相談する<ArrowRight className="w-4 h-4" aria-hidden="true" />
             </a>
-            <a href='/josys#services' className="inline-flex items-center rounded-full border-2 border-sumi px-7 py-4 font-bold text-sumi hover:bg-white transition-colors">サービス詳細を見る</a>
+            <a href='/josys#services' className={`inline-flex items-center rounded-full bg-white px-7 py-4 font-bold text-sumi ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>サービス詳細を見る</a>
           </div>
         </>
       }
@@ -128,51 +128,47 @@ const JosysNext: React.FC = () => (
       image={illust('svc-josys')}
     />
 
-    <section className="py-20 md:py-28 bg-white rounded-t-[40px]">
+    <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[1.2fr_1fr] gap-12 items-center">
         <div>
           <SectionHead
             en="Your Concerns"
             enClass={service.text}
-            title={<>そのIT業務、<br /><span className={service.text}>後回し</span>にしていませんか？</>}
+            title={<>そのIT業務、<br /><Mark><span className={service.text}>後回し</span></Mark>にしていませんか？</>}
             lead="コア業務に集中したいのに、ITのトラブルや雑務に時間を奪われている。そんな経営者様・ご担当者様のお悩みを、私たちが解決します。"
           />
           <div className="space-y-4">
-            {concerns.map((item) => (
-              <div key={item.title} className="flex items-start gap-4 rounded-[28px] bg-cream p-5 md:p-6">
-                <span className={`grid place-items-center shrink-0 w-12 h-12 rounded-full ${service.dot} ${service.text}`}>
+            {concerns.map((item, i) => (
+              <div key={item.title} className={`group pop-reveal flex items-start gap-4 rounded-[28px] bg-cream p-5 md:p-6 ${card}`} style={{ animationDelay: `${i * 80}ms` }}>
+                <span className={`pop-wiggle grid place-items-center shrink-0 w-12 h-12 rounded-2xl text-white border-2 border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6 ${service.bg}`}>
                   <item.icon className="w-6 h-6" aria-hidden="true" />
                 </span>
                 <div>
-                  <h3 className="font-head font-bold text-lg [word-break:auto-phrase]">{item.title}</h3>
-                  <p className="mt-1 text-sm text-sumi-muted leading-relaxed">{item.desc}</p>
+                  <h3 className="font-head font-black text-xl md:text-2xl [word-break:auto-phrase]">{item.title}</h3>
+                  <p className="mt-1 text-sm text-sumi-muted leading-relaxed [word-break:auto-phrase]">{item.desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className={`rounded-full ${service.tint} max-w-md w-full justify-self-center`}>
-          <img src={illust('worry-pc')} alt="" className="w-full" loading="lazy" />
+        <div className={`group pop-reveal relative aspect-square grid place-items-center rounded-[32px] ${service.tint} max-w-md w-full justify-self-center p-6 ${card}`}>
+          <img src={illust('worry-pc')} alt="" className="pop-tilt w-full" loading="lazy" />
+          <Sparkle className="absolute -top-5 -right-3 w-9 h-9 text-mustard" />
         </div>
       </div>
     </section>
 
-    <section id="services" className="py-20 md:py-28 bg-cream-dark scroll-mt-24">
+    <section id="services" className="py-20 md:py-28 bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px] border-y-[2.5px] border-sumi scroll-mt-24">
       <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="Our Services" enClass={service.text} title="Total Support" lead="貴社のIT環境を包括的にサポート。課題に合わせて最適なソリューションを提供します。" center />
+        <SectionHead en="Our Services" enClass={service.text} title={<>Total <Mark>Support</Mark></>} lead="貴社のIT環境を包括的にサポート。課題に合わせて最適なソリューションを提供します。" center />
         <div className="grid md:grid-cols-2 gap-6">
           {offerings.map((item, index) => (
-            <article key={item.title} className="rounded-[28px] bg-white p-7 md:p-9 border border-warm-line">
-              <div className="flex items-center justify-between mb-7">
-                <span className={`grid place-items-center w-16 h-16 rounded-full ${service.dot} ${service.text}`}>
-                  <item.icon className="w-8 h-8" aria-hidden="true" />
-                </span>
-                <span className={`font-en text-sm font-semibold ${service.text}`}>0{index + 1}</span>
-              </div>
-              <p className={`font-en text-sm ${service.text}`}>{item.title}</p>
-              <h3 className="font-head text-xl md:text-2xl font-bold mt-2 [word-break:auto-phrase]">{item.sub}</h3>
+            <article key={item.title} className={`group pop-reveal rounded-[28px] bg-white p-7 md:p-9 ${card}`} style={{ animationDelay: `${index * 80}ms` }}>
+              <IconTile icon={<item.icon className="w-7 h-7" aria-hidden="true" />} num={index + 1} bg={service.bg} className="pop-wiggle" />
+              <p className={`mt-6 font-en text-sm font-bold tracking-wider ${service.text}`}>{item.title}</p>
+              <h3 className="font-head text-2xl md:text-[28px] font-black leading-snug mt-1 [word-break:auto-phrase]">{item.sub}</h3>
               <p className="mt-5 text-sumi-muted leading-[1.9]">{item.desc}</p>
-              <ul className="mt-6 pt-6 border-t border-warm-line space-y-3">
+              <ul className="mt-6 pt-6 border-t-2 border-dashed border-warm-line space-y-3">
                 {['24時間365日の監視体制', '専門スタッフによる迅速対応', 'コスト削減の具体案提示'].map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed">
                     <Check className={`w-4 h-4 shrink-0 mt-1 ${service.text}`} aria-hidden="true" />{feature}
@@ -185,31 +181,34 @@ const JosysNext: React.FC = () => (
       </div>
     </section>
 
-    <section className="py-20 md:py-28">
+    {/* サービスの名前を流すテープ */}
+    <Ticker items={offerings.map((item) => item.sub)} tone="bg-svc-josys text-white" className="-mb-4 -mt-[2.5px]" />
+
+    <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Pricing" enClass={service.text} title="プラン一覧" lead="スポット対応から包括的なIT運用まで。貴社の規模や課題に合わせた最適なサポートプランをご提供します" center />
-        <div className="grid lg:grid-cols-3 gap-6 items-stretch">
-          {plans.map((plan) => (
-            <article key={plan.name} className={`relative rounded-[28px] border-2 p-7 md:p-8 flex flex-col ${plan.recommended ? `${service.border} ${service.tint}` : 'border-warm-line bg-white'}`}>
-              {plan.recommended && <span className={`absolute -top-4 left-7 rounded-full px-4 py-1 text-sm font-bold text-white ${service.bg}`}>おすすめ</span>}
-              <p className={`font-en font-semibold text-sm tracking-wider ${service.text}`}>{plan.name}</p>
-              <h3 className="font-head text-xl font-bold mt-2 [word-break:auto-phrase]">{plan.sub}</h3>
+        <div className="grid lg:grid-cols-3 gap-8 lg:gap-6 items-stretch">
+          {plans.map((plan, i) => (
+            <article key={plan.name} style={{ animationDelay: `${i * 80}ms` }} className={`pop-reveal relative rounded-[28px] border-[2.5px] border-sumi p-7 md:p-8 flex flex-col ${plan.recommended ? `${service.tint} shadow-[8px_8px_0_#F2B544] lg:-translate-y-3` : 'bg-cream shadow-[6px_6px_0_#1F2430]'}`}>
+              {plan.recommended && <span className="pop-float absolute -top-4 left-6 -rotate-3 rounded-lg px-4 py-1 text-sm font-black text-white bg-coral border-2 border-sumi shadow-[3px_3px_0_#1F2430]">おすすめ</span>}
+              <p className={`font-en font-black italic text-lg tracking-wider ${service.text}`}>{plan.name}</p>
+              <h3 className="font-head text-2xl font-black mt-1 [word-break:auto-phrase]">{plan.sub}</h3>
               <p className="mt-3 text-sm text-sumi-muted">{plan.desc}</p>
-              <p className={`my-7 font-head font-bold text-4xl ${service.text}`}>{plan.price}</p>
-              <ul className="space-y-4 border-t border-warm-line pt-7 mb-8 flex-1">
+              <p className={`my-7 font-en font-black italic text-5xl tracking-tight ${service.text}`}>{plan.price}</p>
+              <ul className="space-y-4 border-t-2 border-dashed border-warm-line pt-7 mb-8 flex-1">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2 text-sm leading-relaxed">
                     <Check className={`w-4 h-4 shrink-0 mt-1 ${service.text}`} aria-hidden="true" />{feature}
                   </li>
                 ))}
               </ul>
-              <a href='/contact' className="inline-flex items-center justify-center gap-2 rounded-full bg-sumi text-white px-6 py-4 font-bold text-sm hover:bg-svc-josys transition-colors">
+              <a href='/contact' className="inline-flex items-center justify-center gap-2 rounded-full bg-sumi text-white px-6 py-4 font-bold text-sm border-[2.5px] border-sumi shadow-[4px_4px_0_#F2B544] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#F2B544]">
                 お問い合わせ<ArrowRight className="w-4 h-4" aria-hidden="true" />
               </a>
             </article>
           ))}
         </div>
-        <div className="mt-8 rounded-[28px] bg-white border border-warm-line p-6 text-sm text-sumi-muted leading-[1.9] space-y-2">
+        <div className="mt-10 rounded-[28px] bg-cream border-2 border-dashed border-sumi/40 p-6 text-sm text-sumi-muted leading-[1.9] space-y-2">
           <p>※料金は税抜です。企業規模や対応範囲に応じてカスタマイズ可能です。</p>
           <p>※東海エリアは訪問にも対応します。</p>
         </div>

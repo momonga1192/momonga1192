@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Check, ArrowRight, Wallet, Server, RefreshCw, Headphones, Smartphone, Mail, Globe, ShieldCheck, BarChart3, MessageSquare, Newspaper, ChevronDown, MapPin } from 'lucide-react';
-import { PageHeader, SectionHead, ContactCta } from '../parts';
+import { PageHeader, SectionHead, ContactCta, IconTile, Mark, Sparkle, Sticker, Ticker, card, press } from '../parts';
 import { illust, services } from '../theme';
 
 const plans = [
@@ -91,21 +91,21 @@ const samples = [
 
 const SampleCard: React.FC<{ sample: (typeof samples)[number]; hidden?: boolean }> = ({ sample, hidden }) => (
   <li className="w-[280px] md:w-[360px] shrink-0" aria-hidden={hidden || undefined}>
-    <a href={`/samples/${sample.slug}`} target="_blank" rel="noopener" tabIndex={hidden ? -1 : undefined} className="group block rounded-[28px] bg-white border border-warm-line p-3 hover:shadow-[0_16px_40px_rgb(31_36_48/0.08)] hover:-translate-y-1 transition-all">
-      <div className="rounded-[18px] overflow-hidden border border-warm-line bg-cream">
-        <div className="flex gap-1.5 px-3 py-2 border-b border-warm-line" aria-hidden="true">
-          <span className="w-2 h-2 rounded-full bg-coral/60" />
-          <span className="w-2 h-2 rounded-full bg-mustard/70" />
-          <span className="w-2 h-2 rounded-full bg-svc-web/50" />
+    <a href={`/samples/${sample.slug}`} target="_blank" rel="noopener" tabIndex={hidden ? -1 : undefined} className={`group block rounded-[28px] bg-white p-3 ${card} ${press}`}>
+      <div className="pop-tilt rounded-[18px] overflow-hidden border-2 border-sumi bg-cream">
+        <div className="flex gap-1.5 px-3 py-2 border-b-2 border-sumi bg-white" aria-hidden="true">
+          <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-sumi bg-coral" />
+          <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-sumi bg-mustard" />
+          <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-sumi bg-svc-web" />
         </div>
         <img src={`/images/samples/${sample.slug}.webp`} alt={hidden ? '' : `${sample.name}の作例サイトのトップページ`} width={800} height={500} className="block w-full aspect-[8/5] object-cover object-top" loading="lazy" />
       </div>
       <div className="px-2 pt-4 pb-2">
         <p className="flex items-center gap-2 text-xs">
-          <span className={`rounded-full px-2.5 py-0.5 font-bold ${service.tint} ${service.text}`}>{sample.plan}</span>
+          <span className={`pop-wiggle -rotate-3 rounded-md px-2.5 py-0.5 font-bold text-white ${service.bg}`}>{sample.plan}</span>
           <span className="text-sumi-muted">{sample.type}</span>
         </p>
-        <p className="font-head font-bold mt-2 flex items-center justify-between gap-2">
+        <p className="font-head font-black mt-2 flex items-center justify-between gap-2">
           {sample.name}
           <ArrowRight className={`w-4 h-4 shrink-0 ${service.text} group-hover:translate-x-1 transition-transform`} />
         </p>
@@ -162,10 +162,10 @@ const faqs = [
 ];
 
 const service = services.find((s) => s.key === 'web')!;
-const button = 'inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-sumi text-white font-bold hover:bg-svc-web transition-colors';
+const button = 'inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-sumi text-white font-bold border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544]';
 
 const WebNext: React.FC = () => (
-  <div className="bg-cream text-sumi">
+  <div className="bg-cream text-sumi overflow-x-clip">
       <Helmet>
         <title>月額制ホームページ制作 | 愛知・東海 初期費用0円・月額4,800円〜 - Arcle</title>
         <meta name="description" content="愛知・東海の中小企業向け、月額制のホームページ制作。初期費用0円、月額4,800円（税抜）から。サーバー・ドメイン・独自ドメインのメール・スマホ対応・公開後の更新まで込み。東海エリアは訪問打ち合わせにも対応します。" />
@@ -209,22 +209,23 @@ const WebNext: React.FC = () => (
       </Helmet>
     <PageHeader
       en="Web Production"
-      title={<>ホームページは、<br /><span className={service.text}>月額制</span>でつくる時代へ。</>}
+      title={<>ホームページは、<br /><Mark><span className={service.text}>月額制</span></Mark>でつくる時代へ。</>}
       lead={<>初期費用0円、月額4,800円から。<br />制作からサーバー・ドメイン・メール、公開後の更新まで、ホームページのことはまるごとArcleにお任せください。</>}
       crumbs={[{ label: 'サービス', href: '/services' }, { label: 'Web制作' }]}
       service="web"
       image={illust('svc-web')}
     />
 
-    <section className="pb-20 md:pb-28">
+    <section className="py-16 md:py-20">
       <div className="max-w-6xl mx-auto px-5">
-        <div className="rounded-[40px] bg-white p-7 md:p-10 grid lg:grid-cols-[1fr_1.1fr] gap-8 items-center border border-warm-line">
+        <div className={`relative rounded-[40px] bg-white p-7 md:p-10 grid lg:grid-cols-[1fr_1.1fr] gap-8 items-center ${card}`}>
+          <Sparkle className="absolute -top-5 -right-3 w-10 h-10 text-mustard" />
           <div>
             <div className="grid grid-cols-2 gap-4">
               {[{ label: '初期費用', amount: '0', unit: '円' }, { label: '月額', amount: '4,800', unit: '円〜' }].map((price) => (
-                <div key={price.label} className={`rounded-[28px] p-5 ${service.tint}`}>
-                  <p className={`text-sm font-bold ${service.text}`}>{price.label}</p>
-                  <p className="mt-2 font-en font-bold text-4xl md:text-5xl">{price.amount}<span className="text-base ml-1">{price.unit}</span></p>
+                <div key={price.label} className={`group rounded-[28px] p-5 border-2 border-sumi ${service.tint}`}>
+                  <p><Sticker className="pop-wiggle text-sm font-bold">{price.label}</Sticker></p>
+                  <p className={`mt-3 font-en font-black italic text-[28px] sm:text-4xl md:text-5xl whitespace-nowrap ${service.text}`}>{price.amount}<span className="text-base ml-1">{price.unit}</span></p>
                 </div>
               ))}
             </div>
@@ -233,21 +234,23 @@ const WebNext: React.FC = () => (
           <div>
             <ul className="grid sm:grid-cols-2 gap-3 text-sm">
               {['サーバー・ドメイン・メール込み', 'スマホ・タブレット対応', '公開後の軽微な修正は無料', '最短約2週間で公開'].map((text) => (
-                <li key={text} className="flex items-start gap-2"><Check className={`w-5 h-5 shrink-0 ${service.text}`} />{text}</li>
+                <li key={text} className="flex items-start gap-2 font-bold"><span className={`shrink-0 w-5 h-5 rounded-full grid place-items-center border-2 border-sumi text-white ${service.bg}`}><Check className="w-3 h-3" strokeWidth={4} /></span>{text}</li>
               ))}
             </ul>
-            <div className="flex flex-wrap gap-3 mt-7">
+            <div className="flex flex-wrap gap-4 mt-7">
               <a href='/contact' className={button}>無料で相談・見積もり<ArrowRight className="w-4 h-4" /></a>
-              <a href="#plans" className="inline-flex items-center justify-center px-7 py-4 rounded-full border-2 border-sumi font-bold hover:bg-cream transition-colors">料金プランを見る</a>
+              <a href="#plans" className={`inline-flex items-center justify-center px-7 py-4 rounded-full bg-white font-bold ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>料金プランを見る</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section className="py-20 md:py-28 bg-cream-dark">
+    <Ticker items={['初期費用0円', '月額4,800円〜', 'サーバー・ドメイン・メール込み', 'スマホ・タブレット対応', '公開後の更新もお任せ', '最短約2週間で公開']} tone="bg-svc-web text-white" className="-mb-4" />
+
+    <section className="py-20 md:py-28 bg-white border-y-[2.5px] border-sumi">
       <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="Why Arcle" title="選ばれる4つの理由" enClass={service.text} />
+        <SectionHead en="Why Arcle" title={<>選ばれる<Mark>4つの理由</Mark></>} enClass={service.text} />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {[
               { icon: Wallet, title: '初期費用0円', desc: '数十万円の制作費をまとめて払う必要はありません。月々の定額で、無理なくホームページを持てます。' },
@@ -255,12 +258,9 @@ const WebNext: React.FC = () => (
               { icon: RefreshCw, title: '公開後の更新もお任せ', desc: '文章や写真の差し替え、お知らせの掲載などの軽微な修正は、追加費用なしで対応します。' },
               { icon: Headphones, title: 'IT全般の相談窓口に', desc: '情シス代行も手がけるArcleなら、メールやPC、Microsoft 365のお困りごともまとめてご相談いただけます。' }
           ].map((item, index) => (
-            <article key={item.title} className="rounded-[28px] bg-white p-7">
-              <div className="flex items-center justify-between mb-6">
-                <span className={`w-12 h-12 rounded-full grid place-items-center ${service.dot}`}><item.icon className={`w-6 h-6 ${service.text}`} /></span>
-                <span className="font-en text-sumi-muted text-sm">0{index + 1}</span>
-              </div>
-              <h3 className="font-head font-bold text-xl [word-break:auto-phrase]">{item.title}</h3>
+            <article key={item.title} className={`group pop-reveal rounded-[28px] bg-cream p-7 ${card}`} style={{ animationDelay: `${index * 90}ms` }}>
+              <IconTile icon={<item.icon className="w-7 h-7" />} num={index + 1} bg={service.bg} className="pop-wiggle" />
+              <h3 className="mt-6 font-head font-black text-xl md:text-2xl leading-snug [word-break:auto-phrase]">{item.title}</h3>
               <p className="mt-3 text-sm text-sumi-muted leading-[1.9]">{item.desc}</p>
             </article>
           ))}
@@ -268,14 +268,14 @@ const WebNext: React.FC = () => (
       </div>
     </section>
 
-    <section className="py-20 md:py-28 bg-white">
+    <section className="py-20 md:py-28 bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px]">
       <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="All Included" title="月額料金に含まれるもの" lead="どのプランでも、ホームページの運営に必要なものがそろっています。" enClass={service.text} center />
+        <SectionHead en="All Included" title={<>月額料金に<Mark>含まれるもの</Mark></>} lead="どのプランでも、ホームページの運営に必要なものがそろっています。" enClass={service.text} center />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {included.map((item) => (
-            <article key={item.title} className="rounded-[28px] border border-warm-line p-6">
-              <span className={`w-12 h-12 rounded-full grid place-items-center ${service.dot}`}><item.icon className={`w-6 h-6 ${service.text}`} /></span>
-              <h3 className="mt-5 font-head font-bold [word-break:auto-phrase]">{item.title}</h3>
+          {included.map((item, index) => (
+            <article key={item.title} className="group pop-reveal rounded-[24px] bg-white p-6 border-2 border-sumi shadow-[4px_4px_0_#1F2430]" style={{ animationDelay: `${(index % 4) * 80}ms` }}>
+              <span className={`pop-wiggle w-12 h-12 rounded-2xl grid place-items-center text-white border-2 border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6 ${service.bg}`}><item.icon className="w-6 h-6" /></span>
+              <h3 className="mt-5 font-head font-black text-xl leading-snug [word-break:auto-phrase]">{item.title}</h3>
               <p className="mt-2 text-sm text-sumi-muted leading-[1.9]">{item.desc}</p>
             </article>
           ))}
@@ -283,37 +283,39 @@ const WebNext: React.FC = () => (
       </div>
     </section>
 
-    <section id="plans" className="py-20 md:py-28 scroll-mt-20">
+    <section id="plans" className="py-20 md:py-28 scroll-mt-20 bg-white border-y-[2.5px] border-sumi">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Pricing" title="料金プラン" lead="すべてのプランで初期費用0円です。" enClass={service.text} center />
-        <div className="grid md:grid-cols-3 gap-6 items-stretch">
-          {plans.map((plan) => (
-            <article key={plan.name} className={`relative rounded-[28px] p-7 lg:p-8 flex flex-col border-2 ${plan.recommended ? `${service.border} bg-white shadow-[0_16px_40px_rgb(31_36_48/0.08)]` : 'border-warm-line bg-white'}`}>
-              {plan.recommended && <span className={`absolute -top-4 left-7 rounded-full px-4 py-1 text-sm text-white font-bold ${service.bg}`}>おすすめ</span>}
-              <h3 className="font-en font-bold text-3xl">{plan.name}</h3>
-              <p className={`mt-1 text-sm font-bold ${service.text}`}>{plan.sub}</p>
-              <p className="mt-3 text-sm text-sumi-muted leading-relaxed">{plan.desc}</p>
-              <div className={`rounded-[28px] p-5 my-6 ${service.tint}`}>
-                <p className="text-sm">初期費用 0円</p>
-                <p className="mt-2"><span className="text-sm mr-1">月額</span><span className="font-en text-4xl font-bold">{plan.price.toLocaleString()}</span><span className="text-sm ml-1">円</span></p>
-                <p className="text-xs mt-1 text-sumi-muted">（税込 {withTax(plan.price)}円）</p>
+        <div className="grid md:grid-cols-3 gap-8 md:gap-6 items-stretch pt-4">
+          {plans.map((plan, index) => (
+            <article key={plan.name} style={{ animationDelay: `${index * 110}ms` }} className={`pop-reveal relative rounded-[28px] p-7 lg:p-8 flex flex-col border-[2.5px] border-sumi ${plan.recommended ? 'bg-white shadow-[8px_8px_0_#C8509F] md:-translate-y-3' : 'bg-cream shadow-[6px_6px_0_#1F2430]'}`}>
+              {plan.recommended && <span className={`pop-float absolute -top-5 left-6 -rotate-6 rounded-xl px-4 py-1 text-sm text-white font-black border-2 border-sumi shadow-[3px_3px_0_#1F2430] ${service.bg}`}>おすすめ</span>}
+              <h3 className="flex items-baseline gap-2">
+                <span className="font-en font-black italic text-2xl">{plan.name}</span>
+                <span className={`text-sm font-bold ${service.text}`}>{plan.sub}</span>
+              </h3>
+              <p className="mt-2 text-sm text-sumi-muted leading-relaxed">{plan.desc}</p>
+              <div className={`rounded-[22px] px-5 py-6 my-6 border-2 border-sumi ${service.tint}`}>
+                <p className="text-sm font-bold">初期費用 0円</p>
+                <p className="mt-1 whitespace-nowrap"><span className="text-base font-bold mr-1">月額</span><span className={`font-en text-[52px] lg:text-[60px] leading-none font-black italic ${service.text}`}>{plan.price.toLocaleString()}</span><span className="text-base font-bold ml-1">円</span></p>
+                <p className="text-xs mt-2 text-sumi-muted">（税込 {withTax(plan.price)}円）</p>
               </div>
               <ul className="space-y-4 flex-1">
-                {plan.features.map((feature) => <li key={feature} className="flex gap-2 text-sm leading-relaxed"><Check className={`w-4 h-4 shrink-0 mt-1 ${service.text}`} />{feature}</li>)}
+                {plan.features.map((feature) => <li key={feature} className="flex gap-2 text-sm leading-relaxed"><span className={`shrink-0 mt-0.5 w-5 h-5 rounded-full grid place-items-center border-2 border-sumi text-white ${service.bg}`}><Check className="w-3 h-3" strokeWidth={4} /></span>{feature}</li>)}
               </ul>
               <p className="text-xs text-sumi-muted mt-7 mb-4">公開までの目安：{plan.term}</p>
               <a href='/contact' className={button}>このプランで相談する</a>
             </article>
           ))}
         </div>
-        <div className="mt-8 rounded-[28px] bg-white border border-warm-line p-7 md:p-10 flex flex-col md:flex-row md:items-center gap-6">
+        <div className={`pop-reveal mt-10 rounded-[28px] bg-cream p-7 md:p-10 flex flex-col md:flex-row md:items-center gap-6 ${card}`}>
           <div className="flex-1">
-            <p className={`text-sm font-bold ${service.text}`}>今あるホームページはそのままで</p>
-            <h3 className="font-head text-2xl font-bold mt-2 [word-break:auto-phrase]">運用おまかせプラン</h3>
+            <p><Sticker className="text-sm font-bold">今あるホームページはそのままで</Sticker></p>
+            <h3 className="font-head text-2xl md:text-3xl font-black mt-4 [word-break:auto-phrase]">運用おまかせプラン</h3>
             <p className="mt-3 text-sm text-sumi-muted leading-[1.9]">他社で制作したホームページの更新・管理を引き継ぎます。サーバーやドメインの管理、文章・写真の差し替えまでまとめてお任せいただけます。</p>
           </div>
           <div className="shrink-0">
-            <p><span className="text-sm mr-1">月額</span><span className="font-en text-4xl font-bold">4,800</span><span className="text-sm ml-1">円</span></p>
+            <p className="whitespace-nowrap"><span className="text-base font-bold mr-1">月額</span><span className={`font-en text-[52px] leading-none font-black italic ${service.text}`}>4,800</span><span className="text-base font-bold ml-1">円</span></p>
             <p className="text-xs text-sumi-muted mt-1">（税込 5,280円）</p>
           </div>
         </div>
@@ -324,12 +326,12 @@ const WebNext: React.FC = () => (
       </div>
     </section>
 
-    <section className={`py-20 md:py-28 ${service.tint}`}>
+    <section className={`py-20 md:py-28 ${service.tint} bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px]`}>
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Samples" title="業種別の作例をご覧ください" lead="建設・介護・保育・教室・美容・飲食・士業など、さまざまな業種の作例をご用意しています。気に入ったデザインをもとに、御社の情報と写真でお作りします。" enClass={service.text} center />
       </div>
       <div className="marquee overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-        <ul className="marquee-track flex w-max gap-5 md:gap-6 pr-5 md:pr-6 py-4">
+        <ul className="marquee-track flex w-max gap-6 md:gap-8 pr-6 md:pr-8 pt-4 pb-6">
           {samples.map((s) => <SampleCard key={s.slug} sample={s} />)}
           {samples.map((s) => <SampleCard key={`${s.slug}-copy`} sample={s} hidden />)}
         </ul>
@@ -343,11 +345,11 @@ const WebNext: React.FC = () => (
     <section className="py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Comparison" title="他の制作方法との比較" enClass={service.text} center />
-        <div className="overflow-x-auto rounded-[28px] border border-warm-line bg-white" role="region" aria-label="制作方法の比較表（横にスクロールできます）" tabIndex={0}>
+        <div className={`pop-reveal overflow-x-auto rounded-[28px] bg-white ${card}`} role="region" aria-label="制作方法の比較表（横にスクロールできます）" tabIndex={0}>
           <table className="w-full min-w-[720px] text-sm border-collapse">
             <thead><tr>
               <th scope="col" className="p-5 text-left w-1/4">比較項目</th>
-              <th scope="col" className={`p-5 w-1/4 text-white ${service.bg}`}>Arcle</th>
+              <th scope="col" className={`p-5 w-1/4 text-white font-en font-black italic text-lg ${service.bg}`}>Arcle</th>
               <th scope="col" className="p-5 w-1/4 text-sumi-muted">一般的な制作会社</th>
               <th scope="col" className="p-5 w-1/4 text-sumi-muted">格安の制作サービス</th>
             </tr></thead>
@@ -365,15 +367,15 @@ const WebNext: React.FC = () => (
       </div>
     </section>
 
-    <section className="py-20 md:py-28 bg-cream-dark">
+    <section className="py-20 md:py-28 bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px] border-y-[2.5px] border-sumi">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Flow" title="公開までの流れ" lead="ご契約までは費用はかかりません。" enClass={service.text} />
         <div className="grid lg:grid-cols-[0.65fr_1.35fr] gap-10 items-start">
-          <img src={illust('flow-hearing')} alt="" className="w-full max-w-xs mx-auto" loading="lazy" />
+          <img src={illust('flow-hearing')} alt="" className="pop-tilt w-full max-w-xs mx-auto lg:sticky lg:top-28" loading="lazy" />
           <ol className="space-y-4">{flow.map((step, index) => (
-            <li key={step.title} className="rounded-[28px] bg-white p-6 flex gap-4">
-              <span className={`shrink-0 w-10 h-10 rounded-full grid place-items-center font-en font-bold text-white ${service.bg}`}>{index + 1}</span>
-              <div><h3 className="font-head font-bold text-lg [word-break:auto-phrase]">{step.title}</h3><p className="mt-2 text-sm text-sumi-muted leading-[1.9]">{step.desc}</p></div>
+            <li key={step.title} className="group pop-reveal rounded-[24px] bg-white p-6 flex gap-4 border-2 border-sumi shadow-[4px_4px_0_#1F2430]" style={{ animationDelay: `${index * 70}ms` }}>
+              <span className={`pop-wiggle shrink-0 -rotate-12 w-10 h-10 rounded-full grid place-items-center font-en font-black italic text-white border-2 border-sumi shadow-[2px_2px_0_#1F2430] ${index % 2 ? 'bg-coral' : service.bg}`}>{index + 1}</span>
+              <div><h3 className="font-head font-black text-xl [word-break:auto-phrase]">{step.title}</h3><p className="mt-2 text-sm text-sumi-muted leading-[1.9]">{step.desc}</p></div>
             </li>
           ))}</ol>
         </div>
@@ -384,22 +386,22 @@ const WebNext: React.FC = () => (
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Area" title="対応エリア" lead="東海エリア（愛知・岐阜・三重）は訪問での打ち合わせにも対応します。オンライン打ち合わせなら全国どこからでもご依頼いただけます。" enClass={service.text} center />
         <ul className="max-w-3xl mx-auto flex flex-wrap justify-center gap-3">{areas.map((area) => (
-          <li key={area} className="rounded-full border border-warm-line bg-cream px-4 py-2 text-sm inline-flex items-center gap-2"><MapPin className={`w-4 h-4 ${service.text}`} />{area}</li>
+          <li key={area} className="pop-wiggle rounded-full border-2 border-sumi bg-cream px-5 py-2 font-bold inline-flex items-center gap-2 shadow-[3px_3px_0_#1F2430]"><MapPin className={`w-4 h-4 ${service.text}`} strokeWidth={2.5} />{area}</li>
         ))}</ul>
       </div>
     </section>
 
-    <section className="py-20 md:py-28">
+    <section className="py-20 md:py-28 bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px] border-t-[2.5px] border-sumi">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="FAQ" title="よくある質問" enClass={service.text} center />
         <div className="max-w-3xl mx-auto space-y-4">{faqs.map((item, index) => (
-          <details key={item.q} open={index === 0} className="group rounded-[28px] bg-white border border-warm-line">
+          <details key={item.q} open={index === 0} className="group pop-reveal rounded-[24px] bg-white border-2 border-sumi shadow-[4px_4px_0_#1F2430]" style={{ animationDelay: `${Math.min(index, 4) * 60}ms` }}>
             <summary className="flex items-center gap-4 p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-              <span className={`font-en text-xl font-bold ${service.text}`}>Q</span>
-              <h3 className="flex-1 font-head font-bold [word-break:auto-phrase]">{item.q}</h3>
+              <span className={`pop-wiggle shrink-0 -rotate-6 w-9 h-9 rounded-xl grid place-items-center font-en text-lg font-black italic text-white border-2 border-sumi ${service.bg}`}>Q</span>
+              <h3 className="flex-1 font-head font-black text-[17px] md:text-lg [word-break:auto-phrase]">{item.q}</h3>
               <ChevronDown className={`w-5 h-5 shrink-0 transition-transform group-open:rotate-180 ${service.text}`} />
             </summary>
-            <p className="px-6 pb-6 text-sm text-sumi-muted leading-[2]">{item.a}</p>
+            <p className="mx-6 mb-6 pt-4 border-t-2 border-dashed border-warm-line text-sm text-sumi-muted leading-[2]">{item.a}</p>
           </details>
         ))}</div>
       </div>

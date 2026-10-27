@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
-import { ContactCta, PageHeader, SectionHead } from '../parts';
+import { ContactCta, Mark, PageHeader, SectionHead, Sparkle, Sticker, card } from '../parts';
 
 const career = [
   {
@@ -31,23 +31,24 @@ const MessageNext: React.FC = () => (
 
     <PageHeader en="Message" title="代表あいさつ" crumbs={[{ label: '会社案内', href: '/company' }, { label: '代表あいさつ' }]} />
 
-    <section className="py-20 md:py-28 bg-white rounded-t-[48px] md:rounded-t-[80px]">
+    <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[360px_1fr] gap-12 lg:gap-16 items-start">
         <div className="lg:sticky lg:top-28 text-center lg:text-left">
-          <div className="relative mx-auto lg:mx-0 w-64 h-64 md:w-80 md:h-80">
-            <div className="absolute inset-0 rounded-full bg-mustard/30 -translate-x-3 translate-y-3" />
+          <div className="group relative mx-auto lg:mx-0 w-64 h-64 md:w-80 md:h-80">
+            <div className="absolute inset-0 rounded-full bg-mustard border-[2.5px] border-sumi -translate-x-3 translate-y-3" />
+            <Sparkle className="absolute -right-2 top-2 w-9 h-9 text-svc-josys" />
             <img
               src="/images/Gemini_Generated_Image_guortkguortkguor.png"
               alt="Arcle代表 栗原勇太のプロフィール写真"
-              className="relative w-full h-full rounded-full object-cover border-4 border-white"
+              className="pop-tilt-r relative w-full h-full rounded-full object-cover border-[2.5px] border-sumi"
             />
           </div>
-          <p className="mt-8 inline-block px-4 py-1 rounded-full bg-svc-josys text-white text-xs font-bold tracking-widest uppercase">Data &amp; IT Consultant</p>
-          <p className="mt-4 font-head text-3xl font-bold">栗原 勇太</p>
+          <p className="pop-float mt-8 inline-block -rotate-3 px-4 py-1 rounded-lg bg-svc-josys text-white text-xs font-black tracking-widest uppercase border-2 border-sumi shadow-[3px_3px_0_#1F2430]">Data &amp; IT Consultant</p>
+          <p className="mt-5 font-head text-4xl font-black">栗原 勇太</p>
           <p className="font-en text-sumi-muted tracking-widest">Yuta Kurihara</p>
           <ul className="mt-6 flex flex-wrap justify-center lg:justify-start gap-2">
             {specialties.map((tag) => (
-              <li key={tag} className="text-xs px-3 py-1 rounded-full bg-cream border border-warm-line">
+              <li key={tag} className="text-xs font-bold px-3 py-1 rounded-full bg-cream border-2 border-sumi">
                 {tag}
               </li>
             ))}
@@ -55,11 +56,11 @@ const MessageNext: React.FC = () => (
         </div>
 
         <div>
-          <p className="font-en text-sm font-semibold tracking-[0.2em] uppercase text-svc-josys">Message</p>
-          <h2 className="font-head text-[28px] md:text-[40px] font-bold leading-snug mt-2 [word-break:auto-phrase]">
+          <Sticker className="font-en text-sm font-black italic tracking-[0.12em] uppercase">Message</Sticker>
+          <h2 className="font-head text-[30px] md:text-[48px] font-black leading-[1.35] mt-5 [word-break:auto-phrase]">
             データとITの力で、
             <br />
-            <span className="bg-[linear-gradient(transparent_62%,rgb(242_181_68/0.55)_62%)]">企業のポテンシャルを解放する。</span>
+            企業の<Mark>ポテンシャルを解放</Mark>する。
           </h2>
           <div className="mt-8 space-y-5 text-[16px] leading-[2.1] text-sumi-muted">
             <p>はじめまして。Arcle代表の栗原です。</p>
@@ -71,11 +72,11 @@ const MessageNext: React.FC = () => (
 
           <div className="mt-16">
             <SectionHead en="Biography" title="経歴" />
-            <ol className="-mt-4 relative border-l-2 border-warm-line ml-3 space-y-8">
-              {career.map((item) => (
-                <li key={item.title} className="relative pl-8">
-                  <span className={`absolute -left-[9px] top-2 w-4 h-4 rounded-full border-4 border-white ${item.color}`} />
-                  <p className="font-head text-lg font-bold">{item.title}</p>
+            <ol className="-mt-4 relative border-l-[2.5px] border-dashed border-sumi ml-3 space-y-8">
+              {career.map((item, i) => (
+                <li key={item.title} className="pop-reveal relative pl-8" style={{ animationDelay: `${i * 90}ms` }}>
+                  <span className={`absolute -left-[12px] top-1.5 w-5 h-5 rounded-full border-[2.5px] border-sumi ${item.color}`} />
+                  <p className="font-head text-xl md:text-2xl font-black leading-snug">{item.title}</p>
                   <p className="text-sm text-sumi-muted font-en">{item.role}</p>
                   <p className="mt-2 leading-[1.9] text-sumi-muted">{item.body}</p>
                 </li>
@@ -83,18 +84,18 @@ const MessageNext: React.FC = () => (
             </ol>
           </div>
 
-          <div className="mt-14 rounded-[28px] bg-cream border border-warm-line p-6 md:p-8">
-            <p className="font-head font-bold">保有資格</p>
+          <div className={`pop-reveal mt-14 rounded-[28px] bg-cream p-6 md:p-8 ${card}`}>
+            <p className="font-head text-xl md:text-2xl font-black">保有資格</p>
             <ul className="mt-4 flex flex-wrap gap-2">
               {certifications.map((c) => (
-                <li key={c} className="px-4 py-2 rounded-full bg-white border border-warm-line text-sm font-medium">
+                <li key={c} className="pop-wiggle px-4 py-2 rounded-full bg-white border-2 border-sumi text-sm font-bold">
                   {c}
                 </li>
               ))}
             </ul>
           </div>
 
-          <a href='/company' className="mt-10 inline-flex items-center gap-2 font-bold text-svc-josys">
+          <a href="/company" className="mt-10 inline-flex items-center gap-2 font-bold text-svc-josys hover:underline">
             会社案内に戻る
             <ArrowRight className="w-4 h-4" />
           </a>

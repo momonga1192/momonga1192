@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Check, ArrowRight, BarChart, PieChart, TrendingUp, Database, Activity, Search } from 'lucide-react';
-import { PageHeader, SectionHead, ContactCta } from '../parts';
+import { PageHeader, SectionHead, ContactCta, IconTile, Mark, Sparkle, Ticker, card, press } from '../parts';
 import { illust, services } from '../theme';
 
 const service = services.find((s) => s.key === 'data')!;
@@ -87,7 +87,7 @@ const cases = [
             ];
 
 const DataNext: React.FC = () => (
-  <div className="bg-cream text-sumi">
+  <div className="bg-cream text-sumi overflow-x-clip">
       <Helmet>
         <title>データ活用支援・Power BI／Tableau導入 | 愛知・東海の中小企業向け - Arcle</title>
         <meta name="description" content="愛知・東海の中小企業向けのデータ活用支援。Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計・モニタリング、データリテラシー研修で中小企業のデータドリブン経営を実現。" />
@@ -114,11 +114,11 @@ const DataNext: React.FC = () => (
       title={<>データに語らせ、<br />未来を拓く。</>}
       lead={<>
         <p>埋もれたデータは、磨けば輝く「原石」です。<br />確かな分析と可視化で、意思決定のスピードと精度を劇的に高めます。</p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a href='/contact' className="inline-flex items-center gap-2 rounded-full bg-sumi px-7 py-4 text-base font-bold text-white hover:bg-svc-data transition-colors">
+        <div className="mt-8 flex flex-wrap gap-4">
+          <a href='/contact' className="inline-flex items-center gap-2 rounded-full bg-sumi px-7 py-4 text-base font-bold text-white border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544]">
             まずは無料で相談する<ArrowRight className="h-4 w-4" />
           </a>
-          <a href="#services" className="inline-flex items-center rounded-full border-2 border-sumi px-7 py-4 text-base font-bold text-sumi hover:bg-white transition-colors">サービス詳細を見る</a>
+          <a href="#services" className={`inline-flex items-center rounded-full bg-white px-7 py-4 text-base font-bold text-sumi ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>サービス詳細を見る</a>
         </div>
       </>}
       crumbs={[{ label: 'サービス', href: '/services' }, { label: 'データ活用' }]}
@@ -126,49 +126,46 @@ const DataNext: React.FC = () => (
       image={illust('svc-data')}
     />
 
-    <section className="rounded-t-[40px] bg-white py-20 md:py-28">
+    <section className="bg-white py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[1.2fr_1fr] gap-10 md:gap-16 items-center">
         <div>
           <SectionHead en="Your Concerns" enClass={service.text}
-            title={<>そのデータ、<br /><span className={service.text}>眠らせたまま</span>にしていませんか？</>}
+            title={<>そのデータ、<br /><Mark><span className={service.text}>眠らせたまま</span></Mark>にしていませんか？</>}
             lead="日々蓄積される膨大なデータ。しかし、それを活用できている企業はごくわずかです。「見えない」「分からない」「使えない」を解消し、データを武器に変えます。" />
           <div className="space-y-4">
-            {concerns.map((item) => (
-              <div key={item.title} className="flex gap-4 rounded-[28px] bg-cream p-5 md:p-6">
-                <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${service.dot} ${service.text}`}>
+            {concerns.map((item, i) => (
+              <div key={item.title} className={`group pop-reveal flex gap-4 rounded-[28px] bg-cream p-5 md:p-6 ${card}`} style={{ animationDelay: `${i * 80}ms` }}>
+                <div className={`pop-wiggle flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-white border-2 border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6 ${service.bg}`}>
                   <item.icon className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <div>
-                  <h3 className="font-head font-bold text-lg [word-break:auto-phrase]">{item.title}</h3>
-                  <p className="mt-1 text-sm leading-[1.9] text-sumi-muted">{item.desc}</p>
+                  <h3 className="font-head font-black text-xl md:text-2xl [word-break:auto-phrase]">{item.title}</h3>
+                  <p className="mt-1 text-sm leading-[1.9] text-sumi-muted [word-break:auto-phrase]">{item.desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className={`rounded-[40px] ${service.tint} p-6 md:p-10`}>
-          <img src={illust('worry-data')} alt="データの集計や活用に悩む様子" className="w-full" loading="lazy" />
+        {/* 困っている人のイラストは、ふわふわ浮かせる */}
+        <div className={`group pop-float relative aspect-square grid place-items-center rounded-[32px] ${service.tint} max-w-md w-full justify-self-center p-6 ${card}`}>
+          <img src={illust('worry-data')} alt="データの集計や活用に悩む様子" className="pop-tilt w-full" loading="lazy" />
+          <Sparkle className="absolute -top-5 -right-3 w-9 h-9 text-mustard" />
         </div>
       </div>
     </section>
 
-    <section id="services" className="py-20 md:py-28 bg-cream-dark scroll-mt-24">
+    <section id="services" className="py-20 md:py-28 bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px] border-y-[2.5px] border-sumi scroll-mt-24">
       <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="Data Solutions" enClass={service.text} title="データの収集から分析、活用まで。"
+        <SectionHead en="Data Solutions" enClass={service.text} title={<>データの収集から分析、<Mark>活用</Mark>まで。</>}
           lead="データの収集から分析、活用まで。フェーズに合わせた最適な支援を提供します。" />
         <div className="grid md:grid-cols-2 gap-6">
           {solutions.map((item, index) => (
-            <article key={item.title} className="rounded-[28px] bg-white p-7 md:p-9">
-              <div className="flex items-center justify-between gap-4 mb-7">
-                <div className={`flex h-16 w-16 items-center justify-center rounded-full ${service.dot} ${service.text}`}>
-                  <item.icon className="h-7 w-7" aria-hidden="true" />
-                </div>
-                <span className={`font-en text-4xl font-semibold ${service.text} opacity-30`}>{String(index + 1).padStart(2, '0')}</span>
-              </div>
-              <p className={`font-en text-sm tracking-wider ${service.text}`}>{item.title}</p>
-              <h3 className="mt-2 font-head text-2xl font-bold [word-break:auto-phrase]">{item.sub}</h3>
+            <article key={item.title} className={`group pop-reveal rounded-[28px] bg-white p-7 md:p-9 ${card}`} style={{ animationDelay: `${index * 80}ms` }}>
+              <IconTile icon={<item.icon className="h-7 w-7" aria-hidden="true" />} num={index + 1} bg={service.bg} className="pop-wiggle" />
+              <p className={`mt-6 font-en text-sm font-bold tracking-wider ${service.text}`}>{item.title}</p>
+              <h3 className="mt-1 font-head text-2xl md:text-[28px] font-black leading-snug [word-break:auto-phrase]">{item.sub}</h3>
               <p className="mt-5 leading-[1.9] text-sumi-muted">{item.desc}</p>
-              <ul className="mt-7 pt-6 border-t border-warm-line space-y-3">
+              <ul className="mt-7 pt-6 border-t-2 border-dashed border-warm-line space-y-3">
                 {['ビジネス課題に直結した分析設計', '実務で使いこなせる操作研修', '持続可能なデータ運用体制の構築'].map((feature) => (
                   <li key={feature} className="flex gap-3 text-sm leading-relaxed">
                     <Check className={`h-5 w-5 shrink-0 ${service.text}`} aria-hidden="true" />{feature}
@@ -181,24 +178,27 @@ const DataNext: React.FC = () => (
       </div>
     </section>
 
+    {/* 支援の名前を流すテープ */}
+    <Ticker items={solutions.map((item) => item.sub)} tone="bg-svc-data text-white" className="-mb-4 -mt-[2.5px]" />
+
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="What We Can Do" enClass={service.text} title={<>困り事から、<br className="sm:hidden" />解決策へ</>}
           lead="よくある課題と、私たちが提供するソリューションをご紹介します。" />
-        <div className="space-y-6">
+        <div className="space-y-8">
           {cases.map((item, index) => (
-            <article key={item.problem.title} className="grid md:grid-cols-2 overflow-hidden rounded-[28px] border border-warm-line">
+            <article key={item.problem.title} className={`group pop-reveal grid md:grid-cols-2 overflow-hidden rounded-[28px] ${card}`}>
               <div className="p-7 md:p-9 bg-cream">
                 <p className="flex items-center gap-3 text-sm font-bold text-sumi-muted">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-mustard/25 font-en text-sumi">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="pop-wiggle grid h-10 w-10 place-items-center rounded-full bg-coral text-white font-en font-black italic text-lg border-2 border-sumi -rotate-12">{index + 1}</span>
                   こんな困り事
                 </p>
-                <h3 className="mt-5 font-head text-xl md:text-2xl font-bold leading-snug [word-break:auto-phrase]">{item.problem.title}</h3>
+                <h3 className="mt-5 font-head text-xl md:text-2xl font-black leading-snug [word-break:auto-phrase]">{item.problem.title}</h3>
                 <p className="mt-4 text-sumi-muted leading-[1.9]">{item.problem.desc}</p>
               </div>
-              <div className={`p-7 md:p-9 ${service.tint}`}>
-                <p className={`font-bold text-sm ${service.text}`}>私たちができること</p>
-                <h3 className="mt-5 font-head text-xl md:text-2xl font-bold leading-snug [word-break:auto-phrase]">{item.solution.title}</h3>
+              <div className={`p-7 md:p-9 border-t-[2.5px] md:border-t-0 md:border-l-[2.5px] border-sumi ${service.tint}`}>
+                <p><span className={`inline-block -rotate-3 rounded-lg px-3 py-1 text-sm font-black text-white border-2 border-sumi ${service.bg}`}>私たちができること</span></p>
+                <h3 className="mt-5 font-head text-xl md:text-2xl font-black leading-snug [word-break:auto-phrase]">{item.solution.title}</h3>
                 <p className="mt-4 text-sumi-muted leading-[1.9]">{item.solution.desc}</p>
                 <ul className="mt-6 grid sm:grid-cols-2 gap-3">
                   {item.solution.features.map((feature) => (

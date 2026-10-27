@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Bot, Check, Code, Cpu, Lock, MessageSquare, Zap } from 'lucide-react';
-import { ContactCta, PageHeader, SectionHead } from '../parts';
+import { ContactCta, IconTile, Mark, PageHeader, SectionHead, Sparkle, Ticker, card, press } from '../parts';
 import { illust, services } from '../theme';
 
 const ai = services.find((service) => service.key === 'ai')!;
@@ -87,7 +87,7 @@ const plans = [
 const features = ['最新のAIモデルに対応', 'セキュアな導入プロセスの徹底', '継続的な活用ロードマップ提示'];
 
 const GenAINext: React.FC = () => (
-  <div className="bg-cream text-sumi">
+  <div className="bg-cream text-sumi overflow-x-clip">
     <Helmet>
         <title>生成AI活用支援・ChatGPT導入 | 愛知・東海の中小企業向け - Arcle</title>
         <meta name="description" content="愛知・東海の中小企業向けの生成AI活用支援。ChatGPT Enterprise導入支援、社内独自RAGチャットボット開発、AI利用ガイドライン策定、プロンプトエンジニアリング研修、業務自動化。中小企業のAI活用を月額5万円〜で支援。" />
@@ -121,11 +121,11 @@ const GenAINext: React.FC = () => (
       title={<>生成AI活用支援<br /><span className={ai.text}>AIと共に、創造の先へ。</span></>}
       lead={<>
         <p>生成AIは、単なるツールではありません。<br />ビジネスの常識を覆し、圧倒的な生産性を生み出す「パートナー」です。</p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a href='/contact' className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-sumi text-white text-sm font-bold hover:bg-svc-ai transition-colors">
+        <div className="mt-8 flex flex-wrap gap-4">
+          <a href='/contact' className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-sumi text-white text-sm font-bold border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544]">
             まずは無料で相談する<ArrowRight className="w-4 h-4" aria-hidden="true" />
           </a>
-          <a href='/gen-ai#services' className="inline-flex items-center px-7 py-4 rounded-full border-2 border-sumi text-sumi text-sm font-bold hover:bg-white transition-colors">サービス詳細を見る</a>
+          <a href='/gen-ai#services' className={`inline-flex items-center px-7 py-4 rounded-full bg-white text-sumi text-sm font-bold ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>サービス詳細を見る</a>
         </div>
       </>}
       crumbs={[{ label: 'サービス', href: '/services' }, { label: '生成AI活用' }]}
@@ -133,21 +133,22 @@ const GenAINext: React.FC = () => (
       image={illust('svc-ai')}
     />
 
-    <section className="py-20 md:py-28 bg-white rounded-t-[40px]">
+    <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[1fr_1.1fr] gap-10 md:gap-16 items-center">
         <div>
-          <SectionHead en="Your Concerns" enClass={ai.text} title={<>AIの波に、<br /><span className={ai.text}>乗り遅れて</span>いませんか？</>} lead="ChatGPTをはじめとする生成AIの進化は止まりません。導入への不安やリスクを解消し、安全かつ効果的にAIを業務に組み込みます。" />
-          <div className={`rounded-full ${ai.tint} max-w-[300px] mx-auto`}>
-            <img src={illust('worry-ai')} alt="" className="w-full" loading="lazy" />
+          <SectionHead en="Your Concerns" enClass={ai.text} title={<>AIの波に、<br /><Mark><span className={ai.text}>乗り遅れて</span></Mark>いませんか？</>} lead="ChatGPTをはじめとする生成AIの進化は止まりません。導入への不安やリスクを解消し、安全かつ効果的にAIを業務に組み込みます。" />
+          <div className={`group pop-reveal relative aspect-square grid place-items-center rounded-[32px] ${ai.tint} max-w-[320px] mx-auto p-5 ${card}`}>
+            <img src={illust('worry-ai')} alt="" className="pop-tilt w-full" loading="lazy" />
+            <Sparkle className="absolute -top-5 -right-3 w-9 h-9 text-mustard" />
           </div>
         </div>
-        <div className="space-y-4">
-          {concerns.map((item) => (
-            <article key={item.title} className="flex items-start gap-5 rounded-[28px] bg-cream p-6 md:p-8">
-              <span className={`shrink-0 w-12 h-12 grid place-items-center rounded-full ${ai.dot} ${ai.text}`}><item.icon className="w-6 h-6" aria-hidden="true" /></span>
+        <div className="space-y-5">
+          {concerns.map((item, i) => (
+            <article key={item.title} className={`group pop-reveal flex items-start gap-5 rounded-[28px] bg-cream p-6 md:p-8 ${card}`} style={{ animationDelay: `${i * 80}ms` }}>
+              <span className={`pop-wiggle shrink-0 w-12 h-12 grid place-items-center rounded-2xl text-white border-2 border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6 ${ai.bg}`}><item.icon className="w-6 h-6" aria-hidden="true" /></span>
               <div>
-                <h3 className="font-head text-lg font-bold [word-break:auto-phrase]">{item.title}</h3>
-                <p className="mt-2 text-sm leading-[1.9] text-sumi-muted">{item.desc}</p>
+                <h3 className="font-head text-xl md:text-2xl font-black [word-break:auto-phrase]">{item.title}</h3>
+                <p className="mt-2 text-sm leading-[1.9] text-sumi-muted [word-break:auto-phrase]">{item.desc}</p>
               </div>
             </article>
           ))}
@@ -155,20 +156,17 @@ const GenAINext: React.FC = () => (
       </div>
     </section>
 
-    <section id="services" className="py-20 md:py-28 bg-cream-dark scroll-mt-24">
+    <section id="services" className="py-20 md:py-28 bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px] border-y-[2.5px] border-sumi scroll-mt-24">
       <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="AI Integration" enClass={ai.text} title="導入支援から独自開発まで" lead="導入支援から独自開発まで。貴社のAIトランスフォーメーションを加速させます。" />
+        <SectionHead en="AI Integration" enClass={ai.text} title={<>導入支援から<Mark>独自開発</Mark>まで</>} lead="導入支援から独自開発まで。貴社のAIトランスフォーメーションを加速させます。" />
         <div className="grid md:grid-cols-2 gap-6">
           {offerings.map((item, index) => (
-            <article key={item.title} className="rounded-[28px] bg-white p-7 md:p-9">
-              <div className="flex justify-between items-center gap-4">
-                <span className={`w-16 h-16 rounded-full grid place-items-center ${ai.dot} ${ai.text}`}><item.icon className="w-8 h-8" aria-hidden="true" /></span>
-                <span className={`font-en text-4xl font-bold ${ai.text} opacity-40`}>0{index + 1}</span>
-              </div>
-              <p className={`mt-7 font-en text-sm font-semibold tracking-wider ${ai.text}`}>{item.title}</p>
-              <h3 className="mt-2 font-head text-2xl font-bold [word-break:auto-phrase]">{item.sub}</h3>
+            <article key={item.title} className={`group pop-reveal rounded-[28px] bg-white p-7 md:p-9 ${card}`} style={{ animationDelay: `${index * 80}ms` }}>
+              <IconTile icon={<item.icon className="w-7 h-7" aria-hidden="true" />} num={index + 1} bg={ai.bg} className="pop-wiggle" />
+              <p className={`mt-6 font-en text-sm font-bold tracking-wider ${ai.text}`}>{item.title}</p>
+              <h3 className="mt-1 font-head text-2xl md:text-[28px] font-black leading-snug [word-break:auto-phrase]">{item.sub}</h3>
               <p className="mt-4 text-[15px] leading-[1.9] text-sumi-muted">{item.desc}</p>
-              <ul className="mt-6 pt-5 border-t border-warm-line space-y-3">
+              <ul className="mt-6 pt-5 border-t-2 border-dashed border-warm-line space-y-3">
                 {features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed"><Check className={`w-4 h-4 shrink-0 mt-1 ${ai.text}`} aria-hidden="true" />{feature}</li>
                 ))}
@@ -179,27 +177,30 @@ const GenAINext: React.FC = () => (
       </div>
     </section>
 
+    {/* サービスの名前を流すテープ */}
+    <Ticker items={offerings.map((item) => item.sub)} tone="bg-svc-ai text-white" className="-mb-4 -mt-[2.5px]" />
+
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Pricing" enClass={ai.text} title="プラン一覧" lead="導入から定着、独自開発まで。貴社の成長段階に合わせて最適なAI活用支援プランをご提供します" center />
-        <div className="grid lg:grid-cols-3 gap-6 items-stretch">
-          {plans.map((plan) => (
-            <article key={plan.name} className={`relative flex flex-col rounded-[28px] border p-7 md:p-8 ${plan.recommended ? `${ai.tint} ${ai.border} shadow-[0_16px_40px_rgb(31_36_48/0.08)]` : 'bg-cream border-warm-line'}`}>
-              {plan.recommended && <span className={`absolute -top-3 left-7 px-4 py-1 rounded-full text-xs font-bold text-white ${ai.bg}`}>おすすめ</span>}
-              <p className={`font-en text-xl font-semibold ${ai.text}`}>{plan.name}</p>
-              <h3 className="mt-2 font-head text-xl font-bold [word-break:auto-phrase]">{plan.sub}</h3>
+        <div className="grid lg:grid-cols-3 gap-8 lg:gap-6 items-stretch">
+          {plans.map((plan, i) => (
+            <article key={plan.name} style={{ animationDelay: `${i * 80}ms` }} className={`pop-reveal relative flex flex-col rounded-[28px] border-[2.5px] border-sumi p-7 md:p-8 ${plan.recommended ? `${ai.tint} shadow-[8px_8px_0_#F2B544] lg:-translate-y-3` : 'bg-cream shadow-[6px_6px_0_#1F2430]'}`}>
+              {plan.recommended && <span className="pop-float absolute -top-4 left-6 -rotate-3 rounded-lg px-4 py-1 text-sm font-black text-white bg-coral border-2 border-sumi shadow-[3px_3px_0_#1F2430]">おすすめ</span>}
+              <p className={`font-en text-xl font-black italic ${ai.text}`}>{plan.name}</p>
+              <h3 className="mt-1 font-head text-2xl font-black [word-break:auto-phrase]">{plan.sub}</h3>
               <p className="mt-3 text-sm text-sumi-muted">{plan.desc}</p>
-              <p className="mt-6 text-4xl font-head font-bold">{plan.price}</p>
-              <ul className="mt-7 mb-8 pt-6 border-t border-warm-line space-y-3">
+              <p className={`mt-6 font-en text-5xl font-black italic tracking-tight ${ai.text}`}>{plan.price}</p>
+              <ul className="mt-7 mb-8 pt-6 border-t-2 border-dashed border-warm-line space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2 text-sm leading-[1.8] text-sumi-muted"><Check className={`w-4 h-4 shrink-0 mt-1 ${ai.text}`} aria-hidden="true" /><span>{feature}</span></li>
                 ))}
               </ul>
-              <a href='/contact' aria-label={`${plan.sub}についてお問い合わせ`} className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-bold transition-colors ${plan.recommended ? 'bg-sumi text-white hover:bg-svc-ai' : 'border-2 border-sumi hover:bg-white'}`}>お問い合わせ<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
+              <a href='/contact' aria-label={`${plan.sub}についてお問い合わせ`} className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-bold border-[2.5px] border-sumi transition-all hover:translate-x-[2px] hover:translate-y-[2px] ${plan.recommended ? 'bg-sumi text-white shadow-[4px_4px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544]' : 'bg-white shadow-[4px_4px_0_#1F2430] hover:shadow-[2px_2px_0_#1F2430]'}`}>お問い合わせ<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
             </article>
           ))}
         </div>
-        <div className="mt-8 space-y-2 text-xs leading-[1.9] text-sumi-muted">
+        <div className="mt-10 rounded-[28px] bg-cream border-2 border-dashed border-sumi/40 p-6 space-y-2 text-xs leading-[1.9] text-sumi-muted">
           <p>※料金は税抜です。お客様の状況やご要望に応じてカスタマイズ可能です。</p>
           <p>※Developmentプランは要件定義後に個別見積もりとなります。まずはお気軽にご相談ください。</p>
         </div>

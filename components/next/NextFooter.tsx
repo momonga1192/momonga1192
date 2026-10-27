@@ -23,10 +23,10 @@ const groups = [
 ];
 
 const NextFooter: React.FC = () => (
-  <footer className="bg-sumi text-white/80">
+  <footer className="bg-sumi text-white/80 border-t-[2.5px] border-sumi">
     <div className="max-w-6xl mx-auto px-5 pt-16 pb-10 grid gap-12 md:grid-cols-[1.2fr_2fr]">
       <div>
-        <p className="font-en text-3xl font-bold text-white">Arcle</p>
+        <p className="font-en text-4xl font-black italic text-white">Arcle</p>
         <p className="mt-4 text-sm leading-relaxed">
           中小企業のIT部門として
           <br />
@@ -34,18 +34,18 @@ const NextFooter: React.FC = () => (
         </p>
         <div className="mt-6 flex gap-2" aria-hidden="true">
           {services.map((s) => (
-            <span key={s.key} className={`w-8 h-1.5 rounded-full ${s.bg}`} />
+            <span key={s.key} className={`w-4 h-4 rounded-full border-2 border-white/80 ${s.bg}`} />
           ))}
         </div>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
         {groups.map((group) => (
           <div key={group.title}>
-            <p className="text-xs font-bold tracking-widest text-white/50 mb-4">{group.title}</p>
+            <p className="mb-4"><span className="inline-block -rotate-2 rounded-md bg-mustard px-2 py-0.5 text-xs font-black tracking-widest text-sumi">{group.title}</span></p>
             <ul className="space-y-3 text-sm">
               {group.links.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="hover:text-white">
+                  <a href={link.href} className="hover:text-mustard transition-colors">
                     {link.label}
                   </a>
                 </li>

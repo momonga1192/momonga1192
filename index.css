@@ -57,7 +57,7 @@ body {
   --color-svc-josys: #3B6FE0;
   --color-svc-data: #5B5BD6;
   --color-svc-ai: #8E5BD0;
-  --color-svc-web: #1E9C8C;
+  --color-svc-web: #C8509F;
   --color-mustard: #F2B544;
   --color-coral: #F07A5A;
   --font-head: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
@@ -79,3 +79,37 @@ body {
   .marquee-track { animation: none; }
   .marquee { overflow-x: auto; }
 }
+
+/* ポップ版の動き。使い方は components/next/DESIGN.md の「動き」を参照 */
+@keyframes pop-float { 50% { transform: translateY(-8px); } }
+@keyframes pop-twinkle { 0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; } 50% { transform: scale(0.7) rotate(25deg); opacity: 0.75; } }
+@keyframes pop-wiggle { 0%, 100% { transform: none; } 25% { transform: rotate(-7deg) scale(1.06); } 75% { transform: rotate(6deg) scale(1.06); } }
+@keyframes pop-ticker { to { transform: translateX(-50%); } }
+@keyframes pop-in { 0% { opacity: 0; transform: translateY(28px) scale(0.96); } 70% { opacity: 1; transform: translateY(-4px) scale(1.01); } 100% { opacity: 1; transform: none; } }
+
+/* ふわふわ浮く（Tailwind の rotate-* はそのまま効く。ずらしたいときは [animation-delay:-2s] など） */
+.pop-float { animation: pop-float 4s ease-in-out infinite; }
+/* キラキラがまたたく */
+.pop-twinkle { animation: pop-twinkle 2.6s ease-in-out infinite; transform-origin: center; }
+/* 流れるテープ */
+.pop-ticker { animation: pop-ticker 40s linear infinite; }
+/* マウスを乗せると、斜めに傾いて少し持ち上がる。親に group を付けると、カード全体へのマウスオーバーでも動く */
+.pop-tilt { transition: transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1); transform-origin: 50% 90%; }
+.pop-tilt:hover, .group:hover .pop-tilt { transform: rotate(-4deg) translateY(-6px) scale(1.03); }
+.pop-tilt-r:hover, .group:hover .pop-tilt-r { transform: rotate(4deg) translateY(-6px) scale(1.03); }
+/* マウスを乗せると、ぷるっと揺れる（ステッカーや番号に） */
+.pop-wiggle:hover, .group:hover .pop-wiggle { animation: pop-wiggle 0.5s ease-in-out; }
+/* スクロールして画面に入ったら、ぽんと出てくる（JSが動くときだけ隠す）。順番に出すときは style={{ animationDelay }} */
+.js-motion .pop-reveal:not(.is-in) { opacity: 0; }
+.js-motion .pop-reveal.is-in { animation: pop-in 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pop-float, .pop-twinkle, .pop-ticker { animation: none; }
+  .pop-tilt:hover, .group:hover .pop-tilt, .pop-tilt-r:hover, .group:hover .pop-tilt-r { transform: none; }
+  .pop-wiggle:hover, .group:hover .pop-wiggle { animation: none; }
+  .js-motion .pop-reveal:not(.is-in) { opacity: 1; }
+  .js-motion .pop-reveal.is-in { animation: none; }
+}
+
+/* 斜めのテープなどで、ページの横幅がはみ出さないようにする */
+html { overflow-x: clip; }
