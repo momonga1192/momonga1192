@@ -10,10 +10,10 @@ const ArticleJosysGuide: React.FC = () => {
   return (
     <div className="bg-cream text-sumi">
       <Helmet>
-        <title>一宮市の中小企業向け 情シス代行の選び方 | Arcle</title>
+        <title>中小企業向け 情シス代行の選び方 | Arcle</title>
         <meta
           name="description"
-          content="一宮市で情シス代行を検討する中小企業向けに、比較ポイント、費用目安、導入ステップを実務目線で解説します。"
+          content="情シス代行を検討する中小企業向けに、比較ポイント、費用目安、導入ステップを実務目線で解説します。"
         />
         <link rel="canonical" href="https://www.arcle.net/articles/ichinomiya-josys-outsourcing-guide" />
         <script type="application/ld+json">
@@ -51,9 +51,9 @@ const ArticleJosysGuide: React.FC = () => {
       </Helmet>
       <PageHeader
         en="Articles"
-        title="一宮市の中小企業向け 情シス代行の選び方"
+        title="中小企業向け 情シス代行の選び方"
         service="josys"
-        crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: '一宮市の中小企業向け 情シス代行の選び方' }]}
+        crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: '中小企業向け 情シス代行の選び方' }]}
       />
       <article className="bg-white rounded-t-[48px] md:rounded-t-[80px] py-20 md:py-28">
         <div className="max-w-3xl mx-auto px-5 text-[16px] leading-[2]">

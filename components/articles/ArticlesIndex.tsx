@@ -6,7 +6,7 @@ import { serviceByName, services, illust } from '../next/theme';
 
 export const articles = [
   {
-    title: '一宮市の中小企業向け 情シス代行の選び方',
+    title: '中小企業向け 情シス代行の選び方',
     description: '情シス代行を検討する際の比較ポイント、費用感、失敗しない導入手順を解説します。',
     href: '/articles/ichinomiya-josys-outsourcing-guide',
     published: '2026-03-06',

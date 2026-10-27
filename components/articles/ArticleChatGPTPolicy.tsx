@@ -110,7 +110,7 @@ const ArticleChatGPTPolicy: React.FC = () => {
             <h2 className="font-head text-2xl md:text-[28px] font-bold text-svc-ai [word-break:auto-phrase] mb-4">関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/ichinomiya-josys-outsourcing-guide" className="block text-svc-josys hover:underline underline-offset-4 py-1">
-                一宮市の中小企業向け 情シス代行の選び方
+                中小企業向け 情シス代行の選び方
               </a>
               <a href="/articles/sme-bi-tableau-powerbi" className="block text-svc-data hover:underline underline-offset-4 py-1">
                 TableauとPower BIはどちらを選ぶべき？

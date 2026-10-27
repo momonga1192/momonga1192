@@ -29,7 +29,7 @@ const JosysRescue: React.FC = () => {
     <div className="bg-cream text-sumi">
       <Helmet>
         <title>情シスレスキュー | IT専任者がいない企業のためのIT代行サービス - Arcle</title>
-        <meta name="description" content="情シスレスキューは愛知県一宮市のArcleが提供するIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額5万円〜で包括サポート。IT専任者がいない中小企業の味方です。" />
+        <meta name="description" content="情シスレスキューはArcleが提供するIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額5万円〜で包括サポート。IT専任者がいない中小企業の味方です。" />
         <link rel="canonical" href="https://www.arcle.net/lp/josys-rescue" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -45,7 +45,7 @@ const JosysRescue: React.FC = () => {
           "name": "情シスレスキュー",
           "provider": { "@type": "Organization", "name": "Arcle" },
           "description": "IT専任者がいない企業のためのIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額5万円〜で包括サポート。",
-          "areaServed": { "@type": "City", "name": "一宮市" },
+          "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [
             { "@type": "Offer", "name": "ライトプラン", "price": "50000", "priceCurrency": "JPY", "description": "IT相談窓口・簡易トラブル対応・リモートサポート" },
             { "@type": "Offer", "name": "スタンダードプラン", "price": "150000", "priceCurrency": "JPY", "description": "Lightの全内容+PCキッティング・システム導入支援・訪問サポート・セキュリティ対策" },
@@ -381,7 +381,7 @@ const JosysRescue: React.FC = () => {
           </div>
           <div className="text-center mt-12 reveal-hidden space-y-2">
             <p className="text-sumi-muted text-xs">※料金は税抜です。</p>
-            <p className="text-sumi-muted text-xs">※訪問サポートは一宮市近郊は無料。その他エリアは別途交通費を頂戴します。</p>
+            <p className="text-sumi-muted text-xs">※東海エリアは訪問にも対応します。</p>
           </div>
         </div>
       </section>
@@ -398,7 +398,7 @@ const JosysRescue: React.FC = () => {
             {[
               {
                 q: '対応エリアはどこですか？',
-                a: '愛知県一宮市近郊の企業様を中心に承っています。リモート対応は全国可能です。',
+                a: '東海エリアは訪問にも対応しています。リモート対応は全国可能です。',
               },
               {
                 q: '契約期間の縛りはありますか？',

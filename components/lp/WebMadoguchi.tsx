@@ -36,7 +36,7 @@ const WebMadoguchi: React.FC = () => {
     <div className="bg-cream text-sumi">
       <Helmet>
         <title>ウェブの窓口 | ホームページ制作・リニューアル - Arcle</title>
-        <meta name="description" content="ウェブの窓口は愛知県一宮市のArcleが提供するWeb制作サービス。コーポレートサイト・LP制作、WordPress導入、SEO内部対策、保守運用を初期費用0円・月額4,800円〜（税抜）で提供。スマホ対応・デザインリニューアルもお任せ。" />
+        <meta name="description" content="ウェブの窓口はArcleが提供するWeb制作サービス。コーポレートサイト・LP制作、WordPress導入、SEO内部対策、保守運用を初期費用0円・月額4,800円〜（税抜）で提供。スマホ対応・デザインリニューアルもお任せ。" />
         <link rel="canonical" href="https://www.arcle.net/lp/web-madoguchi" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -52,7 +52,7 @@ const WebMadoguchi: React.FC = () => {
           "name": "ウェブの窓口",
           "provider": { "@type": "Organization", "name": "Arcle" },
           "description": "企業のWeb制作・リニューアルをワンストップでサポート。デザインから集客まで、まるっとお任せ。",
-          "areaServed": { "@type": "City", "name": "一宮市" },
+          "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [
   {
     "@type": "Offer",

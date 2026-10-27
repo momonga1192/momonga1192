@@ -71,7 +71,7 @@ const flow = [
   { title: '運用サポート', desc: '公開後も文章・写真の差し替えやお知らせの掲載をお手伝いします。' }
 ];
 
-const areas = ['一宮市', '稲沢市', '江南市', '岩倉市', '北名古屋市', '清須市', '小牧市', '犬山市', '名古屋市', '岐阜市', '羽島市', '各務原市'];
+const areas = ['愛知県', '岐阜県', '三重県'];
 
 const faqs = [
   {
@@ -127,7 +127,7 @@ const WebNext: React.FC = () => (
   <div className="bg-cream text-sumi">
       <Helmet>
         <title>月額制ホームページ制作 | 初期費用0円・月額4,800円〜 - Arcle</title>
-        <meta name="description" content="愛知県一宮市のArcleの月額制ホームページ制作。初期費用0円、月額4,800円（税抜）から。サーバー・ドメイン・独自ドメインのメール・スマホ対応・公開後の更新まで込み。一宮市・稲沢市・江南市など尾張エリアは訪問打ち合わせにも対応します。" />
+        <meta name="description" content="Arcleの月額制ホームページ制作。初期費用0円、月額4,800円（税抜）から。サーバー・ドメイン・独自ドメインのメール・スマホ対応・公開後の更新まで込み。東海エリアは訪問打ち合わせにも対応します。" />
         <link rel="canonical" href="https://www.arcle.net/web-production" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -143,7 +143,7 @@ const WebNext: React.FC = () => (
           "name": "月額制ホームページ制作",
           "provider": { "@type": "Organization", "name": "Arcle" },
           "description": "初期費用0円・月額4,800円から。サーバー・ドメイン・メール・スマホ対応・公開後の更新まで込みのホームページ制作",
-          "areaServed": areas.map((name) => ({ "@type": "City", "name": name })),
+          "areaServed": areas.map((name) => ({ "@type": "State", "name": name })),
           "offers": plans.map((plan) => ({
             "@type": "Offer",
             "name": plan.sub,
@@ -341,7 +341,7 @@ const WebNext: React.FC = () => (
 
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="Area" title="対応エリア" lead="一宮市を拠点に、尾張エリアと岐阜県南部は訪問での打ち合わせにも対応します。オンライン打ち合わせなら全国どこからでもご依頼いただけます。" enClass={service.text} center />
+        <SectionHead en="Area" title="対応エリア" lead="東海エリア（愛知・岐阜・三重）は訪問での打ち合わせにも対応します。オンライン打ち合わせなら全国どこからでもご依頼いただけます。" enClass={service.text} center />
         <ul className="max-w-3xl mx-auto flex flex-wrap justify-center gap-3">{areas.map((area) => (
           <li key={area} className="rounded-full border border-warm-line bg-cream px-4 py-2 text-sm inline-flex items-center gap-2"><MapPin className={`w-4 h-4 ${service.text}`} />{area}</li>
         ))}</ul>

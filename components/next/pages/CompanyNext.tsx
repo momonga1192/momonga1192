@@ -19,7 +19,7 @@ const profile: [string, React.ReactNode][] = [
       ))}
     </ul>
   ],
-  ['対応エリア', '一宮市近郊の企業さまを中心に承っています（訪問は一宮市近郊無料）。リモートで対応できる業務は、エリアを問わずご相談ください。'],
+  ['対応エリア', '東海エリアは訪問にも対応しています。リモートで対応できる業務は、エリアを問わずご相談ください。'],
   ['お問い合わせ', 'お問い合わせフォームより承っています。通常2営業日以内にご連絡します。']
 ];
 
@@ -27,14 +27,14 @@ const CompanyNext: React.FC = () => (
   <div className="bg-cream text-sumi">
     <Helmet>
       <title>会社案内 | Arcle（アークル）</title>
-      <meta name="description" content="Arcle（アークル）の会社案内。社名に込めた想い、代表あいさつ、会社概要とアクセスをご紹介します。愛知県一宮市。" />
+      <meta name="description" content="Arcle（アークル）の会社案内。社名に込めた想い、代表あいさつ、会社概要とアクセスをご紹介します。" />
       <link rel="canonical" href="https://www.arcle.net/company" />
     </Helmet>
 
     <PageHeader
       en="Company"
       title="会社案内"
-      lead="Arcleは、愛知県一宮市を拠点に、IT担当者がいない中小企業の「IT部門」として支援している会社です。"
+      lead="Arcleは、IT担当者がいない中小企業の「IT部門」として支援している会社です。"
       crumbs={[{ label: '会社案内' }]}
     />
 

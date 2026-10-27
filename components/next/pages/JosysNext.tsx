@@ -84,8 +84,8 @@ const plans = [
 const JosysNext: React.FC = () => (
   <div className="bg-cream text-sumi">
       <Helmet>
-        <title>情シス代行サービス | 愛知県一宮市のITアウトソーシング - Arcle</title>
-        <meta name="description" content="愛知県一宮市のArcleが提供する情シス代行サービス。IT専任担当者不在の中小企業向けに、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額5万円〜で包括サポート。" />
+        <title>情シス代行サービス | 中小企業のITアウトソーシング - Arcle</title>
+        <meta name="description" content="Arcleが提供する情シス代行サービス。IT専任担当者不在の中小企業向けに、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額5万円〜で包括サポート。" />
         <link rel="canonical" href="https://www.arcle.net/josys" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -101,7 +101,7 @@ const JosysNext: React.FC = () => (
           "name": "情シス代行サービス",
           "provider": { "@type": "Organization", "name": "Arcle" },
           "description": "IT専任担当者不在の企業向けに、ITヘルプデスク・システム導入・セキュリティ対策・クラウド支援を包括サポート",
-          "areaServed": { "@type": "City", "name": "一宮市" },
+          "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [
             { "@type": "Offer", "name": "ライトプラン", "price": "50000", "priceCurrency": "JPY", "description": "IT相談窓口・簡易トラブルシューティング" },
             { "@type": "Offer", "name": "スタンダードプラン", "price": "150000", "priceCurrency": "JPY", "description": "情シス業務を包括サポート" },
@@ -211,7 +211,7 @@ const JosysNext: React.FC = () => (
         </div>
         <div className="mt-8 rounded-[28px] bg-white border border-warm-line p-6 text-sm text-sumi-muted leading-[1.9] space-y-2">
           <p>※料金は税抜です。企業規模や対応範囲に応じてカスタマイズ可能です。</p>
-          <p>※訪問サポートは一宮市近郊は無料。その他エリアは別途交通費を頂戴します。</p>
+          <p>※東海エリアは訪問にも対応します。</p>
         </div>
       </div>
     </section>

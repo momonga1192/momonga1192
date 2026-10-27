@@ -12,10 +12,10 @@ const HomeNext: React.FC = () => {
   return (
     <div className="bg-cream text-sumi">
       <Helmet>
-        <title>Arcle | 愛知県一宮市のITコンサルティング - DX推進・情シス代行・データ活用・生成AI</title>
+        <title>Arcle | 中小企業のITコンサルティング - DX推進・情シス代行・データ活用・生成AI</title>
         <meta
           name="description"
-          content="Arcle（アークル）は愛知県一宮市のITコンサルティング企業です。中小企業向けに情シス代行、データ活用支援（Tableau・PowerBI）、生成AI導入支援、Web制作を提供。DX推進のパートナーとして経営課題を解決します。"
+          content="Arcle（アークル）は中小企業向けのITコンサルティング企業です。情シス代行、データ活用支援（Tableau・PowerBI）、生成AI導入支援、Web制作を提供。DX推進のパートナーとして経営課題を解決します。"
         />
         <link rel="canonical" href="https://www.arcle.net/" />
       </Helmet>
@@ -26,11 +26,7 @@ const HomeNext: React.FC = () => {
         <div className="absolute -left-24 bottom-[-140px] w-[320px] h-[320px] rounded-full bg-mustard/25" />
         <div className="relative max-w-6xl mx-auto px-5 pt-12 pb-20 md:pt-16 md:pb-28 grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-6 items-center">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-line px-4 py-1.5 text-sm text-sumi-muted">
-              <MapPin className="w-4 h-4 text-coral" />
-              愛知県一宮市のIT支援
-            </p>
-            <h1 className="font-head font-black text-[27px] leading-[1.5] sm:text-[36px] lg:text-[44px] lg:leading-[1.45] mt-6 tracking-[0.02em] [word-break:auto-phrase]">
+            <h1 className="font-head font-black text-[27px] leading-[1.5] sm:text-[36px] lg:text-[44px] lg:leading-[1.45] tracking-[0.02em] [word-break:auto-phrase]">
               <span className="inline-block">会社のITの「困った」を、</span>
               <br />
               <span className="inline-block">
@@ -50,7 +46,7 @@ const HomeNext: React.FC = () => {
               </a>
             </div>
             <ul className="mt-9 flex flex-wrap gap-x-6 gap-y-2 text-sm text-sumi-muted">
-              {['ご相談・お見積り無料', '一宮市近郊は訪問対応', 'ITのことをまとめて相談'].map((t) => (
+              {['ご相談・お見積り無料', '東海エリアは訪問対応', 'ITのことをまとめて相談'].map((t) => (
                 <li key={t} className="flex items-center gap-1.5">
                   <Check className="w-4 h-4 text-svc-web" strokeWidth={3} />
                   {t}
@@ -138,7 +134,7 @@ const HomeNext: React.FC = () => {
           <SectionHead en="Why Arcle" title="Arcleが選ばれる3つの理由" center />
           <div className="grid md:grid-cols-3 gap-10">
             {[
-              { img: 'reason-local', icon: MapPin, title: '一宮市から、すぐに駆けつける', body: '一宮市近郊のお客様には訪問無料で対応します。顔の見える距離だから、ちょっとしたことも気軽に相談できます。' },
+              { img: 'reason-local', icon: MapPin, title: '東海エリアなら、駆けつけます', body: '東海エリアのお客さまには訪問で対応します。顔の見える距離だから、ちょっとしたことも気軽に相談できます。' },
               { img: 'reason-onestop', icon: Layers, title: 'ITのことを、ひとつの窓口で', body: 'PC・データ・AI・Webを別々の会社に頼む必要はありません。会社全体を見渡したうえで、優先順位から一緒に考えます。' },
               { img: 'reason-small', icon: MessageCircle, title: '小さく始めて、一緒に育てる', body: '最初から大きな投資は必要ありません。まずは困りごとをひとつ解決するところから始め、成果を見ながら広げていきます。' }
             ].map((r, i) => (

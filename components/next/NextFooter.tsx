@@ -28,7 +28,7 @@ const NextFooter: React.FC = () => (
       <div>
         <p className="font-en text-3xl font-bold text-white">Arcle</p>
         <p className="mt-4 text-sm leading-relaxed">
-          愛知県一宮市を拠点に、中小企業のIT部門として
+          中小企業のIT部門として
           <br />
           情シス・データ・生成AI・Webをまとめて支援しています。
         </p>

@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     q: '対応エリアはどこですか？',
-    a: '現在、新規のご依頼は愛知県一宮市近郊の企業様を中心に承っております。訪問サポートは一宮市近郊は無料で、その他エリアは別途交通費をいただいております。リモート対応が可能な業務については、エリアを問わずご相談いただけます。'
+    a: '東海エリアは訪問にも対応しています。リモート対応が可能な業務については、エリアを問わずご相談いただけます。'
   },
   {
     q: '相談や見積りは無料ですか？',
@@ -79,7 +79,7 @@ const FlowNext: React.FC = () => (
               <MapPin className="w-7 h-7 text-coral" />
             </span>
             <h3 className="font-head text-xl font-bold mt-5">訪問でのサポート</h3>
-            <p className="mt-3 leading-[1.9] text-sumi-muted">一宮市近郊の企業さまを中心に承っています。一宮市近郊への訪問は無料、その他のエリアは別途交通費をいただきます。</p>
+            <p className="mt-3 leading-[1.9] text-sumi-muted">東海エリアは訪問にも対応しています。リモートで対応できる業務は、エリアを問わずご相談ください。</p>
           </div>
           <div className="rounded-[28px] bg-white p-8">
             <span className="w-14 h-14 rounded-full bg-svc-josys/15 grid place-items-center">

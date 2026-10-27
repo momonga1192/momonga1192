@@ -36,7 +36,7 @@ const HajimeteAI: React.FC = () => {
     <div className="bg-cream text-sumi">
       <Helmet>
         <title>はじめてのAI導入 | ChatGPT導入・生成AI活用支援 - Arcle</title>
-        <meta name="description" content="はじめてのAI導入は愛知県一宮市のArcleが提供する生成AI活用支援サービス。ChatGPT Enterprise導入、AI利用ガイドライン策定、社内RAGチャットボット開発、プロンプト研修を月額5万円〜で提供。" />
+        <meta name="description" content="はじめてのAI導入はArcleが提供する生成AI活用支援サービス。ChatGPT Enterprise導入、AI利用ガイドライン策定、社内RAGチャットボット開発、プロンプト研修を月額5万円〜で提供。" />
         <link rel="canonical" href="https://www.arcle.net/lp/hajimete-ai" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -52,7 +52,7 @@ const HajimeteAI: React.FC = () => {
           "name": "はじめてのAI導入",
           "provider": { "@type": "Organization", "name": "Arcle" },
           "description": "ChatGPT等の生成AIを安全に・効果的に業務へ導入するための伴走型サービス。導入から定着、独自開発まで。",
-          "areaServed": { "@type": "City", "name": "一宮市" },
+          "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [
             { "@type": "Offer", "name": "Starterプラン", "price": "50000", "priceCurrency": "JPY" },
             { "@type": "Offer", "name": "Standardプラン", "price": "200000", "priceCurrency": "JPY" },

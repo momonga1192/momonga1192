@@ -111,7 +111,7 @@ const ArticleBIToolChoice: React.FC = () => {
             <h2 className="font-head text-2xl md:text-[28px] font-bold text-svc-data [word-break:auto-phrase] mb-4">関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/ichinomiya-josys-outsourcing-guide" className="block text-svc-josys hover:underline underline-offset-4 py-1">
-                一宮市の中小企業向け 情シス代行の選び方
+                中小企業向け 情シス代行の選び方
               </a>
               <a href="/articles/chatgpt-security-policy-sme" className="block text-svc-ai hover:underline underline-offset-4 py-1">
                 ChatGPT導入前に作るべき社内ルール

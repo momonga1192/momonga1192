@@ -18,7 +18,7 @@ const ServicesNext: React.FC = () => (
       <title>サービス一覧 | 情シス代行・データ活用・生成AI・Web制作 - Arcle</title>
       <meta
         name="description"
-        content="Arcleのサービス一覧。情シス代行・データ活用・生成AI活用・Web制作の4つのサービスで、IT担当者がいない中小企業のITをまとめて支援します。愛知県一宮市。"
+        content="Arcleのサービス一覧。情シス代行・データ活用・生成AI活用・Web制作の4つのサービスで、IT担当者がいない中小企業のITをまとめて支援します。"
       />
       <link rel="canonical" href="https://www.arcle.net/services" />
     </Helmet>
