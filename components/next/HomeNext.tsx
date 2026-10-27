@@ -100,7 +100,7 @@ const HomeNext: React.FC = () => {
           />
           <div className="grid md:grid-cols-2 gap-6">
             {services.map((s, i) => (
-              <article key={s.key} className="group relative flex flex-col rounded-[32px] bg-white overflow-hidden">
+              <article key={s.key} className="group relative flex flex-col rounded-[32px] bg-white overflow-hidden hover:shadow-[0_16px_40px_rgb(31_36_48/0.08)] hover:-translate-y-1 transition-all">
                 <div className={`relative ${s.tint} px-8 pt-8`}>
                   <span className="absolute right-7 top-6 font-en text-[56px] font-bold leading-none text-white/80">0{i + 1}</span>
                   <img src={illust(`svc-${s.key}`)} alt="" className="relative w-full aspect-[4/3] object-contain mix-blend-multiply" loading="lazy" />
@@ -116,12 +116,12 @@ const HomeNext: React.FC = () => {
                       </li>
                     ))}
                   </ul>
-                  <a href={s.href} className={`mt-auto pt-7 inline-flex items-center gap-2 font-bold ${s.text}`}>
+                  <a href={s.href} className={`mt-auto pt-7 inline-flex items-center gap-2 font-bold ${s.text} after:absolute after:inset-0 after:content-['']`}>
                     {s.name}について詳しく
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </div>
-                <span className={`absolute left-0 right-0 bottom-0 h-1.5 ${s.bg} scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500`} />
+                <span className={`pointer-events-none absolute left-0 right-0 bottom-0 h-1.5 ${s.bg} scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500`} />
               </article>
             ))}
           </div>
