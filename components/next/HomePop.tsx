@@ -25,10 +25,10 @@ const HomePop: React.FC = () => {
 
       {/* ヒーロー */}
       <section className="relative bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px]">
-        <div className="relative max-w-6xl mx-auto px-5 pt-12 pb-24 md:pt-16 md:pb-32 grid lg:grid-cols-[1fr_1.1fr] gap-20 lg:gap-6 items-center">
-          <div className="relative z-10">
+        <div className="relative max-w-6xl mx-auto px-5 pt-4 pb-20 md:pt-16 md:pb-32 flex flex-col lg:grid lg:grid-cols-[1fr_1.1fr] lg:gap-6 lg:items-center">
+          <div className="relative z-10 order-2 lg:order-none -mt-14 mx-1 sm:mx-6 rounded-[28px] bg-white p-5 pb-7 sm:p-8 border-[2.5px] border-sumi shadow-[5px_5px_0_#1F2430] lg:m-0 lg:p-0 lg:rounded-none lg:bg-transparent lg:border-0 lg:shadow-none">
             {/* 画像がかぶっても読めるよう、見出しの文字に白いふちを付ける */}
-            <h1 className="font-head font-black [paint-order:stroke_fill] [-webkit-text-stroke:7px_#FAF8F4] text-[25px] leading-[1.6] sm:text-[38px] lg:text-[34px] xl:text-[38px] lg:leading-[1.5] tracking-[0.02em] [word-break:auto-phrase]">
+            <h1 className="font-head font-black [paint-order:stroke_fill] [-webkit-text-stroke:7px_#FAF8F4] text-[22px] leading-[1.6] sm:text-[38px] lg:text-[34px] xl:text-[38px] lg:leading-[1.5] tracking-[0.02em] [word-break:auto-phrase]">
               <span className="inline-block">会社のITの「困った」を、</span>
               <br />
               <span className="inline-block">
@@ -36,34 +36,34 @@ const HomePop: React.FC = () => {
                 相談できる場所。
               </span>
             </h1>
-            <p className="mt-7 max-w-xl rounded-2xl bg-white px-5 py-4 text-[15px] md:text-[16px] leading-[1.95] text-sumi border-2 border-sumi shadow-[4px_4px_0_#1F2430]">
+            <p className="mt-4 lg:mt-7 max-w-xl text-[15px] md:text-[16px] leading-[1.9] text-sumi lg:rounded-2xl lg:bg-white lg:px-5 lg:py-4 lg:border-2 lg:border-sumi lg:shadow-[4px_4px_0_#1F2430]">
               PCやネットワークの管理から、データの見える化、生成AIの活用、ホームページまで。IT担当者がいない中小企業の「IT部門」として、まとめてお手伝いします。
             </p>
-            <div className="mt-9 flex flex-wrap gap-4">
-              <a href="/contact" className={`relative inline-flex items-center gap-2 px-7 py-4 rounded-full bg-sumi text-white font-bold border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544]`}>
+            <div className="mt-7 lg:mt-9 flex flex-wrap gap-4">
+              <a href="/contact" className={`relative inline-flex w-full sm:w-auto justify-center items-center gap-2 px-7 py-4 rounded-full bg-sumi text-white font-bold border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544]`}>
                 無料で相談する
                 <ArrowRight className="w-4 h-4" />
-                <span className="pop-float absolute -top-7 -right-6 grid place-items-center w-14 h-14 rounded-full bg-coral text-white font-head font-black text-[12px] leading-tight text-center border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] [--r:12deg] rotate-[12deg]" aria-hidden="true">
+                <span className="pop-float absolute -top-7 -right-3 sm:-right-6 grid place-items-center w-14 h-14 rounded-full bg-coral text-white font-head font-black text-[12px] leading-tight text-center border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] [--r:12deg] rotate-[12deg]" aria-hidden="true">
                   相談
                   <br />
                   無料!
                 </span>
               </a>
-              <a href="#services" className={`inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white font-bold ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>
+              <a href="#services" className={`inline-flex w-full sm:w-auto justify-center items-center gap-2 px-7 py-4 rounded-full bg-white font-bold ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>
                 サービスを見る
               </a>
             </div>
           </div>
 
           {/* 濃紺のカードから、イラストを上にはみ出させる */}
-          <div className="group relative mt-16 lg:mt-36 lg:mb-10">
+          <div className="group relative order-1 lg:order-none mt-14 lg:mt-36 lg:mb-10">
             <div className={`relative rounded-[36px] aspect-[16/11] bg-[radial-gradient(circle_at_15%_100%,rgb(30_156_140/0.6),transparent_55%),radial-gradient(circle_at_100%_0%,rgb(242_181_68/0.35),transparent_50%)] bg-sumi ${card}`} />
             <img
               src={illust('hero')}
               alt="Arcleのスタッフと中小企業の社員が、PC・データ・AI・Webでつながっているイラスト"
-              className="pop-tilt absolute left-1/2 -bottom-[8%] lg:-bottom-[12%] w-[124%] lg:w-[128%] xl:w-[150%] max-w-none -translate-x-1/2 lg:-translate-x-[58%] xl:-translate-x-[57%] drop-shadow-[0_12px_18px_rgb(0_0_0/0.25)]"
+              className="pop-tilt absolute left-1/2 -bottom-[8%] lg:-bottom-[12%] w-[124%] md:w-[104%] lg:w-[128%] xl:w-[150%] max-w-none -translate-x-1/2 lg:-translate-x-[58%] xl:-translate-x-[57%] drop-shadow-[0_12px_18px_rgb(0_0_0/0.25)]"
             />
-            <span className="pop-float absolute -right-2 bottom-[-18px] rounded-2xl bg-white px-4 py-2 font-head font-bold text-sm border-[2.5px] border-sumi shadow-[4px_4px_0_#1F2430] rotate-[4deg] [animation-delay:-2s]">
+            <span className="pop-float absolute -right-2 bottom-[-18px] hidden lg:block rounded-2xl bg-white px-4 py-2 font-head font-bold text-sm border-[2.5px] border-sumi shadow-[4px_4px_0_#1F2430] rotate-[4deg] [animation-delay:-2s]">
               <MapPin className="inline w-4 h-4 -mt-0.5 mr-1 text-coral" strokeWidth={2.5} />
               東海エリアは訪問対応
             </span>
