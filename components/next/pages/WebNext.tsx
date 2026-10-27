@@ -166,8 +166,8 @@ const button = 'inline-flex items-center justify-center gap-2 px-7 py-4 rounded-
 const WebNext: React.FC = () => (
   <div className="bg-cream text-sumi">
       <Helmet>
-        <title>月額制ホームページ制作 | 初期費用0円・月額4,800円〜 - Arcle</title>
-        <meta name="description" content="Arcleの月額制ホームページ制作。初期費用0円、月額4,800円（税抜）から。サーバー・ドメイン・独自ドメインのメール・スマホ対応・公開後の更新まで込み。東海エリアは訪問打ち合わせにも対応します。" />
+        <title>月額制ホームページ制作 | 愛知・東海 初期費用0円・月額4,800円〜 - Arcle</title>
+        <meta name="description" content="愛知・東海の中小企業向け、月額制のホームページ制作。初期費用0円、月額4,800円（税抜）から。サーバー・ドメイン・独自ドメインのメール・スマホ対応・公開後の更新まで込み。東海エリアは訪問打ち合わせにも対応します。" />
         <link rel="canonical" href="https://www.arcle.net/web-production" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -181,7 +181,7 @@ const WebNext: React.FC = () => (
           "@context": "https://schema.org",
           "@type": "Service",
           "name": "月額制ホームページ制作",
-          "provider": { "@type": "Organization", "name": "Arcle" },
+          "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "初期費用0円・月額4,800円から。サーバー・ドメイン・メール・スマホ対応・公開後の更新まで込みのホームページ制作",
           "areaServed": areas.map((name) => ({ "@type": "State", "name": name })),
           "offers": plans.map((plan) => ({

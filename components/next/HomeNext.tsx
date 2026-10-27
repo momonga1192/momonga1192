@@ -12,10 +12,10 @@ const HomeNext: React.FC = () => {
   return (
     <div className="bg-cream text-sumi">
       <Helmet>
-        <title>Arcle | 中小企業のITコンサルティング - DX推進・情シス代行・データ活用・生成AI</title>
+        <title>Arcle（アークル）| 愛知・東海の中小企業のIT支援 - 情シス代行・データ活用・生成AI・Web制作</title>
         <meta
           name="description"
-          content="Arcle（アークル）は中小企業向けのITコンサルティング企業です。情シス代行、データ活用支援（Tableau・PowerBI）、生成AI導入支援、Web制作を提供。DX推進のパートナーとして経営課題を解決します。"
+          content="Arcle（アークル）は、愛知・東海エリアの中小企業の「IT部門」として、情シス代行、データ活用（Power BI・Tableau）、生成AI活用、月額制のホームページ制作をまとめて支援します。ご相談・お見積りは無料です。"
         />
         <link rel="canonical" href="https://www.arcle.net/" />
       </Helmet>

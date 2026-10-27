@@ -26,7 +26,7 @@ const profile: [string, React.ReactNode][] = [
 const CompanyNext: React.FC = () => (
   <div className="bg-cream text-sumi">
     <Helmet>
-      <title>会社案内 | Arcle（アークル）</title>
+      <title>会社案内 | Arcle（アークル）- 愛知・東海の中小企業のIT支援</title>
       <meta name="description" content="Arcle（アークル）の会社案内。社名に込めた想い、代表あいさつ、会社概要とアクセスをご紹介します。" />
       <link rel="canonical" href="https://www.arcle.net/company" />
     </Helmet>

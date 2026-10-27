@@ -10,6 +10,10 @@ import ArticlesIndex from './components/articles/ArticlesIndex';
 import ArticleJosysGuide from './components/articles/ArticleJosysGuide';
 import ArticleBIToolChoice from './components/articles/ArticleBIToolChoice';
 import ArticleChatGPTPolicy from './components/articles/ArticleChatGPTPolicy';
+import ArticleM365Migration from './components/articles/ArticleM365Migration';
+import ArticleExcelToPowerBI from './components/articles/ArticleExcelToPowerBI';
+import ArticleWebMonthlyVsOneTime from './components/articles/ArticleWebMonthlyVsOneTime';
+import ArticleWebCompanyGuide from './components/articles/ArticleWebCompanyGuide';
 import WorksIndex from './components/works/WorksIndex';
 import WorkDetail from './components/works/WorkDetail';
 import HomeNext from './components/next/HomeNext';
@@ -86,6 +90,10 @@ export const AppContent: React.FC = () => (
         <Route path="/articles/ichinomiya-josys-outsourcing-guide" element={<ArticleJosysGuide />} />
         <Route path="/articles/sme-bi-tableau-powerbi" element={<ArticleBIToolChoice />} />
         <Route path="/articles/chatgpt-security-policy-sme" element={<ArticleChatGPTPolicy />} />
+        <Route path="/articles/microsoft-365-migration-sme" element={<ArticleM365Migration />} />
+        <Route path="/articles/excel-report-automation-power-bi" element={<ArticleExcelToPowerBI />} />
+        <Route path="/articles/monthly-vs-one-time-website" element={<ArticleWebMonthlyVsOneTime />} />
+        <Route path="/articles/website-company-guide-aichi-tokai" element={<ArticleWebCompanyGuide />} />
         <Route path="/works" element={<WorksIndex />} />
         <Route path="/works/:slug" element={<WorkDetail />} />
         <Route path="/lp/josys-rescue" element={<JosysRescue />} />

@@ -15,7 +15,7 @@ const WorksIndex: React.FC = () => {
   return (
     <div className="bg-cream text-sumi min-h-screen">
       <Helmet>
-        <title>支援モデルケース | Arcle</title>
+        <title>支援モデルケース | 中小企業のIT・データ・AI・Web活用 - Arcle</title>
         <meta
           name="description"
           content="Arcleの支援モデルケースです。中小企業によくある情シス・データ活用・生成AI・Web制作のご相談をもとに、課題の背景から支援の流れ、想定される効果までを紹介します。"

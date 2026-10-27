@@ -89,8 +89,8 @@ const cases = [
 const DataNext: React.FC = () => (
   <div className="bg-cream text-sumi">
       <Helmet>
-        <title>データ活用支援・BIツール導入 | Tableau・PowerBI - Arcle</title>
-        <meta name="description" content="Arcleのデータ活用支援サービス。Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計・モニタリング、データリテラシー研修で中小企業のデータドリブン経営を実現。" />
+        <title>データ活用支援・Power BI／Tableau導入 | 愛知・東海の中小企業向け - Arcle</title>
+        <meta name="description" content="愛知・東海の中小企業向けのデータ活用支援。Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計・モニタリング、データリテラシー研修で中小企業のデータドリブン経営を実現。" />
         <link rel="canonical" href="https://www.arcle.net/data-consulting" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -104,7 +104,7 @@ const DataNext: React.FC = () => (
           "@context": "https://schema.org",
           "@type": "Service",
           "name": "データ活用支援サービス",
-          "provider": { "@type": "Organization", "name": "Arcle" },
+          "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計で中小企業のデータドリブン経営を実現",
           "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }]
         })}</script>

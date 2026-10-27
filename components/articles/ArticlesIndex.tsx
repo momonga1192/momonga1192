@@ -6,6 +6,34 @@ import { serviceByName, services, illust } from '../next/theme';
 
 export const articles = [
   {
+    title: '中小企業のMicrosoft 365導入・移行手順',
+    description: 'アカウントやメール、ファイルの棚卸しから多要素認証、入退社時の管理まで、移行の進め方を整理します。',
+    href: '/articles/microsoft-365-migration-sme',
+    published: '2026-10-27',
+    tag: '情シス代行'
+  },
+  {
+    title: 'Excel集計を自動化する｜Power BIで月次報告',
+    description: '毎月の手作業の集計を減らすために、Power BIで月次報告を作る手順と小さく始めるコツを解説します。',
+    href: '/articles/excel-report-automation-power-bi',
+    published: '2026-10-27',
+    tag: 'データ活用'
+  },
+  {
+    title: 'ホームページは月額制と買い切りのどちらがいい？',
+    description: '初期費用だけでなく、総額や更新費、契約期間、解約時の扱いまで比べて選ぶポイントを紹介します。',
+    href: '/articles/monthly-vs-one-time-website',
+    published: '2026-10-27',
+    tag: 'Web制作'
+  },
+  {
+    title: '中小企業向け ホームページ制作会社の選び方',
+    description: '見積りの比べ方、更新のしやすさ、公開後のサポート、ドメインの名義など、依頼前に確認したい項目をまとめました。',
+    href: '/articles/website-company-guide-aichi-tokai',
+    published: '2026-10-27',
+    tag: 'Web制作'
+  },
+  {
     title: '中小企業向け 情シス代行の選び方',
     description: '情シス代行を検討する際の比較ポイント、費用感、失敗しない導入手順を解説します。',
     href: '/articles/ichinomiya-josys-outsourcing-guide',
@@ -32,10 +60,10 @@ const ArticlesIndex: React.FC = () => {
   return (
     <div className="bg-cream text-sumi">
       <Helmet>
-        <title>記事一覧 | Arcle</title>
+        <title>お役立ち記事 | 中小企業のIT・データ活用・生成AI・Web制作 - Arcle</title>
         <meta
           name="description"
-          content="ArcleのITコンサルティング記事一覧です。情シス代行、データ活用、生成AI導入の実務ノウハウを発信しています。"
+          content="中小企業のIT担当者・経営者向けのお役立ち記事。情シス代行の選び方、Microsoft 365の導入、Power BIでの集計の自動化、生成AIの社内ルール、ホームページ制作まで、実務のノウハウを解説します。"
         />
         <link rel="canonical" href="https://www.arcle.net/articles" />
       </Helmet>

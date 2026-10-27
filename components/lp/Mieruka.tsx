@@ -35,6 +35,8 @@ const Mieruka: React.FC = () => {
   return (
     <div className="bg-cream text-sumi">
       <Helmet>
+        {/* 広告用LP。同じ内容のサービスページと評価が割れないよう、検索には出さない */}
+        <meta name="robots" content="noindex, follow" />
         <title>ミエルカ | データ見える化サービス（Tableau・PowerBI導入） - Arcle</title>
         <meta name="description" content="ミエルカはArcleが提供するデータ見える化サービス。Tableau・PowerBI導入、経営ダッシュボード構築、データ基盤設計で中小企業のデータドリブン経営を実現。無料データ診断実施中。" />
         <link rel="canonical" href="https://www.arcle.net/lp/mieruka" />
@@ -50,7 +52,7 @@ const Mieruka: React.FC = () => {
           "@context": "https://schema.org",
           "@type": "Service",
           "name": "ミエルカ - データ見える化サービス",
-          "provider": { "@type": "Organization", "name": "Arcle" },
+          "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "Tableau・PowerBI導入、経営ダッシュボード構築、データ基盤設計で中小企業のデータドリブン経営を実現",
           "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }]
         })}</script>

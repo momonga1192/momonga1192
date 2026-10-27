@@ -28,6 +28,8 @@ const JosysRescue: React.FC = () => {
   return (
     <div className="bg-cream text-sumi">
       <Helmet>
+        {/* 広告用LP。同じ内容のサービスページと評価が割れないよう、検索には出さない */}
+        <meta name="robots" content="noindex, follow" />
         <title>情シスレスキュー | IT専任者がいない企業のためのIT代行サービス - Arcle</title>
         <meta name="description" content="情シスレスキューはArcleが提供するIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額5万円〜で包括サポート。IT専任者がいない中小企業の味方です。" />
         <link rel="canonical" href="https://www.arcle.net/lp/josys-rescue" />
@@ -43,7 +45,7 @@ const JosysRescue: React.FC = () => {
           "@context": "https://schema.org",
           "@type": "Service",
           "name": "情シスレスキュー",
-          "provider": { "@type": "Organization", "name": "Arcle" },
+          "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "IT専任者がいない企業のためのIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額5万円〜で包括サポート。",
           "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [

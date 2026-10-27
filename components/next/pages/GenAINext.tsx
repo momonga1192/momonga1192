@@ -89,8 +89,8 @@ const features = ['最新のAIモデルに対応', 'セキュアな導入プロ�
 const GenAINext: React.FC = () => (
   <div className="bg-cream text-sumi">
     <Helmet>
-        <title>生成AI活用支援・ChatGPT導入 | RAGチャットボット開発 - Arcle</title>
-        <meta name="description" content="Arcleの生成AI活用支援。ChatGPT Enterprise導入支援、社内独自RAGチャットボット開発、AI利用ガイドライン策定、プロンプトエンジニアリング研修、業務自動化。中小企業のAI活用を月額5万円〜で支援。" />
+        <title>生成AI活用支援・ChatGPT導入 | 愛知・東海の中小企業向け - Arcle</title>
+        <meta name="description" content="愛知・東海の中小企業向けの生成AI活用支援。ChatGPT Enterprise導入支援、社内独自RAGチャットボット開発、AI利用ガイドライン策定、プロンプトエンジニアリング研修、業務自動化。中小企業のAI活用を月額5万円〜で支援。" />
         <link rel="canonical" href="https://www.arcle.net/gen-ai" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -104,7 +104,7 @@ const GenAINext: React.FC = () => (
           "@context": "https://schema.org",
           "@type": "Service",
           "name": "生成AI活用支援サービス",
-          "provider": { "@type": "Organization", "name": "Arcle" },
+          "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "ChatGPT Enterprise導入、社内独自RAGチャットボット開発、プロンプト研修、業務AI自動化を支援",
           "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [

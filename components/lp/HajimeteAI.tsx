@@ -35,6 +35,8 @@ const HajimeteAI: React.FC = () => {
   return (
     <div className="bg-cream text-sumi">
       <Helmet>
+        {/* 広告用LP。同じ内容のサービスページと評価が割れないよう、検索には出さない */}
+        <meta name="robots" content="noindex, follow" />
         <title>はじめてのAI導入 | ChatGPT導入・生成AI活用支援 - Arcle</title>
         <meta name="description" content="はじめてのAI導入はArcleが提供する生成AI活用支援サービス。ChatGPT Enterprise導入、AI利用ガイドライン策定、社内RAGチャットボット開発、プロンプト研修を月額5万円〜で提供。" />
         <link rel="canonical" href="https://www.arcle.net/lp/hajimete-ai" />
@@ -50,7 +52,7 @@ const HajimeteAI: React.FC = () => {
           "@context": "https://schema.org",
           "@type": "Service",
           "name": "はじめてのAI導入",
-          "provider": { "@type": "Organization", "name": "Arcle" },
+          "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "ChatGPT等の生成AIを安全に・効果的に業務へ導入するための伴走型サービス。導入から定着、独自開発まで。",
           "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [

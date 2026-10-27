@@ -10,7 +10,7 @@ const contactColor = services[0];
 const ContactForm: React.FC = () => (
   <div className="bg-cream text-sumi">
       <Helmet>
-        <title>お問い合わせ・無料相談 | ITコンサルティングのArcle</title>
+        <title>お問い合わせ・無料相談 | 愛知・東海の中小企業のIT支援 - Arcle</title>
         <meta name="description" content="Arcleへのご相談・お見積りは無料です。ITコンサルティング、情シス代行、データ活用支援（Tableau・PowerBI）、生成AI導入支援、Web制作について、お気軽にお問い合わせください。通常2営業日以内にご連絡します。" />
         <link rel="canonical" href="https://www.arcle.net/contact" />
         <script type="application/ld+json">{JSON.stringify({

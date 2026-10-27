@@ -84,8 +84,8 @@ const plans = [
 const JosysNext: React.FC = () => (
   <div className="bg-cream text-sumi">
       <Helmet>
-        <title>情シス代行サービス | 中小企業のITアウトソーシング - Arcle</title>
-        <meta name="description" content="Arcleが提供する情シス代行サービス。IT専任担当者不在の中小企業向けに、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額5万円〜で包括サポート。" />
+        <title>情シス代行サービス | 愛知・東海の中小企業のIT担当を代行 - Arcle</title>
+        <meta name="description" content="愛知・東海の中小企業向けの情シス代行サービス。IT専任担当者がいない会社に代わって、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額5万円〜で包括サポート。" />
         <link rel="canonical" href="https://www.arcle.net/josys" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -99,7 +99,7 @@ const JosysNext: React.FC = () => (
           "@context": "https://schema.org",
           "@type": "Service",
           "name": "情シス代行サービス",
-          "provider": { "@type": "Organization", "name": "Arcle" },
+          "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "IT専任担当者不在の企業向けに、ITヘルプデスク・システム導入・セキュリティ対策・クラウド支援を包括サポート",
           "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [

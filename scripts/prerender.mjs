@@ -13,6 +13,8 @@ const template = readFileSync(join(distDir, 'index.html'), 'utf-8');
 // Pages to prerender are taken from the sitemap so the two never drift apart
 const sitemap = readFileSync(join(distDir, 'sitemap.xml'), 'utf-8');
 const routes = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
+// Ad landing pages are noindex, so they stay out of the sitemap but still need static HTML
+routes.push('/lp/josys-rescue', '/lp/mieruka', '/lp/hajimete-ai', '/lp/web-madoguchi');
 
 const pick = (tagHtml, pattern) => tagHtml.match(pattern)?.[1];
 
@@ -39,6 +41,7 @@ const buildPage = (url) => {
   if (title) page = page.replace(/<title>[^<]*<\/title>/, '');
   if (description) page = page.replace(/<meta name="description"[^>]*>/, '');
   if (canonical) page = page.replace(/<link rel="canonical"[^>]*>/, '');
+  if (/<meta[^>]*name="robots"/.test(metaTags)) page = page.replace(/<meta name="robots"[^>]*>/, '');
 
   // OGP / Twitter Card follow the page's title, description and canonical
   if (title) {
@@ -52,17 +55,12 @@ const buildPage = (url) => {
   if (canonical) page = setMetaContent(page, 'property', 'og:url', canonical);
   if (url.startsWith('/articles/')) page = setMetaContent(page, 'property', 'og:type', 'article');
 
-  // The FAQ structured data in index.html describes the homepage FAQ, so keep it on the homepage only
-  if (url !== '/') {
-    page = page.replace(
-      /\s*<!-- FAQ Structured Data -->\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/,
-      ''
-    );
-  }
 
   page = page
     .replace('</head>', `${titleTag}${metaTags}${linkTags}${scriptTags}\n</head>`)
-    .replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
+    .replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`)
+    // The page already has its content, so the generic noscript fallback (with its own h1) is not needed
+    .replace(/\s*<noscript>[\s\S]*?<\/noscript>/, '');
 
   // Written as /foo.html and served at /foo through cleanUrls in vercel.json
   const outFile = url === '/' ? join(distDir, 'index.html') : join(distDir, `${url}.html`);

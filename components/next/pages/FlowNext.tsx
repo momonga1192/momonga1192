@@ -37,9 +37,14 @@ const faqs = [
 const FlowNext: React.FC = () => (
   <div className="bg-cream text-sumi">
     <Helmet>
-      <title>ご相談の流れ・よくあるご質問 | Arcle</title>
+      <title>ご相談の流れ・よくあるご質問 | Arcle（アークル）</title>
       <meta name="description" content="Arcleへのご相談の流れと、よくあるご質問。お問い合わせから無料相談、ご提案、ご契約までの流れと、対応エリアをご案内します。" />
       <link rel="canonical" href="https://www.arcle.net/flow" />
+      <script type="application/ld+json">{JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((item) => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } }))
+      })}</script>
     </Helmet>
 
     <PageHeader
