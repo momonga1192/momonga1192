@@ -76,6 +76,7 @@ const areas = ['愛知県', '岐阜県', '三重県'];
 // 作例（public/samples）。画像は各作例のファーストビュー
 const samples = [
   { slug: 'hazuki-kensetsu', name: '葉月建設株式会社', type: '建設業', plan: 'スタンダード' },
+  { slug: 'redline-gym', name: 'RED LINE', type: 'キックボクシングジム', plan: 'オーダーメイド' },
   { slug: 'komorebi-day', name: 'デイサービス こもれび', type: '介護', plan: 'ライト' },
   { slug: 'hair-lien', name: 'hair salon Lien', type: '美容室', plan: 'スタンダード' },
   { slug: 'niji-atelier', name: 'こどもアトリエ にじいろ', type: '幼児・小学生向け教室', plan: 'ライト' },

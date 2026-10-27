@@ -1,0 +1,29 @@
+{
+  "mode": "built-in image_gen",
+  "images": [
+    {
+      "file": "training.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape website photograph for fictional Japanese kickboxing fitness gym. Wide editorial gym training floor, Japanese adult woman practicing a straight punch in black boxing gloves, full body dynamic stance, other Japanese adults softly blurred in background. High contrast editorial sports photography, natural realistic skin and proportions, black white and red palette, dramatic side lighting but faces visible, clean contemporary interior. No text, no logos, no signage, no watermarks. Save generated file for workspace use."
+    },
+    {
+      "file": "mitts.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape website photograph for fictional Japanese kickboxing fitness gym. Japanese adult beginner woman practicing pad work with Japanese male trainer holding focus mitts, clear correct hand anatomy, candid side view. High contrast editorial sports photography, natural realistic skin and proportions, black white and red palette, dramatic side lighting but faces visible, clean contemporary interior. No text, no logos, no signage, no watermarks. Save generated file for workspace use."
+    },
+    {
+      "file": "bag.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape website photograph for fictional Japanese kickboxing fitness gym. Close editorial scene Japanese adult man training beside a hanging black heavy punching bag, red gym accent wall. High contrast editorial sports photography, natural realistic skin and proportions, black white and red palette, dramatic side lighting but faces visible, clean contemporary interior. No text, no logos, no signage, no watermarks. Save generated file for workspace use."
+    },
+    {
+      "file": "trainer-yu.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape website photograph for fictional Japanese kickboxing fitness gym. Portrait Japanese adult male fitness coach in plain black sportswear, relaxed arms folded, welcoming expression, gym background. High contrast editorial sports photography, natural realistic skin and proportions, black white and red palette, dramatic side lighting but faces visible, clean contemporary interior. No text, no logos, no signage, no watermarks. Save generated file for workspace use."
+    },
+    {
+      "file": "trainer-madoka.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape website photograph for fictional Japanese kickboxing fitness gym. Portrait Japanese adult female fitness coach in plain black sportswear, welcoming confident expression, gym background. High contrast editorial sports photography, natural realistic skin and proportions, black white and red palette, dramatic side lighting but faces visible, clean contemporary interior. No text, no logos, no signage, no watermarks. Save generated file for workspace use."
+    },
+    {
+      "file": "reception.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: landscape website photograph for fictional Japanese kickboxing fitness gym. Modern small Japanese gym reception counter and bench, Japanese adult staff member greeting a Japanese adult visitor, uncluttered. High contrast editorial sports photography, natural realistic skin and proportions, black white and red palette, dramatic side lighting but faces visible, clean contemporary interior. No text, no logos, no signage, no watermarks. Save generated file for workspace use."
+    }
+  ]
+}

@@ -168,5 +168,29 @@
   "office-write": {
     "source": "AI生成（Codex 画像生成）",
     "license": "Arcle作成"
+  },
+  "redline-gym/training": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "redline-gym/mitts": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "redline-gym/bag": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "redline-gym/trainer-yu": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "redline-gym/trainer-madoka": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "redline-gym/reception": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
   }
 }
