@@ -2,7 +2,7 @@
 // 送られた内容をシートに記録するだけ。資料PDFのメールはArcleが手作業で送る。スクリプトと設定手順は docs/it-check-gas.md
 // endpoint が空のあいだは送信せず、画面で資料PDFをそのままダウンロードしてもらう
 export const leadForm = {
-  endpoint: ''
+  endpoint: 'https://script.google.com/macros/s/AKfycbzNCZqoruaYPcvaPhvRPo7zu3TAugp9R71tRll0M1IEigWQcqifADeqFOWHMmJFDbfHZA/exec'
 };
 
 // 資料PDF（はじめてのDX読本）。scripts/dx-guide/build.mjs で作る
