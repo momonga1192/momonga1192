@@ -1,5 +1,5 @@
 // 診断結果の解禁フォームの送り先（Googleスプレッドシート＋Apps Script のウェブアプリ）
-// 送られた内容をシートに記録し、資料PDFのリンクをメールで送る。スクリプトと設定手順は docs/it-check-gas.md
+// 送られた内容をシートに記録するだけ。資料PDFのメールはArcleが手作業で送る。スクリプトと設定手順は docs/it-check-gas.md
 // endpoint が空のあいだは送信せず、画面で資料PDFをそのままダウンロードしてもらう
 export const leadForm = {
   endpoint: ''

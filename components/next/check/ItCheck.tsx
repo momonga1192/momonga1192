@@ -647,7 +647,7 @@ const Details: React.FC<{ byArea: AreaScore[]; order: AreaScore[] }> = ({ byArea
           {deliverByMail ? (
             <p className="inline-flex items-center gap-2 mt-5 rounded-2xl bg-mustard/30 px-5 py-3 text-sm font-black border-2 border-sumi">
               <Mail className="w-4 h-4" />
-              ご入力いただいたメールアドレスにお送りしました
+              ご入力いただいたメールアドレスに、追ってお送りします
             </p>
           ) : (
             <p className="mt-5">
