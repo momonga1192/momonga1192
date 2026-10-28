@@ -41,7 +41,7 @@ const plans = [
                 name: "Light", 
                 sub: "ライトプラン", 
                 desc: "まずは気軽に相談から", 
-                price: "5万円~", 
+                price: "3万円~", 
                 features: [
                   "IT相談窓口（メール・チャット）",
                   "簡易トラブルシューティング",
@@ -85,7 +85,7 @@ const JosysNext: React.FC = () => (
   <div className="bg-cream text-sumi overflow-x-clip">
       <Helmet>
         <title>情シス代行サービス | 愛知・東海の中小企業のIT担当を代行 - Arcle</title>
-        <meta name="description" content="愛知・東海の中小企業向けの情シス代行サービス。IT専任担当者がいない会社に代わって、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額5万円〜で包括サポート。" />
+        <meta name="description" content="愛知・東海の中小企業向けの情シス代行サービス。IT専任担当者がいない会社に代わって、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額3万円〜で包括サポート。" />
         <link rel="canonical" href="https://www.arcle.net/josys" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -103,7 +103,7 @@ const JosysNext: React.FC = () => (
           "description": "IT専任担当者不在の企業向けに、ITヘルプデスク・システム導入・セキュリティ対策・クラウド支援を包括サポート",
           "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [
-            { "@type": "Offer", "name": "ライトプラン", "price": "50000", "priceCurrency": "JPY", "description": "IT相談窓口・簡易トラブルシューティング" },
+            { "@type": "Offer", "name": "ライトプラン", "price": "30000", "priceCurrency": "JPY", "description": "IT相談窓口・簡易トラブルシューティング" },
             { "@type": "Offer", "name": "スタンダードプラン", "price": "150000", "priceCurrency": "JPY", "description": "情シス業務を包括サポート" },
             { "@type": "Offer", "name": "プレミアムプラン", "price": "300000", "priceCurrency": "JPY", "description": "IT戦略パートナー" }
           ]

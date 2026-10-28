@@ -6,8 +6,8 @@ import { ContactCta, Mark, PageHeader, SectionHead, Ticker, card, press } from '
 
 // 事業ごとの料金の目安（既存の各事業ページの料金表より）
 const prices: Record<string, string> = {
-  josys: '月額5万円〜',
-  data: '内容に合わせてお見積り',
+  josys: '月額3万円〜',
+  data: '月額5万円〜',
   ai: '月額5万円〜',
   web: '月額4,800円〜'
 };
