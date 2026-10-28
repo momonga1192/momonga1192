@@ -42,7 +42,11 @@ const WorkDetail: React.FC = () => {
 
   const style = serviceStyles[work.service];
   const url = `https://www.arcle.net/works/${work.slug}`;
-  const others = publishedWorks.filter((w) => w.slug !== work.slug).slice(0, 3);
+  // ほかのモデルケースは、同じサービスのものを先に並べる
+  const others = publishedWorks
+    .filter((w) => w.slug !== work.slug)
+    .sort((a, b) => Number(b.service === work.service) - Number(a.service === work.service))
+    .slice(0, 3);
   const profile: [string, string][] = [
     ['想定企業', work.client],
     ['業種', work.industry],
