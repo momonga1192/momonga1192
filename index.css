@@ -123,6 +123,7 @@ html { overflow-x: clip; }
 
 /* 診断結果の印刷・PDF保存：ヘッダー・フッター・ボタン・追尾バナーを隠し、色をそのまま刷る */
 @media print {
+  @page { size: A4; margin: 12mm; }
   header, footer, .no-print { display: none !important; }
   body { background: #fff; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }

@@ -70,7 +70,7 @@ const TrackPageView: React.FC = () => {
 // --- Main App Component ---
 
 export const AppContent: React.FC = () => (
-  <div className="relative min-h-screen bg-cream text-sumi">
+  <div className="relative min-h-screen bg-cream print:bg-white text-sumi">
     <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[200] focus:top-4 focus:left-4 focus:bg-white focus:text-gray-900 focus:px-4 focus:py-2 focus:rounded focus:shadow-lg focus:text-sm focus:font-medium">
       メインコンテンツへスキップ
     </a>

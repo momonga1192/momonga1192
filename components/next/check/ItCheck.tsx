@@ -78,7 +78,7 @@ const ItCheck: React.FC = () => {
   };
 
   return (
-    <div className="bg-cream text-sumi overflow-x-clip">
+    <div className="bg-cream print:bg-white text-sumi overflow-x-clip">
       <Helmet>
         <title>会社のIT健康診断（無料・3分）| 中小企業のITの弱点がわかる - Arcle</title>
         <meta
@@ -260,6 +260,162 @@ const Radar: React.FC<{ scores: AreaScore[] }> = ({ scores }) => {
   );
 };
 
+// 印刷・PDF保存用のレポート。A4の2ページに収まるよう、画面とは別に組む
+// 1ページ目：総合点・レーダー・ランク・回答の一覧 ／ 2ページ目：まずやること・進める順番・ご相談の案内
+const PrintReport: React.FC<{ answers: number[] }> = ({ answers }) => {
+  const { byArea, total, weakest, allGood, order } = scoreAnswers(answers);
+  const typeName = allGood ? allGoodType : weakest.area.type;
+  const answerLabel = (point: number) => choices.find((c) => c.point === point)?.label ?? '';
+  const today = new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+  let q = 0;
+  return (
+    <div className="hidden print:block text-sumi bg-white text-[10.5px] leading-[1.6]">
+      {/* 1ページ目 */}
+      <div className="flex items-start justify-between border-b-[2.5px] border-sumi pb-3">
+        <div>
+          <p className="font-en font-black italic text-2xl leading-none">Arcle</p>
+          <h1 className="font-head font-black text-[22px] mt-2">会社のIT健康診断 結果レポート</h1>
+          <p className="text-sumi-muted mt-0.5">{today} 診断</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <p className="text-right text-[9.5px] leading-snug">
+            Arcle（アークル）
+            <br />
+            <b className="font-en">www.arcle.net</b>
+          </p>
+          <img src="/images/qr-arcle.svg" alt="ArcleのサイトのQRコード" className="w-[22mm] h-[22mm]" />
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-[1fr_1fr] gap-5 items-center">
+        <div className="rounded-2xl border-2 border-sumi p-2">
+          <Radar scores={byArea} />
+        </div>
+        <div>
+          <p className="flex items-baseline gap-1.5">
+            <span className="font-bold">総合</span>
+            <span className="font-en font-black italic text-[64px] leading-none">{total}</span>
+            <span className="font-head font-black text-lg">点</span>
+            <span className="text-sumi-muted">/ 100点</span>
+          </p>
+          <p className="mt-3 text-sumi-muted font-bold">御社は…</p>
+          <p className="font-head font-black text-[20px]">
+            <Mark>{typeName}</Mark>
+          </p>
+          {!allGood && (
+            <div className="mt-3 rounded-xl border-2 border-sumi p-3">
+              <p className="font-black">いちばん伸ばしたい分野：{weakest.area.label}</p>
+              <p className="mt-1">{weakest.area.results[weakest.level].text}</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-4 gap-2">
+        {byArea.map((a) => {
+          const s = service(a.area.key);
+          return (
+            <div key={a.area.key} className="flex items-center gap-2 rounded-xl border-2 border-sumi px-2.5 py-2">
+              <span className={`shrink-0 grid place-items-center w-9 h-9 rounded-lg text-white font-en font-black italic text-lg border-2 border-sumi ${s.bg}`}>{a.rank}</span>
+              <span>
+                <span className="block text-[9.5px] font-bold leading-tight">{a.area.label}</span>
+                <span className="block font-black">{levelLabel[a.level]}</span>
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      <p className="mt-1 text-[9px] text-sumi-muted">ランクは S・A・B・C・D の5段階です（S がいちばん整っている状態）。</p>
+
+      <h2 className="font-head font-black text-[14px] mt-4 mb-1.5">回答の一覧</h2>
+      <table className="w-full border-collapse text-[9.5px]">
+        <tbody>
+          {areas.map((area) =>
+            area.questions.map((text, n) => {
+              const i = q++;
+              return (
+                <tr key={text} className="border-b border-sumi/15">
+                  {n === 0 && (
+                    <td rowSpan={area.questions.length} className={`w-[22mm] align-top py-1 pr-2 font-black text-white px-2 ${service(area.key).bg}`}>
+                      {area.label}
+                    </td>
+                  )}
+                  <td className="py-[3px] pl-2">
+                    <b className="font-en mr-1">Q{i + 1}</b>
+                    {text}
+                  </td>
+                  <td className="w-[30mm] text-right font-bold whitespace-nowrap">{answerLabel(answers[i])}</td>
+                </tr>
+              );
+            })
+          )}
+        </tbody>
+      </table>
+
+      {/* 2ページ目 */}
+      <div style={{ breakBefore: 'page' }}>
+        <h2 className="font-head font-black text-[16px] mb-2">分野ごとの「まずやること」</h2>
+        <div className="grid grid-cols-2 gap-2.5">
+          {byArea.map((a) => {
+            const s = service(a.area.key);
+            const r = a.area.results[a.level];
+            return (
+              <div key={a.area.key} className="rounded-xl border-2 border-sumi p-3" style={{ breakInside: 'avoid' }}>
+                <p className="flex items-center gap-2">
+                  <span className={`grid place-items-center w-7 h-7 rounded-lg text-white font-en font-black italic border-2 border-sumi ${s.bg}`}>{a.rank}</span>
+                  <b className="font-head font-black text-[13px]">{a.area.label}</b>
+                  <span className="text-sumi-muted">{levelLabel[a.level]}</span>
+                </p>
+                <p className="mt-1.5">{r.text}</p>
+                <ol className="mt-1.5 space-y-0.5 font-bold">
+                  {r.todo.map((t, n) => (
+                    <li key={t}>
+                      {n + 1}. {t}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            );
+          })}
+        </div>
+
+        <h2 className="font-head font-black text-[16px] mt-5 mb-2">御社に合った進める順番</h2>
+        <div className="grid grid-cols-4 gap-2">
+          {order.map((a, i) => {
+            const s = service(a.area.key);
+            return (
+              <div key={a.area.key} className="rounded-xl border-2 border-sumi p-2.5" style={{ breakInside: 'avoid' }}>
+                <p className="font-en font-black italic text-[9px] text-sumi-muted">STEP {i + 1}</p>
+                <p className={`font-head font-black text-[12px] ${s.text}`}>{a.area.label}</p>
+                <p className="mt-1 font-bold">{a.area.results[a.level].todo[0]}</p>
+                <p className="mt-1.5 text-[9px] text-sumi-muted">
+                  Arcleの{s.name}：{prices[a.area.key]}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+        <p className="mt-1 text-[9px] text-sumi-muted">守りが手薄なら最初に固め、そのあとは点数の低い分野から順に進めるのがおすすめです。料金は税抜の目安です。</p>
+
+        <div className="mt-5 flex items-center gap-5 rounded-2xl bg-sumi text-white p-5" style={{ breakInside: 'avoid' }}>
+          <div className="flex-1">
+            <p className="font-head font-black text-[15px]">この結果をもとに、何から始めるかを一緒に整理します。</p>
+            <p className="mt-1.5 text-white/80">ご相談・お見積りは無料です。東海エリアは訪問にも対応します。資料『はじめてのDX読本』もあわせてご覧ください。</p>
+            <p className="mt-2 font-bold">
+              無料相談のお申し込み <span className="font-en">www.arcle.net/contact</span>
+            </p>
+          </div>
+          <div className="text-center">
+            <img src="/images/qr-arcle.svg" alt="ArcleのサイトのQRコード" className="w-[26mm] h-[26mm] rounded-md bg-white p-1" />
+            <p className="mt-1 text-[9px]">サイトはこちら</p>
+          </div>
+        </div>
+        <p className="mt-3 text-[9px] text-sumi-muted">Arcle（アークル）〒491-0835 愛知県一宮市あずら2丁目8　https://www.arcle.net</p>
+      </div>
+    </div>
+  );
+};
+
 const Result: React.FC<{ answers: number[]; unlocked: boolean; onUnlock: () => void; onRetry: () => void }> = ({ answers, unlocked, onUnlock, onRetry }) => {
   const { byArea, total, weakest, allGood, order } = scoreAnswers(answers);
   const typeName = allGood ? allGoodType : weakest.area.type;
@@ -268,8 +424,11 @@ const Result: React.FC<{ answers: number[]; unlocked: boolean; onUnlock: () => v
 
   return (
     <>
+      {/* 印刷・PDF保存用のレポート（画面には出さない） */}
+      {unlocked && <PrintReport answers={answers} />}
+
       {/* 無料で見せる部分 */}
-      <section className="py-16 md:py-24 bg-white border-t-[2.5px] border-sumi">
+      <section className="print:hidden py-16 md:py-24 bg-white border-t-[2.5px] border-sumi">
         <div className="max-w-6xl mx-auto px-5">
           <div className="text-center">
             <Sticker className="font-en text-sm font-black italic tracking-[0.12em] uppercase">Result</Sticker>
@@ -323,7 +482,7 @@ const Result: React.FC<{ answers: number[]; unlocked: boolean; onUnlock: () => v
       </section>
 
       {/* 解禁する部分 */}
-      <section className="relative py-16 md:py-24 border-t-[2.5px] border-sumi bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px]">
+      <section className="print:hidden relative py-16 md:py-24 border-t-[2.5px] border-sumi bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px]">
         <div className="max-w-6xl mx-auto px-5">
           {unlocked ? (
             <>

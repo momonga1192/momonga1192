@@ -37,6 +37,7 @@ const img = (name) => {
   used.add(name);
   return pathToFileURL(join(imgDir, `${name}.png`)).href;
 };
+const qr = pathToFileURL(join(root, 'public/images/qr-arcle.svg')).href;
 const svc = Object.fromEntries(services.map((s) => [s.key, s]));
 const color = { josys: '#3B6FE0', data: '#5B5BD6', ai: '#8E5BD0', web: '#C8509F' };
 const caseSlugs = ['textile-josys-pc-management', 'wholesale-powerbi-dashboard', 'construction-chatgpt-guideline', 'dental-clinic-website-renewal'];
@@ -83,6 +84,7 @@ pages.push(
     <div class="cover-foot">
       <span class="logo">Arcle</span>
       <span>愛知・東海の中小企業の「IT部門」として、PC・データ・AI・Webをまとめてお手伝いしています</span>
+      <img class="cover-qr" src="${qr}" alt="">
     </div>
   </div>`,
     { cls: 'dots', number: false }
@@ -335,6 +337,7 @@ pages.push(
       <div class="back-cta">無料相談のお申し込み　<b class="en">arcle.net/contact</b></div>
       <img src="${img('check-book')}" alt="">
     </div>
+    <div class="back-info">
     <dl class="company">
       <div><dt>会社名</dt><dd>Arcle（アークル）</dd></div>
       <div><dt>代表</dt><dd>栗原 勇太</dd></div>
@@ -342,6 +345,8 @@ pages.push(
       <div><dt>Web</dt><dd class="en">https://www.arcle.net</dd></div>
       <div><dt>事業</dt><dd>情シス代行・データ活用・生成AI活用・Web制作</dd></div>
     </dl>
+    <div class="qr-box"><img src="${qr}" alt=""><p>サイトはこちら</p></div>
+    </div>
     <p class="back-logo"><span class="logo">Arcle</span></p>
   </div>`,
     { cls: 'dots', number: false }
@@ -482,7 +487,12 @@ h1, h2, h3, .toc-title { font-family: 'Zen Kaku Gothic New', sans-serif; font-we
 .back-cta { margin-top: 9mm; display: inline-block; background: #F2B544; color: #1F2430; font-weight: 900; border: 2.5px solid #1F2430; border-radius: 99px; padding: 3mm 8mm; box-shadow: 4px 4px 0 #1E9C8C; }
 .back-cta .en { font-size: 14pt; }
 .back-card img { position: absolute; right: -4mm; bottom: -6mm; width: 66mm; }
-.company { margin-top: 14mm; background: #fff; border: 2.5px solid #1F2430; border-radius: 6mm; padding: 4mm 8mm; }
+.back-info { margin-top: 14mm; display: flex; gap: 6mm; align-items: stretch; }
+.qr-box { flex-shrink: 0; background: #fff; border: 2.5px solid #1F2430; border-radius: 6mm; padding: 4mm; text-align: center; box-shadow: 4px 4px 0 #F2B544; }
+.qr-box img { width: 34mm; height: 34mm; display: block; }
+.qr-box p { font-size: 9pt; font-weight: 900; margin-top: 1mm; }
+.cover-qr { width: 18mm; height: 18mm; margin-left: auto; border: 2px solid #1F2430; border-radius: 2mm; background: #fff; padding: 1mm; }
+.company { flex: 1; background: #fff; border: 2.5px solid #1F2430; border-radius: 6mm; padding: 4mm 8mm; }
 .company div { display: flex; gap: 6mm; padding: 2mm 0; border-bottom: 1.5px dashed #1F243020; font-size: 10pt; }
 .company div:last-child { border-bottom: 0; }
 .company dt { width: 22mm; font-weight: 900; flex-shrink: 0; }
