@@ -499,12 +499,9 @@ const Result: React.FC<{ answers: number[]; unlocked: boolean; onUnlock: () => v
               </div>
             </>
           ) : (
-            <div className="relative">
-              {/* 中身が少し透けて見える状態にして、何が見られるかを伝える */}
-              <div aria-hidden="true" className="blur-[7px] select-none pointer-events-none opacity-70 max-h-[900px] overflow-hidden">
-                <Details byArea={byArea} order={order} />
-              </div>
-              <div className="absolute inset-0 flex items-start justify-center pt-14 md:pt-20">
+            <div className="grid lg:grid-cols-[1fr_460px] gap-10 lg:gap-12 items-start">
+              <LockedPreview byArea={byArea} order={order} />
+              <div className="lg:sticky lg:top-24 pt-6 lg:pt-10">
                 <UnlockForm summary={summary} onUnlock={onUnlock} />
               </div>
             </div>
@@ -512,6 +509,69 @@ const Result: React.FC<{ answers: number[]; unlocked: boolean; onUnlock: () => v
         </div>
       </section>
     </>
+  );
+};
+
+// 入力前に見せる「入力すると見られるもの」。見出しと分野名ははっきり出し、中身だけぼかす
+const LockedPreview: React.FC<{ byArea: AreaScore[]; order: AreaScore[] }> = ({ byArea, order }) => {
+  const blur = 'blur-[5px] select-none pointer-events-none';
+  return (
+    <div>
+      <p className="inline-flex items-center gap-2 rounded-full bg-sumi px-4 py-1.5 text-sm font-black text-white">
+        <Lock className="w-4 h-4" />
+        入力すると、ここが見られます
+      </p>
+
+      <div className="mt-8">
+        <Sticker className="font-en text-sm font-black italic tracking-[0.12em] uppercase">Advice</Sticker>
+        <h2 className="font-head font-black text-[24px] md:text-[32px] leading-[1.35] mt-3 [word-break:auto-phrase]">
+          分野ごとの<Mark>まずやること</Mark>
+        </h2>
+        <p className="mt-2 text-sm text-sumi-muted">4つの分野それぞれに、御社の状態に合わせた解説と「まずやること」3つ</p>
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4">
+          {byArea.map((a) => {
+            const s = service(a.area.key);
+            const r = a.area.results[a.level];
+            return (
+              <div key={a.area.key} className={`rounded-[22px] bg-white p-3.5 sm:p-5 ${card} shadow-[4px_4px_0_#1F2430] sm:shadow-[6px_6px_0_#1F2430]`}>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                  <IconTile bg={s.bg} className="!w-9 !h-9 sm:!w-11 sm:!h-11" icon={React.createElement(areaIcon[a.area.key], { className: 'w-4 h-4 sm:w-5 sm:h-5', strokeWidth: 2.4 })} />
+                  <div>
+                    <p className="font-head font-black text-[15px] sm:text-lg leading-tight">{a.area.label}</p>
+                    <p className="text-[11px] sm:text-xs font-bold text-sumi-muted">ランク{a.rank}・{levelLabel[a.level]}</p>
+                  </div>
+                </div>
+                <div aria-hidden="true" className={`mt-3 text-xs leading-relaxed ${blur}`}>
+                  <p className="hidden sm:block">{r.text}</p>
+                  <p className="sm:mt-2 font-bold">1. {r.todo[0]}</p>
+                  <p className="hidden sm:block font-bold">2. {r.todo[1]}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="mt-12">
+        <Sticker className="font-en text-sm font-black italic tracking-[0.12em] uppercase">Roadmap</Sticker>
+        <h2 className="font-head font-black text-[24px] md:text-[32px] leading-[1.35] mt-3 [word-break:auto-phrase]">
+          御社に合った<Mark>進める順番</Mark>
+        </h2>
+        <p className="mt-2 text-sm text-sumi-muted">どの分野から手をつけるか、おすすめのサービスと料金の目安つき</p>
+        <ol className="mt-5 grid grid-cols-4 gap-2 sm:gap-3">
+          {order.map((a, i) => (
+            <li key={a.area.key} className={`rounded-[16px] sm:rounded-[18px] bg-white p-2.5 sm:p-4 ${card} shadow-[3px_3px_0_#1F2430] sm:shadow-[4px_4px_0_#1F2430]`}>
+              <span className="font-en font-black italic text-[11px] sm:text-sm">STEP {i + 1}</span>
+              <p aria-hidden="true" className={`mt-1 text-[10px] sm:text-xs font-bold leading-relaxed line-clamp-3 sm:line-clamp-none ${blur}`}>
+                {a.area.label}
+                <br />
+                {a.area.results[a.level].todo[0]}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
   );
 };
 
@@ -699,15 +759,15 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
           <input tabIndex={-1} autoComplete="off" value={trap} onChange={(e) => setTrap(e.target.value)} />
         </label>
         <label className="block text-sm font-bold">
-          電話番号<span className="text-sumi-muted font-normal ml-1">任意</span>
-          <input type="tel" value={lead.phone} onChange={set('phone')} autoComplete="tel" className={input} />
+          電話番号<span className="text-coral ml-1">必須</span>
+          <input required pattern="[0-9０-９\-－+ ]{10,}" title="電話番号を入力してください（例：0586-00-0000）" type="tel" value={lead.phone} onChange={set('phone')} autoComplete="tel" className={input} />
         </label>
         <label className="flex items-start gap-2.5 text-xs leading-relaxed text-sumi-muted">
           <input required type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-0.5 w-4 h-4 accent-sumi" />
           入力いただいた情報は、診断結果と資料のご提供、Arcleからのご連絡・ご案内にのみ使います。内容に同意して送信します。
         </label>
       </div>
-      <button type="submit" disabled={sending} className="mt-6 w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-sumi text-white font-black border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544] disabled:opacity-60">
+      <button type="submit" disabled={sending} className="mt-6 w-full inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-4 text-[15px] sm:text-base whitespace-nowrap rounded-full bg-sumi text-white font-black border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544] disabled:opacity-60">
         {sending ? '送信しています…' : '結果の続きを見る・読本を受け取る'}
         <ArrowRight className="w-4 h-4" />
       </button>
