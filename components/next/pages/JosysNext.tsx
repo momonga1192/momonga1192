@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Check, Cpu, Globe, Shield, Users, Zap } from 'lucide-react';
-import { ContactCta, IconTile, Mark, PageHeader, SectionHead, Sparkle, Ticker, card, press } from '../parts';
+import { ContactCta, IconTile, Mark, PageHeader, PlanCard, SectionHead, Sparkle, Ticker, card, press } from '../parts';
 import { illust, services } from '../theme';
 
 const service = services.find((s) => s.key === 'josys')!;
@@ -187,25 +187,9 @@ const JosysNext: React.FC = () => (
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Pricing" enClass={service.text} title="プラン一覧" lead="スポット対応から包括的なIT運用まで。貴社の規模や課題に合わせた最適なサポートプランをご提供します" center />
-        <div className="grid lg:grid-cols-3 gap-8 lg:gap-6 items-stretch">
+        <div className="grid lg:grid-cols-3 gap-10 lg:gap-6 items-stretch pt-4">
           {plans.map((plan, i) => (
-            <article key={plan.name} style={{ animationDelay: `${i * 80}ms` }} className={`pop-reveal relative rounded-[28px] border-[2.5px] border-sumi p-7 md:p-8 flex flex-col ${plan.recommended ? `${service.tint} shadow-[8px_8px_0_#F2B544] lg:-translate-y-3` : 'bg-cream shadow-[6px_6px_0_#1F2430]'}`}>
-              {plan.recommended && <span className="pop-float absolute -top-4 left-6 -rotate-3 rounded-lg px-4 py-1 text-sm font-black text-white bg-coral border-2 border-sumi shadow-[3px_3px_0_#1F2430]">おすすめ</span>}
-              <p className={`font-en font-black italic text-lg tracking-wider ${service.text}`}>{plan.name}</p>
-              <h3 className="font-head text-2xl font-black mt-1 [word-break:auto-phrase]">{plan.sub}</h3>
-              <p className="mt-3 text-sm text-sumi-muted">{plan.desc}</p>
-              <p className={`my-7 font-en font-black italic text-5xl tracking-tight ${service.text}`}>{plan.price}</p>
-              <ul className="space-y-4 border-t-2 border-dashed border-warm-line pt-7 mb-8 flex-1">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2 text-sm leading-relaxed">
-                    <Check className={`w-4 h-4 shrink-0 mt-1 ${service.text}`} aria-hidden="true" />{feature}
-                  </li>
-                ))}
-              </ul>
-              <a href='/contact' className="inline-flex items-center justify-center gap-2 rounded-full bg-sumi text-white px-6 py-4 font-bold text-sm border-[2.5px] border-sumi shadow-[4px_4px_0_#F2B544] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#F2B544]">
-                お問い合わせ<ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </a>
-            </article>
+            <PlanCard key={plan.name} index={i} service="josys" plan={{ ...plan, prefix: '月額', amount: plan.price.replace(/万円~$/, ''), unit: '万円〜', priceNote: '税抜' }} />
           ))}
         </div>
         <div className="mt-10 rounded-[28px] bg-cream border-2 border-dashed border-sumi/40 p-6 text-sm text-sumi-muted leading-[1.9] space-y-2">

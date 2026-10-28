@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Bot, Check, Code, Cpu, Lock, MessageSquare, Zap } from 'lucide-react';
-import { ContactCta, IconTile, Mark, PageHeader, SectionHead, Sparkle, Ticker, card, press } from '../parts';
+import { ContactCta, IconTile, Mark, PageHeader, PlanCard, SectionHead, Sparkle, Ticker, card, press } from '../parts';
 import { illust, services } from '../theme';
 
 const ai = services.find((service) => service.key === 'ai')!;
@@ -183,21 +183,9 @@ const GenAINext: React.FC = () => (
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Pricing" enClass={ai.text} title="プラン一覧" lead="導入から定着、独自開発まで。貴社の成長段階に合わせて最適なAI活用支援プランをご提供します" center />
-        <div className="grid lg:grid-cols-3 gap-8 lg:gap-6 items-stretch">
+        <div className="grid lg:grid-cols-3 gap-10 lg:gap-6 items-stretch pt-4">
           {plans.map((plan, i) => (
-            <article key={plan.name} style={{ animationDelay: `${i * 80}ms` }} className={`pop-reveal relative flex flex-col rounded-[28px] border-[2.5px] border-sumi p-7 md:p-8 ${plan.recommended ? `${ai.tint} shadow-[8px_8px_0_#F2B544] lg:-translate-y-3` : 'bg-cream shadow-[6px_6px_0_#1F2430]'}`}>
-              {plan.recommended && <span className="pop-float absolute -top-4 left-6 -rotate-3 rounded-lg px-4 py-1 text-sm font-black text-white bg-coral border-2 border-sumi shadow-[3px_3px_0_#1F2430]">おすすめ</span>}
-              <p className={`font-en text-xl font-black italic ${ai.text}`}>{plan.name}</p>
-              <h3 className="mt-1 font-head text-2xl font-black [word-break:auto-phrase]">{plan.sub}</h3>
-              <p className="mt-3 text-sm text-sumi-muted">{plan.desc}</p>
-              <p className={`mt-6 font-en text-5xl font-black italic tracking-tight ${ai.text}`}>{plan.price}</p>
-              <ul className="mt-7 mb-8 pt-6 border-t-2 border-dashed border-warm-line space-y-3">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2 text-sm leading-[1.8] text-sumi-muted"><Check className={`w-4 h-4 shrink-0 mt-1 ${ai.text}`} aria-hidden="true" /><span>{feature}</span></li>
-                ))}
-              </ul>
-              <a href='/contact' aria-label={`${plan.sub}についてお問い合わせ`} className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-bold border-[2.5px] border-sumi transition-all hover:translate-x-[2px] hover:translate-y-[2px] ${plan.recommended ? 'bg-sumi text-white shadow-[4px_4px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544]' : 'bg-white shadow-[4px_4px_0_#1F2430] hover:shadow-[2px_2px_0_#1F2430]'}`}>お問い合わせ<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
-            </article>
+            <PlanCard key={plan.name} index={i} service="ai" ctaLabel={`${plan.sub}についてお問い合わせ`} plan={{ ...plan, amount: plan.price.replace(/万円~$/, ''), unit: '万円〜', priceNote: '税抜' }} />
           ))}
         </div>
         <div className="mt-10 rounded-[28px] bg-cream border-2 border-dashed border-sumi/40 p-6 space-y-2 text-xs leading-[1.9] text-sumi-muted">

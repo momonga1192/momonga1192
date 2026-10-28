@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Check, ArrowRight, Wallet, Server, RefreshCw, Headphones, Smartphone, Mail, Globe, ShieldCheck, BarChart3, MessageSquare, Newspaper, ChevronDown, MapPin } from 'lucide-react';
-import { PageHeader, SectionHead, ContactCta, IconTile, Mark, Sparkle, Sticker, Ticker, card, press } from '../parts';
+import { PageHeader, SectionHead, ContactCta, IconTile, Mark, PlanCard, Sparkle, Sticker, Ticker, card, press } from '../parts';
 import { illust, services } from '../theme';
 
 const plans = [
@@ -286,36 +286,26 @@ const WebNext: React.FC = () => (
     <section id="plans" className="py-20 md:py-28 scroll-mt-20 bg-white border-y-[2.5px] border-sumi">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="Pricing" title="料金プラン" lead="すべてのプランで初期費用0円です。" enClass={service.text} center />
-        <div className="grid md:grid-cols-3 gap-8 md:gap-6 items-stretch pt-4">
+        <div className="grid lg:grid-cols-3 gap-10 lg:gap-6 items-stretch pt-4">
           {plans.map((plan, index) => (
-            <article key={plan.name} style={{ animationDelay: `${index * 110}ms` }} className={`pop-reveal relative rounded-[28px] p-7 lg:p-8 flex flex-col border-[2.5px] border-sumi ${plan.recommended ? 'bg-white shadow-[8px_8px_0_#C8509F] md:-translate-y-3' : 'bg-cream shadow-[6px_6px_0_#1F2430]'}`}>
-              {plan.recommended && <span className={`pop-float absolute -top-5 left-6 -rotate-6 rounded-xl px-4 py-1 text-sm text-white font-black border-2 border-sumi shadow-[3px_3px_0_#1F2430] ${service.bg}`}>おすすめ</span>}
-              <h3 className="flex items-baseline gap-2">
-                <span className="font-en font-black italic text-2xl">{plan.name}</span>
-                <span className={`text-sm font-bold ${service.text}`}>{plan.sub}</span>
-              </h3>
-              <p className="mt-2 text-sm text-sumi-muted leading-relaxed">{plan.desc}</p>
-              <div className={`rounded-[22px] px-5 py-6 my-6 border-2 border-sumi ${service.tint}`}>
-                <p className="text-sm font-bold">初期費用 0円</p>
-                <p className="mt-1 whitespace-nowrap"><span className="text-base font-bold mr-1">月額</span><span className={`font-en text-[52px] lg:text-[60px] leading-none font-black italic ${service.text}`}>{plan.price.toLocaleString()}</span><span className="text-base font-bold ml-1">円</span></p>
-                <p className="text-xs mt-2 text-sumi-muted">（税込 {withTax(plan.price)}円）</p>
-              </div>
-              <ul className="space-y-4 flex-1">
-                {plan.features.map((feature) => <li key={feature} className="flex gap-2 text-sm leading-relaxed"><span className={`shrink-0 mt-0.5 w-5 h-5 rounded-full grid place-items-center border-2 border-sumi text-white ${service.bg}`}><Check className="w-3 h-3" strokeWidth={4} /></span>{feature}</li>)}
-              </ul>
-              <p className="text-xs text-sumi-muted mt-7 mb-4">公開までの目安：{plan.term}</p>
-              <a href='/contact' className={button}>このプランで相談する</a>
-            </article>
+            <PlanCard
+              key={plan.name}
+              index={index}
+              service="web"
+              cta="このプランで相談する"
+              plan={{ ...plan, chip: '初期費用 0円', prefix: '月額', amount: plan.price.toLocaleString(), unit: '円', priceNote: `（税込 ${withTax(plan.price)}円）`, note: `公開までの目安：${plan.term}` }}
+            />
           ))}
         </div>
-        <div className={`pop-reveal mt-10 rounded-[28px] bg-cream p-7 md:p-10 flex flex-col md:flex-row md:items-center gap-6 ${card}`}>
+        <div className={`group pop-reveal mt-14 rounded-[28px] bg-cream p-7 md:p-10 flex flex-col md:flex-row md:items-center gap-6 ${card}`}>
           <div className="flex-1">
             <p><Sticker className="text-sm font-bold">今あるホームページはそのままで</Sticker></p>
             <h3 className="font-head text-2xl md:text-3xl font-black mt-4 [word-break:auto-phrase]">運用おまかせプラン</h3>
             <p className="mt-3 text-sm text-sumi-muted leading-[1.9]">他社で制作したホームページの更新・管理を引き継ぎます。サーバーやドメインの管理、文章・写真の差し替えまでまとめてお任せいただけます。</p>
           </div>
-          <div className="shrink-0">
-            <p className="whitespace-nowrap"><span className="text-base font-bold mr-1">月額</span><span className={`font-en text-[52px] leading-none font-black italic ${service.text}`}>4,800</span><span className="text-base font-bold ml-1">円</span></p>
+          {/* 上のプランと同じ値札 */}
+          <div className="pop-wiggle shrink-0 self-start md:self-center rotate-2 rounded-2xl bg-white border-[2.5px] border-sumi px-6 py-4 shadow-[4px_4px_0_#1F2430]">
+            <p className="flex items-baseline whitespace-nowrap"><span className="font-bold mr-1.5">月額</span><span className={`font-en text-[52px] leading-none font-black italic tracking-tight ${service.text}`}>4,800</span><span className="font-head font-black text-lg ml-1">円</span></p>
             <p className="text-xs text-sumi-muted mt-1">（税込 5,280円）</p>
           </div>
         </div>

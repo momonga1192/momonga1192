@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { ArrowRight, Check, ChevronRight, Plus } from 'lucide-react';
 import { illust, services, type ServiceKey } from './theme';
 
 // 社名の由来（弧＝Arcをつないで円＝Circleにする）を、4事業の色の弧で表す
@@ -182,3 +182,86 @@ export const Ticker: React.FC<{ items: string[]; className?: string; tone?: stri
     </div>
   </div>
 );
+
+// 料金プランのカード。事業色の帯（プラン名）→ 帯に重ねた値札 → 内容 → ボタン の順に、上から一本道で読める
+// 「〇〇プランの全内容」は、下のプランを丸ごと含むことが分かるよう黄色のシールにする
+export type Plan = {
+  name: string;
+  sub: string;
+  desc: string;
+  amount: string;
+  unit: string;
+  prefix?: string;
+  chip?: string;
+  priceNote?: string;
+  features: string[];
+  note?: string;
+  recommended?: boolean;
+};
+
+export const PlanCard: React.FC<{ plan: Plan; service: ServiceKey; index: number; cta?: string; ctaLabel?: string }> = ({ plan, service, index, cta = 'お問い合わせ', ctaLabel }) => {
+  const s = services.find((item) => item.key === service)!;
+  const hot = plan.recommended;
+  const included = plan.features.filter((f) => f.endsWith('プランの全内容'));
+  const features = plan.features.filter((f) => !f.endsWith('プランの全内容'));
+  return (
+    <div style={{ animationDelay: `${index * 110}ms` }} className={`pop-reveal relative ${hot ? 'lg:-translate-y-4 z-10' : ''}`}>
+      <article className={`group relative h-full flex flex-col rounded-[28px] bg-white border-[2.5px] border-sumi transition-[translate,rotate,box-shadow] duration-300 hover:-translate-y-2 ${index % 2 ? 'hover:rotate-1' : 'hover:-rotate-1'} ${hot ? 'shadow-[8px_8px_0_#F2B544] hover:shadow-[12px_12px_0_#F2B544]' : 'shadow-[6px_6px_0_#1F2430] hover:shadow-[10px_10px_0_#1F2430]'}`}>
+        {hot && (
+          <span className="pop-float absolute -top-6 -right-3 z-20 grid place-items-center w-[80px] h-[80px] rounded-full bg-mustard text-sumi font-head font-black text-[14px] leading-tight text-center border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] rotate-12">
+            おすすめ!
+          </span>
+        )}
+        {/* プラン名の帯 */}
+        <div className={`relative rounded-t-[25px] border-b-[2.5px] border-sumi px-7 pt-7 pb-16 ${hot ? `${s.bg} text-white` : s.tint}`}>
+          <p className="font-en font-black italic text-[34px] leading-none tracking-tight">{plan.name}</p>
+          <h3 className="font-head font-black text-lg mt-2 [word-break:auto-phrase]">{plan.sub}</h3>
+          <p className={`mt-1 text-sm leading-relaxed ${hot ? 'text-white/85' : 'text-sumi-muted'}`}>{plan.desc}</p>
+          {hot && <Sparkle className="absolute right-8 top-[88px] w-7 h-7 text-mustard" />}
+        </div>
+        {/* 帯に重ねた値札 */}
+        <div className="relative -mt-11 px-5">
+          <div className={`pop-wiggle inline-block rounded-2xl bg-white border-[2.5px] border-sumi pl-5 pr-6 py-3.5 shadow-[4px_4px_0_#1F2430] ${index % 2 ? 'rotate-2' : '-rotate-2'}`}>
+            {plan.chip && <span className={`inline-block rounded-full px-3 py-0.5 text-xs font-black text-white border-2 border-sumi ${s.bg}`}>{plan.chip}</span>}
+            <p className="mt-1 flex items-baseline whitespace-nowrap">
+              {plan.prefix && <span className="font-bold mr-1.5">{plan.prefix}</span>}
+              <span className={`font-en font-black italic text-[52px] lg:text-[58px] leading-none tracking-tight ${s.text}`}>{plan.amount}</span>
+              <span className="font-head font-black text-lg ml-1">{plan.unit}</span>
+            </p>
+            {plan.priceNote && <p className="text-xs text-sumi-muted mt-1">{plan.priceNote}</p>}
+          </div>
+        </div>
+        {/* 内容 */}
+        <div className="px-7 pt-7 pb-7 flex flex-col flex-1">
+          {included.map((f) => (
+            <p key={f} className="mb-4">
+              <span className="inline-flex items-center gap-1 -rotate-2 rounded-lg bg-mustard px-3 py-1 text-[13px] font-black border-2 border-sumi shadow-[2px_2px_0_#1F2430]">
+                <Plus className="w-3.5 h-3.5" strokeWidth={3.5} aria-hidden="true" />
+                {f}
+              </span>
+            </p>
+          ))}
+          <ul className="space-y-3.5 flex-1">
+            {features.map((f) => (
+              <li key={f} className="flex gap-2.5 text-sm leading-relaxed">
+                <span className={`shrink-0 mt-0.5 w-5 h-5 rounded-full grid place-items-center border-2 border-sumi text-white ${s.bg}`}>
+                  <Check className="w-3 h-3" strokeWidth={4} aria-hidden="true" />
+                </span>
+                {f}
+              </li>
+            ))}
+          </ul>
+          {plan.note && <p className="text-xs text-sumi-muted mt-7">{plan.note}</p>}
+          <a
+            href="/contact"
+            aria-label={ctaLabel}
+            className={`mt-6 inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 font-bold text-sm border-[2.5px] border-sumi transition-all hover:translate-x-[3px] hover:translate-y-[3px] ${hot ? 'bg-sumi text-white shadow-[5px_5px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544]' : 'bg-white shadow-[5px_5px_0_#1F2430] hover:shadow-[2px_2px_0_#1F2430]'}`}
+          >
+            {cta}
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </a>
+        </div>
+      </article>
+    </div>
+  );
+};
