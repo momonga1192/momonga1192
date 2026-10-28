@@ -23,6 +23,7 @@ export const sendLead = async (lead: Lead, result: string) => {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ ...lead, result, page: location.href })
+    // 電話番号は全角を半角にそろえ、先頭に ' を付けてシートで数値にならないようにする（0 が消えるのを防ぐ）
+    body: JSON.stringify({ ...lead, phone: `'${lead.phone.replace(/[０-９－]/g, (c) => (c === '－' ? '-' : String.fromCharCode(c.charCodeAt(0) - 0xfee0)))}`, result, page: location.href })
   });
 };
