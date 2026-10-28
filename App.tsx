@@ -22,6 +22,7 @@ import ServicesNext from './components/next/pages/ServicesNext';
 import CompanyNext from './components/next/pages/CompanyNext';
 import MessageNext from './components/next/pages/MessageNext';
 import FlowNext from './components/next/pages/FlowNext';
+import PrivacyNext from './components/next/pages/PrivacyNext';
 import JosysNext from './components/next/pages/JosysNext';
 import DataNext from './components/next/pages/DataNext';
 import GenAINext from './components/next/pages/GenAINext';
@@ -90,6 +91,7 @@ export const AppContent: React.FC = () => (
         <Route path="/company" element={<CompanyNext />} />
         <Route path="/company/message" element={<MessageNext />} />
         <Route path="/flow" element={<FlowNext />} />
+        <Route path="/privacy" element={<PrivacyNext />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/it-check" element={<ItCheck />} />
         <Route path="/articles" element={<ArticlesIndex />} />

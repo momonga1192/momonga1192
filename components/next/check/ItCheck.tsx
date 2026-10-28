@@ -764,7 +764,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
         </label>
         <label className="flex items-start gap-2.5 text-xs leading-relaxed text-sumi-muted">
           <input required type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-0.5 w-4 h-4 accent-sumi" />
-          入力いただいた情報は、診断結果と資料のご提供、Arcleからのご連絡・ご案内にのみ使います。内容に同意して送信します。
+          <span>入力いただいた情報は、診断結果と資料のご提供、Arcleからのご連絡・ご案内にのみ使います。<a href="/privacy" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-sumi">プライバシーポリシー</a>に同意して送信します。</span>
         </label>
       </div>
       <button type="submit" disabled={sending} className="mt-6 w-full inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-4 text-[15px] sm:text-base whitespace-nowrap rounded-full bg-sumi text-white font-black border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544] disabled:opacity-60">

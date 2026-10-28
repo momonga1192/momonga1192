@@ -17,7 +17,8 @@ const groups = [
     links: [
       { label: 'ご相談の流れ', href: '/flow' },
       { label: 'よくあるご質問', href: '/flow#faq' },
-      { label: 'お問い合わせ', href: '/contact' }
+      { label: 'お問い合わせ', href: '/contact' },
+      { label: 'プライバシーポリシー', href: '/privacy' }
     ]
   }
 ];

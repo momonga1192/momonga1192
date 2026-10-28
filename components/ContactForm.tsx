@@ -36,6 +36,7 @@ const ContactForm: React.FC = () => (
         <div className={`min-w-0 rounded-[28px] bg-white py-8 md:py-10 ${card}`}>
           <div className="px-6 md:px-10">
             <SectionHead en="Contact Form" title="お問い合わせフォーム" />
+            <p className="mt-4 text-sm text-sumi-muted">お預かりした個人情報は、<a href="/privacy" className="underline underline-offset-4 hover:text-sumi">プライバシーポリシー</a>に沿って取り扱います。</p>
           </div>
           {/* Googleフォームの項目・検証・送信・完了表示をそのまま維持する。
               別オリジンのiframe内には、このページからスタイルを適用できない。 */}
