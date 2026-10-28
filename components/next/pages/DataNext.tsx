@@ -216,7 +216,7 @@ const DataNext: React.FC = () => (
           en="Dashboard Sample"
           enClass={service.text}
           title={<>ダッシュボードって、<br className="sm:hidden" /><Mark>こういうもの</Mark>です。</>}
-          lead="Excelや販売管理システムにある数字を自動で集めて、1つの画面にまとめたものです。下の見本は、架空の卸売業のデータで作っています。期間や営業所を切り替えて、触ってみてください。"
+          lead="Excelや販売管理システム、生産の記録などにある数字を自動で集めて、1つの画面にまとめたものです。下の見本は、架空の会社のデータで作った売上・在庫・生産のダッシュボードです。タブや営業所を切り替えて、触ってみてください。"
           center
         />
         <div className="pop-reveal relative">
