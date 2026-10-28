@@ -36,3 +36,8 @@ dist-ssr
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# 資料PDFの生成用の中間ファイル
+scripts/dx-guide/.data.mjs
+scripts/dx-guide/guide.html
+scripts/dx-guide/.img/

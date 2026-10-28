@@ -10,6 +10,8 @@ export type Area = {
   label: string;
   short: string;
   questions: string[];
+  // レーダーチャートの細かい軸。分野を2つに分け、q はその分野の質問の番号（0始まり）
+  facets: { label: string; q: number[] }[];
   // 一番弱い分野になったときの呼び名
   type: string;
   results: Record<Level, { text: string; todo: string[] }>;
@@ -32,6 +34,10 @@ export const areas: Area[] = [
       '社員が辞めたとき、その日のうちにアカウントを止めている',
       'Microsoft 365やGoogle Workspaceなどに、二段階認証を設定している',
       '大事なデータのバックアップを取っていて、元に戻せることを確かめている'
+    ],
+    facets: [
+      { label: '管理・体制', q: [0, 1, 2] },
+      { label: 'セキュリティ', q: [3, 4] }
     ],
     type: 'まずは足元固めタイプ',
     results: {
@@ -60,6 +66,10 @@ export const areas: Area[] = [
       '会議では、感覚ではなく数字をもとに話し合っている',
       '顧客や商談の情報が、担当者の頭やメモではなく、共有の場所にある'
     ],
+    facets: [
+      { label: '集計・見える化', q: [0, 1, 2] },
+      { label: '活用・共有', q: [3, 4] }
+    ],
     type: '数字が眠っているタイプ',
     results: {
       low: {
@@ -86,6 +96,10 @@ export const areas: Area[] = [
       '業務で生成AIを使っている社員がいる',
       '議事録・メール・資料づくりなど、AIに任せられそうな作業が分かっている',
       '社内のマニュアルや過去の資料を、すぐに探し出せる'
+    ],
+    facets: [
+      { label: 'ルール・環境', q: [0, 1] },
+      { label: '業務での活用', q: [2, 3, 4] }
     ],
     type: 'AIはこれからタイプ',
     results: {
@@ -114,6 +128,10 @@ export const areas: Area[] = [
       'ホームページの更新を、社内か依頼先ですぐにできる',
       'ホームページから、問い合わせや採用の応募が来ている'
     ],
+    facets: [
+      { label: '情報の鮮度', q: [0, 2, 3] },
+      { label: '集客力', q: [1, 4] }
+    ],
     type: '会社の顔をみがきたいタイプ',
     results: {
       low: {
@@ -137,28 +155,32 @@ export const allGoodType = '次のステージへタイプ';
 
 export const questionCount = areas.reduce((n, a) => n + a.questions.length, 0);
 
+// 点数の割合からランクを出す（S〜D）。level は結果の文章の出し分けに使う
+export const rankOf = (rate: number) => (rate >= 0.9 ? 'S' : rate >= 0.8 ? 'A' : rate >= 0.6 ? 'B' : rate >= 0.4 ? 'C' : 'D');
+export const levelLabel: Record<Level, string> = { low: 'これから', mid: 'もう一歩', high: 'できている' };
+
 // 回答（質問の順に点数、未回答は -1）から分野ごとの点数を出す
-export type AreaScore = { area: Area; score: number; max: number; level: Level };
+export type AreaScore = { area: Area; score: number; max: number; rate: number; rank: string; level: Level; facets: { label: string; rate: number }[] };
 
 export const scoreAnswers = (answers: number[]) => {
-  let i = 0;
+  let offset = 0;
   const byArea: AreaScore[] = areas.map((area) => {
-    const max = area.questions.length * 2;
-    let score = 0;
-    area.questions.forEach(() => {
-      score += Math.max(answers[i++] ?? 0, 0);
-    });
+    const own = area.questions.map((_, n) => Math.max(answers[offset + n] ?? 0, 0));
+    offset += area.questions.length;
+    const max = own.length * 2;
+    const score = own.reduce((a, b) => a + b, 0);
     const rate = score / max;
-    const level: Level = rate < 0.5 ? 'low' : rate < 0.8 ? 'mid' : 'high';
-    return { area, score, max, level };
+    const level: Level = rate < 0.6 ? 'low' : rate < 0.8 ? 'mid' : 'high';
+    const facets = area.facets.map((f) => ({ label: f.label, rate: f.q.reduce((a, q) => a + own[q], 0) / (f.q.length * 2) }));
+    return { area, score, max, rate, rank: rankOf(rate), level, facets };
   });
   const total = Math.round((byArea.reduce((n, a) => n + a.score, 0) / (questionCount * 2)) * 100);
-  const weakest = [...byArea].sort((a, b) => a.score / a.max - b.score / b.max)[0];
+  const weakest = [...byArea].sort((a, b) => a.rate - b.rate)[0];
   const allGood = byArea.every((a) => a.level === 'high');
   // 進める順番：守り（情シス）が弱ければ最初に固め、そのあとは点数の低い順
   const order = [...byArea].sort((a, b) => {
     const guard = (s: AreaScore) => (s.area.key === 'josys' && s.level !== 'high' ? -1 : 0);
-    return guard(a) - guard(b) || a.score / a.max - b.score / b.max;
+    return guard(a) - guard(b) || a.rate - b.rate;
   });
   return { byArea, total, weakest, allGood, order };
 };

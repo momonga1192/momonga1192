@@ -1,5 +1,6 @@
-// 診断結果の解禁フォームの送り先（Googleフォーム）
-// フォームの「回答を送信するURL（…/formResponse）」と、各項目の entry ID（entry.123456789 の形）を入れる
+// 診断結果の解禁フォームの送り先
+// TODO: Googleスプレッドシート＋Apps Script（ウェブアプリ）に差し替える。シートに記録し、資料PDFをメールで送る
+// 今はGoogleフォーム形式（…/formResponse と entry ID）のまま
 // action が空のあいだは送信せずに、画面の解禁だけ行う（開発中の確認用）
 export const leadForm = {
   action: '',
@@ -13,8 +14,9 @@ export const leadForm = {
   }
 };
 
-// 資料PDF（はじめてのDX読本）の置き場所。空のあいだは「準備中」と表示する
-export const guidePdf = '';
+// 資料PDF（はじめてのDX読本）は画面では渡さず、送信先（Apps Script）からメールで送る
+// 明らかなダミーのアドレスは受け付けない（フリーメールは中小企業でも使うので弾かない）
+export const isDummyEmail = (email: string) => /^(test|sample|dummy|example|a+|x+)@|@(example\.(com|jp|net|org)|test\.(com|jp)|sample\.(com|jp))$/i.test(email.trim());
 
 export type Lead = { company: string; name: string; email: string; phone: string };
 

@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, ArrowRight, BarChart3, Bot, Download, Globe, Lock, Printer, RotateCcw, Shield } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BarChart3, Bot, Globe, Lock, Mail, Printer, RotateCcw, Shield } from 'lucide-react';
 import { IconTile, Mark, PageHeader, Sparkle, Sticker, card, press } from '../parts';
 import { illust, prices, services } from '../theme';
-import { allGoodType, areas, choices, questionCount, scoreAnswers, type AreaScore } from './checkData';
-import { guidePdf, sendLead, type Lead } from './leadForm';
+import { allGoodType, areas, choices, levelLabel, questionCount, scoreAnswers, type AreaScore } from './checkData';
+import { isDummyEmail, sendLead, type Lead } from './leadForm';
 
 // 会社のIT健康診断。20問に答えると、総合点・レーダーチャート・一番弱い分野までは無料で見せ、
-// 分野ごとの解説・進める順番・おすすめサービス・資料PDFは、会社名などを入力すると解禁する
+// 分野ごとの解説・進める順番・おすすめサービスは、会社名などを入力すると解禁する。資料PDFは入力されたメールアドレスに送る
 const STORE = 'arcle-it-check';
 
 type Saved = { answers: number[]; unlocked: boolean };
@@ -131,7 +131,7 @@ const Intro: React.FC<{ onStart: () => void }> = ({ onStart }) => (
         {[
           { title: '20問に答える', body: '4分野×5問。考え込まずに、いまの会社の様子で答えてください。', icon: '01' },
           { title: 'その場で結果がわかる', body: '総合点と4分野のレーダーチャート、いちばん伸ばしたい分野がすぐに見られます。', icon: '02' },
-          { title: '詳しい解説と資料を受け取る', body: '会社名などを入力すると、分野ごとの「まずやること」と進める順番、資料PDFが見られます。', icon: '03' }
+          { title: '詳しい解説と資料を受け取る', body: '会社名などを入力すると、分野ごとの「まずやること」と進める順番が見られます。資料PDFはメールでお送りします。', icon: '03' }
         ].map((item, i) => (
           <div key={item.title} style={{ animationDelay: `${i * 80}ms` }} className={`group pop-reveal rounded-[28px] bg-cream p-7 ${card}`}>
             <span className="pop-wiggle inline-grid place-items-center w-12 h-12 rounded-full bg-coral text-white font-en font-black italic text-lg border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6">{item.icon}</span>
@@ -201,42 +201,62 @@ const Quiz: React.FC<{ index: number; onAnswer: (point: number) => void; onBack:
   );
 };
 
-// 4分野のレーダーチャート（上：守り、右：データ、下：AI、左：Web）
+// 8軸のレーダーチャート。4分野をそれぞれ2つの軸に分け、分野ごとに背景を色分けする
+const colors: Record<string, string> = { josys: '#3B6FE0', data: '#5B5BD6', ai: '#8E5BD0', web: '#C8509F' };
+
 const Radar: React.FC<{ scores: AreaScore[] }> = ({ scores }) => {
-  const R = 110;
-  const dirs = [
-    [0, -1],
-    [1, 0],
-    [0, 1],
-    [-1, 0]
-  ];
-  const pt = (i: number, rate: number) => `${dirs[i][0] * R * rate},${dirs[i][1] * R * rate}`;
-  const poly = scores.map((s, i) => pt(i, Math.max(s.score / s.max, 0.06))).join(' ');
-  const colors = ['#3B6FE0', '#5B5BD6', '#8E5BD0', '#C8509F'];
+  const R = 118;
+  const axes = scores.flatMap((s) => s.facets.map((f) => ({ ...f, key: s.area.key })));
+  const n = axes.length;
+  // 分野の真ん中の向き（上・右・下・左）から、左右に半分ずつずらして2本の軸を置く
+  const angle = (i: number) => ((-90 - 180 / n + (360 / n) * i) * Math.PI) / 180;
+  const at = (i: number, r: number): [number, number] => [Math.cos(angle(i)) * R * r, Math.sin(angle(i)) * R * r];
+  const ring = (r: number) => axes.map((_, i) => at(i, r).join(',')).join(' ');
+  const mid = (i: number, j: number) => {
+    const [x1, y1] = at(i, 1);
+    const [x2, y2] = at(j, 1);
+    return `${(x1 + x2) / 2},${(y1 + y2) / 2}`;
+  };
+  const data = axes.map((a, i) => at(i, Math.max(a.rate, 0.05)));
   return (
-    <svg viewBox="-205 -150 410 300" className="w-full max-w-[420px] mx-auto" role="img" aria-label={scores.map((s) => `${s.area.label} ${s.score}/${s.max}点`).join('、')}>
-      {[0.25, 0.5, 0.75, 1].map((r) => (
-        <polygon key={r} points={[0, 1, 2, 3].map((i) => pt(i, r)).join(' ')} fill={r === 1 ? '#fff' : 'none'} stroke="#1F2430" strokeOpacity={r === 1 ? 1 : 0.18} strokeWidth={r === 1 ? 2.5 : 1.5} strokeDasharray={r === 1 ? undefined : '4 4'} />
-      ))}
-      {[0, 1, 2, 3].map((i) => (
-        <line key={i} x1="0" y1="0" x2={dirs[i][0] * R} y2={dirs[i][1] * R} stroke="#1F2430" strokeOpacity="0.18" strokeWidth="1.5" />
-      ))}
-      <polygon points={poly} fill="#F2B544" fillOpacity="0.75" stroke="#1F2430" strokeWidth="3" strokeLinejoin="round" />
-      {scores.map((s, i) => {
-        const [x, y] = pt(i, Math.max(s.score / s.max, 0.06)).split(',').map(Number);
-        return <circle key={s.area.key} cx={x} cy={y} r="7" fill={colors[i]} stroke="#1F2430" strokeWidth="2.5" />;
-      })}
-      {scores.map((s, i) => {
-        const lx = dirs[i][0] * (R + 16);
-        const ly = dirs[i][1] * (R + 22);
-        const anchor = dirs[i][0] === 0 ? 'middle' : dirs[i][0] > 0 ? 'start' : 'end';
-        return (
-          <text key={s.area.key} x={lx} y={ly + (dirs[i][1] > 0 ? 10 : dirs[i][1] < 0 ? -2 : 5)} textAnchor={anchor} className="font-head" fontWeight="900" fontSize="15" fill="#1F2430">
-            {s.area.short}
-          </text>
-        );
-      })}
-    </svg>
+    <div>
+      <svg viewBox="-228 -152 456 304" className="w-full max-w-[460px] mx-auto" role="img" aria-label={axes.map((a) => `${a.label} ${Math.round(a.rate * 100)}%`).join('、')}>
+        <polygon points={ring(1)} fill="#fff" />
+        {scores.map((s, k) => (
+          <polygon key={s.area.key} points={`0,0 ${mid((2 * k - 1 + n) % n, 2 * k)} ${at(2 * k, 1).join(',')} ${at(2 * k + 1, 1).join(',')} ${mid(2 * k + 1, (2 * k + 2) % n)}`} fill={colors[s.area.key]} fillOpacity="0.12" />
+        ))}
+        {[0.2, 0.4, 0.6, 0.8].map((r) => (
+          <polygon key={r} points={ring(r)} fill="none" stroke="#1F2430" strokeOpacity="0.16" strokeWidth="1.2" strokeDasharray="3 4" />
+        ))}
+        {axes.map((_, i) => {
+          const [x, y] = at(i, 1);
+          return <line key={i} x1="0" y1="0" x2={x} y2={y} stroke="#1F2430" strokeOpacity="0.18" strokeWidth="1.2" />;
+        })}
+        <polygon points={ring(1)} fill="none" stroke="#1F2430" strokeWidth="2.5" strokeLinejoin="round" />
+        <polygon points={data.map((p) => p.join(',')).join(' ')} fill="#F2B544" fillOpacity="0.72" stroke="#1F2430" strokeWidth="3" strokeLinejoin="round" />
+        {data.map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r="6" fill={colors[axes[i].key]} stroke="#1F2430" strokeWidth="2.5" />
+        ))}
+        {axes.map((a, i) => {
+          const cos = Math.cos(angle(i));
+          const sin = Math.sin(angle(i));
+          const anchor = cos > 0.3 ? 'start' : cos < -0.3 ? 'end' : 'middle';
+          return (
+            <text key={a.label} x={cos * (R + 12)} y={sin * (R + 14) + 5} textAnchor={anchor} fontWeight="800" fontSize="14" fill={colors[a.key]}>
+              {a.label}
+            </text>
+          );
+        })}
+      </svg>
+      <ul className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-1.5 text-xs font-bold">
+        {scores.map((s) => (
+          <li key={s.area.key} className="inline-flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded-full border-2 border-sumi" style={{ background: colors[s.area.key] }} />
+            {s.area.label}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
@@ -244,7 +264,7 @@ const Result: React.FC<{ answers: number[]; unlocked: boolean; onUnlock: () => v
   const { byArea, total, weakest, allGood, order } = scoreAnswers(answers);
   const typeName = allGood ? allGoodType : weakest.area.type;
   const ws = service(weakest.area.key);
-  const summary = `総合${total}点 / ${byArea.map((a) => `${a.area.label}${a.score}/${a.max}`).join(' / ')} / 回答:${answers.join('')}`;
+  const summary = `総合${total}点 / ${byArea.map((a) => `${a.area.label} ${a.rank}(${a.score}/${a.max})`).join(' / ')} / 回答:${answers.join('')}`;
 
   return (
     <>
@@ -283,19 +303,20 @@ const Result: React.FC<{ answers: number[]; unlocked: boolean; onUnlock: () => v
                 {byArea.map((a) => {
                   const s = service(a.area.key);
                   return (
-                    <li key={a.area.key} className="rounded-2xl bg-white border-2 border-sumi px-4 py-3">
-                      <p className="text-xs font-bold">{a.area.label}</p>
-                      <p className="flex items-baseline gap-1 mt-1">
-                        <span className={`font-en font-black italic text-3xl leading-none ${s.text}`}>{a.score}</span>
-                        <span className="text-xs text-sumi-muted">/ {a.max}</span>
-                      </p>
-                      <span className="mt-2 block h-2 rounded-full bg-sumi/10 overflow-hidden">
-                        <span className={`block h-full ${s.bg}`} style={{ width: `${(a.score / a.max) * 100}%` }} />
+                    <li key={a.area.key} className="flex items-center gap-3 rounded-2xl bg-white border-2 border-sumi px-3.5 py-3">
+                      <span className={`shrink-0 grid place-items-center w-11 h-11 md:w-12 md:h-12 rounded-xl text-white font-en font-black italic text-2xl border-2 border-sumi shadow-[2px_2px_0_#1F2430] -rotate-6 ${s.bg}`}>{a.rank}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-[11px] md:text-xs font-bold leading-tight">{a.area.label}</span>
+                        <span className="block text-sm font-black mt-0.5">{levelLabel[a.level]}</span>
+                        <span className="mt-1.5 block h-1.5 rounded-full bg-sumi/10 overflow-hidden">
+                          <span className={`block h-full ${s.bg}`} style={{ width: `${a.rate * 100}%` }} />
+                        </span>
                       </span>
                     </li>
                   );
                 })}
               </ul>
+              <p className="mt-3 text-xs text-sumi-muted">ランクは S・A・B・C・D の5段階です（S がいちばん整っている状態）。</p>
             </div>
           </div>
         </div>
@@ -335,9 +356,8 @@ const Result: React.FC<{ answers: number[]; unlocked: boolean; onUnlock: () => v
   );
 };
 
-// 解禁後に見せる中身：分野ごとの解説、進める順番、おすすめのサービス、資料PDF
+// 解禁後に見せる中身：分野ごとの解説、進める順番、おすすめのサービス、資料PDFの案内
 const Details: React.FC<{ byArea: AreaScore[]; order: AreaScore[] }> = ({ byArea, order }) => {
-  const label = { low: 'これから', mid: 'もう一歩', high: 'できている' } as const;
   return (
     <>
       <div className="text-center">
@@ -357,7 +377,7 @@ const Details: React.FC<{ byArea: AreaScore[]; order: AreaScore[] }> = ({ byArea
                 <div>
                   <h3 className="font-head font-black text-xl md:text-2xl">{a.area.label}</h3>
                   <p className="text-xs font-bold text-sumi-muted mt-0.5">
-                    {a.score} / {a.max}点・{label[a.level]}
+                    ランク{a.rank}・{levelLabel[a.level]}
                   </p>
                 </div>
               </div>
@@ -405,16 +425,12 @@ const Details: React.FC<{ byArea: AreaScore[]; order: AreaScore[] }> = ({ byArea
         <div>
           <Sticker className="text-sm font-bold">無料の資料</Sticker>
           <h3 className="font-head font-black text-[24px] md:text-[32px] leading-snug mt-4 [word-break:auto-phrase]">IT担当がいない会社のための はじめてのDX読本</h3>
-          <p className="mt-4 text-sm leading-[1.9] text-sumi-muted">よくある困りごと、分野ごとの進め方、支援のモデルケースまでをまとめた資料です。社内での共有にもお使いください。</p>
+          <p className="mt-4 text-sm leading-[1.9] text-sumi-muted">よくある困りごと、分野ごとの進め方、支援のモデルケースまでをまとめた資料です。社内での共有にもお使いください。届かないときは、迷惑メールのフォルダもご確認ください。</p>
           <div className="mt-7 flex flex-wrap gap-4">
-            {guidePdf ? (
-              <a href={guidePdf} download onClick={() => track('guide_download')} className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-sumi text-white font-bold border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544]">
-                <Download className="w-4 h-4" />
-                資料PDFをダウンロード
-              </a>
-            ) : (
-              <span className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-sumi/10 text-sumi-muted font-bold border-2 border-dashed border-sumi/30">資料PDFは準備中です</span>
-            )}
+            <p className="inline-flex items-center gap-2 rounded-2xl bg-mustard/30 px-5 py-3 text-sm font-black border-2 border-sumi">
+              <Mail className="w-4 h-4" />
+              ご入力のメールアドレスにお送りします
+            </p>
             <a href="/contact" className={`inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white font-bold ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>
               結果をもとに無料で相談する
               <ArrowRight className="w-4 h-4" />
@@ -430,13 +446,20 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
   const [lead, setLead] = useState<Lead>({ company: '', name: '', email: '', phone: '' });
   const [agree, setAgree] = useState(false);
   const [sending, setSending] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  // ロボットよけ：画面には見えない欄。ここが埋まっていたら送信しない
+  const [trap, setTrap] = useState('');
   const set = (key: keyof Lead) => (e: React.ChangeEvent<HTMLInputElement>) => setLead({ ...lead, [key]: e.target.value });
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isDummyEmail(lead.email)) {
+      setEmailError('資料をお送りできるメールアドレスを入力してください');
+      return;
+    }
     setSending(true);
     try {
-      await sendLead(lead, summary);
+      if (!trap) await sendLead(lead, summary);
     } catch {
       /* 送信に失敗しても、入力してくれた人には結果を見せる */
     }
@@ -449,9 +472,9 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
   return (
     <form onSubmit={submit} className={`relative w-full max-w-lg rounded-[32px] bg-white p-7 md:p-9 ${card} shadow-[8px_8px_0_#1F2430]`}>
       <span className="pop-float absolute -top-6 -right-3 grid place-items-center w-[76px] h-[76px] rounded-full bg-coral text-white font-head font-black text-sm leading-tight text-center border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] rotate-12">
-        資料PDF
+        DX読本
         <br />
-        つき
+        プレゼント
       </span>
       <p className="inline-flex items-center gap-2 text-sm font-black">
         <Lock className="w-4 h-4" />
@@ -469,7 +492,27 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
         </label>
         <label className="block text-sm font-bold">
           メールアドレス<span className="text-coral ml-1">必須</span>
-          <input required type="email" value={lead.email} onChange={set('email')} autoComplete="email" className={input} />
+          <input
+            required
+            type="email"
+            value={lead.email}
+            onChange={(e) => {
+              setEmailError('');
+              set('email')(e);
+            }}
+            autoComplete="email"
+            aria-invalid={!!emailError}
+            className={input}
+          />
+          {emailError ? (
+            <span className="block mt-1.5 text-xs font-bold text-coral">{emailError}</span>
+          ) : (
+            lead.email && <span className="block mt-1.5 text-xs font-normal text-sumi-muted break-all">資料PDFは「{lead.email}」にお送りします</span>
+          )}
+        </label>
+        <label aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+          ホームページ
+          <input tabIndex={-1} autoComplete="off" value={trap} onChange={(e) => setTrap(e.target.value)} />
         </label>
         <label className="block text-sm font-bold">
           電話番号<span className="text-sumi-muted font-normal ml-1">任意</span>
@@ -481,7 +524,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
         </label>
       </div>
       <button type="submit" disabled={sending} className="mt-6 w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-sumi text-white font-black border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544] disabled:opacity-60">
-        {sending ? '送信しています…' : '結果の続きを見る'}
+        {sending ? '送信しています…' : '結果の続きを見る・資料を受け取る'}
         <ArrowRight className="w-4 h-4" />
       </button>
     </form>
