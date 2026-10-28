@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowDown, MousePointerClick } from 'lucide-react';
+import { ArrowLeft, MousePointerClick } from 'lucide-react';
 import { card } from './parts';
+import { Count, Donut, Gauge, MotionStyles, TouchHint, useReveal } from './dashboard/Visuals';
 
 // データ活用ページの「ダッシュボードの見本」。架空の会社のデータで、売上・在庫・生産の3つを切り替えて触れる
 // 色：主＝藍（事業の色）、比べる相手＝青緑。2色は色覚の違いでも見分けられることを確かめてある
@@ -12,19 +13,28 @@ const WARNING = '#B7770A';
 
 const months = ['11月', '12月', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月'];
 const sumOf = (vals: number[]) => vals.reduce((a, b) => a + b, 0);
+// 丸め誤差を最後の項目で調整し、構成比の合計をKPIと一致させる。
+const reconcile = (rows: { label: string; value: number }[], total: number) => rows.map((row, i) => ({
+  ...row,
+  value: i === rows.length - 1 ? total - sumOf(rows.slice(0, -1).map(r => r.value)) : row.value
+}));
 const yen = (man: number) => (man >= 10000 ? `${(man / 10000).toFixed(2)}億円` : `${man.toLocaleString()}万円`);
 
 // 親の幅に合わせてSVGを描く（スマホで文字が縮まないように）
 const useWidth = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(560);
+  const [height, setHeight] = useState(250);
   useEffect(() => {
     if (!ref.current) return;
-    const ro = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width));
+    const ro = new ResizeObserver(([entry]) => {
+      setWidth(entry.contentRect.width);
+      setHeight(entry.contentRect.height);
+    });
     ro.observe(ref.current);
     return () => ro.disconnect();
   }, []);
-  return [ref, width] as const;
+  return [ref, width, height] as const;
 };
 
 // 目盛りを切りのいい数字にする（1・2・2.5・5 の10の累乗）
@@ -42,9 +52,9 @@ type Series = { name: string; color: string; values: number[]; kind?: 'line' | '
 
 // 折れ線（と縦棒）のグラフ。縦軸は1本だけ。マウスを乗せた月の数字をまとめて出す
 const Chart: React.FC<{ labels: string[]; series: Series[]; unit: string; refLine?: { value: number; label: string }; zero?: boolean }> = ({ labels, series, unit, refLine, zero }) => {
-  const [ref, width] = useWidth();
+  const [ref, width, height] = useWidth();
   const [hover, setHover] = useState<number | null>(null);
-  const H = 220;
+  const H = Math.max(220, height - 30);
   const pad = { l: 46, r: 46, t: 14, b: 26 };
   const all = series.flatMap((s) => s.values).concat(refLine ? [refLine.value] : []);
   const { min, max, ticks } = niceScale(zero ? 0 : Math.min(...all) * 0.85, Math.max(...all));
@@ -66,7 +76,8 @@ const Chart: React.FC<{ labels: string[]; series: Series[]; unit: string; refLin
   };
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative flex min-w-0 flex-1 flex-col min-h-[250px]">
+      <TouchHint />
       <svg width={width} height={H} className="block" role="img" aria-label={labels.map((m, i) => `${m} ${series.map((s) => `${s.name}${s.values[i].toLocaleString()}${unit}`).join('・')}`).join('、')}>
         {ticks.map((t) => (
           <g key={t}>
@@ -126,11 +137,11 @@ const Chart: React.FC<{ labels: string[]; series: Series[]; unit: string; refLin
               ))}
           </g>
         )}
-        <rect x={pad.l} y={0} width={Math.max(inner, 0)} height={H} fill="transparent" onPointerMove={onMove} onPointerLeave={() => setHover(null)} />
+        <rect x={pad.l} y={0} width={Math.max(inner, 0)} height={H} fill="transparent" onPointerDown={onMove} onPointerMove={onMove} onPointerLeave={(e) => { if (e.pointerType !== 'touch') setHover(null); }} style={{ touchAction: 'pan-y' }} />
       </svg>
       {hover !== null && (
         <div
-          className="pointer-events-none absolute top-1 z-10 rounded-xl bg-white border border-sumi/15 shadow-[0_6px_18px_rgb(31_36_48/0.12)] px-3 py-2 text-xs"
+          className="pointer-events-none absolute top-8 z-10 rounded-xl bg-white border border-sumi/15 shadow-[0_6px_18px_rgb(31_36_48/0.12)] px-3 py-2 text-xs"
           style={{ left: Math.min(Math.max(x(hover) - 75, 0), width - 160), width: 150 }}
         >
           <p className="text-sumi-muted">{labels[hover]}</p>
@@ -154,13 +165,13 @@ const Chart: React.FC<{ labels: string[]; series: Series[]; unit: string; refLin
 const Tile: React.FC<{ label: string; value: string; note?: string; hero?: boolean }> = ({ label, value, note, hero }) => (
   <div className={`rounded-2xl bg-white border border-sumi/10 ${hero ? 'col-span-3 lg:col-span-1 p-4' : 'p-3 sm:p-4'}`}>
     <p className="text-xs text-sumi-muted">{label}</p>
-    <p className={`font-en font-black leading-tight text-sumi ${hero ? 'text-[34px] md:text-[40px]' : 'text-xl sm:text-2xl md:text-[28px]'}`}>{value}</p>
+    <div className={`font-en font-black leading-tight text-sumi ${hero ? 'text-[34px] md:text-[40px]' : 'text-xl sm:text-2xl md:text-[28px]'}`}><Count value={value} /></div>
     {note && <p className="hidden md:block text-[11px] text-sumi-muted">{note}</p>}
   </div>
 );
 
 const Panel: React.FC<{ title: React.ReactNode; legend?: Series[]; children: React.ReactNode; className?: string }> = ({ title, legend, children, className = '' }) => (
-  <div className={`rounded-2xl bg-white border border-sumi/10 p-4 min-w-0 ${className}`}>
+  <div className={`rounded-2xl bg-white border-2 border-sumi/15 p-4 min-w-0 flex flex-col ${className}`}>
     <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
       <p className="font-bold text-sm">{title}</p>
       {legend?.map((s) => (
@@ -170,49 +181,31 @@ const Panel: React.FC<{ title: React.ReactNode; legend?: Series[]; children: Rea
         </span>
       ))}
     </div>
-    <div className="mt-3">{children}</div>
+    <div className="mt-3 flex flex-1 flex-col min-h-0">{children}</div>
   </div>
 );
 
-const BarList: React.FC<{ rows: { label: string; value: number }[]; unit: string }> = ({ rows, unit }) => {
-  const max = Math.max(...rows.map((r) => r.value));
-  return (
-    <ul className="space-y-2.5">
-      {rows.map(({ label, value }) => (
-        <li key={label} className="grid grid-cols-[88px_1fr] items-center gap-2 text-xs">
-          <span className="text-sumi-muted truncate">{label}</span>
-          <span className="flex items-center gap-2 min-w-0">
-            <span className="h-3.5 rounded-r-[4px] transition-[width] duration-500" style={{ width: `${(value / max) * 70}%`, background: MAIN }} />
-            <span className="shrink-0 font-bold text-sumi">
-              {value.toLocaleString()}
-              {unit}
-            </span>
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-};
-
-const Meters: React.FC<{ rows: { label: string; rate: number; dim?: boolean }[] }> = ({ rows }) => (
-  <ul className="space-y-3">
+const Meters: React.FC<{ rows: { label: string; rate: number; dim?: boolean }[] }> = ({ rows }) => {
+  const { ref, progress, ease } = useReveal(JSON.stringify(rows));
+  const burst = 1 + 2.70158 * (progress - 1) ** 3 + 1.70158 * (progress - 1) ** 2;
+  return <div ref={ref}><ul className="space-y-6 py-2">
     {rows.map(({ label, rate, dim }) => (
       <li key={label} className={`text-xs transition-opacity ${dim ? 'opacity-40' : ''}`}>
         <span className="flex justify-between">
           <span className="text-sumi-muted">{label}</span>
-          <b className="text-sumi">{Math.round(rate * 100)}%</b>
+          <b className="text-sumi">{Math.round(rate * 100 * ease)}%</b>
         </span>
-        <span className="relative mt-1 block h-2.5 rounded-full bg-svc-data/15">
-          <span className="absolute inset-y-0 left-0 rounded-full transition-[width] duration-500" style={{ width: `${Math.min(rate, 1) * 100}%`, background: MAIN }} />
+        <span className="relative mt-2 block h-4 overflow-hidden rounded-full bg-svc-data/15">
+          <span className="absolute inset-y-0 left-0 rounded-full " style={{ width: `${Math.min(rate, 1) * 100}%`, transformOrigin: 'left', transform: `scaleX(${burst})`, background: MAIN }} />
         </span>
       </li>
     ))}
-  </ul>
-);
+  </ul></div>;
+};
 
-// 絞り込みのボタン。最初は「ここをクリック」の矢印で、触れることを知らせる
+// 操作後も案内を残し、繰り返し絞り込めることを知らせる
 const Filter: React.FC<{ options: readonly string[]; value: string; onChange: (v: string) => void; label: string; hint: boolean }> = ({ options, value, onChange, label, hint }) => (
-  <div className="relative flex flex-wrap items-center gap-1.5" role="group" aria-label={label}>
+  <div className="relative flex flex-wrap items-center gap-1.5 w-full sm:w-auto" role="group" aria-label={label}>
     {options.map((o) => (
       <button
         key={o}
@@ -225,13 +218,13 @@ const Filter: React.FC<{ options: readonly string[]; value: string; onChange: (v
       </button>
     ))}
     {hint && (
-      <span aria-hidden="true" className="pointer-events-none absolute z-20 left-1/2 -translate-x-1/2 -top-12 sm:static sm:translate-x-0 sm:ml-2 flex items-center gap-1 animate-[pop-hint_1.1s_ease-in-out_infinite]">
+      <span aria-hidden="true" className="pointer-events-none flex items-center gap-1 sm:ml-2 dash-hint">
         <ArrowLeft className="hidden sm:block w-6 h-6 text-coral" strokeWidth={3.2} />
         <span className="flex items-center gap-1 -rotate-3 whitespace-nowrap rounded-lg bg-coral px-2.5 py-1 text-xs font-black text-white border-2 border-sumi shadow-[2px_2px_0_#1F2430]">
           <MousePointerClick className="w-3.5 h-3.5" strokeWidth={2.6} />
           ここをクリック！
         </span>
-        <ArrowDown className="sm:hidden absolute left-1/2 -translate-x-1/2 top-full w-5 h-5 text-coral" strokeWidth={3.2} />
+
       </span>
     )}
   </div>
@@ -250,7 +243,7 @@ const sales: Record<Branch, { now: number[]; prev: number[]; target: number; mar
 const salesShare: Record<Branch, number[]> = { 名古屋: [0.31, 0.27, 0.18, 0.14, 0.1], 一宮: [0.22, 0.24, 0.29, 0.15, 0.1], 岐阜: [0.35, 0.21, 0.16, 0.18, 0.1] };
 const salesCats = ['日用品', '食品', '業務用資材', '文具・事務用品', 'その他'];
 
-const SalesBoard: React.FC<{ hint: boolean; onTouch: () => void }> = ({ hint, onTouch }) => {
+const SalesBoard: React.FC = () => {
   const [branch, setBranch] = useState<string>('全社');
   const [span, setSpan] = useState(12);
   const v = useMemo(() => {
@@ -269,7 +262,8 @@ const SalesBoard: React.FC<{ hint: boolean; onTouch: () => void }> = ({ hint, on
       growth: (total / sumOf(prev) - 1) * 100,
       margin: picked.reduce((n, b) => n + sales[b].margin * own(b), 0) / total,
       orders: Math.round(picked.reduce((n, b) => n + sales[b].orders, 0) * (span / 12)),
-      cats: salesCats.map((label, ci) => ({ label, value: Math.round(picked.reduce((n, b) => n + own(b) * salesShare[b][ci], 0)) })),
+      cats: reconcile(salesCats.map((label, ci) => ({ label, value: Math.round(picked.reduce((n, b) => n + own(b) * salesShare[b][ci], 0)) })), total),
+      target: picked.reduce((n, b) => n + sales[b].target * span / 12, 0),
       goals: branches.map((b) => ({ label: b, rate: own(b) / ((sales[b].target * span) / 12), dim: branch !== '全社' && branch !== b }))
     };
   }, [branch, span]);
@@ -279,34 +273,37 @@ const SalesBoard: React.FC<{ hint: boolean; onTouch: () => void }> = ({ hint, on
   ];
   return (
     <>
-      <div className="flex flex-wrap items-center gap-3 pt-8 sm:pt-0">
+      <div className="flex flex-wrap items-center gap-3 pt-1">
         {/* スマホでは営業所のボタンを先に出し、「ここをクリック」が期間の欄に重ならないようにする */}
         <label className="order-2 sm:order-none flex items-center gap-2 text-xs font-bold text-sumi-muted">
           期間
-          <select className={select} value={span} onChange={(e) => (setSpan(Number(e.target.value)), onTouch())}>
+          <select className={select} value={span} onChange={(e) => setSpan(Number(e.target.value))}>
             <option value={12}>直近12か月</option>
             <option value={6}>直近6か月</option>
           </select>
         </label>
-        <Filter label="営業所" options={['全社', ...branches]} value={branch} onChange={(b) => (setBranch(b), onTouch())} hint={hint} />
+        <Filter label="営業所" options={['全社', ...branches]} value={branch} onChange={(b) => setBranch(b)} hint={true} />
       </div>
-      <div className="mt-5 grid grid-cols-3 lg:grid-cols-4 gap-3">
-        <Tile hero label="売上の合計" value={yen(v.total)} />
-        <Tile label="前年比" value={`${v.growth >= 0 ? '+' : ''}${v.growth.toFixed(1)}%`} note="前年の同じ期間とくらべて" />
-        <Tile label="粗利率" value={`${v.margin.toFixed(1)}%`} />
-        <Tile label="受注件数" value={`${v.orders.toLocaleString()}件`} />
-      </div>
-      <div className="mt-3 grid lg:grid-cols-[1.6fr_1fr] gap-3">
-        <Panel title={<>月別の売上<span className="ml-1 text-xs font-normal text-sumi-muted">（万円）</span></>} legend={lines}>
-          <Chart labels={v.labels} series={lines} unit="万円" />
-        </Panel>
-        <div className="grid gap-3">
-          <Panel title="商品カテゴリ別の売上">
-            <BarList rows={v.cats} unit="万円" />
+      <div key={`${branch}:${span}`} className="min-w-0">
+        <div className="mt-5 grid grid-cols-3 lg:grid-cols-4 gap-3">
+          <Tile hero label="売上の合計" value={yen(v.total)} />
+          <Tile label="前年比" value={`${v.growth >= 0 ? '+' : ''}${v.growth.toFixed(1)}%`} note="前年の同じ期間とくらべて" />
+          <Tile label="粗利率" value={`${v.margin.toFixed(1)}%`} />
+          <Tile label="受注件数" value={`${v.orders.toLocaleString()}件`} />
+        </div>
+        <div className="mt-3 grid lg:grid-cols-[1fr_1.25fr] items-stretch gap-3">
+          <Gauge value={v.total / v.target * 100} title="売上の目標達成率" detail={`売上 ${yen(v.total)} ／ 選択期間の目標 ${yen(v.target)}`} />
+          <Panel title={<>月別の売上<span className="ml-1 text-xs font-normal text-sumi-muted">（万円）</span></>} legend={lines}>
+            <Chart labels={v.labels} series={lines} unit="万円" />
           </Panel>
-          <Panel title="営業所別の目標達成率">
-            <Meters rows={v.goals} />
-          </Panel>
+          <div className="grid items-start gap-3 sm:grid-cols-2 lg:col-span-2">
+            <Panel title="商品カテゴリ別の売上" className="sm:order-2">
+              <Donut rows={v.cats} unit="万円" />
+            </Panel>
+            <Panel title="営業所別の目標達成率">
+              <Meters rows={v.goals} />
+            </Panel>
+          </div>
         </div>
       </div>
     </>
@@ -331,7 +328,7 @@ const watch: { name: string; wh: Warehouse; qty: number; daily: number }[] = [
   { name: '紙コップ 7oz 1000個', wh: '第2倉庫', qty: 640, daily: 9 }
 ];
 
-const StockBoard: React.FC<{ hint: boolean; onTouch: () => void }> = ({ hint, onTouch }) => {
+const StockBoard: React.FC = () => {
   const [wh, setWh] = useState<string>('全倉庫');
   const v = useMemo(() => {
     const picked = wh === '全倉庫' ? [...warehouses] : [wh as Warehouse];
@@ -350,65 +347,74 @@ const StockBoard: React.FC<{ hint: boolean; onTouch: () => void }> = ({ hint, on
       short: items.filter((it) => it.days <= 4).length,
       over: items.filter((it) => it.days >= 60).length,
       items,
-      cats: salesCats.map((label, ci) => ({ label, value: Math.round(picked.reduce((n, w) => n + stock[w].value[11] * stockShare[w][ci], 0)) }))
+      cats: reconcile(salesCats.map((label, ci) => ({ label, value: Math.round(picked.reduce((n, w) => n + stock[w].value[11] * stockShare[w][ci], 0)) })), current)
     };
   }, [wh]);
   const line: Series[] = [{ name: '在庫金額', color: MAIN, values: v.value }];
   return (
     <>
-      <div className="flex flex-wrap items-center gap-3 pt-8 sm:pt-0">
+      <div className="flex flex-wrap items-center gap-3 pt-1">
         <span className="text-xs font-bold text-sumi-muted">倉庫</span>
-        <Filter label="倉庫" options={['全倉庫', ...warehouses]} value={wh} onChange={(w) => (setWh(w), onTouch())} hint={hint} />
+        <Filter label="倉庫" options={['全倉庫', ...warehouses]} value={wh} onChange={(w) => setWh(w)} hint={true} />
       </div>
-      <div className="mt-5 grid grid-cols-3 lg:grid-cols-4 gap-3">
-        <Tile hero label="いまの在庫金額" value={yen(v.current)} />
-        <Tile label="在庫回転日数" value={`${v.turnover}日`} note="在庫が売れるまでの目安" />
-        <Tile label="欠品が近い品目" value={`${v.short}品目`} note="残り4日分以下" />
-        <Tile label="在庫が多すぎる品目" value={`${v.over}品目`} note="60日分以上" />
-      </div>
-      <div className="mt-3 grid lg:grid-cols-[1.6fr_1fr] gap-3">
-        <Panel title={<>在庫金額の推移<span className="ml-1 text-xs font-normal text-sumi-muted">（万円）</span></>}>
-          <Chart labels={months} series={line} unit="万円" refLine={{ value: v.proper, label: '適正' }} />
-        </Panel>
-        <Panel title="カテゴリ別の在庫金額">
-          <BarList rows={v.cats} unit="万円" />
-        </Panel>
-      </div>
-      <Panel title="要注意の品目" className="mt-3">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[520px] text-xs">
-            <thead>
-              <tr className="text-sumi-muted text-left">
-                <th className="font-normal py-1.5">品目</th>
-                <th className="font-normal">倉庫</th>
-                <th className="font-normal text-right">在庫数</th>
-                <th className="font-normal text-right">1日の出荷</th>
-                <th className="font-normal text-right">残り</th>
-                <th className="font-normal pl-4">状態</th>
-              </tr>
-            </thead>
-            <tbody>
-              {v.items.map((it) => {
-                const short = it.days <= 4;
-                return (
-                  <tr key={it.name} className="border-t border-sumi/10">
-                    <td className="py-2 font-bold">{it.name}</td>
-                    <td className="text-sumi-muted">{it.wh}</td>
-                    <td className="text-right">{it.qty.toLocaleString()}</td>
-                    <td className="text-right">{it.daily.toLocaleString()}</td>
-                    <td className="text-right font-bold">{it.days}日分</td>
-                    <td className="pl-4">
-                      <span className="inline-flex items-center gap-1 font-bold" style={{ color: short ? CRITICAL : WARNING }}>
-                        {short ? '▼ 欠品注意' : '▲ 多すぎ'}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+      <div key={wh} className="min-w-0">
+        <div className="mt-5 grid grid-cols-3 lg:grid-cols-4 gap-3">
+          <Tile hero label="いまの在庫金額" value={yen(v.current)} />
+          <Tile label="在庫回転日数" value={`${v.turnover}日`} note="在庫が売れるまでの目安" />
+          <Tile label="欠品が近い品目" value={`${v.short}品目`} note="残り4日分以下" />
+          <Tile label="在庫が多すぎる品目" value={`${v.over}品目`} note="60日分以上" />
         </div>
-      </Panel>
+        <div className="mt-3 grid lg:grid-cols-[1fr_1.25fr] items-stretch gap-3">
+          <Gauge value={v.current / v.proper * 100} title="適正在庫に対する在庫水準" inventory detail={`現在 ${yen(v.current)} ／ 適正在庫 ${yen(v.proper)}`} />
+          <Panel title={<>在庫金額の推移<span className="ml-1 text-xs font-normal text-sumi-muted">（万円）</span></>}>
+            <Chart labels={months} series={line} unit="万円" refLine={{ value: v.proper, label: '適正' }} />
+          </Panel>
+          <div className="grid items-start gap-3 sm:grid-cols-2 lg:col-span-2">
+            <Panel title="倉庫別の在庫水準">
+              <p className="mb-4 text-xs leading-relaxed text-sumi-muted">適正在庫を100%とした現在の在庫金額。80〜120%を適正範囲として表示しています。</p>
+              <Meters rows={warehouses.map(w => ({ label: w, rate: stock[w].value[11] / stock[w].proper, dim: wh !== '全倉庫' && wh !== w }))} />
+            </Panel>
+            <Panel title="カテゴリ別の在庫金額">
+              <Donut rows={v.cats} unit="万円" />
+            </Panel>
+          </div>
+        </div>
+        <Panel title="要注意の品目" className="mt-3">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[520px] text-xs">
+              <thead>
+                <tr className="text-sumi-muted text-left">
+                  <th className="font-normal py-1.5">品目</th>
+                  <th className="font-normal">倉庫</th>
+                  <th className="font-normal text-right">在庫数</th>
+                  <th className="font-normal text-right">1日の出荷</th>
+                  <th className="font-normal text-right">残り</th>
+                  <th className="font-normal pl-4">状態</th>
+                </tr>
+              </thead>
+              <tbody>
+                {v.items.map((it) => {
+                  const short = it.days <= 4;
+                  return (
+                    <tr key={it.name} className="border-t border-sumi/10">
+                      <td className="py-2 font-bold">{it.name}</td>
+                      <td className="text-sumi-muted">{it.wh}</td>
+                      <td className="text-right">{it.qty.toLocaleString()}</td>
+                      <td className="text-right">{it.daily.toLocaleString()}</td>
+                      <td className="text-right font-bold">{it.days}日分</td>
+                      <td className="pl-4">
+                        <span className="inline-flex items-center gap-1 font-bold" style={{ color: short ? CRITICAL : WARNING }}>
+                          {short ? '▼ 欠品注意' : '▲ 多すぎ'}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Panel>
+      </div>
     </>
   );
 };
@@ -430,7 +436,7 @@ const defects = [
   { label: 'その他', share: 0.06 }
 ];
 
-const ProductionBoard: React.FC<{ hint: boolean; onTouch: () => void }> = ({ hint, onTouch }) => {
+const ProductionBoard: React.FC = () => {
   const [line, setLine] = useState<string>('全ライン');
   const v = useMemo(() => {
     const picked = line === '全ライン' ? [...lines] : [line as Line];
@@ -446,7 +452,7 @@ const ProductionBoard: React.FC<{ hint: boolean; onTouch: () => void }> = ({ hin
       defectRate,
       uptime: picked.reduce((n, l) => n + prod[l].uptime, 0) / picked.length,
       lineRates: lines.map((l) => ({ label: l, rate: prod[l].uptime, dim: line !== '全ライン' && line !== l })),
-      defects: defects.map((d) => ({ label: d.label, value: Math.round(((total * defectRate) / 100) * d.share) }))
+      defects: reconcile(defects.map((d) => ({ label: d.label, value: Math.round(((total * defectRate) / 100) * d.share) })), Math.round(total * defectRate / 100))
     };
   }, [line]);
   const series: Series[] = [
@@ -455,27 +461,30 @@ const ProductionBoard: React.FC<{ hint: boolean; onTouch: () => void }> = ({ hin
   ];
   return (
     <>
-      <div className="flex flex-wrap items-center gap-3 pt-8 sm:pt-0">
+      <div className="flex flex-wrap items-center gap-3 pt-1">
         <span className="text-xs font-bold text-sumi-muted">ライン</span>
-        <Filter label="ライン" options={['全ライン', ...lines]} value={line} onChange={(l) => (setLine(l), onTouch())} hint={hint} />
+        <Filter label="ライン" options={['全ライン', ...lines]} value={line} onChange={(l) => setLine(l)} hint={true} />
       </div>
-      <div className="mt-5 grid grid-cols-3 lg:grid-cols-4 gap-3">
-        <Tile hero label="今月の生産数" value={`${v.total.toLocaleString()}個`} />
-        <Tile label="計画達成率" value={`${(v.achieve * 100).toFixed(1)}%`} />
-        <Tile label="不良率" value={`${v.defectRate.toFixed(1)}%`} />
-        <Tile label="稼働率" value={`${Math.round(v.uptime * 100)}%`} note="動いていた時間の割合" />
-      </div>
-      <div className="mt-3 grid lg:grid-cols-[1.6fr_1fr] gap-3">
-        <Panel title={<>日別の生産数<span className="ml-1 text-xs font-normal text-sumi-muted">（個）</span></>} legend={series}>
-          <Chart labels={days} series={series} unit="個" zero />
-        </Panel>
-        <div className="grid gap-3">
-          <Panel title="ライン別の稼働率">
-            <Meters rows={v.lineRates} />
+      <div key={line} className="min-w-0">
+        <div className="mt-5 grid grid-cols-3 lg:grid-cols-4 gap-3">
+          <Tile hero label="今月の生産数" value={`${v.total.toLocaleString()}個`} />
+          <Tile label="計画達成率" value={`${(v.achieve * 100).toFixed(1)}%`} />
+          <Tile label="不良率" value={`${v.defectRate.toFixed(1)}%`} />
+          <Tile label="稼働率" value={`${Math.round(v.uptime * 100)}%`} note="動いていた時間の割合" />
+        </div>
+        <div className="mt-3 grid lg:grid-cols-[1fr_1.25fr] items-stretch gap-3">
+          <Gauge value={v.achieve * 100} title="生産の計画達成率" detail={`実績 ${v.total.toLocaleString()}個 ／ 計画 ${sumOf(v.plan).toLocaleString()}個`} />
+          <Panel title={<>日別の生産数<span className="ml-1 text-xs font-normal text-sumi-muted">（個）</span></>} legend={series}>
+            <Chart labels={days} series={series} unit="個" zero />
           </Panel>
-          <Panel title="不良の内訳">
-            <BarList rows={v.defects} unit="個" />
-          </Panel>
+          <div className="grid items-start gap-3 sm:grid-cols-2 lg:col-span-2">
+            <Panel title="ライン別の稼働率">
+              <Meters rows={v.lineRates} />
+            </Panel>
+            <Panel title="不良の内訳">
+              <Donut rows={v.defects} unit="個" />
+            </Panel>
+          </div>
         </div>
       </div>
     </>
@@ -490,12 +499,11 @@ const boards = [
 
 const DashboardSample: React.FC = () => {
   const [tab, setTab] = useState(0);
-  const [touched, setTouched] = useState(false);
-  const [tabTouched, setTabTouched] = useState(false);
   const { Board } = boards[tab];
 
   return (
-    <div className={`rounded-[28px] bg-white overflow-hidden ${card}`}>
+    <div className={`rounded-[28px] bg-white overflow-hidden min-w-0 ${card}`}>
+      <MotionStyles />
       {/* 画面の枠（ブラウザ風）。タブでダッシュボードを切り替える */}
       <div className="flex items-end gap-2 border-b-[2.5px] border-sumi bg-cream px-4 pt-3">
         <span className="hidden sm:flex gap-1.5 self-center pb-3 mr-1" aria-hidden="true">
@@ -512,7 +520,6 @@ const DashboardSample: React.FC = () => {
               aria-selected={tab === i}
               onClick={() => {
                 setTab(i);
-                setTabTouched(true);
               }}
               className={`-mb-[2.5px] rounded-t-xl border-[2.5px] px-3 sm:px-4 py-2 text-sm font-bold whitespace-nowrap transition-colors ${tab === i ? 'bg-[#FCFCFB] border-sumi border-b-[#FCFCFB]' : 'bg-transparent border-transparent text-sumi-muted hover:text-sumi'}`}
             >
@@ -521,19 +528,19 @@ const DashboardSample: React.FC = () => {
             </button>
           ))}
         </div>
-        {!tabTouched && (
-          <span aria-hidden="true" className="hidden md:inline-flex self-center pb-2 items-center gap-1 text-xs font-black text-coral animate-[pop-hint_1.1s_ease-in-out_infinite]">
-            <ArrowLeft className="w-4 h-4" strokeWidth={3} />
-            ほかの例も見られます
-          </span>
-        )}
         <span className="ml-auto self-center mb-3 shrink-0 rounded-full bg-sumi px-3 py-0.5 text-[11px] font-black text-white">
           見本<span className="hidden sm:inline">・架空のデータです</span>
         </span>
       </div>
 
+      <div className="bg-cream px-4 py-3 border-b border-sumi/10">
+        <span aria-hidden="true" className="flex items-center gap-1 text-xs font-black text-coral dash-hint">
+          <ArrowLeft className="w-4 h-4" strokeWidth={3} />
+          ほかの例も見られます
+        </span>
+      </div>
       <div className="p-4 md:p-7 bg-[#FCFCFB]" role="tabpanel" aria-label={boards[tab].title}>
-        <Board key={boards[tab].key} hint={!touched} onTouch={() => setTouched(true)} />
+        <Board key={boards[tab].key} />
       </div>
     </div>
   );
