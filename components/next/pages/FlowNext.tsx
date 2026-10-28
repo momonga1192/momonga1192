@@ -30,7 +30,7 @@ const faqs = [
   },
   {
     q: 'データ活用支援ではどのようなツールを使いますか？',
-    a: '主にTableauやPowerBIといったBIツールを活用し、経営ダッシュボードの構築やデータ分析基盤の設計を行います。代表の栗原はTableau Certified Data AnalystおよびDATA Saberの資格を保有しており、データの収集・統合から可視化・分析まで一貫してサポートします。'
+    a: '主にTableauやPowerBIといったBIツールを活用し、経営ダッシュボードの構築やデータ分析基盤の設計を行います。代表の栗原はTableau Certified Data AnalystおよびKnight of DATA Saberの資格を保有しており、データの収集・統合から可視化・分析まで一貫してサポートします。'
   }
 ];
 

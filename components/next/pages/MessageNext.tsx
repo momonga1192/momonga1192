@@ -5,21 +5,40 @@ import { ContactCta, Mark, PageHeader, SectionHead, Sparkle, Sticker, card } fro
 
 const career = [
   {
-    title: '外資系自動車メーカー日本法人 / 食品製造業',
-    role: 'Data Engineer / DX Promoter',
-    body: '大規模なデータ基盤の構築や、全社的なDX推進プロジェクトをリード。現場の業務フロー改善からデータ分析環境の整備まで幅広く従事。',
+    title: '外資系自動車メーカー日本法人',
+    role: 'Data Engineer',
+    body: '大規模なデータ基盤の構築に従事。',
     color: 'bg-svc-josys'
+  },
+  {
+    title: '食品製造業',
+    role: 'DX Promoter',
+    body: '全社的なDX推進プロジェクトをリード。現場の業務フロー改善からデータ分析環境の整備まで幅広く従事。',
+    color: 'bg-svc-data'
+  },
+  {
+    title: 'ITコンサルティング会社',
+    role: 'IT Consultant',
+    body: 'ITコンサルタントとして、企業のIT・データ活用の支援に従事。',
+    color: 'bg-svc-ai'
   },
   {
     title: 'IT・DX Consultant (Freelance)',
     role: 'Representative Director',
     body: '数多くの中堅・中小企業のDX推進を支援。',
-    color: 'bg-svc-data'
+    color: 'bg-svc-web'
   }
 ];
 
 const specialties = ['DX Strategy', 'Data Engineering', 'AWS Cloud', 'Tableau', 'Generative AI'];
-const certifications = ['AWS All Certificate', 'Tableau Certified Data Analyst', 'DATA Saber'];
+const certifications = [
+  'AWS All Certificate',
+  'Tableau Certified Data Analyst',
+  'Knight of DATA Saber',
+  'PMP（米国PMI認定 プロジェクトマネジメント・プロフェッショナル）',
+  'freee認定 会計上級エキスパート',
+  'freee認定 人事労務エキスパート'
+];
 
 const MessageNext: React.FC = () => (
   <div className="bg-cream text-sumi">
