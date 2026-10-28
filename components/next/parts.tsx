@@ -217,7 +217,7 @@ export const PlanCard: React.FC<{ plan: Plan; service: ServiceKey; index: number
           <p className="font-en font-black italic text-[34px] leading-none tracking-tight">{plan.name}</p>
           <h3 className="font-head font-black text-lg mt-2 [word-break:auto-phrase]">{plan.sub}</h3>
           <p className={`mt-1 text-sm leading-relaxed ${hot ? 'text-white/85' : 'text-sumi-muted'}`}>{plan.desc}</p>
-          {hot && <Sparkle className="absolute right-8 top-[88px] w-7 h-7 text-mustard" />}
+          {hot && <Sparkle className="absolute right-24 top-8 w-7 h-7 text-mustard" />}
         </div>
         {/* 帯に重ねた値札 */}
         <div className="relative -mt-11 px-5">
