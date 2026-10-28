@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
 import { services } from '../theme';
-import { Arcs, ContactCta, Mark, PageHeader, SectionHead, Sparkle, Sticker, card, press } from '../parts';
+import { ContactCta, Mark, PageHeader, SectionHead, Sparkle, Sticker, card, press } from '../parts';
 
 const profile: [string, React.ReactNode][] = [
   ['名称', 'Arcle（アークル）'],
@@ -23,6 +23,42 @@ const profile: [string, React.ReactNode][] = [
   ['お問い合わせ', 'お問い合わせフォームより承っています。通常2営業日以内にご連絡します。']
 ];
 
+const arcColors = ['#3B6FE0', '#5B5BD6', '#8E5BD0', '#C8509F'];
+
+// 社名の「Arc（弧）＋Circle（円）」を動きで見せる。マウスを乗せると4つの弧が高速で回りながら隙間を閉じ、
+// 4色が混ざり合った1つの円に変わる。外すと逆の順で弧に戻る
+const ArcsMerge: React.FC = () => (
+  <div className="absolute inset-0" aria-hidden="true">
+    <svg
+      viewBox="0 0 200 200"
+      fill="none"
+      className="absolute inset-0 w-full h-full transition-[transform,opacity] duration-[1100ms,300ms] ease-[cubic-bezier(0.55,0,0.75,0.4),ease] group-hover:rotate-[1080deg] group-hover:opacity-0 group-hover:delay-[0ms,950ms] delay-[0ms,0ms] motion-reduce:group-hover:rotate-0 motion-reduce:transition-opacity"
+    >
+      {arcColors.map((color, i) => (
+        <path
+          key={color}
+          d="M 100 8 A 92 92 0 0 1 192 100"
+          stroke={color}
+          strokeWidth="5"
+          strokeLinecap="round"
+          transform={`rotate(${i * 90 + 6} 100 100)`}
+          pathLength={100}
+          className="[stroke-dasharray:86_100] group-hover:[stroke-dasharray:100_100] transition-[stroke-dasharray] duration-500 group-hover:delay-500"
+        />
+      ))}
+    </svg>
+    {/* 4色をつないだ円。弧の太さと位置（半径92・太さ5）に合わせて、円錐グラデーションを輪の形に切り抜く */}
+    <div
+      className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-hover:duration-500 group-hover:delay-[850ms] animate-[spin_4s_linear_infinite] motion-reduce:animate-none"
+      style={{
+        background: `conic-gradient(${[...arcColors, arcColors[0]].join(', ')})`,
+        mask: 'radial-gradient(closest-side, transparent 89.4%, #000 89.6%, #000 94.4%, transparent 94.6%)',
+        WebkitMask: 'radial-gradient(closest-side, transparent 89.4%, #000 89.6%, #000 94.4%, transparent 94.6%)'
+      }}
+    />
+  </div>
+);
+
 const CompanyNext: React.FC = () => (
   <div className="bg-cream text-sumi">
     <Helmet>
@@ -42,7 +78,7 @@ const CompanyNext: React.FC = () => (
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[1fr_1.15fr] gap-14 items-center">
         <div className="group pop-reveal relative mx-auto w-full max-w-[400px] aspect-square">
-          <Arcs className="pop-tilt absolute inset-0 w-full h-full" />
+          <ArcsMerge />
           <Sparkle className="absolute right-[6%] top-[4%] w-9 h-9 text-mustard" />
           <Sparkle className="absolute left-[4%] bottom-[10%] w-6 h-6 text-svc-web" />
           <div className={`pop-float absolute inset-[18%] rounded-full bg-cream grid place-items-center text-center ${card}`}>
