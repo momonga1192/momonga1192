@@ -5,6 +5,14 @@ export const illust = (name: string) => `/images/illust-pop/${name}.webp`;
 
 export type ServiceKey = 'josys' | 'data' | 'ai' | 'web';
 
+// 事業ごとの料金の目安（既存の各事業ページの料金表より）
+export const prices: Record<ServiceKey, string> = {
+  josys: '月額5万円〜',
+  data: '内容に合わせてお見積り',
+  ai: '月額5万円〜',
+  web: '月額4,800円〜'
+};
+
 export const services: {
   key: ServiceKey;
   name: string;

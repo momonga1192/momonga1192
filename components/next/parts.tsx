@@ -139,7 +139,7 @@ export const ContactCta: React.FC<{ title?: React.ReactNode; body?: string }> = 
   ),
   body = 'いまの困りごとをお聞きして、やるべきことの順番から一緒に整理します。ご相談・お見積りは無料です。'
 }) => (
-  <section className="py-20 md:py-28 bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px]">
+  <section data-hide-banner className="py-20 md:py-28 bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px]">
     <div className="max-w-6xl mx-auto px-5">
       <div className={`relative rounded-[40px] bg-sumi text-white p-10 md:p-16 grid md:grid-cols-[1.4fr_1fr] gap-10 items-center bg-[radial-gradient(circle_at_10%_100%,rgb(30_156_140/0.55),transparent_50%),radial-gradient(circle_at_100%_0%,rgb(242_181_68/0.3),transparent_45%)] ${card}`}>
         <Sparkle className="absolute right-10 top-10 w-10 h-10 text-mustard" />

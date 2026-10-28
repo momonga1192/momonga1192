@@ -1,16 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Check } from 'lucide-react';
-import { illust, services } from '../theme';
+import { illust, prices, services } from '../theme';
 import { ContactCta, Mark, PageHeader, SectionHead, Ticker, card, press } from '../parts';
-
-// 事業ごとの料金の目安（既存の各事業ページの料金表より）
-const prices: Record<string, string> = {
-  josys: '月額5万円〜',
-  data: '内容に合わせてお見積り',
-  ai: '月額5万円〜',
-  web: '月額4,800円〜'
-};
 
 const ServicesNext: React.FC = () => (
   <div className="bg-cream text-sumi overflow-x-clip">

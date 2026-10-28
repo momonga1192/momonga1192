@@ -28,6 +28,8 @@ import WebNext from './components/next/pages/WebNext';
 import NextHeader from './components/next/NextHeader';
 import PopMotion from './components/next/PopMotion';
 import NextFooter from './components/next/NextFooter';
+import ItCheck from './components/next/check/ItCheck';
+import CheckBanner from './components/next/check/CheckBanner';
 
 declare global {
   interface Window {
@@ -88,6 +90,7 @@ export const AppContent: React.FC = () => (
         <Route path="/company/message" element={<MessageNext />} />
         <Route path="/flow" element={<FlowNext />} />
         <Route path="/contact" element={<ContactForm />} />
+        <Route path="/it-check" element={<ItCheck />} />
         <Route path="/articles" element={<ArticlesIndex />} />
         <Route path="/articles/ichinomiya-josys-outsourcing-guide" element={<ArticleJosysGuide />} />
         <Route path="/articles/sme-bi-tableau-powerbi" element={<ArticleBIToolChoice />} />
@@ -105,6 +108,7 @@ export const AppContent: React.FC = () => (
       </Routes>
     </main>
     <NextFooter />
+    <CheckBanner />
   </div>
 );
 
