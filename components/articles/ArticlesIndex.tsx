@@ -6,6 +6,13 @@ import { serviceByName, services, illust } from '../next/theme';
 
 export const articles = [
   {
+    title: '生成AIで議事録を作る手順と注意点',
+    description: '録音と文字起こしの準備、要約を頼む指示文の例、情報漏えいを防ぐルール、AIが間違えやすい箇所の確認方法をまとめました。',
+    href: '/articles/ai-meeting-minutes-guide',
+    published: '2026-10-28',
+    tag: '生成AI'
+  },
+  {
     title: '中小企業のMicrosoft 365導入・移行手順',
     description: 'アカウントやメール、ファイルの棚卸しから多要素認証、入退社時の管理まで、移行の進め方を整理します。',
     href: '/articles/microsoft-365-migration-sme',

@@ -14,6 +14,7 @@ import ArticleM365Migration from './components/articles/ArticleM365Migration';
 import ArticleExcelToPowerBI from './components/articles/ArticleExcelToPowerBI';
 import ArticleWebMonthlyVsOneTime from './components/articles/ArticleWebMonthlyVsOneTime';
 import ArticleWebCompanyGuide from './components/articles/ArticleWebCompanyGuide';
+import ArticleAIMeetingMinutes from './components/articles/ArticleAIMeetingMinutes';
 import WorksIndex from './components/works/WorksIndex';
 import WorkDetail from './components/works/WorkDetail';
 import HomePop from './components/next/HomePop';
@@ -99,6 +100,7 @@ export const AppContent: React.FC = () => (
         <Route path="/articles/excel-report-automation-power-bi" element={<ArticleExcelToPowerBI />} />
         <Route path="/articles/monthly-vs-one-time-website" element={<ArticleWebMonthlyVsOneTime />} />
         <Route path="/articles/website-company-guide-aichi-tokai" element={<ArticleWebCompanyGuide />} />
+        <Route path="/articles/ai-meeting-minutes-guide" element={<ArticleAIMeetingMinutes />} />
         <Route path="/works" element={<WorksIndex />} />
         <Route path="/works/:slug" element={<WorkDetail />} />
         <Route path="/lp/josys-rescue" element={<JosysRescue />} />
