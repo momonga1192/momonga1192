@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, MousePointerClick } from 'lucide-react';
 import { card } from './parts';
-import { Count, Donut, Gauge, MotionStyles, TouchHint, useReveal } from './dashboard/Visuals';
+import { BigProgress, Count, Donut, Gauge, MotionStyles, Pareto, PeekHint, RangeBars, Rings, StackBar, useReveal } from './dashboard/Visuals';
 
 // データ活用ページの「ダッシュボードの見本」。架空の会社のデータで、売上・在庫・生産の3つを切り替えて触れる
 // 色：主＝藍（事業の色）、比べる相手＝青緑。2色は色覚の違いでも見分けられることを確かめてある
@@ -51,7 +51,9 @@ const niceScale = (lo: number, hi: number) => {
 type Series = { name: string; color: string; values: number[]; kind?: 'line' | 'column' };
 
 // 折れ線（と縦棒）のグラフ。縦軸は1本だけ。マウスを乗せた月の数字をまとめて出す
-const Chart: React.FC<{ labels: string[]; series: Series[]; unit: string; refLine?: { value: number; label: string }; zero?: boolean }> = ({ labels, series, unit, refLine, zero }) => {
+const Chart: React.FC<{ labels: string[]; series: Series[]; unit: string; refLine?: { value: number; label: string }; zero?: boolean; dark?: boolean }> = ({ labels, series, unit, refLine, zero, dark }) => {
+  const grid = dark ? 'rgb(255 255 255 / 0.12)' : '#E6E4DF';
+  const ink = dark ? '#A9AFBD' : '#6B7080';
   const [ref, width, height] = useWidth();
   const [hover, setHover] = useState<number | null>(null);
   const H = Math.max(220, height - 30);
@@ -77,25 +79,24 @@ const Chart: React.FC<{ labels: string[]; series: Series[]; unit: string; refLin
 
   return (
     <div ref={ref} className="relative flex min-w-0 flex-1 flex-col min-h-[250px]">
-      <TouchHint />
       <svg width={width} height={H} className="block" role="img" aria-label={labels.map((m, i) => `${m} ${series.map((s) => `${s.name}${s.values[i].toLocaleString()}${unit}`).join('・')}`).join('、')}>
         {ticks.map((t) => (
           <g key={t}>
-            <line x1={pad.l} x2={width - pad.r} y1={y(t)} y2={y(t)} stroke="#E6E4DF" strokeWidth="1" />
-            <text x={pad.l - 8} y={y(t) + 4} textAnchor="end" fontSize="11" fill="#6B7080">
+            <line x1={pad.l} x2={width - pad.r} y1={y(t)} y2={y(t)} stroke={grid} strokeWidth="1" />
+            <text x={pad.l - 8} y={y(t) + 4} textAnchor="end" fontSize="11" fill={ink}>
               {t.toLocaleString()}
             </text>
           </g>
         ))}
         {labels.map((m, i) => (
-          <text key={m} x={x(i)} y={H - 6} textAnchor="middle" fontSize="11" fill="#6B7080" className={skip && i % 2 ? 'hidden' : ''}>
+          <text key={m} x={x(i)} y={H - 6} textAnchor="middle" fontSize="11" fill={ink} className={skip && i % 2 ? 'hidden' : ''}>
             {m}
           </text>
         ))}
         {refLine && (
           <g>
-            <line x1={pad.l} x2={width - pad.r} y1={y(refLine.value)} y2={y(refLine.value)} stroke="#1F2430" strokeOpacity="0.55" strokeWidth="1" strokeDasharray="5 4" />
-            <text x={width - pad.r + 6} y={y(refLine.value) + 4} fontSize="11" fill="#50566A">
+            <line x1={pad.l} x2={width - pad.r} y1={y(refLine.value)} y2={y(refLine.value)} stroke={dark ? '#fff' : '#1F2430'} strokeOpacity="0.55" strokeWidth="1" strokeDasharray="5 4" />
+            <text x={width - pad.r + 6} y={y(refLine.value) + 4} fontSize="11" fill={dark ? '#fff' : '#50566A'}>
               {refLine.label}
             </text>
           </g>
@@ -122,18 +123,18 @@ const Chart: React.FC<{ labels: string[]; series: Series[]; unit: string; refLin
           .filter((s) => s.kind !== 'column')
           .map((s, n) => (
             <g key={s.name}>
-              {n === 0 && !hasColumns && <path d={`${path(s.values)} L${x(last)},${y(min)} L${x(0)},${y(min)} Z`} fill={s.color} fillOpacity="0.1" />}
+              {n === 0 && !hasColumns && <path d={`${path(s.values)} L${x(last)},${y(min)} L${x(0)},${y(min)} Z`} fill={s.color} fillOpacity={dark ? 0.25 : 0.1} />}
               <path d={path(s.values)} fill="none" stroke={s.color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-              {!hasColumns && <circle cx={x(last)} cy={y(s.values[last])} r="4.5" fill={s.color} stroke="#fff" strokeWidth="2" />}
+              {!hasColumns && <circle cx={x(last)} cy={y(s.values[last])} r="4.5" fill={s.color} stroke={dark ? '#1F2430' : '#fff'} strokeWidth="2" />}
             </g>
           ))}
         {hover !== null && (
           <g>
-            {!hasColumns && <line x1={x(hover)} x2={x(hover)} y1={pad.t} y2={H - pad.b} stroke="#1F2430" strokeOpacity="0.35" strokeWidth="1" />}
+            {!hasColumns && <line x1={x(hover)} x2={x(hover)} y1={pad.t} y2={H - pad.b} stroke={dark ? '#fff' : '#1F2430'} strokeOpacity="0.35" strokeWidth="1" />}
             {series
               .filter((s) => s.kind !== 'column')
               .map((s) => (
-                <circle key={s.name} cx={x(hover)} cy={y(s.values[hover])} r="4.5" fill={s.color} stroke="#fff" strokeWidth="2" />
+                <circle key={s.name} cx={x(hover)} cy={y(s.values[hover])} r="4.5" fill={s.color} stroke={dark ? '#1F2430' : '#fff'} strokeWidth="2" />
               ))}
           </g>
         )}
@@ -162,20 +163,21 @@ const Chart: React.FC<{ labels: string[]; series: Series[]; unit: string; refLin
 };
 
 // 部品
-const Tile: React.FC<{ label: string; value: string; note?: string; hero?: boolean }> = ({ label, value, note, hero }) => (
-  <div className={`rounded-2xl bg-white border border-sumi/10 ${hero ? 'col-span-3 lg:col-span-1 p-4' : 'p-3 sm:p-4'}`}>
-    <p className="text-xs text-sumi-muted">{label}</p>
-    <div className={`font-en font-black leading-tight text-sumi ${hero ? 'text-[34px] md:text-[40px]' : 'text-xl sm:text-2xl md:text-[28px]'}`}><Count value={value} /></div>
-    {note && <p className="hidden md:block text-[11px] text-sumi-muted">{note}</p>}
+const Tile: React.FC<{ label: string; value: string; note?: string; hero?: boolean; dark?: boolean; accent?: string }> = ({ label, value, note, hero, dark, accent }) => (
+  <div className={`rounded-2xl ${dark ? 'bg-white/[0.06] border border-white/10' : 'bg-white border border-sumi/10'} ${hero ? 'col-span-3 lg:col-span-1 p-4' : 'p-3 sm:p-4'}`}>
+    <p className={`text-xs ${dark ? 'text-white/60' : 'text-sumi-muted'}`}>{label}</p>
+    <div className={`font-en font-black leading-tight ${dark ? 'text-white' : 'text-sumi'} ${hero ? 'text-[34px] md:text-[40px]' : 'text-xl sm:text-2xl md:text-[28px]'}`} style={accent ? { color: accent } : undefined}><Count value={value} /></div>
+    {note && <p className={`hidden md:block text-[11px] ${dark ? 'text-white/50' : 'text-sumi-muted'}`}>{note}</p>}
   </div>
 );
 
-const Panel: React.FC<{ title: React.ReactNode; legend?: Series[]; children: React.ReactNode; className?: string }> = ({ title, legend, children, className = '' }) => (
-  <div className={`rounded-2xl bg-white border-2 border-sumi/15 p-4 min-w-0 flex flex-col ${className}`}>
+const Panel: React.FC<{ title: React.ReactNode; legend?: Series[]; children: React.ReactNode; className?: string; dark?: boolean; hint?: string }> = ({ title, legend, children, className = '', dark, hint }) => (
+  <div className={`relative rounded-2xl p-4 min-w-0 flex flex-col ${dark ? 'bg-white/[0.06] border border-white/10 text-white' : 'bg-white border-2 border-sumi/15'} ${className}`}>
+    {hint && <PeekHint text={hint} className="-top-4 right-3" />}
     <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
       <p className="font-bold text-sm">{title}</p>
       {legend?.map((s) => (
-        <span key={s.name} className="flex items-center gap-1.5 text-xs text-sumi-muted">
+        <span key={s.name} className={`flex items-center gap-1.5 text-xs ${dark ? 'text-white/60' : 'text-sumi-muted'}`}>
           <span className={`w-4 rounded ${s.kind === 'column' ? 'h-2.5' : 'h-0.5'}`} style={{ background: s.color }} />
           {s.name}
         </span>
@@ -292,12 +294,12 @@ const SalesBoard: React.FC = () => {
           <Tile label="受注件数" value={`${v.orders.toLocaleString()}件`} />
         </div>
         <div className="mt-3 grid lg:grid-cols-[1fr_1.25fr] items-stretch gap-3">
-          <Gauge value={v.total / v.target * 100} title="売上の目標達成率" detail={`売上 ${yen(v.total)} ／ 選択期間の目標 ${yen(v.target)}`} />
-          <Panel title={<>月別の売上<span className="ml-1 text-xs font-normal text-sumi-muted">（万円）</span></>} legend={lines}>
+          <Gauge value={v.total / v.target * 100} title="売上の目標達成率" sub={`目標 ${yen(v.target)}`} />
+          <Panel title={<>月別の売上<span className="ml-1 text-xs font-normal text-sumi-muted">（万円）</span></>} legend={lines} hint="グラフに触れてみて！">
             <Chart labels={v.labels} series={lines} unit="万円" />
           </Panel>
           <div className="grid items-start gap-3 sm:grid-cols-2 lg:col-span-2">
-            <Panel title="商品カテゴリ別の売上" className="sm:order-2">
+            <Panel title="商品カテゴリ別の売上" className="sm:order-2" hint="リングに触れてみて！">
               <Donut rows={v.cats} unit="万円" />
             </Panel>
             <Panel title="営業所別の目標達成率">
@@ -357,54 +359,58 @@ const StockBoard: React.FC = () => {
         <span className="text-xs font-bold text-sumi-muted">倉庫</span>
         <Filter label="倉庫" options={['全倉庫', ...warehouses]} value={wh} onChange={(w) => setWh(w)} hint={true} />
       </div>
-      <div key={wh} className="min-w-0">
-        <div className="mt-5 grid grid-cols-3 lg:grid-cols-4 gap-3">
-          <Tile hero label="いまの在庫金額" value={yen(v.current)} />
-          <Tile label="在庫回転日数" value={`${v.turnover}日`} note="在庫が売れるまでの目安" />
-          <Tile label="欠品が近い品目" value={`${v.short}品目`} note="残り4日分以下" />
-          <Tile label="在庫が多すぎる品目" value={`${v.over}品目`} note="60日分以上" />
+      <div key={wh} className="mt-5 min-w-0 rounded-[22px] bg-sumi p-3 sm:p-4 text-white">
+        <p className="flex items-center gap-2 px-1 pb-3 text-[11px] font-black tracking-widest text-white/60 font-en">
+          <span className="h-2 w-2 rounded-full bg-[#5ED3BF] dash-lamp" />
+          WAREHOUSE MONITOR
+        </p>
+        <div className="grid grid-cols-3 lg:grid-cols-4 gap-3">
+          <Tile dark hero label="いまの在庫金額" value={yen(v.current)} />
+          <Tile dark label="在庫回転日数" value={`${v.turnover}日`} note="在庫が売れるまでの目安" />
+          <Tile dark label="欠品が近い品目" value={`${v.short}品目`} note="残り4日分以下" accent="#FF8A7A" />
+          <Tile dark label="在庫が多すぎる品目" value={`${v.over}品目`} note="60日分以上" accent="#F2B544" />
         </div>
-        <div className="mt-3 grid lg:grid-cols-[1fr_1.25fr] items-stretch gap-3">
-          <Gauge value={v.current / v.proper * 100} title="適正在庫に対する在庫水準" inventory detail={`現在 ${yen(v.current)} ／ 適正在庫 ${yen(v.proper)}`} />
-          <Panel title={<>在庫金額の推移<span className="ml-1 text-xs font-normal text-sumi-muted">（万円）</span></>}>
-            <Chart labels={months} series={line} unit="万円" refLine={{ value: v.proper, label: '適正' }} />
+        <div className="mt-3 grid lg:grid-cols-[1.4fr_1fr] gap-3">
+          <Panel dark title={<>在庫金額の推移<span className="ml-1 text-xs font-normal text-white/50">（万円）</span></>} hint="グラフに触れてみて！">
+            <Chart dark labels={months} series={line} unit="万円" refLine={{ value: v.proper, label: '適正' }} />
           </Panel>
-          <div className="grid items-start gap-3 sm:grid-cols-2 lg:col-span-2">
-            <Panel title="倉庫別の在庫水準">
-              <p className="mb-4 text-xs leading-relaxed text-sumi-muted">適正在庫を100%とした現在の在庫金額。80〜120%を適正範囲として表示しています。</p>
-              <Meters rows={warehouses.map(w => ({ label: w, rate: stock[w].value[11] / stock[w].proper, dim: wh !== '全倉庫' && wh !== w }))} />
+          <div className="grid gap-3">
+            <Panel dark title="倉庫別の在庫水準">
+              <RangeBars rows={warehouses.map((w) => ({ label: w, rate: stock[w].value[11] / stock[w].proper, dim: wh !== '全倉庫' && wh !== w }))} />
             </Panel>
-            <Panel title="カテゴリ別の在庫金額">
-              <Donut rows={v.cats} unit="万円" />
+            <Panel dark title="カテゴリ別の在庫金額" hint="帯に触れてみて！">
+              <StackBar rows={v.cats} unit="万円" />
             </Panel>
           </div>
         </div>
-        <Panel title="要注意の品目" className="mt-3">
+        <Panel dark title="要注意の品目" className="mt-3">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[520px] text-xs">
               <thead>
-                <tr className="text-sumi-muted text-left">
+                <tr className="text-white/50 text-left">
                   <th className="font-normal py-1.5">品目</th>
                   <th className="font-normal">倉庫</th>
                   <th className="font-normal text-right">在庫数</th>
                   <th className="font-normal text-right">1日の出荷</th>
-                  <th className="font-normal text-right">残り</th>
-                  <th className="font-normal pl-4">状態</th>
+                  <th className="font-normal pl-5 w-[34%]">残り日数</th>
                 </tr>
               </thead>
               <tbody>
                 {v.items.map((it) => {
                   const short = it.days <= 4;
+                  const color = short ? '#FF8A7A' : '#F2B544';
                   return (
-                    <tr key={it.name} className="border-t border-sumi/10">
-                      <td className="py-2 font-bold">{it.name}</td>
-                      <td className="text-sumi-muted">{it.wh}</td>
-                      <td className="text-right">{it.qty.toLocaleString()}</td>
-                      <td className="text-right">{it.daily.toLocaleString()}</td>
-                      <td className="text-right font-bold">{it.days}日分</td>
-                      <td className="pl-4">
-                        <span className="inline-flex items-center gap-1 font-bold" style={{ color: short ? CRITICAL : WARNING }}>
-                          {short ? '▼ 欠品注意' : '▲ 多すぎ'}
+                    <tr key={it.name} className="border-t border-white/10">
+                      <td className="py-2.5 font-bold">{it.name}</td>
+                      <td className="text-white/60">{it.wh}</td>
+                      <td className="text-right font-en">{it.qty.toLocaleString()}</td>
+                      <td className="text-right font-en">{it.daily.toLocaleString()}</td>
+                      <td className="pl-5">
+                        <span className="flex items-center gap-2">
+                          <span className="relative h-2 flex-1 rounded-full bg-white/10">
+                            <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${Math.min(it.days / 90, 1) * 100}%`, background: color }} />
+                          </span>
+                          <b className="w-[4.5rem] text-right font-en" style={{ color }}>{short ? '▼' : '▲'} {it.days}日分</b>
                         </span>
                       </td>
                     </tr>
@@ -472,20 +478,24 @@ const ProductionBoard: React.FC = () => {
           <Tile label="不良率" value={`${v.defectRate.toFixed(1)}%`} />
           <Tile label="稼働率" value={`${Math.round(v.uptime * 100)}%`} note="動いていた時間の割合" />
         </div>
-        <div className="mt-3 grid lg:grid-cols-[1fr_1.25fr] items-stretch gap-3">
-          <Gauge value={v.achieve * 100} title="生産の計画達成率" detail={`実績 ${v.total.toLocaleString()}個 ／ 計画 ${sumOf(v.plan).toLocaleString()}個`} />
-          <Panel title={<>日別の生産数<span className="ml-1 text-xs font-normal text-sumi-muted">（個）</span></>} legend={series}>
+        <div className="mt-3 grid lg:grid-cols-[1fr_1.3fr] gap-3">
+          <div className="rounded-2xl border-2 border-sumi bg-[#FFF8E6] p-4 shadow-[3px_3px_0_#F2B544]">
+            <p className="text-xs font-black tracking-widest text-[#B7770A] font-en">LINE STATUS</p>
+            <p className="mt-1 font-black">ライン別の稼働率</p>
+            <div className="mt-4">
+              <Rings rows={v.lineRates} />
+            </div>
+            <div className="mt-6 border-t-2 border-dashed border-sumi/20 pt-5">
+              <BigProgress rate={v.achieve} label="今月の計画達成率" />
+            </div>
+          </div>
+          <Panel title={<>日別の生産数<span className="ml-1 text-xs font-normal text-sumi-muted">（個）</span></>} legend={series} hint="棒に触れてみて！">
             <Chart labels={days} series={series} unit="個" zero />
           </Panel>
-          <div className="grid items-start gap-3 sm:grid-cols-2 lg:col-span-2">
-            <Panel title="ライン別の稼働率">
-              <Meters rows={v.lineRates} />
-            </Panel>
-            <Panel title="不良の内訳">
-              <Donut rows={v.defects} unit="個" />
-            </Panel>
-          </div>
         </div>
+        <Panel title="不良の内訳（多い順）" className="mt-3">
+          <Pareto rows={v.defects} unit="個" />
+        </Panel>
       </div>
     </>
   );
@@ -528,17 +538,16 @@ const DashboardSample: React.FC = () => {
             </button>
           ))}
         </div>
+        {/* 隣のタブを指す案内 */}
+        <span aria-hidden="true" className="self-center mb-2.5 ml-1 flex items-center gap-0.5 text-xs font-black text-coral dash-hint whitespace-nowrap">
+          <ArrowLeft className="w-4 h-4 shrink-0" strokeWidth={3} />
+          ほかの例<span className="hidden sm:inline">も見られます</span>
+        </span>
         <span className="ml-auto self-center mb-3 shrink-0 rounded-full bg-sumi px-3 py-0.5 text-[11px] font-black text-white">
           見本<span className="hidden sm:inline">・架空のデータです</span>
         </span>
       </div>
 
-      <div className="bg-cream px-4 py-3 border-b border-sumi/10">
-        <span aria-hidden="true" className="flex items-center gap-1 text-xs font-black text-coral dash-hint">
-          <ArrowLeft className="w-4 h-4" strokeWidth={3} />
-          ほかの例も見られます
-        </span>
-      </div>
       <div className="p-4 md:p-7 bg-[#FCFCFB]" role="tabpanel" aria-label={boards[tab].title}>
         <Board key={boards[tab].key} />
       </div>
