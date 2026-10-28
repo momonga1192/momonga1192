@@ -31,7 +31,7 @@ const JosysRescue: React.FC = () => {
         {/* 広告用LP。同じ内容のサービスページと評価が割れないよう、検索には出さない */}
         <meta name="robots" content="noindex, follow" />
         <title>情シスレスキュー | IT専任者がいない企業のためのIT代行サービス - Arcle</title>
-        <meta name="description" content="情シスレスキューはArcleが提供するIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額5万円〜で包括サポート。IT専任者がいない中小企業の味方です。" />
+        <meta name="description" content="情シスレスキューはArcleが提供するIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額3万円〜で包括サポート。IT専任者がいない中小企業の味方です。" />
         <link rel="canonical" href="https://www.arcle.net/lp/josys-rescue" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -46,10 +46,10 @@ const JosysRescue: React.FC = () => {
           "@type": "Service",
           "name": "情シスレスキュー",
           "provider": { "@id": "https://www.arcle.net/#organization" },
-          "description": "IT専任者がいない企業のためのIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額5万円〜で包括サポート。",
+          "description": "IT専任者がいない企業のためのIT代行サービス。PCトラブル対応・セキュリティ対策・SaaS管理・ネットワーク構築を月額3万円〜で包括サポート。",
           "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": [
-            { "@type": "Offer", "name": "ライトプラン", "price": "50000", "priceCurrency": "JPY", "description": "IT相談窓口・簡易トラブル対応・リモートサポート" },
+            { "@type": "Offer", "name": "ライトプラン", "price": "30000", "priceCurrency": "JPY", "description": "IT相談窓口・簡易トラブル対応・リモートサポート" },
             { "@type": "Offer", "name": "スタンダードプラン", "price": "150000", "priceCurrency": "JPY", "description": "Lightの全内容+PCキッティング・システム導入支援・訪問サポート・セキュリティ対策" },
             { "@type": "Offer", "name": "プレミアムプラン", "price": "300000", "priceCurrency": "JPY", "description": "Standardの全内容+IT戦略コンサルティング・DX戦略策定・実行" }
           ]
@@ -66,7 +66,7 @@ const JosysRescue: React.FC = () => {
         lead={<><p>
                 情シスレスキューは、IT専任者がいない企業のための<br className="hidden md:block" />
                 "もうひとつのIT部門"です。<br />
-                月額5万円〜、必要な時だけプロがサポート。
+                月額3万円〜、必要な時だけプロがサポート。
               </p><a href="/contact" className="mt-8 inline-flex items-center gap-2 rounded-full bg-sumi px-7 py-4 font-bold text-white hover:bg-svc-josys transition-colors">無料で相談する<ArrowRight className="w-4 h-4" /></a></>}
         crumbs={[{ label: '情シスレスキュー' }]}
         service="josys"
@@ -296,7 +296,7 @@ const JosysRescue: React.FC = () => {
               {
                 name: 'Light',
                 sub: 'ライト',
-                price: '5万円〜',
+                price: '3万円〜',
                 desc: 'まずは気軽に相談から',
                 features: [
                   'IT相談窓口',
