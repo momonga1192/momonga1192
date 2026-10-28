@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Pointer } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 
 // 画面に入ったとき・絞り込みで値が変わったときに、0から最終値まで動かす。動きを減らす設定なら最初から最終値
 export function useReveal(token: string) {
@@ -57,12 +57,12 @@ export function useReveal(token: string) {
 // 少し行き過ぎてから戻る動き（針やバーの「グイーン」「ピューン」）
 const overshoot = (t: number) => 1 + 2.70158 * (t - 1) ** 3 + 1.70158 * (t - 1) ** 2;
 
-// 「ここをクリック！」と同じステッカー。カードの縁に重ねて、ダッシュボードの上に浮かせる
+// 「ここをクリック！」と同じステッカー。カードの上の縁に重ねて浮かせ、下向きの矢印でそのカードの中を指す
 export const PeekHint: React.FC<{ text: string; className?: string }> = ({ text, className = '' }) => (
   <span aria-hidden="true" className={`pointer-events-none absolute z-20 dash-hint ${className}`}>
     <span className="flex items-center gap-1 -rotate-3 whitespace-nowrap rounded-lg bg-coral px-2.5 py-1 text-xs font-black text-white border-2 border-sumi shadow-[2px_2px_0_#1F2430]">
-      <Pointer className="w-3.5 h-3.5" strokeWidth={2.6} />
       {text}
+      <ArrowDown className="w-3.5 h-3.5" strokeWidth={3.2} />
     </span>
   </span>
 );
