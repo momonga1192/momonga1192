@@ -1,7 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Check, ArrowRight, BarChart, PieChart, TrendingUp, Database, Activity, Search } from 'lucide-react';
-import { PageHeader, SectionHead, ContactCta, IconTile, Mark, Sparkle, Ticker, card, press } from '../parts';
+import { PageHeader, PlanCard, SectionHead, ContactCta, IconTile, Mark, Sparkle, Ticker, card, press } from '../parts';
+import DashboardSample from '../DashboardSample';
 import { illust, services } from '../theme';
 
 const service = services.find((s) => s.key === 'data')!;
@@ -86,11 +87,37 @@ const cases = [
               }
             ];
 
+// 構築作業も月額に含めて初期費用なし（最低契約期間6ヶ月）。2026-10-28 に決定
+const plans = [
+  {
+    name: 'Light',
+    sub: 'まずは見える化',
+    desc: '毎月の手作業の集計を、まずなくしたい',
+    price: 5,
+    features: ['1つのテーマ（売上など）のダッシュボードを作成', 'Excelや既存システムのデータから自動で更新', '操作の説明', 'メール・チャットでのご相談', '軽い修正・数字の確認']
+  },
+  {
+    name: 'Standard',
+    sub: 'データ活用を全社に',
+    desc: '部門ごとの数字を、全社で同じように見たい',
+    price: 15,
+    features: ['Lightプランの全内容', '複数のデータをまとめて自動で更新', '部門別など、ダッシュボードを複数作成', 'KPI（見るべき数字）の設計', '月1回の定例ミーティング', '社内向けの操作研修'],
+    recommended: true
+  },
+  {
+    name: 'Premium',
+    sub: 'データ経営パートナー',
+    desc: 'データをもとに経営判断する仕組みを作りたい',
+    price: 30,
+    features: ['Standardプランの全内容', '散らばったデータをまとめる基盤づくり', 'データの品質・管理ルールの整備', 'AIを使った分析・予測', 'データリテラシー研修', '経営会議への同席と改善提案']
+  }
+];
+
 const DataNext: React.FC = () => (
   <div className="bg-cream text-sumi overflow-x-clip">
       <Helmet>
         <title>データ活用支援・Power BI／Tableau導入 | 愛知・東海の中小企業向け - Arcle</title>
-        <meta name="description" content="愛知・東海の中小企業向けのデータ活用支援。Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計・モニタリング、データリテラシー研修で中小企業のデータドリブン経営を実現。" />
+        <meta name="description" content="愛知・東海の中小企業向けのデータ活用支援。Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計・モニタリング、データリテラシー研修で中小企業のデータドリブン経営を実現。初期費用0円・月額5万円〜。" />
         <link rel="canonical" href="https://www.arcle.net/data-consulting" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -106,7 +133,8 @@ const DataNext: React.FC = () => (
           "name": "データ活用支援サービス",
           "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "Tableau・PowerBI導入、経営ダッシュボード構築、データ分析基盤設計、KPI設計で中小企業のデータドリブン経営を実現",
-          "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }]
+          "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
+          "offers": plans.map((plan) => ({ "@type": "Offer", "name": `${plan.name}（${plan.sub}）`, "price": String(plan.price * 10000), "priceCurrency": "JPY" }))
         })}</script>
       </Helmet>
     <PageHeader
@@ -181,6 +209,35 @@ const DataNext: React.FC = () => (
     {/* 支援の名前を流すテープ */}
     <Ticker items={solutions.map((item) => item.sub)} tone="bg-svc-data text-white" className="-mb-4 -mt-[2.5px]" />
 
+    {/* ダッシュボードの見本（触れる） */}
+    <section id="dashboard" className="py-20 md:py-28 bg-svc-data/10 bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px] border-b-[2.5px] border-sumi scroll-mt-24">
+      <div className="max-w-6xl mx-auto px-5">
+        <SectionHead
+          en="Dashboard Sample"
+          enClass={service.text}
+          title={<>ダッシュボードって、<br className="sm:hidden" /><Mark>こういうもの</Mark>です。</>}
+          lead="Excelや販売管理システムにある数字を自動で集めて、1つの画面にまとめたものです。下の見本は、架空の卸売業のデータで作っています。期間や営業所を切り替えて、触ってみてください。"
+          center
+        />
+        <div className="pop-reveal relative">
+          <Sparkle className="absolute -top-5 -left-3 w-9 h-9 text-mustard z-10" />
+          <DashboardSample />
+        </div>
+        <ul className="mt-10 grid md:grid-cols-3 gap-4">
+          {[
+            ['集計の手作業がなくなる', '元のデータが更新されると、画面の数字も自動で新しくなります。'],
+            ['全員が同じ数字を見られる', '会議の前に資料を作らなくても、同じ画面を見ながら話せます。'],
+            ['気になるところを掘り下げられる', '営業所や期間を切り替えて、どこで何が起きているかを確かめられます。']
+          ].map(([t, d]) => (
+            <li key={t} className={`rounded-[24px] bg-white p-5 ${card}`}>
+              <p className="font-head font-black text-lg flex items-center gap-2"><Check className={`w-5 h-5 shrink-0 ${service.text}`} strokeWidth={3} />{t}</p>
+              <p className="mt-2 text-sm text-sumi-muted leading-[1.85]">{d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5">
         <SectionHead en="What We Can Do" enClass={service.text} title={<>困り事から、<br className="sm:hidden" />解決策へ</>}
@@ -210,6 +267,22 @@ const DataNext: React.FC = () => (
               </div>
             </article>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="py-20 md:py-28 bg-white border-t-[2.5px] border-sumi">
+      <div className="max-w-6xl mx-auto px-5">
+        <SectionHead en="Pricing" enClass={service.text} title="プラン一覧" lead="ダッシュボードの構築も月額に含まれるので、初期費用はかかりません。まずは1つのテーマの見える化から始められます。" center />
+        <div className="grid lg:grid-cols-3 gap-10 lg:gap-6 items-stretch pt-4">
+          {plans.map((plan, i) => (
+            <PlanCard key={plan.name} index={i} service="data" plan={{ ...plan, chip: '初期費用 0円', prefix: '月額', amount: String(plan.price), unit: '万円〜', priceNote: '税抜' }} />
+          ))}
+        </div>
+        <div className="mt-10 rounded-[28px] bg-cream border-2 border-dashed border-sumi/40 p-6 text-sm text-sumi-muted leading-[1.9] space-y-2">
+          <p>※料金は税抜です。ダッシュボードの構築作業も月額に含まれます（最低契約期間は6ヶ月です）。</p>
+          <p>※Power BI・TableauなどのBIツールのライセンス費は、別途必要です。</p>
+          <p>※データの整理に大きな手間がかかる場合は、ヒアリングのうえ別途お見積りします。</p>
         </div>
       </div>
     </section>
