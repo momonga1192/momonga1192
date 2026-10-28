@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, ArrowRight, BarChart3, Bot, Globe, Lock, Mail, Printer, RotateCcw, Shield } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BarChart3, Bot, Gift, Globe, Lock, Mail, Printer, RotateCcw, Shield } from 'lucide-react';
 import { IconTile, Mark, PageHeader, Sparkle, Sticker, card, press } from '../parts';
 import { illust, prices, services } from '../theme';
 import { allGoodType, areas, choices, levelLabel, questionCount, scoreAnswers, type AreaScore } from './checkData';
@@ -106,7 +106,7 @@ const ItCheck: React.FC = () => {
                 {step === 'result' ? 'もう一度診断する' : '診断をはじめる'}
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <span className="text-sm font-bold text-sumi">無料・登録なしで結果が見られます</span>
+              <span className="text-sm font-bold text-sumi">無料・登録なしで結果が見られます<br className="sm:hidden" /><span className="hidden sm:inline">／</span>診断後に『はじめてのDX読本』もプレゼント</span>
             </p>
           </>
         }
@@ -131,7 +131,7 @@ const Intro: React.FC<{ onStart: () => void }> = ({ onStart }) => (
         {[
           { title: '20問に答える', body: '4分野×5問。考え込まずに、いまの会社の様子で答えてください。', icon: '01' },
           { title: 'その場で結果がわかる', body: '総合点と4分野のレーダーチャート、いちばん伸ばしたい分野がすぐに見られます。', icon: '02' },
-          { title: '詳しい解説と資料を受け取る', body: '会社名などを入力すると、分野ごとの「まずやること」と進める順番が見られます。資料PDFはメールでお送りします。', icon: '03' }
+          { title: '詳しい解説とDX読本を受け取る', body: '会社名などを入力すると、分野ごとの「まずやること」と進める順番が見られます。『はじめてのDX読本』もメールでプレゼントします。', icon: '03' }
         ].map((item, i) => (
           <div key={item.title} style={{ animationDelay: `${i * 80}ms` }} className={`group pop-reveal rounded-[28px] bg-cream p-7 ${card}`}>
             <span className="pop-wiggle inline-grid place-items-center w-12 h-12 rounded-full bg-coral text-white font-en font-black italic text-lg border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6">{item.icon}</span>
@@ -345,7 +345,7 @@ const Result: React.FC<{ answers: number[]; unlocked: boolean; onUnlock: () => v
               <div aria-hidden="true" className="blur-[7px] select-none pointer-events-none opacity-70 max-h-[900px] overflow-hidden">
                 <Details byArea={byArea} order={order} />
               </div>
-              <div className="absolute inset-0 flex items-start justify-center pt-6 md:pt-16">
+              <div className="absolute inset-0 flex items-start justify-center pt-14 md:pt-20">
                 <UnlockForm summary={summary} onUnlock={onUnlock} />
               </div>
             </div>
@@ -423,14 +423,14 @@ const Details: React.FC<{ byArea: AreaScore[]; order: AreaScore[] }> = ({ byArea
       <div className={`no-print mt-20 grid md:grid-cols-[1fr_1.3fr] gap-8 items-center rounded-[36px] bg-white p-8 md:p-12 ${card}`}>
         <img src={illust('check-book')} alt="" className="pop-float w-full max-w-[280px] mx-auto" loading="lazy" />
         <div>
-          <Sticker className="text-sm font-bold">無料の資料</Sticker>
+          <Sticker className="text-sm font-bold">お役立ち資料</Sticker>
           <h3 className="font-head font-black text-[24px] md:text-[32px] leading-snug mt-4 [word-break:auto-phrase]">IT担当がいない会社のための はじめてのDX読本</h3>
-          <p className="mt-4 text-sm leading-[1.9] text-sumi-muted">よくある困りごと、分野ごとの進め方、支援のモデルケースまでをまとめた資料です。社内での共有にもお使いください。届かないときは、迷惑メールのフォルダもご確認ください。</p>
+          <p className="inline-flex items-center gap-2 mt-5 rounded-2xl bg-mustard/30 px-5 py-3 text-sm font-black border-2 border-sumi">
+            <Mail className="w-4 h-4" />
+            ご入力いただいたメールアドレスにお送りしました
+          </p>
+          <p className="mt-4 text-sm leading-[1.9] text-sumi-muted">今後のDXのご参考に、よくある困りごとや分野ごとの進め方、セルフチェックシート、支援のモデルケースをまとめました。社内での共有にもお使いください。メールが見当たらないときは、迷惑メールのフォルダもご確認ください。</p>
           <div className="mt-7 flex flex-wrap gap-4">
-            <p className="inline-flex items-center gap-2 rounded-2xl bg-mustard/30 px-5 py-3 text-sm font-black border-2 border-sumi">
-              <Mail className="w-4 h-4" />
-              ご入力のメールアドレスにお送りします
-            </p>
             <a href="/contact" className={`inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white font-bold ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>
               結果をもとに無料で相談する
               <ArrowRight className="w-4 h-4" />
@@ -471,16 +471,32 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
 
   return (
     <form onSubmit={submit} className={`relative w-full max-w-lg rounded-[32px] bg-white p-7 md:p-9 ${card} shadow-[8px_8px_0_#1F2430]`}>
-      <span className="pop-float absolute -top-6 -right-3 grid place-items-center w-[76px] h-[76px] rounded-full bg-coral text-white font-head font-black text-sm leading-tight text-center border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] rotate-12">
-        DX読本
-        <br />
-        プレゼント
-      </span>
+      {/* 入力するともらえる資料を、フォームの上で大きく打ち出す */}
+      <div className="relative -mx-7 md:-mx-9 -mt-7 md:-mt-9 mb-6 rounded-t-[29px] border-b-[2.5px] border-sumi bg-mustard px-7 md:px-9 pt-6 pb-5 pr-[118px] md:pr-[150px]">
+        <p className="inline-flex items-center gap-1.5 -rotate-2 rounded-lg bg-coral px-2.5 py-0.5 text-xs font-black text-white border-2 border-sumi">
+          <Gift className="w-3.5 h-3.5" strokeWidth={2.6} />
+          入力した方にもれなく
+        </p>
+        <p className="font-head font-black text-[22px] md:text-[27px] leading-tight mt-2 [word-break:auto-phrase]">
+          『はじめてのDX読本』
+          <br />
+          プレゼント！
+        </p>
+        <p className="text-xs font-bold mt-1.5">PDF・13ページ／メールでお届けします</p>
+        <img src={illust('check-book')} alt="" className="pop-float absolute right-1 md:right-2 -top-12 w-[118px] md:w-[148px]" />
+      </div>
       <p className="inline-flex items-center gap-2 text-sm font-black">
         <Lock className="w-4 h-4" />
-        続きは入力で解禁
+        診断結果の続きも、入力で見られます
       </p>
-      <h3 className="font-head font-black text-[22px] md:text-[26px] leading-snug mt-2 [word-break:auto-phrase]">分野ごとの「まずやること」と、進める順番を見る</h3>
+      <ul className="mt-3 space-y-1.5 text-sm font-bold">
+        {['分野ごとの「まずやること」', '御社に合った進める順番と、おすすめのサービス', '『はじめてのDX読本』（PDF）をメールでお届け'].map((t) => (
+          <li key={t} className="flex items-start gap-2">
+            <span className="shrink-0 mt-0.5 grid place-items-center w-5 h-5 rounded-full bg-sumi text-white text-[11px]">✓</span>
+            {t}
+          </li>
+        ))}
+      </ul>
       <div className="mt-6 grid gap-4">
         <label className="block text-sm font-bold">
           会社名<span className="text-coral ml-1">必須</span>
@@ -507,7 +523,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
           {emailError ? (
             <span className="block mt-1.5 text-xs font-bold text-coral">{emailError}</span>
           ) : (
-            lead.email && <span className="block mt-1.5 text-xs font-normal text-sumi-muted break-all">資料PDFは「{lead.email}」にお送りします</span>
+            lead.email && <span className="block mt-1.5 text-xs font-normal text-sumi-muted break-all">『はじめてのDX読本』は「{lead.email}」にお送りします</span>
           )}
         </label>
         <label aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
@@ -524,7 +540,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
         </label>
       </div>
       <button type="submit" disabled={sending} className="mt-6 w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-sumi text-white font-black border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544] disabled:opacity-60">
-        {sending ? '送信しています…' : '結果の続きを見る・資料を受け取る'}
+        {sending ? '送信しています…' : '結果の続きを見る・読本を受け取る'}
         <ArrowRight className="w-4 h-4" />
       </button>
     </form>
