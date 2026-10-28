@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, ArrowRight, BarChart3, Bot, Gift, Globe, Lock, Mail, Printer, RotateCcw, Shield } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BarChart3, Bot, Download, Gift, Globe, Lock, Mail, Printer, RotateCcw, Shield } from 'lucide-react';
 import { IconTile, Mark, PageHeader, Sparkle, Sticker, card, press } from '../parts';
 import { illust, prices, services } from '../theme';
 import { allGoodType, areas, choices, levelLabel, questionCount, scoreAnswers, type AreaScore } from './checkData';
-import { isDummyEmail, sendLead, type Lead } from './leadForm';
+import { deliverByMail, guidePdf, isDummyEmail, sendLead, type Lead } from './leadForm';
 
 // 会社のIT健康診断。20問に答えると、総合点・レーダーチャート・一番弱い分野までは無料で見せ、
 // 分野ごとの解説・進める順番・おすすめサービスは、会社名などを入力すると解禁する。資料PDFは入力されたメールアドレスに送る
@@ -131,7 +131,7 @@ const Intro: React.FC<{ onStart: () => void }> = ({ onStart }) => (
         {[
           { title: '20問に答える', body: '4分野×5問。考え込まずに、いまの会社の様子で答えてください。', icon: '01' },
           { title: 'その場で結果がわかる', body: '総合点と4分野のレーダーチャート、いちばん伸ばしたい分野がすぐに見られます。', icon: '02' },
-          { title: '詳しい解説とDX読本を受け取る', body: '会社名などを入力すると、分野ごとの「まずやること」と進める順番が見られます。『はじめてのDX読本』もメールでプレゼントします。', icon: '03' }
+          { title: '詳しい解説とDX読本を受け取る', body: `会社名などを入力すると、分野ごとの「まずやること」と進める順番が見られます。『はじめてのDX読本』も${deliverByMail ? 'メールで' : ''}プレゼントします。`, icon: '03' }
         ].map((item, i) => (
           <div key={item.title} style={{ animationDelay: `${i * 80}ms` }} className={`group pop-reveal rounded-[28px] bg-cream p-7 ${card}`}>
             <span className="pop-wiggle inline-grid place-items-center w-12 h-12 rounded-full bg-coral text-white font-en font-black italic text-lg border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6">{item.icon}</span>
@@ -425,11 +425,20 @@ const Details: React.FC<{ byArea: AreaScore[]; order: AreaScore[] }> = ({ byArea
         <div>
           <Sticker className="text-sm font-bold">お役立ち資料</Sticker>
           <h3 className="font-head font-black text-[24px] md:text-[32px] leading-snug mt-4 [word-break:auto-phrase]">IT担当がいない会社のための はじめてのDX読本</h3>
-          <p className="inline-flex items-center gap-2 mt-5 rounded-2xl bg-mustard/30 px-5 py-3 text-sm font-black border-2 border-sumi">
-            <Mail className="w-4 h-4" />
-            ご入力いただいたメールアドレスにお送りしました
-          </p>
-          <p className="mt-4 text-sm leading-[1.9] text-sumi-muted">今後のDXのご参考に、よくある困りごとや分野ごとの進め方、セルフチェックシート、支援のモデルケースをまとめました。社内での共有にもお使いください。メールが見当たらないときは、迷惑メールのフォルダもご確認ください。</p>
+          {deliverByMail ? (
+            <p className="inline-flex items-center gap-2 mt-5 rounded-2xl bg-mustard/30 px-5 py-3 text-sm font-black border-2 border-sumi">
+              <Mail className="w-4 h-4" />
+              ご入力いただいたメールアドレスにお送りしました
+            </p>
+          ) : (
+            <p className="mt-5">
+              <a href={guidePdf} download onClick={() => track('guide_download')} className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-sumi text-white font-bold border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544]">
+                <Download className="w-4 h-4" />
+                資料PDFをダウンロード
+              </a>
+            </p>
+          )}
+          <p className="mt-4 text-sm leading-[1.9] text-sumi-muted">今後のDXのご参考に、よくある困りごとや分野ごとの進め方、セルフチェックシート、支援のモデルケースをまとめました。社内での共有にもお使いください。{deliverByMail && 'メールが見当たらないときは、迷惑メールのフォルダもご確認ください。'}</p>
           <div className="mt-7 flex flex-wrap gap-4">
             <a href="/contact" className={`inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white font-bold ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>
               結果をもとに無料で相談する
@@ -454,7 +463,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isDummyEmail(lead.email)) {
-      setEmailError('資料をお送りできるメールアドレスを入力してください');
+      setEmailError('ご連絡のとれるメールアドレスを入力してください');
       return;
     }
     setSending(true);
@@ -482,7 +491,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
           <br />
           プレゼント！
         </p>
-        <p className="text-xs font-bold mt-1.5">PDF・13ページ／メールでお届けします</p>
+        <p className="text-xs font-bold mt-1.5">PDF・13ページ／{deliverByMail ? 'メールでお届けします' : '入力後すぐにダウンロードできます'}</p>
         <img src={illust('check-book')} alt="" className="pop-float absolute right-1 md:right-2 -top-12 w-[118px] md:w-[148px]" />
       </div>
       <p className="inline-flex items-center gap-2 text-sm font-black">
@@ -490,7 +499,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
         診断結果の続きも、入力で見られます
       </p>
       <ul className="mt-3 space-y-1.5 text-sm font-bold">
-        {['分野ごとの「まずやること」', '御社に合った進める順番と、おすすめのサービス', '『はじめてのDX読本』（PDF）をメールでお届け'].map((t) => (
+        {['分野ごとの「まずやること」', '御社に合った進める順番と、おすすめのサービス', deliverByMail ? '『はじめてのDX読本』（PDF）をメールでお届け' : '『はじめてのDX読本』（PDF）のダウンロード'].map((t) => (
           <li key={t} className="flex items-start gap-2">
             <span className="shrink-0 mt-0.5 grid place-items-center w-5 h-5 rounded-full bg-sumi text-white text-[11px]">✓</span>
             {t}
@@ -523,7 +532,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
           {emailError ? (
             <span className="block mt-1.5 text-xs font-bold text-coral">{emailError}</span>
           ) : (
-            lead.email && <span className="block mt-1.5 text-xs font-normal text-sumi-muted break-all">『はじめてのDX読本』は「{lead.email}」にお送りします</span>
+            deliverByMail && lead.email && <span className="block mt-1.5 text-xs font-normal text-sumi-muted break-all">『はじめてのDX読本』は「{lead.email}」にお送りします</span>
           )}
         </label>
         <label aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
