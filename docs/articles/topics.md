@@ -6,7 +6,6 @@
 
 | slug | タグ | 仮タイトル（地域名なし） | 狙う検索語 |
 |---|---|---|---|
-| sme-password-management-mfa | 情シス代行 | 中小企業のパスワード管理と多要素認証の始め方 | 中小企業 パスワード管理 / 多要素認証 導入 |
 | sales-data-visualization-first-steps | データ活用 | 売上データの見える化を始める手順 | 売上 見える化 / 売上分析 やり方 |
 | copilot-vs-chatgpt-sme | 生成AI | Microsoft 365 CopilotとChatGPTの違いと選び方 | Copilot ChatGPT 違い / 中小企業 |
 | google-business-profile-guide | Web制作 | Googleビジネスプロフィールの設定と活用 | Googleビジネスプロフィール 設定 / 使い方 |
@@ -40,3 +39,4 @@
 | slug | タグ | タイトル | 公開日 |
 |---|---|---|---|
 | ai-meeting-minutes-guide | 生成AI | 生成AIで議事録を作る手順と注意点 | 2026-10-28 |
+| sme-password-management-mfa | 情シス代行 | 中小企業のパスワード管理と多要素認証の始め方 | 2026-10-29 |

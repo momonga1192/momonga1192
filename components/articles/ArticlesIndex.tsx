@@ -6,6 +6,13 @@ import { serviceByName, services, illust } from '../next/theme';
 
 export const articles = [
   {
+    title: '中小企業のパスワード管理と多要素認証の始め方',
+    description: '社内のパスワードルールの決め方、保管と共有の方法、多要素認証の方式の選び方と導入手順をチェックリスト付きでまとめました。',
+    href: '/articles/sme-password-management-mfa',
+    published: '2026-10-29',
+    tag: '情シス代行'
+  },
+  {
     title: '生成AIで議事録を作る手順と注意点',
     description: '録音と文字起こしの準備、要約を頼む指示文の例、情報漏えいを防ぐルール、AIが間違えやすい箇所の確認方法をまとめました。',
     href: '/articles/ai-meeting-minutes-guide',
