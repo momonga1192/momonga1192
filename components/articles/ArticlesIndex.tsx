@@ -6,6 +6,13 @@ import { serviceByName, services, illust } from '../next/theme';
 
 export const articles = [
   {
+    title: '売上データの見える化を始める手順',
+    description: '最初に見る数字の決め方、集計しやすい元データの整え方、Excelのピボットテーブルでの集計と数字の読み方をまとめました。',
+    href: '/articles/sales-data-visualization-first-steps',
+    published: '2026-10-30',
+    tag: 'データ活用'
+  },
+  {
     title: '中小企業のパスワード管理と多要素認証の始め方',
     description: '社内のパスワードルールの決め方、保管と共有の方法、多要素認証の方式の選び方と導入手順をチェックリスト付きでまとめました。',
     href: '/articles/sme-password-management-mfa',
