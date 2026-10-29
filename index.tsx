@@ -13,7 +13,8 @@ declare global {
 
 const initGoogleAnalytics = () => {
   const measurementId = gaMeasurementId;
-  if (!measurementId || typeof window === 'undefined') {
+  // 本番のドメインだけ計測する（手元の確認やVercelのプレビューを数えない）
+  if (!measurementId || typeof window === 'undefined' || window.location.hostname !== 'www.arcle.net') {
     return;
   }
 
@@ -25,8 +26,10 @@ const initGoogleAnalytics = () => {
   window.dataLayer = window.dataLayer || [];
   window.gtag =
     window.gtag ||
-    function gtag(...args: unknown[]) {
-      window.dataLayer.push(args);
+    function gtag() {
+      // gtag.js は arguments オブジェクトだけを命令として読む（配列で積むと送信されない）
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments);
     };
 
   window.gtag('js', new Date());
