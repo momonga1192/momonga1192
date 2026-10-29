@@ -14,26 +14,30 @@ const offerings = [
               { 
                 title: "IT Helpdesk", 
                 sub: "ITヘルプデスク", 
-                desc: "PC操作からトラブル対応まで、チャットや電話で迅速に解決。社員の生産性を守り、業務の停滞を防ぎます。緊急時は優先対応で即座にサポート。", 
-                icon: Users, 
+                desc: "PCの操作からトラブル対応まで、メールやチャット、リモート操作でサポートします。リモートで解決しないときは、東海エリアなら訪問して対応します。", 
+                icon: Users,
+                points: ["メール・チャットでのご相談", "リモート操作でのトラブル対応", "東海エリアは訪問にも対応"], 
               },
               {
                 title: "System Integration",
                 sub: "システム導入・DX推進",
-                desc: "業務効率化ツールの選定から導入、運用定着まで一貫サポート。DX戦略の立案・実行を通じて、デジタル化による競争力強化を実現します。",
+                desc: "業務効率化ツールの選定から導入、社内での定着までを一貫してサポートします。何からデジタル化するかの優先順位づけからご相談いただけます。",
                 icon: Cpu,
+                points: ["ツールの比較・選定のご提案", "導入時の設定と移行", "使い方の説明と定着のフォロー"],
               },
               {
                 title: "Security & Asset",
                 sub: "セキュリティ・資産管理",
-                desc: "情報漏洩対策やアクセス管理などのセキュリティ強化と、ITライセンス・アカウントの一元管理でコストとリスクを最適化します。",
+                desc: "情報漏洩対策やアクセス管理などのセキュリティ強化と、ITライセンス・アカウントの一元管理で、ムダなコストとリスクを減らします。",
                 icon: Shield,
+                points: ["アカウント・ライセンスの棚卸し", "多要素認証など基本対策の導入", "社内ルールづくりの支援"],
               },
               {
                 title: "Cloud & Infra",
                 sub: "クラウド・インフラ支援",
-                desc: "M365やGoogle Workspaceなどクラウドサービスの選定・導入・運用を包括サポート。サーバー・ネットワーク環境の最適化も実現します。",
+                desc: "Microsoft 365やGoogle Workspaceなどクラウドサービスの選定・導入・運用をサポートします。社内のネットワークやWi-Fi環境の見直しもご相談いただけます。",
                 icon: Globe,
+                points: ["Microsoft 365・Google Workspaceの導入・移行", "管理者設定とアカウント管理", "ネットワーク・Wi-Fi環境の見直し"],
               }
             ];
 const plans = [
@@ -135,7 +139,7 @@ const JosysNext: React.FC = () => (
             en="Your Concerns"
             enClass={service.text}
             title={<>そのIT業務、<br /><Mark><span className={service.text}>後回し</span></Mark>にしていませんか？</>}
-            lead="コア業務に集中したいのに、ITのトラブルや雑務に時間を奪われている。そんな経営者様・ご担当者様のお悩みを、私たちが解決します。"
+            lead="コア業務に集中したいのに、ITのトラブルや雑務に時間を奪われている。そんな経営者様・ご担当者様のお悩みを、Arcleが一緒に解決します。"
           />
           <div className="space-y-4">
             {concerns.map((item, i) => (
@@ -169,7 +173,7 @@ const JosysNext: React.FC = () => (
               <h3 className="font-head text-2xl md:text-[28px] font-black leading-snug mt-1 [word-break:auto-phrase]">{item.sub}</h3>
               <p className="mt-5 text-sumi-muted leading-[1.9]">{item.desc}</p>
               <ul className="mt-6 pt-6 border-t-2 border-dashed border-warm-line space-y-3">
-                {['24時間365日の監視体制', '専門スタッフによる迅速対応', 'コスト削減の具体案提示'].map((feature) => (
+                {item.points.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed">
                     <Check className={`w-4 h-4 shrink-0 mt-1 ${service.text}`} aria-hidden="true" />{feature}
                   </li>
@@ -200,8 +204,8 @@ const JosysNext: React.FC = () => (
     </section>
 
     <ContactCta
-      title={<span className="[word-break:auto-phrase]">ITの悩み、<br />私たちにお聞かせください。</span>}
-      body="些細なことでも構いません。専門家が丁寧にお話を伺い、貴社に最適な解決策をご提案します。"
+      title={<span className="[word-break:auto-phrase]">ITの悩み、<br />お気軽にお聞かせください。</span>}
+      body="些細なことでも構いません。代表の栗原が直接お話を伺い、貴社に合った解決策をご提案します。"
     />
   </div>
 );

@@ -84,7 +84,7 @@ const HomePop: React.FC = () => {
             <div className="pop-tilt absolute left-1/2 -bottom-[8%] lg:-bottom-[12%] aspect-[1200/816] w-[124%] md:w-[104%] lg:w-[128%] xl:w-[150%] -translate-x-1/2 lg:-translate-x-[58%] xl:-translate-x-[57%] drop-shadow-[0_12px_18px_rgb(0_0_0/0.25)]">
               <img
                 src={illust('hero/base')}
-                alt="Arcleのスタッフと中小企業の社員が、PC・データ・AI・Webでつながっているイラスト"
+                alt="Arcleの担当者と中小企業の社員が、PC・データ・AI・Webでつながっているイラスト"
                 className="absolute inset-0 w-full h-full"
               />
               {heroParts.map((p) => (

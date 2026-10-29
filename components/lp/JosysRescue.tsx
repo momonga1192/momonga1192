@@ -137,7 +137,8 @@ const JosysRescue: React.FC = () => {
                 number: '01',
                 title: 'ITヘルプデスク',
                 titleEn: 'IT Helpdesk',
-                desc: 'PCトラブルからソフト操作まで、チャット・電話で即対応。「PCが動かない」「設定が分からない」もすぐに解決します。',
+                desc: 'PCトラブルからソフト操作まで、メール・チャット・リモート操作でサポート。「PCが動かない」「設定が分からない」もお気軽にご相談ください。',
+                points: ['メール・チャットでのご相談', 'リモート操作でのトラブル対応', '東海エリアは訪問にも対応'],
 
 
 
@@ -159,6 +160,7 @@ const JosysRescue: React.FC = () => {
                 title: 'セキュリティ対策',
                 titleEn: 'Security',
                 desc: '情報漏洩リスクの診断から、対策の実施・運用まで。ウイルス対策・アクセス制御・バックアップ体制を整えます。',
+                points: ['今のセキュリティ状況の確認', '多要素認証・バックアップなど基本対策の導入', '社内ルールづくりの支援'],
 
 
 
@@ -179,7 +181,8 @@ const JosysRescue: React.FC = () => {
                 number: '03',
                 title: 'SaaS・ツール管理',
                 titleEn: 'SaaS Management',
-                desc: '導入選定・アカウント管理・コスト最適化をまるっと代行。「誰が何を使っているか」を可視化し、無駄を削減します。',
+                desc: '導入選定・アカウント管理・コストの見直しをまるっと代行。「誰が何を使っているか」を一覧にし、無駄を減らします。',
+                points: ['契約中のサービスとアカウントの棚卸し', '入退社時のアカウント管理', '使っていない契約の見直し'],
 
 
 
@@ -200,7 +203,8 @@ const JosysRescue: React.FC = () => {
                 number: '04',
                 title: 'ネットワーク・インフラ',
                 titleEn: 'Network & Infra',
-                desc: '社内Wi-Fiからクラウド環境まで安定稼働を支援。「ネットが遅い」「VPNが繋がらない」といったお困りごとも解消します。',
+                desc: '社内Wi-Fiからクラウド環境まで安定稼働を支援。「ネットが遅い」「VPNが繋がらない」といったお困りごともご相談ください。',
+                points: ['ネットワーク・Wi-Fi環境の確認と見直し', 'ルーター・VPNなど機器の設定', 'Microsoft 365などクラウドの設定'],
 
 
 
@@ -265,7 +269,7 @@ const JosysRescue: React.FC = () => {
                   <h4 className="font-head [word-break:auto-phrase] text-3xl font-en font-bold text-sumi mb-6">{item.titleEn}</h4>
                   <p className="text-sumi-muted leading-relaxed text-lg mb-8">{item.desc}</p>
                   <ul className="space-y-4">
-                    {['24時間365日の監視体制', '専門スタッフによる迅速対応', 'コスト削減の具体案提示'].map((feature, i) => (
+                    {item.points.map((feature, i) => (
                       <li key={i} className="flex items-center text-sumi">
                         <Check className="w-5 h-5 text-svc-josys mr-3" />
                         <span className="font-medium">{feature}</span>
@@ -287,7 +291,7 @@ const JosysRescue: React.FC = () => {
             <h2 className="font-head [word-break:auto-phrase] text-[26px] md:text-[38px] font-bold text-sumi mb-6">料金プラン</h2>
             <p className="text-sumi-muted max-w-2xl mx-auto">
               御社の規模や課題に合わせた3つのプランをご用意。<br className="hidden md:block" />
-              すべてのプランで、専門スタッフが丁寧にサポートします。
+              すべてのプランで、代表の栗原が直接サポートします。
             </p>
           </div>
 
