@@ -5,7 +5,7 @@ import { services } from '../theme';
 import { ContactCta, Mark, PageHeader, SectionHead, Sparkle, Sticker, card, press } from '../parts';
 
 const profile: [string, React.ReactNode][] = [
-  ['名称', 'Arcle（アークル）'],
+  ['屋号', 'Arcle（アークル）'],
   ['代表', '栗原 勇太'],
   ['所在地', '〒491-0835 愛知県一宮市あずら2丁目8'],
   [
@@ -25,7 +25,7 @@ const profile: [string, React.ReactNode][] = [
 
 const arcColors = ['#3B6FE0', '#5B5BD6', '#8E5BD0', '#C8509F'];
 
-// 社名の「Arc（弧）＋Circle（円）」を動きで見せる。マウスを乗せると4つの弧が高速で回りながら隙間を閉じ、
+// 屋号の「Arc（弧）＋Circle（円）」を動きで見せる。マウスを乗せると4つの弧が高速で回りながら隙間を閉じ、
 // 4色が混ざり合った1つの円に変わる。外すと逆の順で弧に戻る
 const ArcsMerge: React.FC = () => (
   <div className="absolute inset-0" aria-hidden="true">
@@ -62,19 +62,19 @@ const ArcsMerge: React.FC = () => (
 const CompanyNext: React.FC = () => (
   <div className="bg-cream text-sumi">
     <Helmet>
-      <title>会社案内 | Arcle（アークル）- 愛知・東海の中小企業のIT支援</title>
-      <meta name="description" content="Arcle（アークル）の会社案内。社名に込めた想い、代表あいさつ、会社概要とアクセスをご紹介します。" />
+      <title>事業者概要 | Arcle（アークル）- 愛知・東海の中小企業のIT支援</title>
+      <meta name="description" content="Arcle（アークル）の事業者概要。屋号に込めた想い、代表あいさつ、事業者情報とアクセスをご紹介します。" />
       <link rel="canonical" href="https://www.arcle.net/company" />
     </Helmet>
 
     <PageHeader
       en="Company"
-      title="会社案内"
-      lead="Arcleは、IT担当者がいない中小企業の「IT部門」として支援している会社です。"
-      crumbs={[{ label: '会社案内' }]}
+      title="事業者概要"
+      lead="Arcleは、IT担当者がいない中小企業の「IT部門」となって支援する個人事業です。"
+      crumbs={[{ label: '事業者概要' }]}
     />
 
-    {/* 社名に込めた想い */}
+    {/* 屋号に込めた想い */}
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[1fr_1.15fr] gap-14 items-center">
         <div className="group pop-reveal relative mx-auto w-full max-w-[400px] aspect-square">
@@ -100,7 +100,7 @@ const CompanyNext: React.FC = () => (
             }
           />
           <div className="-mt-6 space-y-5 leading-[2] text-sumi-muted">
-            <p>Arcle（アークル）という社名には、2つの意味を込めています。</p>
+            <p>Arcle（アークル）という屋号には、2つの意味を込めています。</p>
             <p>
               ひとつは<strong className="text-sumi">Arc（弧）</strong>。光る個性や専門性を持った、一人ひとりの技術者を表しています。
             </p>
@@ -147,11 +147,11 @@ const CompanyNext: React.FC = () => (
       </div>
     </section>
 
-    {/* 会社概要 */}
+    {/* 事業者情報 */}
     <section className="py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[1fr_1fr] gap-12">
         <div>
-          <SectionHead en="Profile" title="会社概要" />
+          <SectionHead en="Profile" title="事業者情報" />
           <dl className={`pop-reveal -mt-4 rounded-[28px] bg-white divide-y-2 divide-dashed divide-warm-line ${card}`}>
             {profile.map(([label, value]) => (
               <div key={label} className="grid sm:grid-cols-[120px_1fr] gap-1 sm:gap-6 px-6 py-5">

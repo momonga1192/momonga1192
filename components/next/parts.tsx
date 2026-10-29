@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowRight, Check, ChevronRight, Plus } from 'lucide-react';
 import { illust, services, type ServiceKey } from './theme';
 
-// 社名の由来（弧＝Arcをつないで円＝Circleにする）を、4事業の色の弧で表す
+// 屋号の由来（弧＝Arcをつないで円＝Circleにする）を、4事業の色の弧で表す
 export const Arcs: React.FC<{ className?: string }> = ({ className }) => (
   <svg viewBox="0 0 200 200" className={className} fill="none" aria-hidden="true">
     {['#3B6FE0', '#5B5BD6', '#8E5BD0', '#C8509F'].map((color, i) => (

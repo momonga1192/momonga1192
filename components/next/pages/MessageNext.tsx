@@ -24,7 +24,7 @@ const career = [
   },
   {
     title: 'IT・DX Consultant (Freelance)',
-    role: 'Representative Director',
+    role: 'Owner',
     body: '数多くの中堅・中小企業のDX推進を支援。',
     color: 'bg-svc-web'
   }
@@ -43,12 +43,12 @@ const certifications = [
 const MessageNext: React.FC = () => (
   <div className="bg-cream text-sumi">
     <Helmet>
-      <title>代表あいさつ・経歴 | 会社案内 - Arcle</title>
+      <title>代表あいさつ・経歴 | 事業者概要 - Arcle</title>
       <meta name="description" content="Arcle代表 栗原勇太のあいさつと経歴。データエンジニア・DX推進の経験をもとに、中小企業のIT・データ活用を支援しています。" />
       <link rel="canonical" href="https://www.arcle.net/company/message" />
     </Helmet>
 
-    <PageHeader en="Message" title="代表あいさつ" crumbs={[{ label: '会社案内', href: '/company' }, { label: '代表あいさつ' }]} />
+    <PageHeader en="Message" title="代表あいさつ" crumbs={[{ label: '事業者概要', href: '/company' }, { label: '代表あいさつ' }]} />
 
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[360px_1fr] gap-12 lg:gap-16 items-start">
@@ -115,7 +115,7 @@ const MessageNext: React.FC = () => (
           </div>
 
           <a href="/company" className="mt-10 inline-flex items-center gap-2 font-bold text-svc-josys hover:underline">
-            会社案内に戻る
+            事業者概要に戻る
             <ArrowRight className="w-4 h-4" />
           </a>
         </div>

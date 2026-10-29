@@ -6,7 +6,7 @@ const groups = [
   {
     title: 'Arcleについて',
     links: [
-      { label: '会社案内', href: '/company' },
+      { label: '事業者概要', href: '/company' },
       { label: '代表あいさつ', href: '/company/message' },
       { label: '支援モデルケース', href: '/works' },
       { label: 'お役立ち記事', href: '/articles' }
