@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import { gaMeasurementId } from './ga';
 
 declare global {
   interface Window {
@@ -11,7 +12,7 @@ declare global {
 }
 
 const initGoogleAnalytics = () => {
-  const measurementId = (import.meta as any).env?.VITE_GA_MEASUREMENT_ID as string | undefined;
+  const measurementId = gaMeasurementId;
   if (!measurementId || typeof window === 'undefined') {
     return;
   }

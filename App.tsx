@@ -33,6 +33,7 @@ import PopMotion from './components/next/PopMotion';
 import NextFooter from './components/next/NextFooter';
 import ItCheck from './components/next/check/ItCheck';
 import CheckBanner from './components/next/check/CheckBanner';
+import { gaMeasurementId } from './ga';
 
 declare global {
   interface Window {
@@ -52,7 +53,7 @@ const ScrollToTop: React.FC = () => {
 // --- SPA pageview tracking (GA4) ---
 const TrackPageView: React.FC = () => {
   const location = useLocation();
-  const measurementId = (import.meta as any).env?.VITE_GA_MEASUREMENT_ID as string | undefined;
+  const measurementId = gaMeasurementId;
 
   useEffect(() => {
     if (!measurementId || typeof window === 'undefined' || typeof window.gtag !== 'function') {

@@ -63,7 +63,7 @@ const PrivacyNext: React.FC = () => (
         </ul>
 
         <h2 className={heading}>6. アクセス状況の把握とCookie</h2>
-        <p className={paragraph}>当サイトでは、利用状況を把握し改善に役立てるため、Google アナリティクスなどのアクセス解析ツールを利用する場合があります。これらのツールはCookieを使い、個人を特定しない形でアクセスの情報を集めます。また、地図の表示にGoogle マップを、フォームの表示にGoogle フォームを埋め込んでおり、Googleが独自にCookieなどを利用することがあります。</p>
+        <p className={paragraph}>当サイトでは、利用状況を把握し改善に役立てるため、Googleが提供するアクセス解析ツール「Google アナリティクス」を利用しています。Google アナリティクスはCookieを使い、個人を特定しない形でアクセスの情報を集めます。また、地図の表示にGoogle マップを、フォームの表示にGoogle フォームを埋め込んでおり、Googleが独自にCookieなどを利用することがあります。</p>
         <p className={paragraph}>Cookieは、お使いのブラウザの設定で無効にできます。Googleによるデータの取扱いは、<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener noreferrer" className="text-sumi underline underline-offset-4">Googleのポリシー</a>をご確認ください。</p>
 
         <h2 className={heading}>7. 開示などのご請求</h2>
