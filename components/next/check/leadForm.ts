@@ -1,8 +1,8 @@
-// 診断結果の解禁フォームの送り先（Googleスプレッドシート＋Apps Script のウェブアプリ）
-// 送られた内容をシートに記録するだけ。資料PDFのメールはArcleが手作業で送る。スクリプトと設定手順は docs/it-check-gas.md
+// 診断結果の解禁フォームと、お問い合わせフォームの送り先（Googleスプレッドシート＋Apps Script のウェブアプリ）
+// 送られた内容をシートに記録する。資料PDFのメールはArcleが手作業で送る。スクリプトと設定手順は docs/it-check-gas.md
 // endpoint が空のあいだは送信せず、画面で資料PDFをそのままダウンロードしてもらう
 export const leadForm = {
-  endpoint: 'https://script.google.com/macros/s/AKfycbzNCZqoruaYPcvaPhvRPo7zu3TAugp9R71tRll0M1IEigWQcqifADeqFOWHMmJFDbfHZA/exec'
+  endpoint: 'https://script.google.com/macros/s/AKfycbzllpLYVb3-jGw-EKIK386zkHI0lvD5fDYy1rb1Vq-IjaxTCnn4hCO2GYCgtaI8-RKciQ/exec'
 };
 
 // 資料PDF（はじめてのDX読本）。scripts/dx-guide/build.mjs で作る
@@ -16,14 +16,24 @@ export const isDummyEmail = (email: string) => /^(test|sample|dummy|example|a+|x
 
 export type Lead = { company: string; name: string; email: string; phone: string };
 
-export const sendLead = async (lead: Lead, result: string) => {
+// 電話番号は全角を半角にそろえ、先頭に ' を付けてシートで数値にならないようにする（0 が消えるのを防ぐ）
+const phoneCell = (phone: string) => `'${phone.replace(/[０-９－]/g, (c) => (c === '－' ? '-' : String.fromCharCode(c.charCodeAt(0) - 0xfee0)))}`;
+
+// form でシートを分ける（it_check：1枚目のシート、contact：「お問い合わせ」シート）
+const post = async (form: 'it_check' | 'contact', data: Record<string, string>) => {
   if (!leadForm.endpoint) return;
   // Apps Script は別オリジンで応答を読めない（no-cors）。text/plain にして事前確認（preflight）を起こさない
   await fetch(leadForm.endpoint, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    // 電話番号は全角を半角にそろえ、先頭に ' を付けてシートで数値にならないようにする（0 が消えるのを防ぐ）
-    body: JSON.stringify({ ...lead, phone: `'${lead.phone.replace(/[０-９－]/g, (c) => (c === '－' ? '-' : String.fromCharCode(c.charCodeAt(0) - 0xfee0)))}`, result, page: location.href })
+    body: JSON.stringify({ form, ...data, page: location.href })
   });
 };
+
+export const sendLead = (lead: Lead, result: string) => post('it_check', { ...lead, phone: phoneCell(lead.phone), result });
+
+// お問い合わせページ（/contact）のフォーム
+export type Inquiry = Lead & { topic: string; message: string };
+
+export const sendInquiry = (inquiry: Inquiry) => post('contact', { ...inquiry, phone: phoneCell(inquiry.phone) });

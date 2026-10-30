@@ -35,7 +35,7 @@ type Worry = {
 type Layer = { img: string; depth: 'back' | 'mid' | 'front'; motion: 'bg' | 'pop' | 'rise' | 'fly' | 'smoke' | 'glow' | 'recoil' | 'sigh' | 'hero' | 'spark' | 'wobble'; alt?: string };
 // box は絵の箱の置き方（コマより絵が大きいときに、どこを見せるか）。既定は正方形の絵を上に合わせる
 const LayerScene: React.FC<{ layers: Layer[]; className?: string; box?: string }> = ({ layers, className = '', box = 'inset-x-0 top-0 aspect-square' }) => (
-  <span className={`layer-scene pop-reveal absolute ${box} block transition-transform duration-300 ${className}`}>
+  <span className={`layer-scene pop-reveal pop-late absolute ${box} block transition-transform duration-300 ${className}`}>
     {layers.map((l) => (
       <span key={l.img} className={`layer-${l.depth}`}>
         <img src={`/images/illust-comic/layers/${l.img}.webp`} alt={l.alt ?? ''} className={`layer-${l.motion}`} loading="lazy" />
@@ -134,7 +134,7 @@ const worryContent = (w: Worry, right: boolean, n: number) => {
       ) : (
         <img src={comic(w.img)} alt="" className={`absolute inset-0 w-full h-full object-cover transition-transform duration-300 ${w.imgPos ?? 'group-hover:scale-105'}`} loading="lazy" />
       )}
-      <span className="pop-reveal absolute inset-0 block">
+      <span className="pop-reveal pop-late absolute inset-0 block">
         <Bubble talk className={`${w.talk.at} max-w-[78%] md:max-w-[86%] text-[15px] md:text-[20px]`} tailAt={w.talk.tail} lean={w.talk.lean} rotate={w.talk.tilt} delay={0.15 + n * 0.15}>
           {w.line}
         </Bubble>
@@ -324,7 +324,7 @@ const HomeComic: React.FC = () => {
             </div>
           ))}
           {/* 解決のコマ。スマホは絵を切らずに見せ、せりふは絵の上に別の吹き出しとして出す */}
-          <p className="md:hidden pop-reveal relative mt-3 mx-1 rounded-[46%] bg-white border-[3px] border-[#111] px-6 py-5 text-center font-manga text-[16px] leading-[1.55] text-[#111] [word-break:auto-phrase]">
+          <p className="md:hidden pop-reveal pop-late relative mt-3 mx-1 rounded-[46%] bg-white border-[3px] border-[#111] px-6 py-5 text-center font-manga text-[16px] leading-[1.55] text-[#111] [word-break:auto-phrase]">
             {pointLine}
             <svg viewBox="0 0 40 30" className="absolute -bottom-[26px] right-[25%] w-10 h-8" aria-hidden="true">
               <path d="M4 0 L18 28 L26 0" fill="#fff" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
@@ -342,7 +342,7 @@ const HomeComic: React.FC = () => {
                   { img: 'wo-crowd', depth: 'front', motion: 'rise' }
                 ]}
               />
-              <span className="pop-reveal absolute inset-0 block">
+              <span className="pop-reveal pop-late absolute inset-0 block">
                 <Bubble talk className="hidden md:block left-[3%] top-[6%] w-[56%] text-[26px]" side rotate={-2} delay={0.2}>
                   {pointLine}
                 </Bubble>

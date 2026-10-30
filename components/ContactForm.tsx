@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, FileText, Handshake, Mail, MapPin, MessagesSquare, User } from 'lucide-react';
-import { Mark, PageHeader, SectionHead, comicBtn, comicIllust } from './next/parts';
+import { Mark, PageHeader, SectionHead, comicBtn, comicBtnShape, comicIllust } from './next/parts';
 import { Burst, Caption, panel, panelPress } from './next/comic';
+import { isDummyEmail, sendInquiry, type Inquiry } from './next/check/leadForm';
 
 // お問い合わせページ（アメコミ版）。フォームのコマ・ご相談の流れのコマ割り・事業者情報のコマで組む
 const steps = [
@@ -11,6 +12,141 @@ const steps = [
   { label: 'ご提案・お見積り', icon: FileText, tone: 'bg-svc-ai' },
   { label: 'ご契約・開始', icon: Handshake, tone: 'bg-svc-web' }
 ];
+
+const topics = ['サービスに関するご相談', '見積もり・料金に関するお問い合わせ', '業務提携・パートナーシップに関するお問い合わせ', 'その他'];
+
+const track = (name: string, params?: Record<string, unknown>) => window.gtag?.('event', name, params);
+
+// お問い合わせの入力欄。送った内容はIT健康診断と同じスプレッドシートの「お問い合わせ」シートに記録する（docs/it-check-gas.md）
+const InquiryForm: React.FC = () => {
+  const [inq, setInq] = useState<Inquiry>({ company: '', name: '', email: '', phone: '', topic: '', message: '' });
+  const [agree, setAgree] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  // ロボットよけ：画面には見えない欄。ここが埋まっていたら送信しない
+  const [trap, setTrap] = useState('');
+  const set = (key: keyof Inquiry) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setInq({ ...inq, [key]: e.target.value });
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isDummyEmail(inq.email)) {
+      setEmailError('ご連絡のとれるメールアドレスを入力してください');
+      return;
+    }
+    setSending(true);
+    setError('');
+    try {
+      if (!trap) await sendInquiry(inq);
+    } catch {
+      // 通信できなかったときは、入力を残したまま知らせる
+      setSending(false);
+      setError('送信できませんでした。通信の状態を確かめて、もう一度お試しください。');
+      return;
+    }
+    track('generate_lead', { form: 'contact' });
+    setSent(true);
+    // フォームのコマの頭（見出し）まで戻して、受け付けた表示を見せる
+    window.scrollTo({ top: (document.getElementById('inquiry')?.parentElement?.getBoundingClientRect().top ?? 0) + window.scrollY - 100, behavior: 'smooth' });
+  };
+
+  if (sent)
+    return (
+      <div className="relative px-5 sm:px-8 md:px-10 py-12 md:py-16 text-center comic-rays [--ray-a:#FAF3E0] [--ray-b:#F6EBD0]">
+        <Burst text="THANK YOU!" wide className="relative! inline-grid! w-[260px] md:w-[320px]" textClass="text-white text-[30px] md:text-[36px]" rotate={-6} />
+        <p className="mt-6 font-manga text-[22px] md:text-[28px] leading-snug [word-break:auto-phrase]">お問い合わせを受け付けました</p>
+        <p className="mt-4 inline-block bg-white border-[3px] border-[#111] px-4 py-3 text-sm md:text-base font-bold leading-[1.9] shadow-[4px_4px_0_#111] [word-break:auto-phrase]">
+          通常2営業日以内に、担当より
+          <br />
+          「{inq.email}」へご連絡します。
+        </p>
+        <p className="mt-6 text-xs text-sumi-muted [word-break:auto-phrase]">数日たっても連絡がない場合は、お手数ですが、もう一度お送りください。</p>
+      </div>
+    );
+
+  const input = 'mt-1.5 w-full bg-white border-[3px] border-[#111] px-4 py-3 text-base font-normal shadow-[3px_3px_0_#111] focus:outline-none focus:bg-[#FFF8E6] focus:shadow-[3px_3px_0_#F07A5A]';
+  const required = <span className="ml-1.5 inline-block bg-coral text-white border-2 border-[#111] px-1.5 text-[11px] font-manga leading-[1.5] align-[1px]">必須</span>;
+
+  return (
+    <form id="inquiry" onSubmit={submit} className="relative px-5 sm:px-8 md:px-10 py-8 md:py-10">
+      <div className="grid gap-5 sm:grid-cols-2">
+        <label className="block text-sm font-bold">
+          会社名{required}
+          <input required value={inq.company} onChange={set('company')} autoComplete="organization" className={input} />
+        </label>
+        <label className="block text-sm font-bold">
+          お名前{required}
+          <input required value={inq.name} onChange={set('name')} autoComplete="name" className={input} />
+        </label>
+        <label className="block text-sm font-bold">
+          メールアドレス{required}
+          <input
+            required
+            type="email"
+            value={inq.email}
+            onChange={(e) => {
+              setEmailError('');
+              set('email')(e);
+            }}
+            autoComplete="email"
+            aria-invalid={!!emailError}
+            className={input}
+          />
+          {emailError && <span className="block mt-1.5 text-xs font-bold text-coral">{emailError}</span>}
+        </label>
+        <label className="block text-sm font-bold">
+          電話番号{required}
+          <input required pattern="[0-9０-９\-－+ ]{10,}" title="電話番号を入力してください（例：0586-00-0000）" type="tel" value={inq.phone} onChange={set('phone')} autoComplete="tel" className={input} />
+        </label>
+        <label aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+          ホームページ
+          <input tabIndex={-1} autoComplete="off" value={trap} onChange={(e) => setTrap(e.target.value)} />
+        </label>
+      </div>
+
+      {/* 種別：選ぶと色が付く札 */}
+      <fieldset className="mt-7">
+        <legend className="text-sm font-bold">
+          お問い合わせの種別{required}
+        </legend>
+        <div className="mt-2.5 grid gap-3 sm:grid-cols-2">
+          {topics.map((t) => (
+            <label
+              key={t}
+              className="flex items-center gap-3 cursor-pointer bg-white border-[3px] border-[#111] px-3.5 py-3 text-sm font-bold leading-snug shadow-[3px_3px_0_#111] transition-colors has-[:checked]:bg-mustard has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-svc-josys"
+            >
+              <input required type="radio" name="topic" value={t} checked={inq.topic === t} onChange={() => setInq({ ...inq, topic: t })} className="shrink-0 w-4 h-4 accent-[#111]" />
+              <span className="[word-break:auto-phrase]">{t}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <label className="block mt-7 text-sm font-bold">
+        お問い合わせの内容{required}
+        <textarea required rows={7} value={inq.message} onChange={set('message')} placeholder="例）社員が10人ほどの会社です。PCやアカウントの管理を任せられるところを探しています。" className={`${input} leading-relaxed resize-y placeholder:text-sumi-muted/70`} />
+      </label>
+
+      <label className="mt-6 flex items-start gap-2.5 text-xs leading-relaxed text-sumi-muted">
+        <input required type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-0.5 w-4 h-4 accent-[#111]" />
+        <span>
+          入力いただいた情報は、お問い合わせへの回答と、Arcleからのご連絡にのみ使います。
+          <a href="/privacy" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-sumi">プライバシーポリシー</a>に同意して送信します。
+        </span>
+      </label>
+      {error && (
+        <p role="alert" className="mt-4 text-sm font-bold text-coral">
+          {error}
+        </p>
+      )}
+      <button type="submit" disabled={sending} className={`mt-7 w-full sm:w-auto ${comicBtnShape} px-10 text-[16px] bg-[#111] text-white shadow-[5px_5px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544] disabled:opacity-60`}>
+        {sending ? '送信しています…' : '送信する'}
+        <ArrowRight className="w-4 h-4" strokeWidth={3} />
+      </button>
+    </form>
+  );
+};
 
 const ContactForm: React.FC = () => (
   <div className="bg-[#FAF3E0] text-sumi overflow-x-clip">
@@ -39,7 +175,7 @@ const ContactForm: React.FC = () => (
 
     <section className="relative py-20 md:py-28 comic-dots">
       <div className="max-w-6xl mx-auto px-4 sm:px-5 grid grid-cols-1 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)] gap-12 lg:gap-8 items-start">
-        {/* フォームのコマ：上に濃紺の帯（見出し）、下にGoogleフォーム */}
+        {/* フォームのコマ：上に濃紺の帯（見出し）、下に入力欄 */}
         <div className={`relative min-w-0 bg-white ${panel}`}>
           <div className="relative overflow-hidden bg-sumi comic-dots-light text-white border-b-[4px] border-[#111] px-5 sm:px-8 md:px-10 pt-10 pb-7">
             <div className="absolute inset-0 comic-speed [--speed:rgb(255_255_255/0.08)]" aria-hidden="true" />
@@ -49,23 +185,7 @@ const ContactForm: React.FC = () => (
               お預かりした個人情報は、<a href="/privacy" className="underline underline-offset-4 text-svc-josys hover:text-sumi">プライバシーポリシー</a>に沿って取り扱います。
             </p>
           </div>
-          {/* Googleフォームの項目・検証・送信・完了表示をそのまま維持する。
-              別オリジンのiframe内には、このページからスタイルを適用できない。 */}
-          <div className="w-full min-h-[1450px] pt-4">
-            <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLSeaVdp87uj7uZLVKslQQZUImb0-tw678Ik49yPTE6p6xTy6ag/viewform?embedded=true"
-              width="100%"
-              height="1450"
-              frameBorder="0"
-              marginHeight={0}
-              marginWidth={0}
-              className="w-full"
-              title="お問い合わせフォーム"
-              style={{ border: 'none' }}
-            >
-              読み込んでいます…
-            </iframe>
-          </div>
+          <InquiryForm />
         </div>
 
         <aside className="min-w-0 space-y-10 lg:sticky lg:top-24" aria-label="ご相談のご案内">

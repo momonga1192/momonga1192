@@ -818,7 +818,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
           <br />
           プレゼント！
         </p>
-        <p className="mt-3 inline-block bg-white border-2 border-[#111] px-2 py-0.5 text-xs font-bold">PDF・13ページ／{deliverByMail ? 'メールでお届けします' : '入力後すぐにダウンロードできます'}</p>
+        <p className="mt-3 inline-block bg-white border-2 border-[#111] px-2 py-0.5 text-xs font-bold">PDF・30ページ／{deliverByMail ? 'メールでお届けします' : '入力後すぐにダウンロードできます'}</p>
         <img src={comicIllust('contact-check-book')} alt="" className="pop-float absolute -right-3 -top-[86px] w-[142px] sm:w-[150px] pointer-events-none" />
       </div>
       <div className="p-5 sm:p-7 md:p-9">
