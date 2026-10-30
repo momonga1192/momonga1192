@@ -18,7 +18,7 @@ import ArticleAIMeetingMinutes from './components/articles/ArticleAIMeetingMinut
 import ArticlePasswordMFA from './components/articles/ArticlePasswordMFA';
 import WorksIndex from './components/works/WorksIndex';
 import WorkDetail from './components/works/WorkDetail';
-import HomePop from './components/next/HomePop';
+import HomeComic from './components/next/HomeComic';
 import ServicesNext from './components/next/pages/ServicesNext';
 import CompanyNext from './components/next/pages/CompanyNext';
 import MessageNext from './components/next/pages/MessageNext';
@@ -84,7 +84,7 @@ export const AppContent: React.FC = () => (
     <NextHeader />
     <main id="main-content">
       <Routes>
-        <Route path="/" element={<HomePop />} />
+        <Route path="/" element={<HomeComic />} />
         <Route path="/services" element={<ServicesNext />} />
         <Route path="/josys" element={<JosysNext />} />
         <Route path="/data-consulting" element={<DataNext />} />

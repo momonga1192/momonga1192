@@ -1,8 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
-import { ContactCta, PageHeader } from '../next/parts';
+import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
+import { ac, promoHeroSrc } from './articleComic';
 
 const title = '月額制と買い切りのホームページ比較｜愛知・東海の会社向け';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -10,8 +11,8 @@ const pageTitle = 'ホームページは月額制と買い切りのどちらが�
 const description = '愛知・東海の中小企業向けに、ホームページの月額制と買い切り制作を比較。初期費用だけでなく総額、更新費、サーバー・ドメイン代、最低契約期間や解約時のデータの扱いまで、会社に合う選び方と契約前の確認事項を解説します。';
 const canonical = 'https://www.arcle.net/articles/monthly-vs-one-time-website';
 const date = '2026-10-27';
-const heading = 'font-head text-2xl md:text-[28px] font-bold text-svc-web [word-break:auto-phrase] mt-12 mb-4';
-const paragraph = 'text-sumi-muted leading-[2] mb-4';
+const heading = ac.h2.web;
+const paragraph = ac.p;
 const faqs = [
   {
     q: 'ホームページは月額制と買い切りのどちらが安いですか？',
@@ -42,7 +43,7 @@ const comparisons = [
 const ArticleWebMonthlyVsOneTime: React.FC = () => {
   const service = services.find((item) => item.key === 'web')!;
   return (
-    <div className="bg-cream text-sumi">
+    <div className={ac.page}>
       <Helmet>
         <title>{title} | Arcle</title>
         <meta name="description" content={description} />
@@ -67,35 +68,35 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
           }))
         })}</script>
       </Helmet>
-      <PageHeader en="Articles" title={pageTitle} service="web"
+      <PageHeader en="Articles" title={pageTitle} service="web" compact image={comicIllust('svc-web')} imageMode="panel"
         crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: pageTitle }]} />
-      <article className="bg-white rounded-t-[48px] md:rounded-t-[80px] py-20 md:py-28">
-        <div className="max-w-3xl mx-auto px-5 text-[16px] leading-[2]">
+      <article className={ac.article}>
+        <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
-            <span className={`rounded-full px-4 py-1 text-sm font-bold ${service.tint} ${service.text}`}>Web制作</span>
-            <time dateTime={date} className="font-en text-sm text-sumi-muted">{date}</time>
+            <span className={ac.tag.web}>Web制作</span>
+            <time dateTime={date} className={ac.date}>{date}</time>
           </div>
-          <p className="text-sumi-muted leading-[2] mb-8">
+          <p className="text-[#30343F] leading-[2] mb-8">
             ホームページの月額制と買い切りを比較するとき、「初期費用が少ないほうが安心」「一度払えば安く済む」と迷うことはありませんか。大切なのは、公開してから誰が更新し、何年使い、いくら支払うかです。IT担当者のいない中小企業が選ぶ場合も、制作と運営を一緒に考えると判断しやすくなります。この記事では、費用の整理方法から契約前の確認事項まで順に解説します。
           </p>
 
           <h2 className={heading}>1．ホームページの月額制と買い切りを比較</h2>
           <p className={paragraph}>月額制は、毎月の料金で制作や運営を利用する方式です。買い切りは、制作費を支払ってホームページの納品を受ける方式を指します。ただし、名称だけではサービスの中身は決まりません。月額制でも更新が別料金の場合があり、買い切りでも保守契約を別途結ぶ場合があります。保守とは、公開後の点検や不具合への対応など、サイトを維持するための作業です。</p>
           <p className={paragraph}>まずは次の表を使い、見積書の同じ欄に条件を書き込んでください。「含まれる」とだけ書かれている項目は、どの作業までかを質問します。表は比較の観点であり、すべての制作会社に共通する条件ではありません。</p>
-          <div className="overflow-x-auto rounded-[28px] border border-warm-line" role="region" aria-label="月額制と買い切りの比較表（横にスクロールできます）" tabIndex={0}>
-            <table className="w-full min-w-[640px] text-sm border-collapse text-sumi-muted">
-              <caption className="p-4 text-left font-bold text-sumi">見積もりでそろえる比較項目</caption>
-              <thead className={service.tint}><tr>{['比較項目', '月額制', '買い切り制作'].map((label) => <th key={label} scope="col" className="p-4 text-left text-sumi">{label}</th>)}</tr></thead>
+          <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="月額制と買い切りの比較表（横にスクロールできます）" tabIndex={0}>
+            <table className="w-full min-w-[640px] text-sm border-collapse text-[#30343F]">
+              <caption className={ac.caption}>見積もりでそろえる比較項目</caption>
+              <thead className={ac.thead}><tr>{['比較項目', '月額制', '買い切り制作'].map((label) => <th key={label} scope="col" className="p-4 text-left text-sumi">{label}</th>)}</tr></thead>
               <tbody>{comparisons.map(([label, monthly, oneTime]) => <tr key={label}>
-                <th scope="row" className="p-4 border-t border-warm-line text-left text-sumi">{label}</th>
-                <td className="p-4 border-t border-warm-line">{monthly}</td><td className="p-4 border-t border-warm-line">{oneTime}</td>
+                <th scope="row" className="p-4 border-t-2 border-[#111]/20 text-left text-sumi">{label}</th>
+                <td className="p-4 border-t-2 border-[#111]/20">{monthly}</td><td className="p-4 border-t-2 border-[#111]/20">{oneTime}</td>
               </tr>)}</tbody>
             </table>
           </div>
 
           <h2 className={heading}>2．初期費用より利用期間全体の総額を見る</h2>
           <p className={paragraph}>比較する期間は、社内で使う予定に合わせて統一します。例えば「まずは3年間運営する」と置き、両方の見積もりを同じ期間で合計します。片方は制作費だけ、もう片方は更新込みの月額では、公平に比べられません。消費税の扱いもそろえ、初年度だけ無料の項目があれば翌年度以降も確認しましょう。</p>
-          <ul className="list-disc pl-6 text-sumi-muted leading-[2] space-y-2 mb-4">
+          <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2 mb-4">
             <li>月額制の総額：初期費用＋月額費用×利用月数＋範囲外の作業費＋終了時に必要な費用</li>
             <li>買い切りの総額：制作費＋期間中のサーバー・ドメイン代＋保守費＋更新依頼費＋移行費など</li>
           </ul>
@@ -103,14 +104,16 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
           <p className={paragraph}>更新費は「年に何回、何を変えるか」を仮に決めると比較できます。営業日のお知らせ、採用情報の修正、施工写真の差し替えなど、自社で起きる作業を列挙しましょう。総務担当が作業する場合も、原稿確認や操作に使う時間は必要です。支払額だけでなく、担当者が無理なく続けられるかも評価します。</p>
 
           <h2 className={heading}>3．月額制ホームページ制作のメリット・デメリット</h2>
-          <h3 className="font-head font-bold text-sumi text-xl mb-3 [word-break:auto-phrase]">初期負担と日々の運営をまとめて考えられる</h3>
+          <h3 className={ac.h3}>初期負担と日々の運営をまとめて考えられる</h3>
           <p className={paragraph}>初期費用を抑えられるプランなら、開業時や設備投資の時期に支出を分散できます。更新やサーバー管理も含む契約であれば、社内では変更内容をまとめて依頼する流れを作れます。担当者が交代しても窓口が決まっていることは、運営を続けるうえでの利点です。ただし、対応内容や受付方法は事前に確認してください。</p>
-          <h3 className="font-head font-bold text-sumi text-xl mb-3 [word-break:auto-phrase]">支払いの継続と契約上の制約を確認する</h3>
+          <h3 className={ac.h3}>支払いの継続と契約上の制約を確認する</h3>
           <p className={paragraph}>月額制のデメリットは、利用中の支払いが続くことです。更新をほとんど依頼しなくても月額が発生する契約なら、その前提で予算を確保します。また、最低契約期間がある場合、短期間で閉鎖すると想定外の負担が生じることがあります。「月額だからいつでも費用なしでやめられる」と考えないことが大切です。</p>
           <p className={paragraph}>もう一つの注意点は、自由に変更できる範囲です。選べるデザインや機能、ページ数に制限があるか、追加にいくらかかるかを確認します。予約受付や会員機能を後から付けたい場合は、最初に予定を伝えましょう。更新込みでも、全面的な作り直しまで含むとは限りません。</p>
 
-          <div className={`mt-10 p-6 md:p-8 rounded-[28px] border ${service.border} ${service.tint}`}>
-            <p className="font-head text-sumi font-bold mb-2">Arcleの月額制を比較に入れるなら</p>
+          <div className={ac.promo}>
+            <img src={promoHeroSrc} alt="" className={ac.promoHero} loading="lazy" />
+            <span aria-hidden="true" className={ac.promoLabel}>ARCLE TIP!</span>
+            <p className={ac.promoTitle}>Arcleの月額制を比較に入れるなら</p>
             <p className={paragraph}>Arcleは初期費用0円で、ライトは月額4,800円、スタンダードは7,500円、オーダーメイドは9,800円です（いずれも税抜）。サーバー・ドメイン・独自ドメインのメールや軽微な修正などを含みます。最低契約期間は1年で、1〜5年から選べます。契約期間と必要な内容をそろえて見積もりをご確認ください。</p>
             <a href={service.href} className="inline-flex items-center gap-2 font-bold text-svc-web hover:underline underline-offset-4">月額制ホームページの料金・範囲を見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
@@ -122,7 +125,7 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
 
           <h2 className={heading}>5．どちらが向く会社かを判断する手順</h2>
           <p className={paragraph}>方式を選ぶ前に、ホームページの目的を一つか二つに絞ります。「取引先に会社概要を確認してもらう」「採用応募につなげる」など、見る人に取ってほしい行動を決めましょう。必要なページと更新頻度が具体的になり、不要な機能を減らせます。</p>
-          <ol className="list-decimal pl-6 text-sumi-muted leading-[2] space-y-2 mb-4">
+          <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-2 mb-4">
             <li>目的と必須ページを整理し、今すぐ必要な機能と将来の希望を分けます。</li>
             <li>社内で原稿を用意する人と、公開・修正を操作する人を決めます。</li>
             <li>予定する利用期間で、通常運営と途中終了の両方の費用を確認します。</li>
@@ -132,7 +135,7 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
 
           <h2 className={heading}>6．契約前に確認する期間・データ・更新範囲</h2>
           <p className={paragraph}>最後は、営業説明と見積書、契約書の内容が一致しているかを確認します。口頭で「全部込み」と聞くだけでは判断できません。次の項目を質問し、回答を残しておくと、担当者の交代や将来の移行にも備えられます。</p>
-          <ul className="list-disc pl-6 text-sumi-muted leading-[2] space-y-2 mb-4">
+          <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2 mb-4">
             <li>最低契約期間、更新の方法、解約を申し出る期限はいつか。</li>
             <li>途中解約では何の費用が残り、どのように金額を計算するか。</li>
             <li>終了後に渡されるデータと、渡されないものは何か。</li>
@@ -147,23 +150,23 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
 
           <section className="mt-14">
             <h2 className={heading}>よくある質問</h2>
-            <div className="space-y-5 text-sumi-muted leading-[2] [&>div]:rounded-[28px] [&>div]:bg-cream [&>div]:p-6 [&_h3]:mb-2">
-              {faqs.map((item) => <div key={item.q}><h3 className="font-head font-bold text-sumi [word-break:auto-phrase]">{item.q}</h3><p>{item.a}</p></div>)}
+            <div className={ac.faq}>
+              {faqs.map((item) => <div key={item.q}><h3 className={ac.faqQ}>{item.q}</h3><p>{item.a}</p></div>)}
             </div>
           </section>
-          <section className="mt-14 border-t border-warm-line pt-10">
-            <h2 className="font-head text-2xl md:text-[28px] font-bold text-svc-web [word-break:auto-phrase] mb-4">関連記事</h2>
+          <section className={ac.related}>
+            <h2 className={ac.h2Flat.web}>関連記事</h2>
             <div className="space-y-3">
-              <a href="/articles/website-company-guide-aichi-tokai" className="block text-svc-web hover:underline underline-offset-4 py-1">中小企業向け ホームページ制作会社の選び方</a>
-              <a href="/samples" target="_blank" rel="noopener" className="block text-svc-web hover:underline underline-offset-4 py-1">業種別のホームページ作例を見る</a>
-              <a href="/articles" className="block text-sumi-muted hover:text-sumi underline">記事一覧を見る</a>
+              <a href="/articles/website-company-guide-aichi-tokai" className={ac.relatedLink}>中小企業向け ホームページ制作会社の選び方</a>
+              <a href="/samples" target="_blank" rel="noopener" className={ac.relatedLink}>業種別のホームページ作例を見る</a>
+              <a href="/articles" className={ac.allLink}>記事一覧を見る</a>
             </div>
           </section>
-          <section className={`mt-14 rounded-[28px] p-6 md:p-8 ${service.tint}`}>
-            <h2 className="font-head text-2xl font-bold [word-break:auto-phrase]">関連サービス</h2>
-            <a href={service.href} className="mt-5 inline-flex items-center gap-2 rounded-full bg-sumi text-white px-6 py-3 font-bold hover:opacity-90">{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
+          <section className={ac.svcBox.web}>
+            <h2 className={ac.svcTitle}>関連サービス</h2>
+            <a href={service.href} className={ac.svcBtn}>{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </section>
-          <p className="mt-12 text-sm text-sumi-muted">この記事を書いた人：<a href="/company/message" className="text-svc-web hover:underline underline-offset-4">栗原 勇太（Arcle代表）</a></p>
+          <p className={ac.author}>この記事を書いた人：<a href="/company/message" className="text-svc-web hover:underline underline-offset-4">栗原 勇太（Arcle代表）</a></p>
         </div>
       </article>
       <ContactCta />

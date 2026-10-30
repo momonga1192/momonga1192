@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Building2, MapPin, Users } from 'lucide-react';
 import { publishedWorks, type WorkService } from './worksData';
-import { serviceStyles } from './serviceStyles';
-import { ContactCta, PageHeader, Ticker, card, press } from '../next/parts';
+import { caseArt, metricAfter, serviceStyles } from './serviceStyles';
+import { ContactCta, PageHeader, Ticker, comicIllust } from '../next/parts';
+import { Caption, panel, panelPress } from '../next/comic';
 import { services } from '../next/theme';
 
 const filters: ('すべて' | WorkService)[] = ['すべて', '情シス代行', 'データ活用', '生成AI', 'Web制作'];
 
+// 支援モデルケースの一覧（アメコミ版）。1件ずつ「事件ファイル」の表紙のようなコマにする
 const WorksIndex: React.FC = () => {
   const [filter, setFilter] = useState<(typeof filters)[number]>('すべて');
   const visibleFilters = filters.filter((f) => f === 'すべて' || publishedWorks.some((w) => w.service === f));
   const works = filter === 'すべて' ? publishedWorks : publishedWorks.filter((w) => w.service === filter);
 
   return (
-    <div className="bg-cream text-sumi min-h-screen overflow-x-clip">
+    <div className="bg-[#FAF3E0] text-sumi min-h-screen overflow-x-clip">
       <Helmet>
         <title>支援モデルケース | 中小企業のIT・データ・AI・Web活用 - Arcle</title>
         <meta
@@ -25,22 +27,29 @@ const WorksIndex: React.FC = () => {
       </Helmet>
 
       <PageHeader
-        en="Works"
+        en="Case Files"
         title="支援モデルケース"
         crumbs={[{ label: '支援モデルケース' }]}
-        lead={<>よくあるご相談をもとに、Arcleならどのように支援するかをまとめました。<br className="hidden md:block" />課題の背景から支援の流れ、想定される効果までをご紹介します。</>}
+        image={comicIllust('works-articles-works-header')}
+        imageMode="panel"
+        lead={<span className="block lg:max-w-[30rem]">よくあるご相談をもとに、Arcleならどのように支援するかをまとめました。<br className="hidden md:block" />課題の背景から支援の流れ、想定される効果までをご紹介します。</span>}
       />
-      <div className="max-w-6xl mx-auto px-5 pt-12">
-        <p className="max-w-3xl -rotate-[0.5deg] rounded-[24px] border-2 border-sumi bg-mustard/25 px-6 py-5 text-sm text-sumi leading-[1.9] shadow-[4px_4px_0_#1F2430]">
-          掲載しているのは、よくあるご相談をもとに作成した架空のモデルケースです。企業名・数値は説明のためのもので、実在の企業や実績ではありません。効果はお客様の状況により異なります。
-        </p>
-      </div>
 
-      {/* Filter */}
-      {visibleFilters.length > 2 && (
-        <section className="mt-12 border-y-[2.5px] border-sumi bg-white">
-          <div className="max-w-6xl mx-auto px-5">
-            <div className="flex gap-3 py-4 overflow-x-auto" role="tablist" aria-label="サービスで絞り込む">
+      <section className="comic-dots pt-14 md:pt-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-5">
+          {/* 注意書き：黄色のナレーションの箱 */}
+          <div className="pop-reveal relative max-w-3xl -rotate-[0.5deg] bg-mustard border-[3px] border-[#111] shadow-[5px_5px_0_#111] px-5 pt-7 pb-4 md:px-6">
+            <Caption tone="bg-white text-[#111]" className="absolute -top-4 left-4 -rotate-2 font-comic tracking-[0.08em] text-[17px] md:text-[18px] leading-none pt-1.5">
+              NOTE
+            </Caption>
+            <p className="text-sm font-bold text-[#111] leading-[1.9]">
+              掲載しているのは、よくあるご相談をもとに作成した架空のモデルケースです。企業名・数値は説明のためのもので、実在の企業や実績ではありません。効果はお客様の状況により異なります。
+            </p>
+          </div>
+
+          {/* 絞り込み：太線の四角い札 */}
+          {visibleFilters.length > 2 && (
+            <div className="mt-12 flex flex-wrap gap-3" role="tablist" aria-label="サービスで絞り込む">
               {visibleFilters.map((f) => {
                 const count = f === 'すべて' ? publishedWorks.length : publishedWorks.filter((w) => w.service === f).length;
                 const active = filter === f;
@@ -51,29 +60,29 @@ const WorksIndex: React.FC = () => {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setFilter(f)}
-                    className={`shrink-0 px-4 py-2 rounded-full text-sm font-bold border-2 border-sumi transition-all ${
+                    className={`shrink-0 inline-flex items-center border-[3px] border-[#111] px-4 py-2 font-manga text-[14px] transition-all ${
                       active
-                        ? `${f === 'すべて' ? 'bg-sumi' : serviceStyles[f].accent} text-white shadow-[3px_3px_0_#F2B544]`
-                        : 'bg-cream text-sumi hover:bg-white shadow-[3px_3px_0_#1F2430] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_#1F2430]'
+                        ? `${f === 'すべて' ? 'bg-[#111]' : serviceStyles[f].accent} text-white -rotate-2 shadow-[4px_4px_0_#F2B544]`
+                        : 'bg-white text-[#111] shadow-[4px_4px_0_#111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#111] hover:bg-mustard/30'
                     }`}
                   >
                     {f}
-                    <span className={`ml-2 text-xs font-en font-black ${active ? 'text-white/80' : 'text-sumi-muted'}`}>{count}</span>
+                    <span className={`ml-2 font-comic text-[19px] leading-none tracking-[0.04em] ${active ? 'text-mustard' : 'text-sumi-muted'}`}>{count}</span>
                   </button>
                 );
               })}
             </div>
-          </div>
-        </section>
-      )}
+          )}
+        </div>
+      </section>
 
-      {/* Cards */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-6xl mx-auto px-5">
+      {/* 事件ファイルのコマ */}
+      <section className="comic-dots pt-12 pb-20 md:pt-14 md:pb-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-5">
           {works.length === 0 ? (
             <p className="text-sumi-muted py-16 text-center">モデルケースは準備中です。</p>
           ) : (
-            <div className="grid md:grid-cols-2 gap-10">
+            <div className="grid md:grid-cols-2 gap-10 md:gap-x-10 md:gap-y-14">
               {works.map((work, i) => {
                 const style = serviceStyles[work.service];
                 const Icon = style.icon;
@@ -82,26 +91,47 @@ const WorksIndex: React.FC = () => {
                   <a
                     key={work.slug}
                     href={`/works/${work.slug}`}
-                    className={`group pop-reveal flex flex-col rounded-[28px] overflow-hidden bg-white ${card} ${press}`}
+                    className={`group pop-reveal relative flex flex-col bg-white ${panel} ${panelPress} ${i % 2 ? 'md:rotate-[0.6deg]' : 'md:-rotate-[0.6deg]'}`}
                     style={{ animationDelay: `${(i % 2) * 100}ms` }}
                   >
-                    <div className={`relative px-8 pt-8 pb-6 border-b-[2.5px] border-sumi ${style.panel}`}>
-                      <span className={`pop-wiggle inline-flex items-center gap-1.5 -rotate-3 text-xs font-bold px-3 py-1 rounded-lg text-white border-2 border-sumi ${style.accent}`}>
-                        <Icon className="w-3.5 h-3.5" />
-                        {work.service}
+                    {/* 表紙の絵と号数ラベル */}
+                    <div className="relative aspect-[16/9] md:aspect-[16/8] border-b-[4px] border-[#111] overflow-hidden bg-[#111]">
+                      <img
+                        src={comicIllust(caseArt(style.service, i))}
+                        alt=""
+                        className="absolute inset-0 w-full h-full object-cover object-[50%_30%] transition-transform duration-300 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <span className={`absolute left-3 top-3 -rotate-3 flex flex-col items-center border-[3px] border-[#111] px-3 pt-1 pb-0.5 font-comic leading-none text-white shadow-[3px_3px_0_#111] ${style.accent}`}>
+                        <span className="text-[11px] tracking-[0.2em]">CASE</span>
+                        <span className="text-[28px] [text-shadow:2px_2px_0_#111]">No.{String(i + 1).padStart(2, '0')}</span>
                       </span>
-                      <span className="ml-2 text-xs text-sumi-muted">モデルケース</span>
-                      <p className="mt-6 text-sm font-bold text-sumi">{metric.label}<span className="font-normal text-sumi-muted">（想定）</span></p>
-                      <p className="mt-2 flex items-center gap-3 flex-wrap">
-                        <span className="text-base text-sumi-muted line-through decoration-2 decoration-sumi/40">{metric.before}</span>
-                        <ArrowRight className="w-5 h-5 text-sumi" strokeWidth={3} />
-                        <span className={`pop-wiggle inline-block font-en text-[40px] md:text-5xl leading-none font-black italic ${style.text}`}>{metric.after}</span>
-                      </p>
+                      <span className={`absolute right-3 top-3 rotate-2 inline-flex items-center gap-1.5 border-[3px] border-[#111] bg-white px-2.5 py-1 font-manga text-xs text-[#111] shadow-[3px_3px_0_#111]`}>
+                        <Icon className={`w-3.5 h-3.5 ${style.text}`} strokeWidth={2.5} />
+                        {work.service}
+                        <span className="font-sans font-bold text-sumi-muted">モデルケース</span>
+                      </span>
                     </div>
-                    <div className="flex flex-col flex-1 px-8 py-6">
-                      <h2 className="font-head [word-break:auto-phrase] text-xl md:text-2xl font-black text-sumi leading-snug mb-3">{work.title}</h2>
-                      <p className="text-sm text-sumi-muted leading-relaxed mb-6 line-clamp-3">{work.summary}</p>
-                      <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-sumi-muted border-t-2 border-dashed border-warm-line pt-4">
+
+                    {/* 効果の札：絵の下の辺にまたがせる */}
+                    <div className="relative -mt-9 px-4 sm:px-6">
+                      <div className={`inline-block max-w-full bg-white border-[3px] border-[#111] px-4 py-3 shadow-[5px_5px_0_#111] ${i % 2 ? 'rotate-1' : '-rotate-1'}`}>
+                        <p className="text-xs font-bold text-[#111]">
+                          {metric.label}
+                          <span className="font-normal text-sumi-muted">（想定）</span>
+                        </p>
+                        <p className="mt-1.5 flex items-center gap-x-2.5 gap-y-1 flex-wrap">
+                          <span className="text-sm font-bold text-sumi-muted line-through decoration-2 decoration-[#111]/40">{metric.before}</span>
+                          <ArrowRight className="w-5 h-5 text-[#111] shrink-0" strokeWidth={3} />
+                          <span className={metricAfter(style.text, 'text-[28px] md:text-[34px]')}>{metric.after}</span>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col flex-1 px-5 sm:px-7 pt-5 pb-6">
+                      <h2 className="font-manga [word-break:auto-phrase] text-[20px] md:text-[23px] text-[#111] leading-[1.45] mb-3">{work.title}</h2>
+                      <p className="text-sm text-[#30343F] leading-[1.9] mb-6 line-clamp-3">{work.summary}</p>
+                      <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold text-sumi-muted border-t-[3px] border-dashed border-[#111]/25 pt-4">
                         <span className="inline-flex items-center gap-1">
                           <Building2 className="w-3.5 h-3.5" />
                           {work.client}
@@ -114,9 +144,9 @@ const WorksIndex: React.FC = () => {
                           <MapPin className="w-3.5 h-3.5" />
                           {work.region}
                         </span>
-                        <span className="ml-auto inline-flex items-center font-bold text-sumi">
+                        <span className={`ml-auto inline-flex items-center gap-1 border-[3px] border-[#111] px-3 py-1 font-manga text-[13px] text-white shadow-[3px_3px_0_#111] ${style.accent}`}>
                           詳しく見る
-                          <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                          <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" strokeWidth={3} />
                         </span>
                       </div>
                     </div>

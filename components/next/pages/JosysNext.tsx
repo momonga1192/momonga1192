@@ -1,8 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Check, Cpu, Globe, Shield, Users, Zap } from 'lucide-react';
-import { ContactCta, IconTile, Mark, PageHeader, PlanCard, SectionHead, Sparkle, Ticker, card, press } from '../parts';
-import { illust, services } from '../theme';
+import { ContactCta, IconTile, Mark, PageHeader, PlanCard, SectionHead, Ticker, comicBtn, comicBtnShape, comicIllust } from '../parts';
+import { Caption, SfxText, panel } from '../comic';
+import { services } from '../theme';
 
 const service = services.find((s) => s.key === 'josys')!;
 const concerns = [
@@ -85,8 +86,25 @@ const plans = [
               }
             ];
 
+// アメコミ版の飾り（絵・効果音・コマの番号）。文言は上のデータのまま使う
+// お悩みは1枚の大きなコマ（josys-concerns）に3人を描いてある。スマホは1人ずつ切り出して各カードの上に出す（pos は背景の位置）
+const concernArt = [
+  { sfx: 'HUH?', color: '#F07A5A', at: 'left-[22%] top-[6%]', spAt: 'right-[6%] top-[5%]', tilt: -10, size: '280%', pos: '0% 0%' },
+  { sfx: 'PANIC!', color: '#F2B544', at: 'left-[38%] top-[3%]', spAt: 'right-[5%] top-[5%]', tilt: 6, size: '300%', pos: '50% 0%' },
+  { sfx: 'EEK!', color: '#C9A6FF', at: 'left-[60%] top-[8%]', spAt: 'left-[34%] top-[5%]', tilt: 10, size: '250%', pos: '100% 0%' }
+];
+const offeringArt = [
+  { img: 'josys-svc-helpdesk', sfx: 'CLICK!', at: 'right-[5%] bottom-[8%]', tilt: 8 },
+  { img: 'josys-svc-dx', sfx: 'ZING!', at: 'left-[5%] bottom-[8%]', tilt: -8 },
+  { img: 'josys-svc-security', sfx: 'BLAM!', at: 'left-[40%] top-[5%]', tilt: 10 },
+  { img: 'josys-svc-cloud', sfx: 'WHOOSH!', at: 'right-[4%] top-[46%]', tilt: -6, pos: 'object-[50%_20%]' }
+];
+
+// 見出しの2行目：青い札を2枚、互い違いに傾けて貼る
+const titleTag = 'inline-block px-2 my-1 bg-svc-josys text-white border-[3px] border-[#111] shadow-[5px_5px_0_#111] [-webkit-text-stroke:0] [text-shadow:none]';
+
 const JosysNext: React.FC = () => (
-  <div className="bg-cream text-sumi overflow-x-clip">
+  <div className="bg-[#FAF3E0] text-sumi overflow-x-clip">
       <Helmet>
         <title>情シス代行サービス | 愛知・東海の中小企業のIT担当を代行 - Arcle</title>
         <meta name="description" content="愛知・東海の中小企業向けの情シス代行サービス。IT専任担当者がいない会社に代わって、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額3万円〜で包括サポート。" />
@@ -115,88 +133,145 @@ const JosysNext: React.FC = () => (
       </Helmet>
     <PageHeader
       en="Information Systems Outsourcing"
-      title={<>情シス代行<span className={`block mt-4 ${service.text}`}>ITの専門家を、<br />必要な時だけ。</span></>}
+      title={
+        <>
+          情シス代行
+          <span className="block mt-3 text-[0.8em] leading-[1.5]">
+            <span className={`${titleTag} -rotate-2`}>ITの専門家を、</span>
+            <br />
+            <span className={`${titleTag} rotate-1 ml-3 sm:ml-6`}>必要な時だけ。</span>
+          </span>
+        </>
+      }
       lead={
         <>
           <p>あなたの会社の「見えない情シス部門」として。<br />技術と信頼で、ビジネスの成長を足元から支えます。</p>
-          <div className="mt-8 flex flex-wrap gap-4 text-sm">
-            <a href='/contact' className="inline-flex items-center gap-2 rounded-full bg-sumi px-7 py-4 font-bold text-white border-[2.5px] border-sumi shadow-[5px_5px_0_#F2B544] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[2px_2px_0_#F2B544]">
-              まずは無料で相談する<ArrowRight className="w-4 h-4" aria-hidden="true" />
+          <div className="mt-8 flex flex-wrap gap-4">
+            <a href='/contact' className={`${comicBtnShape} bg-[#111] text-white shadow-[5px_5px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544]`}>
+              まずは無料で相談する<ArrowRight className="w-4 h-4" strokeWidth={3} aria-hidden="true" />
             </a>
-            <a href='/josys#services' className={`inline-flex items-center rounded-full bg-white px-7 py-4 font-bold text-sumi ${card} shadow-[5px_5px_0_#1F2430] ${press}`}>サービス詳細を見る</a>
+            <a href='/josys#services' className={`${comicBtn} bg-white text-[#111]`}>サービス詳細を見る</a>
           </div>
         </>
       }
       crumbs={[{ label: 'サービス', href: '/services' }, { label: '情シス代行' }]}
       service="josys"
-      image={illust('svc-josys')}
+      image={comicIllust('josys-header')}
+      imageMode="panel"
     />
 
-    <section className="py-20 md:py-28 bg-white">
-      <div className="max-w-6xl mx-auto px-5 grid lg:grid-cols-[1.2fr_1fr] gap-12 items-center">
-        <div>
-          <SectionHead
-            en="Your Concerns"
-            enClass={service.text}
-            title={<>そのIT業務、<br /><Mark><span className={service.text}>後回し</span></Mark>にしていませんか？</>}
-            lead="コア業務に集中したいのに、ITのトラブルや雑務に時間を奪われている。そんな経営者様・ご担当者様のお悩みを、Arcleが一緒に解決します。"
-          />
-          <div className="space-y-4">
-            {concerns.map((item, i) => (
-              <div key={item.title} className={`group pop-reveal flex items-start gap-4 rounded-[28px] bg-cream p-5 md:p-6 ${card}`} style={{ animationDelay: `${i * 80}ms` }}>
-                <span className={`pop-wiggle grid place-items-center shrink-0 w-12 h-12 rounded-2xl text-white border-2 border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6 ${service.bg}`}>
-                  <item.icon className="w-6 h-6" aria-hidden="true" />
-                </span>
+    {/* お悩み：黒い帯の見出し → 3人が困っている大きなコマ → 番号付きの3つのコマ */}
+    <section className="pt-16 pb-20 md:pt-24 md:pb-28 bg-mustard comic-dots overflow-x-clip">
+      <div className="pop-reveal text-center px-4">
+        <span className="inline-block -rotate-3 border-[3px] border-[#111] px-4 pt-1.5 pb-1 font-comic text-xl md:text-2xl tracking-[0.06em] shadow-[4px_4px_0_#111] bg-svc-josys text-white">Your Concerns</span>
+      </div>
+      <div className="pop-reveal relative -rotate-1 bg-[#111] py-4 md:py-6 mt-6 border-y-[4px] border-white">
+        <h2 className="text-center px-3 font-manga text-white text-[23px] sm:text-[34px] md:text-[46px] leading-[1.45] [word-break:auto-phrase]">
+          そのIT業務、
+          <br className="sm:hidden" />
+          <span className="mx-1 text-mustard text-[1.3em] [text-shadow:4px_4px_0_#F07A5A]">後回し</span>にしていませんか？
+        </h2>
+      </div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-5">
+        <p className="pop-reveal mt-10 md:mt-12 mx-auto max-w-3xl bg-white border-[3px] border-[#111] shadow-[5px_5px_0_#111] px-5 py-4 md:px-7 md:py-5 font-bold leading-[1.9] [word-break:auto-phrase]">
+          コア業務に集中したいのに、ITのトラブルや雑務に時間を奪われている。そんな経営者様・ご担当者様のお悩みを、Arcleが一緒に解決します。
+        </p>
+
+        {/* PC：3人を描いた1枚の大きなコマ。左・中央・右がそれぞれ下の 1・2・3 のコマに対応する */}
+        <div className={`pop-reveal hidden md:block relative mt-14 aspect-[1200/647] overflow-hidden bg-white ${panel} rotate-[0.6deg]`}>
+          <img src={comicIllust('josys-concerns')} alt="ITの困りごとに追われる社員たちのイラスト" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          {concernArt.map((c, i) => (
+            <React.Fragment key={c.sfx}>
+              <SfxText text={c.sfx} color={c.color} className={`text-[clamp(30px,3.6vw,48px)] ${c.at}`} rotate={c.tilt} delay={0.3 + i * 0.2} />
+              <span className="absolute bottom-[4%] grid place-items-center w-12 h-12 bg-mustard border-[3px] border-[#111] shadow-[3px_3px_0_#111] font-comic text-[30px] leading-none -rotate-6" style={{ left: `calc(${i * 33.3}% + 3%)` }} aria-hidden="true">
+                {i + 1}
+              </span>
+            </React.Fragment>
+          ))}
+        </div>
+
+        <div className="mt-10 md:mt-12 grid md:grid-cols-3 gap-8 md:gap-6">
+          {concerns.map((item, i) => (
+            <div key={item.title} style={{ animationDelay: `${i * 100}ms` }} className={`pop-reveal group relative bg-white ${panel} ${i === 1 ? 'md:rotate-[1deg]' : 'md:-rotate-[0.8deg]'}`}>
+              {/* スマホ：大きなコマから、その人のところだけを切り出して見せる */}
+              <div className="md:hidden relative aspect-square border-b-[4px] border-[#111] bg-no-repeat" style={{ backgroundImage: `url(${comicIllust('josys-concerns')})`, backgroundSize: `${concernArt[i].size} auto`, backgroundPosition: concernArt[i].pos }} aria-hidden="true">
+                <SfxText text={concernArt[i].sfx} color={concernArt[i].color} className={`text-[36px] ${concernArt[i].spAt}`} rotate={concernArt[i].tilt} delay={0.3} />
+              </div>
+              <div className="flex items-start gap-4 p-5 md:p-6">
+                <IconTile icon={<item.icon className="w-6 h-6" aria-hidden="true" />} num={i + 1} bg="bg-svc-josys" className="pop-wiggle shrink-0" />
                 <div>
-                  <h3 className="font-head font-black text-xl md:text-2xl [word-break:auto-phrase]">{item.title}</h3>
-                  <p className="mt-1 text-sm text-sumi-muted leading-relaxed [word-break:auto-phrase]">{item.desc}</p>
+                  <h3 className="font-manga text-[21px] md:text-[22px] leading-snug [word-break:auto-phrase]">{item.title}</h3>
+                  <p className="mt-2 text-[15px] font-bold leading-relaxed text-sumi [word-break:auto-phrase]">{item.desc}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-        <div className={`group pop-reveal relative aspect-square grid place-items-center rounded-[32px] ${service.tint} max-w-md w-full justify-self-center p-6 ${card}`}>
-          <img src={illust('worry-pc')} alt="" className="pop-tilt w-full" loading="lazy" />
-          <Sparkle className="absolute -top-5 -right-3 w-9 h-9 text-mustard" />
+            </div>
+          ))}
         </div>
       </div>
     </section>
 
-    <section id="services" className="py-20 md:py-28 bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px] border-y-[2.5px] border-sumi scroll-mt-24">
-      <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="Our Services" enClass={service.text} title={<>Total <Mark>Support</Mark></>} lead="貴社のIT環境を包括的にサポート。課題に合わせて最適なソリューションを提供します。" center />
-        <div className="grid md:grid-cols-2 gap-6">
-          {offerings.map((item, index) => (
-            <article key={item.title} className={`group pop-reveal rounded-[28px] bg-white p-7 md:p-9 ${card}`} style={{ animationDelay: `${index * 80}ms` }}>
-              <IconTile icon={<item.icon className="w-7 h-7" aria-hidden="true" />} num={index + 1} bg={service.bg} className="pop-wiggle" />
-              <p className={`mt-6 font-en text-sm font-bold tracking-wider ${service.text}`}>{item.title}</p>
-              <h3 className="font-head text-2xl md:text-[28px] font-black leading-snug mt-1 [word-break:auto-phrase]">{item.sub}</h3>
-              <p className="mt-5 text-sumi-muted leading-[1.9]">{item.desc}</p>
-              <ul className="mt-6 pt-6 border-t-2 border-dashed border-warm-line space-y-3">
-                {item.points.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed">
-                    <Check className={`w-4 h-4 shrink-0 mt-1 ${service.text}`} aria-hidden="true" />{feature}
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
+    {/* サービス：青い地に、絵のコマと説明のコマを並べた4段のコミック。段ごとに左右を入れ替える */}
+    <section id="services" className="relative py-20 md:py-28 bg-svc-josys comic-dots-light border-y-[4px] border-[#111] scroll-mt-24 overflow-x-clip">
+      <div className="absolute inset-0 comic-speed [--speed:rgb(255_255_255/0.12)]" aria-hidden="true" />
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-5">
+        <SectionHead en="Our Services" enTone="bg-mustard text-[#111]" title={<>Total <Mark className="bg-coral">Support</Mark></>} lead="貴社のIT環境を包括的にサポート。課題に合わせて最適なソリューションを提供します。" center dark />
+        <div className="flex flex-col gap-14 md:gap-16">
+          {offerings.map((item, index) => {
+            const art = offeringArt[index];
+            const flip = index % 2 === 1;
+            return (
+              <article key={item.title} className="pop-reveal group grid md:grid-cols-[5fr_6fr] gap-5 md:gap-6 items-stretch" style={{ animationDelay: `${index * 60}ms` }}>
+                {/* 絵のコマ */}
+                <div className={`relative ${flip ? 'md:order-2 md:rotate-[1.2deg]' : 'md:-rotate-[1.2deg]'}`}>
+                  <div className={`relative aspect-[4/3] md:aspect-auto md:h-full md:min-h-[340px] overflow-hidden bg-white ${panel}`}>
+                    <img src={comicIllust(art.img)} alt="" className={`absolute inset-0 w-full h-full object-cover ${art.pos ?? 'object-[50%_40%]'} transition-transform duration-300 group-hover:scale-105`} loading="lazy" />
+                    <SfxText text={art.sfx} color="#F2B544" className={`text-[clamp(30px,7vw,44px)] md:text-[clamp(28px,3vw,44px)] ${art.at}`} rotate={art.tilt} delay={0.4} />
+                  </div>
+                  {/* コミックの号数のような番号の札 */}
+                  <span className={`absolute -top-5 ${flip ? '-right-2 md:-right-4 rotate-3' : '-left-2 md:-left-4 -rotate-3'} flex flex-col items-center border-[3px] border-[#111] px-3 pt-1 pb-0.5 font-comic leading-none text-[#111] bg-mustard shadow-[3px_3px_0_#111]`} aria-hidden="true">
+                    <span className="text-[11px] tracking-[0.2em]">ISSUE</span>
+                    <span className="text-[30px]">No.{index + 1}</span>
+                  </span>
+                </div>
+                {/* 説明のコマ */}
+                <div className={`relative bg-[#FAF3E0] p-6 pt-9 md:p-9 md:pt-11 ${panel} ${flip ? 'md:order-1' : ''}`}>
+                  <Caption tone="bg-svc-josys text-white" className={`absolute -top-4 ${flip ? 'right-4 rotate-2' : 'left-4 -rotate-2'}`}>
+                    <span className="font-comic font-normal text-[18px] md:text-[20px] leading-none tracking-[0.08em]">{item.title}</span>
+                  </Caption>
+                  <h3 className="font-manga text-[24px] md:text-[30px] leading-snug [word-break:auto-phrase]">{item.sub}</h3>
+                  <p className="mt-4 text-[15px] leading-[1.9] text-sumi">{item.desc}</p>
+                  <ul className="mt-6 pt-6 border-t-[3px] border-dashed border-[#111]/30 space-y-3">
+                    {item.points.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2.5 text-sm font-bold leading-relaxed">
+                        <span className="shrink-0 mt-0.5 w-5 h-5 grid place-items-center border-2 border-[#111] text-white bg-svc-josys">
+                          <Check className="w-3 h-3" strokeWidth={4} aria-hidden="true" />
+                        </span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
 
     {/* サービスの名前を流すテープ */}
-    <Ticker items={offerings.map((item) => item.sub)} tone="bg-svc-josys text-white" className="-mb-4 -mt-[2.5px]" />
+    <Ticker items={offerings.map((item) => item.sub)} tone="bg-[#111] text-mustard" className="-mb-4 -mt-[4px]" />
 
-    <section className="py-20 md:py-28 bg-white">
-      <div className="max-w-6xl mx-auto px-5">
+    <section className="pt-20 md:pt-28 pb-2 md:pb-4 bg-[#FAF3E0] comic-dots">
+      <div className="max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead en="Pricing" enClass={service.text} title="プラン一覧" lead="スポット対応から包括的なIT運用まで。貴社の規模や課題に合わせた最適なサポートプランをご提供します" center />
-        <div className="grid lg:grid-cols-3 gap-10 lg:gap-6 items-stretch pt-4">
+        <div className="grid lg:grid-cols-3 gap-12 lg:gap-6 items-stretch pt-4">
           {plans.map((plan, i) => (
             <PlanCard key={plan.name} index={i} service="josys" plan={{ ...plan, prefix: '月額', amount: plan.price.replace(/万円~$/, ''), unit: '万円〜', priceNote: '税抜' }} />
           ))}
         </div>
-        <div className="mt-10 rounded-[28px] bg-cream border-2 border-dashed border-sumi/40 p-6 text-sm text-sumi-muted leading-[1.9] space-y-2">
+        {/* 注意書き：ナレーションの箱を上の辺にまたがせた白いコマ */}
+        <div className="pop-reveal relative mt-14 bg-white border-[3px] border-[#111] shadow-[5px_5px_0_#111] px-5 pt-8 pb-5 md:px-7 text-sm font-bold text-sumi leading-[1.9] space-y-2">
+          <Caption className="absolute -top-4 left-4 -rotate-2 font-comic tracking-[0.08em] text-[16px] md:text-[17px]">NOTE</Caption>
           <p>※料金は税抜です。企業規模や対応範囲に応じてカスタマイズ可能です。</p>
           <p>※東海エリアは訪問にも対応します。</p>
         </div>

@@ -44,3 +44,12 @@ export const serviceStyles: Record<
     accent: 'bg-svc-web'
   }
 };
+
+// モデルケースの表紙の絵（アメコミ版）。同じ事業が続いても単調にならないよう、事業の絵とお悩みの絵を交互に使う
+const worryArt: Record<ServiceKey, string> = { josys: 'worry-pc', data: 'worry-data', ai: 'worry-ai', web: 'worry-web' };
+export const caseArt = (service: ServiceKey, index: number) => (index % 2 ? worryArt[service] : `svc-${service}`);
+export const worryArtOf = (service: ServiceKey) => worryArt[service];
+
+// 効果の数字（「月6.6万円」など日本語まじり）を、事業の色の太い文字に黒ぶちで見せる
+export const metricAfter = (text: string, size: string) =>
+  `inline-block font-manga leading-[1.1] break-words [paint-order:stroke_fill] [-webkit-text-stroke:5px_#111] [text-shadow:3px_3px_0_#111] ${text} ${size}`;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
-import { ContactCta, PageHeader } from '../next/parts';
+import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
+import { ac, promoHeroSrc } from './articleComic';
 
 const title = '愛知・東海の中小企業向けホームページ制作会社の選び方';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -16,15 +17,15 @@ const faqs = [
   { q: '地元の制作会社なら必ず訪問してもらえますか？', a: '所在地だけでは判断できません。訪問可能な地域、回数、交通費、オンラインとの使い分けを相談時に確認してください。現場を見てもらう必要がある場合は、その目的を先に伝えると進めやすくなります。' },
   { q: 'SEO対策を頼めば検索順位は保証されますか？', a: '検索順位は保証を前提にせず、具体的な作業範囲で判断しましょう。ページのタイトル設定、検索状況の確認、記事作成、公開後の改善など、何をいつ行い、どこから追加費用になるかを確認します。' }
 ];
-const heading = 'font-head text-2xl md:text-[28px] font-bold text-svc-web [word-break:auto-phrase] mt-12 mb-4';
-const paragraph = 'text-sumi-muted leading-[2] mb-4';
-const subheading = 'font-head text-xl font-bold text-sumi [word-break:auto-phrase] mt-8 mb-3';
+const heading = ac.h2.web;
+const paragraph = ac.p;
+const subheading = ac.h3;
 
 const ArticleWebCompanyGuide: React.FC = () => {
   const service = services.find((item) => item.key === 'web')!;
 
   return (
-    <div className="bg-cream text-sumi">
+    <div className={ac.page}>
       <Helmet>
         <title>{title} | Arcle</title>
         <meta name="description" content={description} />
@@ -49,19 +50,19 @@ const ArticleWebCompanyGuide: React.FC = () => {
           }))
         })}</script>
       </Helmet>
-      <PageHeader en="Articles" title={pageTitle} service="web" crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: pageTitle }]} />
-      <article className="bg-white rounded-t-[48px] md:rounded-t-[80px] py-20 md:py-28">
-        <div className="max-w-3xl mx-auto px-5 text-[16px] leading-[2]">
+      <PageHeader en="Articles" title={pageTitle} service="web" compact image={comicIllust('svc-web')} imageMode="panel" crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: pageTitle }]} />
+      <article className={ac.article}>
+        <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
-            <span className={`rounded-full px-4 py-1 text-sm font-bold ${service.tint} ${service.text}`}>Web制作</span>
-            <time dateTime={published} className="font-en text-sm text-sumi-muted">{published}</time>
+            <span className={ac.tag.web}>Web制作</span>
+            <time dateTime={published} className={ac.date}>{published}</time>
           </div>
-          <p className="text-sumi-muted leading-[2] mb-8">ホームページ制作を検討する中小企業にとって、制作会社の選び方は悩みやすいテーマです。見た目や金額だけでは、公開後に更新を続けられるか、困ったときに相談できるかまでは分かりません。IT担当者がいない会社でも比較できるよう、依頼前の準備から見積り、契約、公開までの確認ポイントを順に整理します。</p>
+          <p className="text-[#30343F] leading-[2] mb-8">ホームページ制作を検討する中小企業にとって、制作会社の選び方は悩みやすいテーマです。見た目や金額だけでは、公開後に更新を続けられるか、困ったときに相談できるかまでは分かりません。IT担当者がいない会社でも比較できるよう、依頼前の準備から見積り、契約、公開までの確認ポイントを順に整理します。</p>
 
           <h2 className={heading}>1. ホームページ制作の依頼前に目的を決める</h2>
           <p className={paragraph}>最初に決めたいのは「誰に、何を知ってもらい、どう行動してほしいか」です。新規の取引先に事業内容を伝えるサイトと、求職者に職場の雰囲気を伝えるサイトでは、必要な情報が変わります。「会社の信頼を伝える」を目的にする場合も、設備、仕事の進め方、担当者の紹介など、何を根拠として載せるかまで考えましょう。</p>
           <p className={paragraph}>目的が複数あるときは優先順位を付けます。問い合わせを増やしたいなら、対象となる仕事、対応地域、相談方法を先に整理します。採用が中心なら、仕事内容や働く環境、応募方法が優先です。最初からすべてを盛り込まず、公開時に必要なものと後で追加するものを分けると、見積りも判断しやすくなります。</p>
-          <ul className="list-disc pl-6 text-sumi-muted leading-[2] space-y-2">
+          <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>目的と読者：取引先、一般のお客様、求職者のうち、誰を優先するか</li>
             <li>必要なページ：会社概要、事業紹介、採用情報、問い合わせなど</li>
             <li>素材：会社案内、ロゴ、商品資料、使用許可のある写真がそろうか</li>
@@ -72,10 +73,10 @@ const ArticleWebCompanyGuide: React.FC = () => {
 
           <h2 className={heading}>2. ホームページ制作会社の選び方は見積りの条件から</h2>
           <p className={paragraph}>見積りは、同じ依頼内容を渡したうえで比較しましょう。ページ数だけでなく、原稿作成、撮影、修正、公開後の更新まで条件をそろえることが大切です。「制作一式」とだけ書かれている場合は、何が含まれ、何が別料金かを一覧にしてもらいます。回答が具体的かどうかも、依頼先を判断する材料になります。</p>
-          <div className="overflow-x-auto rounded-[28px] border border-warm-line my-6" role="region" aria-label="見積りの比較ポイント（横にスクロールできます）" tabIndex={0}>
-            <table className="w-full min-w-[600px] text-sm border-collapse text-sumi-muted">
-              <caption className="p-4 text-left font-bold text-sumi bg-cream">制作会社にそろえて確認する見積り項目</caption>
-              <thead className={service.tint}><tr><th scope="col" className="p-4 text-left">項目</th><th scope="col" className="p-4 text-left">確認する内容</th><th scope="col" className="p-4 text-left">判断のポイント</th></tr></thead>
+          <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="見積りの比較ポイント（横にスクロールできます）" tabIndex={0}>
+            <table className="w-full min-w-[600px] text-sm border-collapse text-[#30343F]">
+              <caption className={ac.caption}>制作会社にそろえて確認する見積り項目</caption>
+              <thead className={ac.thead}><tr><th scope="col" className="p-4 text-left">項目</th><th scope="col" className="p-4 text-left">確認する内容</th><th scope="col" className="p-4 text-left">判断のポイント</th></tr></thead>
               <tbody>
                 {[
                   ['制作内容', 'ページ構成、原稿、写真、フォーム', '自社で準備する作業が明確か'],
@@ -83,7 +84,7 @@ const ArticleWebCompanyGuide: React.FC = () => {
                   ['運用費', 'サーバー、ドメイン、保守、更新', '含まれる作業と別料金が分かるか'],
                   ['契約条件', '契約期間、更新、途中解約、支払時期', '終了時の支払いと引き継ぎが明確か'],
                   ['追加機能', '予約、会員機能、外部サービス連携', '必要性と別契約の有無を説明できるか']
-                ].map(([label, detail, point]) => <tr key={label}><th scope="row" className="p-4 border-t border-warm-line text-left font-bold text-sumi">{label}</th><td className="p-4 border-t border-warm-line">{detail}</td><td className="p-4 border-t border-warm-line">{point}</td></tr>)}
+                ].map(([label, detail, point]) => <tr key={label}><th scope="row" className="p-4 border-t-2 border-[#111]/20 text-left font-bold text-sumi">{label}</th><td className="p-4 border-t-2 border-[#111]/20">{detail}</td><td className="p-4 border-t-2 border-[#111]/20">{point}</td></tr>)}
               </tbody>
             </table>
           </div>
@@ -102,8 +103,10 @@ const ArticleWebCompanyGuide: React.FC = () => {
           <p className={paragraph}>ドメインは、ホームページやメールに使うインターネット上の住所です。登録者名義、契約者、管理するアカウント、更新手続きの担当を確認します。制作会社が管理する場合も、他社へ移す際の手順と費用を明確にしてください。ドメイン、サイトのデータ、デザインやプログラムの著作権は別の確認事項です。「支払い後に何を受け取り、どう使い続けられるか」を項目ごとに聞きます。</p>
           <h3 className={subheading}>SEOの範囲を作業名で確認する</h3>
           <p className={paragraph}>SEOは、検索エンジンにページの内容を伝え、探している人に見つけてもらいやすくする取り組みです。「SEO込み」だけでは作業範囲が分かりません。各ページのタイトルや説明文の設定、検索状況を調べる仕組みの設定、原稿の提案、記事作成、公開後の改善を分けて確認しましょう。設定だけなのか、継続的な確認と改善も含むのかを明らかにし、検索順位や問い合わせ件数の保証を選定の前提にしないことが大切です。</p>
-          <div className={`mt-10 p-6 md:p-8 rounded-[28px] border ${service.border} ${service.tint}`}>
-            <p className="font-head text-sumi font-bold mb-2">更新を任せる運用も含めて相談したい方へ</p>
+          <div className={ac.promo}>
+            <img src={promoHeroSrc} alt="" className={ac.promoHero} loading="lazy" />
+            <span aria-hidden="true" className={ac.promoLabel}>ARCLE TIP!</span>
+            <p className={ac.promoTitle}>更新を任せる運用も含めて相談したい方へ</p>
             <p className={paragraph}>Arcleの月額制ホームページ制作では、文章や写真の差し替え、お知らせの掲載などの軽微な修正を月額料金の範囲で対応します。ページの新規追加やデザイン変更など、作業量が大きいものは事前にお見積りします。自社で行う更新と依頼する更新を分けて検討できます。</p>
             <a href={service.href} className="inline-flex items-center gap-2 text-svc-web font-bold hover:underline underline-offset-4">Web制作の対応内容を確認する<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
@@ -114,7 +117,7 @@ const ArticleWebCompanyGuide: React.FC = () => {
 
           <h2 className={heading}>5. よくある失敗を契約前に防ぐ</h2>
           <p className={paragraph}>避けたいのは、安さだけで決めた後に必要な作業が追加になったり、確認者が増えて公開が遅れたりすることです。契約前に役割と判断基準を決めれば、相談時の認識のずれを減らせます。口頭の説明で気になる点があれば、その場で質問し、回答を見積書やメールに残しましょう。</p>
-          <ul className="list-disc pl-6 text-sumi-muted leading-[2] space-y-2">
+          <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>デザインだけで決める：作例を見ながら、読者が欲しい情報と問い合わせへの進みやすさも確認します。</li>
             <li>素材準備を後回しにする：原稿、写真、掲載許可の担当と提出日を決め、間に合わない場合の扱いも相談します。</li>
             <li>更新担当が決まっていない：お知らせの作成者と承認者を決め、外部へ依頼する作業も整理します。</li>
@@ -123,7 +126,7 @@ const ArticleWebCompanyGuide: React.FC = () => {
           <p className={`${paragraph} mt-4`}>また、写真や紹介文は、自社が掲載してよいものかを確認してください。作例はデザインの参考として見て、架空の会社を使ったサンプルと実際の顧客事例を区別します。「同じ見た目にしたい」に加え、どこが使いやすいと感じたかまで伝えると、希望を共有しやすくなります。</p>
 
           <h2 className={heading}>6. 相談から公開までの依頼の流れ</h2>
-          <ol className="list-decimal pl-6 text-sumi-muted leading-[2] space-y-3">
+          <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-3">
             <li><strong className="text-sumi">相談・要件整理：</strong>目的、読者、予算、公開希望日を伝えます。必要なページと自社で準備する素材を整理し、不明点は宿題として残します。</li>
             <li><strong className="text-sumi">提案・見積り・契約：</strong>制作範囲、運用費、修正条件、解約や移行の条件を確認します。追加費用が生じる場合は、着手前に承認する手順を決めます。</li>
             <li><strong className="text-sumi">素材準備・制作：</strong>文章や写真を渡し、ページ構成とデザインを確認します。社内の意見は窓口担当者がまとめ、合意した内容を記録します。</li>
@@ -137,23 +140,23 @@ const ArticleWebCompanyGuide: React.FC = () => {
 
           <section className="mt-14">
             <h2 className={heading}>よくある質問</h2>
-            <div className="space-y-5 text-sumi-muted leading-[2] [&>div]:rounded-[28px] [&>div]:bg-cream [&>div]:p-6 [&_h3]:mb-2">
-              {faqs.map((faq) => <div key={faq.q}><h3 className="font-head font-bold text-sumi [word-break:auto-phrase]">{faq.q}</h3><p>{faq.a}</p></div>)}
+            <div className={ac.faq}>
+              {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
-          <section className="mt-14 border-t border-warm-line pt-10">
-            <h2 className="font-head text-2xl md:text-[28px] font-bold text-svc-web [word-break:auto-phrase] mb-4">関連記事</h2>
+          <section className={ac.related}>
+            <h2 className={ac.h2Flat.web}>関連記事</h2>
             <div className="space-y-3">
-              <a href="/articles/monthly-vs-one-time-website" className="block text-svc-web hover:underline underline-offset-4 py-1">月額制と一括払いのホームページ制作を比較する</a>
-              <a href="/samples" target="_blank" rel="noopener" className="block text-svc-web hover:underline underline-offset-4 py-1">業種別のホームページ作例を見る</a>
-              <a href="/articles" className="block text-sumi-muted hover:text-sumi underline">記事一覧を見る</a>
+              <a href="/articles/monthly-vs-one-time-website" className={ac.relatedLink}>月額制と一括払いのホームページ制作を比較する</a>
+              <a href="/samples" target="_blank" rel="noopener" className={ac.relatedLink}>業種別のホームページ作例を見る</a>
+              <a href="/articles" className={ac.allLink}>記事一覧を見る</a>
             </div>
           </section>
-          <section className={`mt-14 rounded-[28px] p-6 md:p-8 ${service.tint}`}>
-            <h2 className="font-head text-2xl font-bold [word-break:auto-phrase]">関連サービス</h2>
-            <a href={service.href} className="mt-5 inline-flex items-center gap-2 rounded-full bg-sumi text-white px-6 py-3 font-bold hover:opacity-90">{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
+          <section className={ac.svcBox.web}>
+            <h2 className={ac.svcTitle}>関連サービス</h2>
+            <a href={service.href} className={ac.svcBtn}>{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </section>
-          <p className="mt-10 text-sm text-sumi-muted">この記事を書いた人：栗原 勇太（Arcle代表）<br /><a href="/company/message" className="text-svc-web hover:underline underline-offset-4">代表メッセージを見る</a></p>
+          <p className={ac.author}>この記事を書いた人：栗原 勇太（Arcle代表）<br /><a href="/company/message" className="text-svc-web hover:underline underline-offset-4">代表メッセージを見る</a></p>
         </div>
       </article>
       <ContactCta />

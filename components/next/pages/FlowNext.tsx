@@ -1,14 +1,24 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { MapPin, Monitor, Plus } from 'lucide-react';
-import { illust } from '../theme';
-import { ContactCta, PageHeader, SectionHead, Ticker, card } from '../parts';
+import { ArrowDown, ArrowRight, MapPin, Monitor, Plus } from 'lucide-react';
+import { ContactCta, PageHeader, SectionHead, Ticker, comicIllust } from '../parts';
+import { Bubble, Burst, Caption, SfxText, panel } from '../comic';
+
+// ご相談の流れ（アメコミ版）。4つのステップを、お客さまとヒーローの物語の4コマとして読ませる
 
 const steps = [
-  { image: 'flow-talk', title: 'お問い合わせ', body: 'まずはフォームよりお気軽にご連絡ください。「何に困っているかうまく説明できない」という段階の、ささいなご相談でも構いません。' },
-  { image: 'flow-hearing', title: '無料相談', body: '現状の課題や目標をお聞きし、どのような解決策があるかを整理します。ご訪問・オンラインのどちらでも対応します。' },
-  { image: 'flow-plan', title: 'ご提案・お見積り', body: 'お客様に合ったプランとスケジュール、明確な費用をご提示します。ご納得いただけるまで調整します。' },
-  { image: 'flow-support', title: 'ご契約・開始', body: '合意いただけましたら契約を締結し、スタートします。始まってからも、困ったときにすぐ相談できる距離で伴走します。' }
+  { image: 'services-flow-step-contact', title: 'お問い合わせ', body: 'まずはフォームよりお気軽にご連絡ください。「何に困っているかうまく説明できない」という段階の、ささいなご相談でも構いません。' },
+  { image: 'services-flow-step-hearing', title: '無料相談', body: '現状の課題や目標をお聞きし、どのような解決策があるかを整理します。ご訪問・オンラインのどちらでも対応します。' },
+  { image: 'services-flow-step-plan', title: 'ご提案・お見積り', body: 'お客様に合ったプランとスケジュール、明確な費用をご提示します。ご納得いただけるまで調整します。' },
+  { image: 'services-flow-step-start', title: 'ご契約・開始', body: '合意いただけましたら契約を締結し、スタートします。始まってからも、困ったときにすぐ相談できる距離で伴走します。' }
+];
+
+// 絵に重ねる英語の吹き出し（飾り）。at は位置、tail は尾の出る位置%、lean は尾の向き。尾は話している人に向ける
+const balloons: { text: string; at: string; tail: number; lean: number; tilt: number; side?: boolean }[] = [
+  { text: 'HELLO, ARCLE?', at: 'left-[6%] top-[10%]', tail: 82, lean: 0.9, tilt: -5 },
+  { text: 'I SEE...', at: 'left-[52%] top-[7%]', tail: 40, lean: 0.2, tilt: 4 },
+  { text: "HERE'S THE PLAN!", at: 'left-[14%] top-[7%]', tail: 50, lean: 0, tilt: -3, side: true },
+  { text: "LET'S GO!", at: 'left-[44%] top-[6%]', tail: 40, lean: 0.1, tilt: 5 }
 ];
 
 const faqs = [
@@ -35,7 +45,7 @@ const faqs = [
 ];
 
 const FlowNext: React.FC = () => (
-  <div className="bg-cream text-sumi overflow-x-clip">
+  <div className="bg-[#FAF3E0] text-sumi overflow-x-clip">
     <Helmet>
       <title>ご相談の流れ・よくあるご質問 | Arcle（アークル）</title>
       <meta name="description" content="Arcleへのご相談の流れと、よくあるご質問。お問い合わせから無料相談、ご提案、ご契約までの流れと、対応エリアをご案内します。" />
@@ -52,74 +62,144 @@ const FlowNext: React.FC = () => (
       title="ご相談の流れ"
       lead="お問い合わせからご契約まで、4つのステップでご案内します。ご相談・お見積りは無料です。"
       crumbs={[{ label: 'ご相談の流れ' }]}
-      image={illust('flow-hearing')}
+      image={comicIllust('services-flow-flow-header')}
+      imageMode="panel"
     />
 
-    {/* 流れ */}
-    <section className="py-20 md:py-28 bg-white">
-      <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="Process" title="ご相談から開始まで" center />
-        <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 pt-4">
-          {steps.map((step, i) => (
-            <li key={step.title} className={`group pop-reveal relative flex flex-col rounded-[28px] bg-cream p-6 ${card} ${i % 2 ? 'lg:rotate-[1deg]' : 'lg:-rotate-[1deg]'}`} style={{ animationDelay: `${i * 90}ms` }}>
-              <span className="pop-wiggle absolute z-10 -top-5 -left-3 -rotate-6 px-4 py-1 rounded-lg bg-coral text-white font-en text-base font-black italic tracking-widest border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430]">STEP {i + 1}</span>
-              <div className="aspect-square rounded-[20px] bg-white border-2 border-sumi mb-5 mt-3">
-                <img src={illust(step.image)} alt="" className="pop-tilt w-full h-full object-contain p-2" loading="lazy" />
-              </div>
-              <h3 className="font-head text-2xl font-black">{step.title}</h3>
-              <p className="mt-3 text-[15px] leading-[1.9] text-sumi-muted">{step.body}</p>
-            </li>
-          ))}
+    {/* 流れ：4コマのコミック。コマの上の辺に STEP の札をまたがせ、絵に英語の吹き出しを重ねる */}
+    <section className="py-20 md:py-28 bg-white comic-dots">
+      <div className="max-w-6xl mx-auto px-4 sm:px-5">
+        <SectionHead en="HOW IT WORKS" title="ご相談から開始まで" center />
+        <ol className="grid md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-20 pt-4">
+          {steps.map((step, i) => {
+            const b = balloons[i];
+            return (
+              <li
+                key={step.title}
+                className={`group pop-reveal relative flex flex-col bg-[#FAF3E0] ${panel} ${i % 2 ? 'md:rotate-[1deg]' : 'md:-rotate-[1deg]'}`}
+                style={{ animationDelay: `${(i % 2) * 110}ms` }}
+              >
+                {/* STEP の札 */}
+                <span className="absolute z-20 -top-7 -left-3 sm:-left-4 -rotate-6 flex items-end gap-1.5 border-[3px] border-[#111] bg-coral px-3 pt-1 pb-0.5 font-comic leading-none text-white shadow-[4px_4px_0_#111]">
+                  <span className="text-[18px] tracking-[0.12em] pb-1.5">STEP</span>
+                  <span className="text-[44px] [paint-order:stroke_fill] [-webkit-text-stroke:5px_#111] [text-shadow:3px_3px_0_#111]">{i + 1}</span>
+                </span>
+                {i === 1 && (
+                  <Burst
+                    text="FREE!"
+                    className="w-[96px] sm:w-[112px] -top-12 -right-4 sm:-right-6"
+                    fill="#F2B544"
+                    core="#3B6FE0"
+                    textClass="text-white text-[26px] sm:text-[30px]"
+                    rotate={12}
+                    delay={0.4}
+                  />
+                )}
+                {/* 絵のコマ */}
+                <div className="relative aspect-[3/2] overflow-hidden border-b-[4px] border-[#111] bg-white">
+                  <img src={comicIllust(step.image)} alt="" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+                  <span className="pop-reveal absolute inset-0 block">
+                    <Bubble className={`${b.at} text-[clamp(18px,5vw,26px)] md:text-[clamp(18px,2.2vw,26px)]`} tailAt={b.tail} lean={b.lean} side={b.side} rotate={b.tilt} delay={0.25}>
+                      {b.text}
+                    </Bubble>
+                  </span>
+                </div>
+                {/* 説明（ナレーション） */}
+                <div className="relative px-6 pt-6 pb-7 sm:px-8 flex-1">
+                  <h3 className="font-manga text-[24px] md:text-[28px] leading-snug text-[#111] comic-outline-white">{step.title}</h3>
+                  <p className="mt-3 text-[15px] leading-[1.9] font-bold text-sumi">{step.body}</p>
+                </div>
+                {/* 次のコマへの矢印（スマホは下へ、PCは同じ段の右のコマへ） */}
+                {i < steps.length - 1 && (
+                  <span
+                    className={`absolute z-20 grid place-items-center w-11 h-11 bg-mustard border-[3px] border-[#111] shadow-[3px_3px_0_#111] left-1/2 -translate-x-1/2 -bottom-[62px] ${
+                      i % 2 === 0 ? 'md:left-auto md:translate-x-0 md:-right-[50px] lg:-right-[58px] md:bottom-auto md:top-1/2 md:-translate-y-1/2' : 'md:hidden'
+                    }`}
+                    aria-hidden="true"
+                  >
+                    <ArrowDown className="w-6 h-6 md:hidden" strokeWidth={3.5} />
+                    <ArrowRight className="w-6 h-6 hidden md:block" strokeWidth={3.5} />
+                  </span>
+                )}
+              </li>
+            );
+          })}
         </ol>
       </div>
     </section>
 
-    <Ticker items={[...steps.map((step) => step.title), 'ご相談・お見積りは無料']} className="-my-4" />
+    <Ticker items={[...steps.map((step) => step.title), 'ご相談・お見積りは無料']} className="-my-4" tone="bg-[#111] text-mustard" />
 
-    {/* 対応エリア */}
-    <section className="py-20 md:py-28 bg-cream bg-[radial-gradient(#1F243014_1.5px,transparent_1.5px)] [background-size:22px_22px] border-y-[2.5px] border-sumi">
-      <div className="max-w-6xl mx-auto px-5">
-        <SectionHead en="Area" title="対応エリア" center />
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className={`group pop-reveal relative rounded-[28px] bg-white p-8 ${card}`}>
-            <span className="pop-float absolute -top-5 right-6 rotate-[4deg] rounded-2xl bg-mustard px-4 py-1.5 font-head font-bold text-sm border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430]">
-              <MapPin className="inline w-4 h-4 -mt-0.5 mr-1" strokeWidth={2.5} />
+    {/* 対応エリア：訪問とオンラインの2コマ */}
+    <section className="py-20 md:py-28 comic-dots border-b-[4px] border-[#111]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-5">
+        <SectionHead en="WE COME TO YOU!" enTone="bg-svc-josys text-white" title="対応エリア" center />
+        <div className="grid md:grid-cols-2 gap-12 md:gap-10">
+          <div className="group pop-reveal relative flex flex-col bg-white border-[4px] border-[#111] shadow-[8px_8px_0_#111] md:-rotate-[1deg]">
+            <Caption className="absolute z-20 -top-5 left-4 -rotate-2">
+              <MapPin className="inline w-4 h-4 -mt-0.5 mr-1" strokeWidth={3} />
               東海エリアは訪問対応
-            </span>
-            <span className="pop-wiggle w-14 h-14 rounded-2xl bg-coral text-white grid place-items-center border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6">
-              <MapPin className="w-7 h-7" strokeWidth={2.2} />
-            </span>
-            <h3 className="font-head text-2xl font-black mt-5">訪問でのサポート</h3>
-            <p className="mt-3 leading-[1.9] text-sumi-muted">東海エリアは訪問にも対応しています。リモートで対応できる業務は、エリアを問わずご相談ください。</p>
+            </Caption>
+            <div className="relative aspect-[16/10] overflow-hidden border-b-[4px] border-[#111]">
+              <img src={comicIllust('reason-local')} alt="" className="absolute inset-0 w-full h-full object-cover object-[50%_30%] transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+              <span className="pop-reveal absolute inset-0 block">
+                <SfxText text="ZOOM!" color="#F2B544" className="right-[6%] top-[8%] text-[clamp(30px,8vw,48px)] md:text-[clamp(30px,3.6vw,48px)]" rotate={-8} delay={0.3} />
+              </span>
+            </div>
+            <div className="flex gap-4 p-6 sm:p-8">
+              <span className="shrink-0 grid place-items-center w-12 h-12 bg-coral text-white border-[3px] border-[#111] shadow-[3px_3px_0_#111] -rotate-6">
+                <MapPin className="w-6 h-6" strokeWidth={2.6} />
+              </span>
+              <span className="min-w-0">
+                <span className="block font-manga text-[20px] sm:text-[22px] md:text-[26px] leading-snug text-[#111] [word-break:auto-phrase]">訪問でのサポート</span>
+                <span className="block mt-2 leading-[1.9] font-bold text-sumi">東海エリアは訪問にも対応しています。リモートで対応できる業務は、エリアを問わずご相談ください。</span>
+              </span>
+            </div>
           </div>
-          <div className={`group pop-reveal rounded-[28px] bg-white p-8 ${card}`} style={{ animationDelay: '90ms' }}>
-            <span className="pop-wiggle w-14 h-14 rounded-2xl bg-svc-josys text-white grid place-items-center border-[2.5px] border-sumi shadow-[3px_3px_0_#1F2430] -rotate-6">
-              <Monitor className="w-7 h-7" strokeWidth={2.2} />
-            </span>
-            <h3 className="font-head text-2xl font-black mt-5">オンラインでのサポート</h3>
-            <p className="mt-3 leading-[1.9] text-sumi-muted">リモートで対応できる業務は、エリアを問わずご相談いただけます。打ち合わせもオンラインで行えます。</p>
+          <div className="group pop-reveal relative flex flex-col bg-white border-[4px] border-[#111] shadow-[8px_8px_0_#111] md:rotate-[1deg]" style={{ animationDelay: '110ms' }}>
+            <div className="relative aspect-[16/10] overflow-hidden border-b-[4px] border-[#111] comic-rays [--ray-a:#3B6FE0] [--ray-b:#4A7DEA]">
+              <span className="absolute inset-0 comic-focus opacity-50" aria-hidden="true" />
+              <img src={comicIllust('parts/laptop-ok')} alt="" className="pop-tilt absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[92%] w-auto max-w-none" loading="lazy" />
+              <span className="pop-reveal absolute inset-0 block">
+                <SfxText text="ONLINE!" color="#F2B544" className="left-[6%] top-[8%] text-[clamp(28px,7.4vw,44px)] md:text-[clamp(28px,3.3vw,44px)]" rotate={-6} delay={0.4} />
+              </span>
+            </div>
+            <div className="flex gap-4 p-6 sm:p-8">
+              <span className="shrink-0 grid place-items-center w-12 h-12 bg-svc-josys text-white border-[3px] border-[#111] shadow-[3px_3px_0_#111] -rotate-6">
+                <Monitor className="w-6 h-6" strokeWidth={2.6} />
+              </span>
+              <span className="min-w-0">
+                <span className="block font-manga text-[20px] sm:text-[22px] md:text-[26px] leading-snug text-[#111] [word-break:auto-phrase]">オンラインでのサポート</span>
+                <span className="block mt-2 leading-[1.9] font-bold text-sumi">リモートで対応できる業務は、エリアを問わずご相談いただけます。打ち合わせもオンラインで行えます。</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    {/* よくあるご質問 */}
-    <section id="faq" className="py-20 md:py-28 scroll-mt-20">
-      <div className="max-w-3xl mx-auto px-5">
-        <SectionHead en="FAQ" title="よくあるご質問" center />
-        <div className="space-y-5">
+    {/* よくあるご質問：Q の札とA の札を付けたコマ。開くと答えの箱が出る */}
+    <section id="faq" className="py-20 md:py-28 scroll-mt-20 bg-white comic-dots">
+      <div className="max-w-3xl mx-auto px-4 sm:px-5">
+        <SectionHead en="Q & A" enTone="bg-svc-data text-white" title="よくあるご質問" center />
+        <div className="space-y-6">
           {faqs.map((item, i) => (
-            <details key={item.q} className="group pop-reveal rounded-[24px] bg-white border-[2.5px] border-sumi shadow-[4px_4px_0_#1F2430]" style={{ animationDelay: `${i * 70}ms` }} open={i === 0}>
-              <summary className="flex items-center gap-4 p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                <span className="pop-wiggle grid place-items-center w-9 h-9 shrink-0 -rotate-6 rounded-xl bg-svc-josys text-white font-en font-black italic text-lg border-2 border-sumi">Q</span>
-                <span className="flex-1 font-head font-black text-[16px] md:text-[18px] leading-relaxed">{item.q}</span>
-                <span className="w-8 h-8 shrink-0 rounded-full bg-mustard border-2 border-sumi grid place-items-center group-open:rotate-45 transition-transform">
-                  <Plus className="w-4 h-4" strokeWidth={3} />
+            <details
+              key={item.q}
+              className="group pop-reveal bg-[#FAF3E0] border-[3px] border-[#111] shadow-[6px_6px_0_#111] open:shadow-[6px_6px_0_#F2B544,9px_9px_0_#111]"
+              style={{ animationDelay: `${i * 70}ms` }}
+              open={i === 0}
+            >
+              <summary className="flex items-center gap-4 p-5 sm:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <span className="grid place-items-center w-10 h-10 shrink-0 -rotate-6 bg-svc-josys text-white font-comic text-[26px] leading-none border-[3px] border-[#111] shadow-[2px_2px_0_#111]">Q</span>
+                <span className="flex-1 font-manga text-[16px] md:text-[18px] leading-relaxed text-[#111] [word-break:auto-phrase]">{item.q}</span>
+                <span className="w-9 h-9 shrink-0 bg-mustard border-[3px] border-[#111] grid place-items-center group-open:rotate-45 transition-transform">
+                  <Plus className="w-4 h-4" strokeWidth={3.5} />
                 </span>
               </summary>
-              <div className="flex gap-4 px-6 pb-6">
-                <span className="grid place-items-center w-9 h-9 shrink-0 -rotate-6 rounded-xl bg-coral text-white font-en font-black italic text-lg border-2 border-sumi">A</span>
-                <p className="flex-1 pt-1 leading-[1.9] text-sumi-muted">{item.a}</p>
+              <div className="flex gap-4 px-5 pb-6 sm:px-6">
+                <span className="grid place-items-center w-10 h-10 shrink-0 -rotate-6 bg-coral text-white font-comic text-[26px] leading-none border-[3px] border-[#111] shadow-[2px_2px_0_#111]">A</span>
+                <p className="flex-1 min-w-0 bg-white border-[3px] border-[#111] px-4 py-3 leading-[1.9] font-bold text-sumi">{item.a}</p>
               </div>
             </details>
           ))}

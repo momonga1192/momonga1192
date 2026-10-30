@@ -1,8 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
-import { ContactCta, PageHeader } from '../next/parts';
+import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
+import { ac, promoHeroSrc } from './articleComic';
 
 const title = '愛知・東海の中小企業向け｜生成AIで議事録を作る手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -16,9 +17,9 @@ const faqs = [
   { q: '文字起こしの精度が低いときはどうすればよいですか？', a: 'マイクを参加者の近くに置く、発言の前に名前を名乗る、同時に話さないといった録音側の工夫で改善することが多いです。社名や製品名などの固有名詞は、会議の前に一覧を用意しておき、要約を頼むときに一緒に渡すと誤変換を減らせます。' },
   { q: '録音データや文字起こしは、いつまで残しておくべきですか？', a: '保存期間と保存場所を社内で決めておきましょう。たとえば、確定した議事録は共有フォルダに残し、録音データと文字起こしは議事録の確認が済んだら削除する、といった運用です。契約や取引に関わる会議は、通常の文書の保存ルールに合わせます。' }
 ];
-const heading = 'font-head text-2xl md:text-[28px] font-bold text-svc-ai [word-break:auto-phrase] mt-12 mb-4';
-const paragraph = 'text-sumi-muted leading-[2] mb-4';
-const subheading = 'font-head text-xl font-bold text-sumi [word-break:auto-phrase] mt-8 mb-3';
+const heading = ac.h2.ai;
+const paragraph = ac.p;
+const subheading = ac.h3;
 const prompt = `次の会議の文字起こしから、議事録を作ってください。
 
 # 会議の情報
@@ -45,7 +46,7 @@ const ArticleAIMeetingMinutes: React.FC = () => {
   const service = services.find((item) => item.key === 'ai')!;
 
   return (
-    <div className="bg-cream text-sumi">
+    <div className={ac.page}>
       <Helmet>
         <title>{title} | Arcle</title>
         <meta name="description" content={description} />
@@ -70,14 +71,14 @@ const ArticleAIMeetingMinutes: React.FC = () => {
           }))
         })}</script>
       </Helmet>
-      <PageHeader en="Articles" title={pageTitle} service="ai" crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: pageTitle }]} />
-      <article className="bg-white rounded-t-[48px] md:rounded-t-[80px] py-20 md:py-28">
-        <div className="max-w-3xl mx-auto px-5 text-[16px] leading-[2]">
+      <PageHeader en="Articles" title={pageTitle} service="ai" compact image={comicIllust('svc-ai')} imageMode="panel" crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: pageTitle }]} />
+      <article className={ac.article}>
+        <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
-            <span className={`rounded-full px-4 py-1 text-sm font-bold ${service.tint} ${service.text}`}>生成AI</span>
-            <time dateTime={published} className="font-en text-sm text-sumi-muted">{published}</time>
+            <span className={ac.tag.ai}>生成AI</span>
+            <time dateTime={published} className={ac.date}>{published}</time>
           </div>
-          <p className="text-sumi-muted leading-[2] mb-8">会議のあとに録音を聞き直し、発言をまとめて議事録に仕上げる作業は、思った以上に時間がかかります。生成AIを使えば、文字起こしから要点の整理までの下書きを短い時間で作れます。ただし、録音のしかたや指示の出し方、情報の扱いを決めずに始めると、使えない下書きができたり、社外に出してはいけない情報を入力してしまったりします。この記事では、生成AIで議事録を作るための準備から確認、社内での定着までを順に整理します。</p>
+          <p className="text-[#30343F] leading-[2] mb-8">会議のあとに録音を聞き直し、発言をまとめて議事録に仕上げる作業は、思った以上に時間がかかります。生成AIを使えば、文字起こしから要点の整理までの下書きを短い時間で作れます。ただし、録音のしかたや指示の出し方、情報の扱いを決めずに始めると、使えない下書きができたり、社外に出してはいけない情報を入力してしまったりします。この記事では、生成AIで議事録を作るための準備から確認、社内での定着までを順に整理します。</p>
 
           <h2 className={heading}>1. 生成AIに任せられること、人が担うこと</h2>
           <p className={paragraph}>議事録づくりは、大きく「記録する」「まとめる」「確認して共有する」の三つに分かれます。生成AIが得意なのは、長い文字起こしから議題ごとの要点、決定事項、宿題を抜き出して、決まった形に整える部分です。話し言葉の言い直しや脱線を取り除き、読みやすい文章にするのも任せられます。</p>
@@ -85,16 +86,16 @@ const ArticleAIMeetingMinutes: React.FC = () => {
 
           <h2 className={heading}>2. 議事録を作る三つの方法を比べる</h2>
           <p className={paragraph}>生成AIで議事録を作る方法は、会議の形によって選びます。オンライン会議と対面の会議、社内だけの会議と社外の方が入る会議では、使える道具や気をつける点が変わります。</p>
-          <div className="overflow-x-auto rounded-[28px] border border-warm-line my-6" role="region" aria-label="議事録を作る方法の比較（横にスクロールできます）" tabIndex={0}>
-            <table className="w-full min-w-[640px] text-sm border-collapse text-sumi-muted">
-              <caption className="p-4 text-left font-bold text-sumi bg-cream">生成AIで議事録を作る方法</caption>
-              <thead className={service.tint}><tr><th scope="col" className="p-4 text-left">方法</th><th scope="col" className="p-4 text-left">向いている会議</th><th scope="col" className="p-4 text-left">準備するもの</th><th scope="col" className="p-4 text-left">気をつける点</th></tr></thead>
+          <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="議事録を作る方法の比較（横にスクロールできます）" tabIndex={0}>
+            <table className="w-full min-w-[640px] text-sm border-collapse text-[#30343F]">
+              <caption className={ac.caption}>生成AIで議事録を作る方法</caption>
+              <thead className={ac.thead}><tr><th scope="col" className="p-4 text-left">方法</th><th scope="col" className="p-4 text-left">向いている会議</th><th scope="col" className="p-4 text-left">準備するもの</th><th scope="col" className="p-4 text-left">気をつける点</th></tr></thead>
               <tbody>
                 {[
                   ['Web会議ツールの文字起こしと要約を使う', 'オンライン会議、社内の定例', '会議ツールの文字起こし機能（契約プランで使えるか確認）', '参加者への事前の案内、保存先と閲覧できる人の範囲'],
                   ['録音を文字起こしし、生成AIで要約する', '対面の会議、打ち合わせ', '録音機器、文字起こしの仕組み、会社で認めた生成AI', 'マイクの位置、録音データの保存と削除のルール'],
                   ['手書きのメモを生成AIで整える', '録音できない会議、短い打ち合わせ', '要点のメモ、会社で認めた生成AI', 'メモにない内容をAIが補ってしまわないか']
-                ].map(([way, fit, need, care]) => <tr key={way}><th scope="row" className="p-4 border-t border-warm-line text-left font-bold text-sumi">{way}</th><td className="p-4 border-t border-warm-line">{fit}</td><td className="p-4 border-t border-warm-line">{need}</td><td className="p-4 border-t border-warm-line">{care}</td></tr>)}
+                ].map(([way, fit, need, care]) => <tr key={way}><th scope="row" className="p-4 border-t-2 border-[#111]/20 text-left font-bold text-sumi">{way}</th><td className="p-4 border-t-2 border-[#111]/20">{fit}</td><td className="p-4 border-t-2 border-[#111]/20">{need}</td><td className="p-4 border-t-2 border-[#111]/20">{care}</td></tr>)}
               </tbody>
             </table>
           </div>
@@ -110,22 +111,24 @@ const ArticleAIMeetingMinutes: React.FC = () => {
           <h3 className={subheading}>手順4：形式を決めて要約を頼む</h3>
           <p className={paragraph}>生成AIへの指示は、毎回考えずに使い回せる形にしておきます。会議の情報、出力してほしい形式、守ってほしいことの三つを書き、最後に文字起こしを貼り付けます。「文字起こしにない内容は書かない」「分からない箇所は【要確認】と書く」と明記すると、生成AIがもっともらしい内容で穴を埋めるのを防ぎやすくなります。</p>
           <figure className="my-6">
-            <pre className="[font-family:inherit] whitespace-pre-wrap rounded-[28px] bg-cream p-6 text-sm leading-[1.9] text-sumi overflow-x-auto">{prompt}</pre>
+            <pre className={ac.pre}>{prompt}</pre>
             <figcaption className="mt-2 text-sm text-sumi-muted">要約を頼むときの指示文の例。会議名や参加者は会議に合わせて書き換えます。</figcaption>
           </figure>
           <p className={paragraph}>長い会議では、文字起こしを議題ごとに分けて渡すと、要点の抜け漏れが減ります。出てきた下書きに足りない項目があれば、「〇〇の件について、決定事項と宿題を追加で抜き出してください」のように、項目を指定して聞き直しましょう。</p>
           <h3 className={subheading}>手順5：人が確認して共有する</h3>
           <p className={paragraph}>下書きができたら、会議の進行役か記録係が内容を確認します。特に決定事項と宿題は、参加者の認識と合っているかが大切です。確認が終わったら、決めた保存場所に置き、参加者に共有します。共有の期限は「会議の翌営業日まで」など社内で決めておくと、記憶が新しいうちに認識のずれを直せます。</p>
 
-          <div className={`mt-10 p-6 md:p-8 rounded-[28px] border ${service.border} ${service.tint}`}>
-            <p className="font-head text-sumi font-bold mb-2">生成AIを安全に業務で使う準備から相談したい方へ</p>
+          <div className={ac.promo}>
+            <img src={promoHeroSrc} alt="" className={ac.promoHero} loading="lazy" />
+            <span aria-hidden="true" className={ac.promoLabel}>ARCLE TIP!</span>
+            <p className={ac.promoTitle}>生成AIを安全に業務で使う準備から相談したい方へ</p>
             <p className={paragraph}>Arcleの生成AI活用支援では、社内で生成AIを使うためのルールづくりや、議事録・メール・資料作成などの業務での使い方研修を行っています。どの業務から試すかの整理から一緒に進められます。</p>
             <a href={service.href} className="inline-flex items-center gap-2 text-svc-ai font-bold hover:underline underline-offset-4">生成AI活用の支援内容を確認する<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
 
           <h2 className={heading}>4. 情報漏えいを防ぐために決めておくこと</h2>
           <p className={paragraph}>会議の内容には、取引条件、人事の話、まだ公表していない計画など、社外に出せない情報が含まれます。議事録づくりに生成AIを使う前に、次の点を社内で決めておきましょう。</p>
-          <ul className="list-disc pl-6 text-sumi-muted leading-[2] space-y-2">
+          <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>使ってよいツールとアカウント：会社で契約したものに限り、個人のアカウントや無料版は使わない、といった線引きをします。</li>
             <li>入力した内容の扱い：サービスの利用規約や設定で、入力した内容がAIの学習に使われるかどうか、どこに保存されるかを確認します。</li>
             <li>入力してはいけない会議：人事評価や個人の健康に関する話など、生成AIに入力しない会議の種類を決めます。</li>
@@ -136,9 +139,9 @@ const ArticleAIMeetingMinutes: React.FC = () => {
 
           <h2 className={heading}>5. AIの議事録で間違えやすい箇所を確認する</h2>
           <p className={paragraph}>生成AIが作る議事録は、文章が整っているぶん、誤りに気づきにくいことがあります。確認する人が毎回同じ観点で見られるよう、チェックリストにしておきましょう。</p>
-          <div className="rounded-[28px] bg-cream p-6 md:p-8 my-6">
-            <p className="font-head font-bold text-sumi mb-3">議事録の確認チェックリスト</p>
-            <ul className="space-y-2 text-sumi-muted leading-[2]">
+          <div className={ac.box}>
+            <p className={ac.boxTitle}>議事録の確認チェックリスト</p>
+            <ul className="space-y-2 text-[#30343F] leading-[2]">
               {[
                 '数字、金額、日付、期限が、録音や資料と合っているか',
                 '社名、人名、製品名の誤変換がないか',
@@ -147,14 +150,14 @@ const ArticleAIMeetingMinutes: React.FC = () => {
                 '会議で話していない内容が補われていないか',
                 '宿題に担当者と期限が入っているか',
                 '【要確認】の箇所が残っていないか'
-              ].map((item) => <li key={item} className="flex gap-3"><span aria-hidden="true" className="mt-[0.55em] h-3 w-3 shrink-0 rounded-[4px] border-2 border-svc-ai" />{item}</li>)}
+              ].map((item) => <li key={item} className="flex gap-3"><span aria-hidden="true" className={ac.check} />{item}</li>)}
             </ul>
           </div>
           <p className={paragraph}>確認で見つかった誤りは、次回の指示文に反映します。たとえば、毎回同じ製品名を誤変換するなら固有名詞の一覧に加え、決定事項と検討中の区別があいまいなら「決定事項には、会議で合意したと明言された内容だけを書く」と指示を足します。指示文を少しずつ育てることで、確認の手間が減っていきます。</p>
 
           <h2 className={heading}>6. 社内で定着させるコツ</h2>
           <p className={paragraph}>議事録づくりを生成AIに置き換えるときは、全部の会議で一度に始めないことが大切です。毎週の定例会議のように、参加者も議題の形も決まっている会議から試すと、指示文や確認の手順を整えやすくなります。</p>
-          <ol className="list-decimal pl-6 text-sumi-muted leading-[2] space-y-3">
+          <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-3">
             <li><strong className="text-sumi">議事録の形式をそろえる：</strong>議題ごとの要点、決定事項、宿題、次回の確認事項など、社内で使う形式を一つ決めます。指示文もこの形式に合わせます。</li>
             <li><strong className="text-sumi">担当と期限を決める：</strong>録音する人、生成AIで下書きを作る人、確認する人、共有の期限を決めます。担当があいまいだと、下書きのまま放置されがちです。</li>
             <li><strong className="text-sumi">保存場所を一つにする：</strong>確定した議事録の置き場所と、ファイル名の付け方を決めます。あとから探せることが、議事録を残す意味につながります。</li>
@@ -167,22 +170,22 @@ const ArticleAIMeetingMinutes: React.FC = () => {
 
           <section className="mt-14">
             <h2 className={heading}>よくある質問</h2>
-            <div className="space-y-5 text-sumi-muted leading-[2] [&>div]:rounded-[28px] [&>div]:bg-cream [&>div]:p-6 [&_h3]:mb-2">
-              {faqs.map((faq) => <div key={faq.q}><h3 className="font-head font-bold text-sumi [word-break:auto-phrase]">{faq.q}</h3><p>{faq.a}</p></div>)}
+            <div className={ac.faq}>
+              {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
-          <section className="mt-14 border-t border-warm-line pt-10">
-            <h2 className="font-head text-2xl md:text-[28px] font-bold text-svc-ai [word-break:auto-phrase] mb-4">関連記事</h2>
+          <section className={ac.related}>
+            <h2 className={ac.h2Flat.ai}>関連記事</h2>
             <div className="space-y-3">
-              <a href="/articles/chatgpt-security-policy-sme" className="block text-svc-ai hover:underline underline-offset-4 py-1">ChatGPT導入前に作るべき社内ルール</a>
-              <a href="/articles" className="block text-sumi-muted hover:text-sumi underline">記事一覧を見る</a>
+              <a href="/articles/chatgpt-security-policy-sme" className={ac.relatedLink}>ChatGPT導入前に作るべき社内ルール</a>
+              <a href="/articles" className={ac.allLink}>記事一覧を見る</a>
             </div>
           </section>
-          <section className={`mt-14 rounded-[28px] p-6 md:p-8 ${service.tint}`}>
-            <h2 className="font-head text-2xl font-bold [word-break:auto-phrase]">関連サービス</h2>
-            <a href={service.href} className="mt-5 inline-flex items-center gap-2 rounded-full bg-sumi text-white px-6 py-3 font-bold hover:opacity-90">{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
+          <section className={ac.svcBox.ai}>
+            <h2 className={ac.svcTitle}>関連サービス</h2>
+            <a href={service.href} className={ac.svcBtn}>{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </section>
-          <p className="mt-10 text-sm text-sumi-muted">この記事を書いた人：栗原 勇太（Arcle代表）<br /><a href="/company/message" className="text-svc-ai hover:underline underline-offset-4">代表メッセージを見る</a></p>
+          <p className={ac.author}>この記事を書いた人：栗原 勇太（Arcle代表）<br /><a href="/company/message" className="text-svc-ai hover:underline underline-offset-4">代表メッセージを見る</a></p>
         </div>
       </article>
       <ContactCta />

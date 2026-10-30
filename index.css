@@ -14,7 +14,8 @@ body {
   font-family: 'Noto Sans JP', sans-serif;
   background-color: #FAF8F4;
   color: #1F2430;
-  overflow-x: hidden;
+  /* hidden だと body がスクロールの箱になり、スクロール連動の動き（.layer-back など）が効かなくなるので clip にする */
+  overflow-x: clip;
 }
 
 .font-en {
@@ -61,7 +62,13 @@ body {
   --color-mustard: #F2B544;
   --color-coral: #F07A5A;
   --font-head: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+  /* 先頭の Luckiest Guy は数字だけ（index.html で数字の字だけ読み込む）。英字は Bangers で出る */
+  --font-comic: 'Luckiest Guy', 'Bangers', 'M PLUS 1p', sans-serif;
+  --font-manga: 'M PLUS 1p', 'Zen Kaku Gothic New', sans-serif;
 }
+
+/* アメコミ版の日本語の見出し・セリフ・ボタン（M PLUS 1p）は極太で使う。読み込んでいる太さは800だけ */
+.font-manga { font-weight: 800; }
 
 /* 作例を横に流す（Web制作ページ） */
 @keyframes marquee {
@@ -116,6 +123,130 @@ body {
   .pop-wiggle:hover, .group:hover .pop-wiggle { animation: none; }
   .js-motion .pop-reveal:not(.is-in) { opacity: 1; }
   .js-motion .pop-reveal.is-in { animation: none; }
+}
+
+/* アメコミ版のトップ：網点の地、効果音の飛び出し、揺れ */
+.comic-dots { background-image: radial-gradient(rgb(0 0 0 / 0.16) 1.6px, transparent 1.8px); background-size: 9px 9px; }
+.comic-dots-light { background-image: radial-gradient(rgb(255 255 255 / 0.18) 1.6px, transparent 1.8px); background-size: 9px 9px; }
+.comic-rays { background: repeating-conic-gradient(from 0deg at 50% 50%, var(--ray-a, #F2B544) 0deg 9deg, var(--ray-b, #F7C866) 9deg 18deg); }
+@keyframes comic-pop { 0% { transform: scale(0) rotate(var(--r, 0deg)); opacity: 0; } 60% { transform: scale(1.18) rotate(var(--r, 0deg)); opacity: 1; } 80% { transform: scale(0.94) rotate(var(--r, 0deg)); } 100% { transform: scale(1) rotate(var(--r, 0deg)); opacity: 1; } }
+@keyframes comic-shake { 0%, 100% { transform: rotate(var(--r, 0deg)); } 20% { transform: translate(-2px, 1px) rotate(calc(var(--r, 0deg) - 3deg)); } 40% { transform: translate(2px, -1px) rotate(calc(var(--r, 0deg) + 3deg)); } 60% { transform: translate(-1px, -1px) rotate(var(--r, 0deg)); } }
+.comic-pop { transform: rotate(var(--r, 0deg)); animation: comic-pop 0.55s cubic-bezier(0.3, 1.5, 0.5, 1) both, comic-shake 0.5s ease-in-out 1.8s 3; }
+.comic-shake-hover:hover, .group:hover .comic-shake-hover { animation: comic-shake 0.4s ease-in-out 2; }
+.js-motion .pop-reveal:not(.is-in) .comic-pop { animation: none; opacity: 0; }
+/* 文字だけの効果音のふるえ */
+@keyframes sfx-shake { 0%, 100% { translate: 0 0; } 25% { translate: -1.5px 1px; } 50% { translate: 1.5px -1px; } 75% { translate: -1px -1px; } }
+.sfx-shake { animation: sfx-shake 0.18s linear infinite; }
+/* ため息：ゆっくり沈んで、少しだけ傾いてはまた戻る */
+@keyframes sfx-droop { 0%, 100% { translate: 0 0; rotate: 0deg; scale: 1; } 50% { translate: 0 0.18em; rotate: 4deg; scale: 0.94 1.04; } }
+.sfx-droop { animation: sfx-droop 2.2s ease-in-out infinite; transform-origin: 0% 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .comic-pop, .comic-shake-hover:hover, .group:hover .comic-shake-hover, .sfx-shake, .sfx-droop { animation: none; opacity: 1; }
+}
+
+/* アメコミ版の下層ページ用（parts.tsx の PageHeader などで使う）。使い方は components/next/DESIGN.md を参照 */
+/* 斜めのスピード線（からし色）。網点の地の上に、absolute inset-0 で重ねる。色は --speed で変える */
+.comic-speed { opacity: 0.6; background: repeating-linear-gradient(-28deg, transparent 0 46px, var(--speed, rgb(242 181 68 / 0.35)) 46px 52px); }
+/* 中心から放射する集中線（白）。絵や見出しの後ろに absolute で置き、目線を1か所に集める */
+.comic-focus { background: repeating-conic-gradient(from 0deg at 50% 50%, rgb(255 255 255 / 0.85) 0deg 2deg, transparent 2deg 8deg); -webkit-mask: radial-gradient(circle at 50% 50%, transparent 22%, #000 62%); mask: radial-gradient(circle at 50% 50%, transparent 22%, #000 62%); }
+/* 白ぶち・黒ぶちの太い文字（見出しの迫力用）。paint-order で線を文字の外側だけに出す */
+.comic-outline { paint-order: stroke fill; -webkit-text-stroke: 6px #111; text-shadow: 4px 4px 0 #111; }
+.comic-outline-white { paint-order: stroke fill; -webkit-text-stroke: 6px #fff; text-shadow: 4px 4px 0 #F2B544; }
+
+/* トップのヒーローの切り抜きアニメ（HeroIntro.tsx） */
+@keyframes intro-shake { 0%, 100% { transform: none; } 10% { transform: translate(-1.5%, 1%) rotate(-1deg); } 20% { transform: translate(1.5%, -1%) rotate(1deg); } 30% { transform: translate(-1%, -0.5%); } 40% { transform: translate(1%, 0.8%); } 50% { transform: translate(-0.5%, 0); } 60% { transform: none; } }
+@keyframes intro-typing { 50% { transform: translateY(1.2%); } }
+@keyframes intro-smoke { 0% { transform: translate(0, 0) scale(0.3); opacity: 0.85; } 100% { transform: translate(-30%, -260%) scale(2.2); opacity: 0; } }
+@keyframes intro-villain { 0%, 100% { transform: rotate(-2deg) scale(1); } 50% { transform: rotate(2deg) scale(1.04); } }
+@keyframes intro-hover { 50% { transform: translateY(-3%); } }
+@keyframes intro-flash { 0% { opacity: 0; } 15% { opacity: 0.95; } 100% { opacity: 0; } }
+@keyframes intro-slam { 0% { transform: scale(2.6) rotate(-6deg); opacity: 0; } 55% { transform: scale(0.92) rotate(1deg); opacity: 1; } 75% { transform: scale(1.04); } 100% { transform: none; opacity: 1; } }
+@keyframes intro-failsafe { to { opacity: 0; visibility: hidden; } }
+.intro-shake { animation: intro-shake 0.6s ease-out; }
+@keyframes intro-tremble { 25% { transform: translateX(-0.6%); } 75% { transform: translateX(0.6%); } }
+.intro-tremble { animation: intro-tremble 0.12s linear infinite; }
+@keyframes intro-shard { 0% { transform: none; opacity: 1; } 100% { transform: translate(var(--sx), var(--sy)) rotate(var(--sr)) scale(0.4); opacity: 0; } }
+.intro-shard { animation: intro-shard 0.9s cubic-bezier(0.1, 0.8, 0.3, 1) both; }
+/* 殴った瞬間の集中線（白の放射）と、飛び込む前のスピード線 */
+.intro-impact { background: repeating-conic-gradient(from 0deg at 50% 38%, rgb(255 255 255 / 0.9) 0deg 2.2deg, transparent 2.2deg 7deg); -webkit-mask: radial-gradient(circle at 50% 38%, transparent 14%, #000 40%); mask: radial-gradient(circle at 50% 38%, transparent 14%, #000 40%); animation: intro-impact 0.6s ease-out both; }
+@keyframes intro-impact { 0%, 40% { opacity: 1; } 100% { opacity: 0; } }
+.intro-speed { background: repeating-linear-gradient(-35deg, transparent 0 3.2%, rgb(255 255 255 / 0.85) 3.2% 3.5%, transparent 3.5% 6.1%, rgb(17 17 17 / 0.5) 6.1% 6.3%); background-size: 200% 200%; animation: intro-speed 0.35s linear infinite; }
+@keyframes intro-speed { from { background-position: 0 0; } to { background-position: -40% 28%; } }
+.intro-typing { animation: intro-typing 0.35s ease-in-out infinite; }
+.intro-smoke { animation: intro-smoke 1.4s ease-out infinite both; }
+.intro-villain { animation: intro-villain 1.1s ease-in-out 0.9s infinite; }
+.intro-hover { animation: intro-hover 3s ease-in-out infinite; }
+.intro-flash { animation: intro-flash 0.45s ease-out both; }
+.intro-slam { animation: intro-slam 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+/* Reactが動くまでの黒い幕。JSが止まっても5秒で消える */
+html[data-intro]::after { content: ''; position: fixed; inset: 0; z-index: 70; background: #111; animation: intro-failsafe 0.3s 5s forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .intro-typing, .intro-smoke, .intro-villain, .intro-hover { animation: none; }
+}
+
+/* 部品に分けた絵（トップのお悩みのコマ。HomeComic.tsx の LayerScene）。
+   画面に入ったとき一度だけ、背景が引き、人物が前に飛び出し、手前の物がせり上がり、集中線が一瞬走る。
+   そのあとは煙と紙と人物の小さな動きだけ続ける。スクロールでは奥と手前のずれ方を変えて奥行きを出す */
+.layer-scene > span, .layer-scene img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.js-motion .layer-scene.pop-reveal:not(.is-in) { opacity: 1; }
+.js-motion .layer-scene.pop-reveal.is-in { animation: none; }
+.layer-bg { scale: 1.08; }
+.layer-flash { opacity: 0; }
+@keyframes layer-bg { from { transform: scale(1.16); } }
+@keyframes layer-pop { 0% { transform: translateY(12%) scale(0.88); } 55% { transform: translateY(-2%) scale(1.04); } 100% { transform: none; } }
+@keyframes layer-rise { from { transform: translateY(9%); } }
+@keyframes layer-fly { 0% { transform: translate(-10%, 24%) rotate(-16deg) scale(0.6); opacity: 0; } 100% { transform: none; opacity: 1; } }
+@keyframes layer-smoke-in { from { transform: translateY(8%) scale(0.5); opacity: 0; transform-origin: 80% 50%; } }
+@keyframes layer-flash { 0%, 100% { opacity: 0; } 25% { opacity: 0.9; } }
+@keyframes layer-panic { 0%, 100% { rotate: 0deg; } 25% { rotate: -0.8deg; } 75% { rotate: 0.8deg; } }
+@keyframes layer-puff { 0%, 100% { scale: 1; translate: 0 0; opacity: 1; } 50% { scale: 1.05; translate: -1% -2%; opacity: 0.85; } }
+@keyframes layer-float { 0%, 100% { rotate: 0deg; translate: 0 0; } 50% { rotate: 1.5deg; translate: 0 -1.5%; } }
+.layer-scene.is-in .layer-bg { animation: layer-bg 0.9s cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+.layer-scene.is-in .layer-pop { transform-origin: 50% 80%; animation: layer-pop 0.7s cubic-bezier(0.3, 1.4, 0.5, 1) 0.1s both, layer-panic 0.5s ease-in-out 0.9s 3; }
+.layer-scene.is-in .layer-rise { animation: layer-rise 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.1) both; }
+.layer-scene.is-in .layer-fly { transform-origin: 20% 70%; animation: layer-fly 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1) 0.35s both, layer-float 3.2s ease-in-out 1.2s infinite; }
+.layer-scene.is-in .layer-smoke { transform-origin: 80% 60%; animation: layer-smoke-in 0.8s ease-out 0.3s both, layer-puff 2.6s ease-in-out 1.1s infinite; }
+.layer-scene.is-in .layer-flash { animation: layer-flash 0.6s ease-out 0.15s both; }
+/* 生成AIのロボット：チラつきながら現れ、そのあとは光が強まったり弱まったり */
+@keyframes layer-glow { 0% { opacity: 0; transform: scale(0.94); } 20% { opacity: 0.7; } 30% { opacity: 0.15; } 45% { opacity: 0.9; } 55% { opacity: 0.4; } 100% { opacity: 1; transform: none; } }
+@keyframes layer-hum { 0%, 100% { opacity: 1; translate: 0 0; } 50% { opacity: 0.82; translate: 0 -1.2%; } }
+.layer-scene.is-in .layer-glow { animation: layer-glow 0.9s steps(1, end) 0.2s both, layer-hum 2.8s ease-in-out 1.2s infinite; }
+/* 社長：ロボットから逃げるようにのけぞる */
+@keyframes layer-recoil { 0% { transform: translateX(6%) rotate(3deg); } 55% { transform: translateX(-2.5%) rotate(-2deg); } 100% { transform: none; } }
+.layer-scene.is-in .layer-recoil { transform-origin: 40% 90%; animation: layer-recoil 0.7s cubic-bezier(0.3, 1.4, 0.5, 1) 0.45s both, layer-panic 0.5s ease-in-out 1.2s 2; }
+/* ため息：飛び出さず、ゆっくり沈んで、そのあとも小さく上下する */
+@keyframes layer-sigh-in { from { transform: translateY(-5%); } }
+@keyframes layer-sigh { 0%, 100% { translate: 0 0; } 50% { translate: 0 1%; } }
+.layer-scene.is-in .layer-sigh { animation: layer-sigh-in 1.6s ease-in-out both, layer-sigh 4s ease-in-out 1.6s infinite; }
+/* 解決のヒーロー：右上から現れて、そのあとは宙に浮いたように上下する */
+@keyframes layer-hero { 0% { transform: translate(14%, -10%) scale(0.9); opacity: 0; } 60% { transform: translate(-1.5%, 1%) scale(1.02); opacity: 1; } 100% { transform: none; opacity: 1; } }
+@keyframes layer-hover { 0%, 100% { translate: 0 0; } 50% { translate: 0 -1.5%; } }
+.layer-scene.is-in .layer-hero { animation: layer-hero 0.75s cubic-bezier(0.3, 1.3, 0.5, 1) 0.1s both, layer-hover 3s ease-in-out 0.9s infinite; }
+/* 稲妻の光：ぽんと出て、そのあとまたたく */
+@keyframes layer-spark-in { 0% { transform: scale(0.3); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: none; opacity: 1; } }
+@keyframes layer-twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.layer-scene.is-in .layer-spark { transform-origin: 82% 25%; animation: layer-spark-in 0.4s ease-out 0.7s both, layer-twinkle 1.1s ease-in-out 1.1s infinite; }
+/* 書類の山：せり上がって、ぐらぐら揺れる */
+@keyframes layer-wobble { 0%, 100% { rotate: 0deg; } 50% { rotate: 0.7deg; } }
+.layer-scene.is-in .layer-wobble { transform-origin: 50% 100%; animation: layer-rise 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.1) both, layer-wobble 2.4s ease-in-out 0.7s infinite; }
+/* サービスの立体カード（HomeComic.tsx の ServiceArt）。--tx・--ty（-1〜1）はマウスの位置で、JSが入れる */
+.tilt-card { transform: perspective(900px) rotateY(calc(var(--tx, 0) * 7deg)) rotateX(calc(var(--ty, 0) * -6deg)) scale(1.06); transition: transform 0.3s ease-out; }
+.tilt-card > span, .tilt-card img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.tilt-layer { transform: translate(calc(var(--tx, 0) * var(--d) * 1px), calc(var(--ty, 0) * var(--d) * 1px)); transition: transform 0.3s ease-out; }
+.tilt-card > span:first-child .tilt-layer { scale: 1.06; }
+/* マウスの位置にあたる光 */
+.tilt-glare { pointer-events: none; opacity: 0; transition: opacity 0.3s; mix-blend-mode: soft-light; background: radial-gradient(circle at calc(50% + var(--tx, 0) * 50%) calc(50% + var(--ty, 0) * 50%), rgb(255 255 255 / 0.9), transparent 50%); }
+.tilt-card.is-tilt .tilt-glare { opacity: 1; }
+@supports (animation-timeline: view()) {
+  @keyframes layer-depth-back { from { translate: 0 -3%; } to { translate: 0 3%; } }
+  @keyframes layer-depth-front { from { translate: 0 4%; } to { translate: 0 -4%; } }
+  .layer-back { animation: layer-depth-back linear both; animation-timeline: view(); }
+  .layer-front { animation: layer-depth-front linear both; animation-timeline: view(); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .layer-scene * { animation: none !important; }
+  .tilt-card, .tilt-layer { transform: none !important; }
 }
 
 /* 斜めのテープなどで、ページの横幅がはみ出さないようにする */

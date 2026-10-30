@@ -1,8 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
-import { ContactCta, PageHeader } from '../next/parts';
+import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
+import { ac, promoHeroSrc } from './articleComic';
 
 const title = '愛知・東海の中小企業へ｜Microsoft 365導入・移行手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -10,9 +11,9 @@ const pageTitle = '中小企業のMicrosoft 365導入・移行手順';
 const description = '愛知・東海の中小企業向けに、Microsoft 365の導入・移行手順を解説。アカウント・メール・ファイル・PCの棚卸し、プラン選定、多要素認証、バックアップ、入退社時の管理まで、担当者が確認できるチェックリスト付きで紹介します。';
 const canonical = 'https://www.arcle.net/articles/microsoft-365-migration-sme';
 const published = '2026-10-27';
-const heading = 'font-head text-2xl md:text-[28px] font-bold text-svc-josys [word-break:auto-phrase] mt-12 mb-4';
-const paragraph = 'text-sumi-muted leading-[2] mb-4';
-const list = 'list-disc pl-6 text-sumi-muted leading-[2] space-y-2';
+const heading = ac.h2.josys;
+const paragraph = ac.p;
+const list = 'list-disc pl-6 text-[#30343F] leading-[2] space-y-2';
 const faqs = [
   { question: '今のメールアドレスを引き継げますか？', answer: '会社が管理する独自ドメインのメールは、契約と設定の条件を確認したうえで引き継ぎを計画できます。ドメインの管理権限、現在のメール契約、DNSの変更権限を事前に確認してください。' },
   { question: '全社員を同じ日に移行する必要はありますか？', answer: '必ずしも同じ日に移行する必要はありません。少人数で試験し、部署ごとに広げる方法もあります。ただしメールの受信先やファイルの正本が分かれるため、併用期間のルールと切り替え日を決めてください。' },
@@ -23,7 +24,7 @@ const faqs = [
 const ArticleM365Migration: React.FC = () => {
   const service = services.find((item) => item.key === 'josys')!;
   return (
-    <div className="bg-cream text-sumi">
+    <div className={ac.page}>
       <Helmet>
         <title>{title} | Arcle</title>
         <meta name="description" content={description} />
@@ -48,14 +49,14 @@ const ArticleM365Migration: React.FC = () => {
           }))
         })}</script>
       </Helmet>
-      <PageHeader en="Articles" title={pageTitle} service="josys" crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: pageTitle }]} />
-      <article className="bg-white rounded-t-[48px] md:rounded-t-[80px] py-20 md:py-28">
-        <div className="max-w-3xl mx-auto px-5 text-[16px] leading-[2]">
+      <PageHeader en="Articles" title={pageTitle} service="josys" compact image={comicIllust('svc-josys')} imageMode="panel" crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: pageTitle }]} />
+      <article className={ac.article}>
+        <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
-            <span className={`rounded-full px-4 py-1 text-sm font-bold ${service.tint} ${service.text}`}>情シス代行</span>
-            <time dateTime={published} className="font-en text-sm text-sumi-muted">{published}</time>
+            <span className={ac.tag.josys}>情シス代行</span>
+            <time dateTime={published} className={ac.date}>{published}</time>
           </div>
-          <p className="text-sumi-muted leading-[2] mb-8">中小企業でMicrosoft 365の導入を進めるとき、最初に必要なのは契約ではなく、現在の仕事とデータの整理です。メールが届かない、共有資料が見つからないといった混乱を避けるため、何を移し、誰が確認し、いつ切り替えるかを決めます。この記事では、IT担当者がいない会社の経営者・総務担当者に向けて、Microsoft 365の移行手順と導入後の管理を解説します。</p>
+          <p className="text-[#30343F] leading-[2] mb-8">中小企業でMicrosoft 365の導入を進めるとき、最初に必要なのは契約ではなく、現在の仕事とデータの整理です。メールが届かない、共有資料が見つからないといった混乱を避けるため、何を移し、誰が確認し、いつ切り替えるかを決めます。この記事では、IT担当者がいない会社の経営者・総務担当者に向けて、Microsoft 365の移行手順と導入後の管理を解説します。</p>
 
           <h2 className={heading}>1. Microsoft 365導入前の棚卸し</h2>
           <p className={paragraph}>まず「利用者・契約・データ・端末」の台帳を作ります。社員名簿だけでは、代表メール、複合機の送信設定、退職者のPCにしかない資料などを見落とします。各部署に確認し、利用目的と管理者、移行の要否を一つの表にまとめてください。</p>
@@ -71,14 +72,14 @@ const ArticleM365Migration: React.FC = () => {
 
           <h2 className={heading}>2. 中小企業のプラン選びは業務から</h2>
           <p className={paragraph}>プラン名だけで選ぶと、必要な機能が不足したり、使わない機能を契約したりします。「メールを移すか」「PCにインストールするOfficeが必要か」「端末も管理したいか」を利用者ごとに整理しましょう。メールや会議などを含む範囲は契約により異なるため、必要機能が含まれるかを個別に確認します。</p>
-          <div className="overflow-x-auto rounded-[28px] border border-warm-line my-6">
-            <table className="w-full min-w-[560px] text-left text-sm text-sumi-muted leading-[2]">
-              <caption className="text-left p-4 font-bold text-sumi bg-cream">プランを比較するときの判断表</caption>
-              <thead className="bg-cream"><tr><th scope="col" className="p-4">仕事の条件</th><th scope="col" className="p-4">確認する機能</th><th scope="col" className="p-4">試験で見る点</th></tr></thead>
+          <div className={`overflow-x-auto my-7 ${ac.tableWrap}`}>
+            <table className="w-full min-w-[560px] text-left text-sm text-[#30343F] leading-[2]">
+              <caption className={ac.caption}>プランを比較するときの判断表</caption>
+              <thead className={ac.thead}><tr><th scope="col" className="p-4">仕事の条件</th><th scope="col" className="p-4">確認する機能</th><th scope="col" className="p-4">試験で見る点</th></tr></thead>
               <tbody>
-                <tr className="border-t border-warm-line"><th scope="row" className="p-4">ブラウザー中心の作業</th><td className="p-4">Web版アプリ、会社メール</td><td className="p-4">既存帳票の表示・編集</td></tr>
-                <tr className="border-t border-warm-line"><th scope="row" className="p-4">複雑なExcelやオフライン作業</th><td className="p-4">デスクトップ版アプリの利用権</td><td className="p-4">マクロ、印刷、他ソフト連携</td></tr>
-                <tr className="border-t border-warm-line"><th scope="row" className="p-4">社外利用や端末管理</th><td className="p-4">端末管理、アクセス制御の範囲</td><td className="p-4">対象端末と必要な設定</td></tr>
+                <tr className={ac.row}><th scope="row" className="p-4">ブラウザー中心の作業</th><td className="p-4">Web版アプリ、会社メール</td><td className="p-4">既存帳票の表示・編集</td></tr>
+                <tr className={ac.row}><th scope="row" className="p-4">複雑なExcelやオフライン作業</th><td className="p-4">デスクトップ版アプリの利用権</td><td className="p-4">マクロ、印刷、他ソフト連携</td></tr>
+                <tr className={ac.row}><th scope="row" className="p-4">社外利用や端末管理</th><td className="p-4">端末管理、アクセス制御の範囲</td><td className="p-4">対象端末と必要な設定</td></tr>
               </tbody>
             </table>
           </div>
@@ -87,7 +88,7 @@ const ArticleM365Migration: React.FC = () => {
 
           <h2 className={heading}>3. Microsoft 365のメール移行手順</h2>
           <p className={paragraph}>メールは移行元によって方法が変わります。メール本文だけでなく、連絡先、予定表、共有窓口も対象にするかを決めます。ある方法でメールをコピーできても、他の情報まで同時に移るとは限りません。<a href="https://learn.microsoft.com/en-us/exchange/mailbox-migration/mailbox-migration" className="text-svc-josys underline underline-offset-4">Microsoft公式のメール移行方法</a>で対象と制約を確認し、試験してから本番に進みます。</p>
-          <ol className="list-decimal pl-6 text-sumi-muted leading-[2] space-y-2">
+          <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>移行計画を作ります。責任者、作業日、問い合わせ先、業務への影響、延期や切り戻しの条件を決めます。</li>
             <li>会社用の管理環境と利用者を用意し、ドメインの所有確認、必要なライセンスの割り当て、認証設定を行います。</li>
             <li>代表的な利用者で試験移行します。過去メール、添付ファイル、フォルダー、連絡先・予定表の対象範囲を確認します。</li>
@@ -97,8 +98,10 @@ const ArticleM365Migration: React.FC = () => {
           <p className={`${paragraph} mt-4`}>DNSの変更はすべての場所に同時には反映されません。切り替え前後に旧環境へ届いたメールの扱いと、追加分を移す方法を用意します。切り戻す場合も両環境に届いたデータの整合を取る必要があるため、単に設定を戻すだけで完了とは考えないでください。</p>
           <p className={paragraph}>切り替え日は業務が少ない時間帯を選び、社員にはログイン方法、変更点、連絡先を事前に伝えます。旧契約は新環境の受け入れ確認前に解約しないことが大切です。完了条件を「送受信できた」だけにせず、業務で必要なメールが検索できるところまで確認します。</p>
 
-          <div className={`mt-14 p-6 md:p-8 rounded-[28px] border ${service.border} ${service.tint}`}>
-            <p className="font-head text-sumi font-bold mb-2">棚卸しや切り替え計画で迷ったら</p>
+          <div className={ac.promo}>
+            <img src={promoHeroSrc} alt="" className={ac.promoHero} loading="lazy" />
+            <span aria-hidden="true" className={ac.promoLabel}>ARCLE TIP!</span>
+            <p className={ac.promoTitle}>棚卸しや切り替え計画で迷ったら</p>
             <p className="text-sumi-muted">Arcleの情シス代行では、クラウドサービスの選定・導入・運用、アカウント管理、セキュリティ対策を支援しています。専任担当者のいない企業も、現在の契約や困りごとの整理からご相談いただけます。</p>
             <a href={service.href} className="inline-flex items-center gap-2 mt-4 text-svc-josys font-bold hover:underline underline-offset-4">情シス代行の支援内容を見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
@@ -106,7 +109,7 @@ const ArticleM365Migration: React.FC = () => {
           <h2 className={heading}>4. ファイル移行は保存先と権限を先に決定</h2>
           <p className={paragraph}>ファイルはコピーを始める前に、個人の作業用と会社で共有する資料を分けます。OneDriveは個人の作業ファイル、SharePointは部署や会社で共有する資料の置き場として使い分ける考え方があります。担当者が退職しても会社の資料を引き継げる構成にすることが重要です。</p>
           <p className={paragraph}>部署の責任者とフォルダー構成を決め、閲覧だけの人、編集できる人、社外へ共有できる人を整理します。権限は業務上必要な範囲に絞り、原則として部署や役割のグループ単位で付けると、異動時の変更漏れを減らせます。移行先で古い共有リンクをそのまま使えるとは考えず、案内の更新も予定します。</p>
-          <ol className="list-decimal pl-6 text-sumi-muted leading-[2] space-y-2">
+          <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>小さなフォルダーで試し、ファイル名、パスの長さ、開けない形式、リンク切れなどの問題を洗い出します。</li>
             <li>本番をコピーし、コピー後に更新された差分を反映します。旧保存先での編集を止める時刻を周知します。</li>
             <li>件数や容量、エラー記録を確認し、部署の担当者が重要ファイルを開いて内容・権限を確かめます。</li>
@@ -146,25 +149,25 @@ const ArticleM365Migration: React.FC = () => {
 
           <section className="mt-14">
             <h2 className={heading}>よくある質問</h2>
-            <div className="space-y-5 text-sumi-muted leading-[2] [&>div]:rounded-[28px] [&>div]:bg-cream [&>div]:p-6 [&_h3]:mb-2">
-              {faqs.map(({ question, answer }) => <div key={question}><h3 className="font-head font-bold text-sumi [word-break:auto-phrase]">{question}</h3><p>{answer}</p></div>)}
+            <div className={ac.faq}>
+              {faqs.map(({ question, answer }) => <div key={question}><h3 className={ac.faqQ}>{question}</h3><p>{answer}</p></div>)}
             </div>
           </section>
-          <section className="mt-14 border-t border-warm-line pt-10">
-            <h2 className="font-head text-2xl md:text-[28px] font-bold text-svc-josys [word-break:auto-phrase] mb-4">関連記事</h2>
+          <section className={ac.related}>
+            <h2 className={ac.h2Flat.josys}>関連記事</h2>
             <div className="space-y-3">
-              <a href="/articles/ichinomiya-josys-outsourcing-guide" className="block text-svc-josys hover:underline underline-offset-4 py-1">中小企業向け 情シス代行の選び方</a>
-              <a href="/works/accounting-office-m365-security" className="block text-svc-josys hover:underline underline-offset-4 py-1">Microsoft 365・セキュリティの支援モデルケース</a>
+              <a href="/articles/ichinomiya-josys-outsourcing-guide" className={ac.relatedLink}>中小企業向け 情シス代行の選び方</a>
+              <a href="/works/accounting-office-m365-security" className={ac.relatedLink}>Microsoft 365・セキュリティの支援モデルケース</a>
               <p className="text-sm text-sumi-muted">支援モデルケースは架空のモデルケースであり、実際のお客様の導入実績ではありません。</p>
-              <a href="/articles" className="block text-sumi-muted hover:text-sumi underline">記事一覧を見る</a>
+              <a href="/articles" className={ac.allLink}>記事一覧を見る</a>
             </div>
           </section>
-          <section className={`mt-14 rounded-[28px] p-6 md:p-8 ${service.tint}`}>
-            <h2 className="font-head text-2xl font-bold [word-break:auto-phrase]">関連サービス</h2>
+          <section className={ac.svcBox.josys}>
+            <h2 className={ac.svcTitle}>関連サービス</h2>
             <p className="mt-4 text-sumi-muted">クラウドの導入からアカウント管理、セキュリティの運用まで、情シス代行の対応範囲をご確認ください。</p>
-            <a href={service.href} className="mt-5 inline-flex items-center gap-2 rounded-full bg-sumi text-white px-6 py-3 font-bold hover:opacity-90">{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
+            <a href={service.href} className={ac.svcBtn}>{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </section>
-          <p className="mt-10 text-sm text-sumi-muted">この記事を書いた人：<a href="/company/message" className="text-svc-josys underline underline-offset-4">栗原 勇太（Arcle代表）</a></p>
+          <p className={ac.author}>この記事を書いた人：<a href="/company/message" className="text-svc-josys underline underline-offset-4">栗原 勇太（Arcle代表）</a></p>
         </div>
       </article>
       <ContactCta />
