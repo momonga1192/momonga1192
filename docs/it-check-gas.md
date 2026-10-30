@@ -163,11 +163,13 @@ IT健康診断の「メール送付」の列は空で記録されます。資料
 
 スクリプトを貼り替えて保存し、「デプロイ」→「デプロイを管理」→ 鉛筆のアイコン →「バージョン：新しいバージョン」→「デプロイ」。URLは変わりません。
 
-デプロイしたら、シートに記録されない送り方で、返事が届くかを確かめます（`invalid` が返ればOK。前のスクリプトのままだとエラーの画面が返る）。
+デプロイしたら、シートに記録されない送り方で、新しいスクリプトに替わったかを確かめます。`{"ok":false,"error":"invalid"}` が返ればOK。前のスクリプトのままだと「SyntaxError」のエラーの画面が返ります。
 
 ```bash
-curl -sL -X POST -H 'Content-Type: text/plain' --data '{"form":"check"}' 'https://script.google.com/macros/s/…/exec'
+curl -sL -H 'Content-Type: text/plain' --data 'not-json' 'https://script.google.com/macros/s/…/exec'
 ```
+
+JSONの形のもの（`{"form":"check"}` など）で試さないこと。前のスクリプトは、お問い合わせ以外をすべてIT健康診断のシートに記録するので、空の行が増えます。
 
 メールを送る処理が新しく入ったときは、デプロイの前に、エディタ上部の関数の選択で `authorize` を選んで「実行」し、出てきた画面でメール送信を許可してください（許可しないと、お問い合わせの記録もできません）。
 
