@@ -42,7 +42,7 @@ const InquiryForm: React.FC = () => {
     } catch {
       // 通信できなかったときは、入力を残したまま知らせる
       setSending(false);
-      setError('送信できませんでした。通信の状態を確かめて、もう一度お試しください。');
+      setError('送信できませんでした。通信の状態を確かめて、時間をおいてもう一度お試しください。');
       return;
     }
     track('generate_lead', { form: 'contact' });
@@ -73,18 +73,18 @@ const InquiryForm: React.FC = () => {
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-bold">
           会社名{required}
-          <input required value={inq.company} onChange={set('company')} autoComplete="organization" className={input} />
+          <input required maxLength={100} value={inq.company} onChange={set('company')} autoComplete="organization" className={input} />
         </label>
         <label className="block text-sm font-bold">
           お名前{required}
-          <input required value={inq.name} onChange={set('name')} autoComplete="name" className={input} />
+          <input required maxLength={50} value={inq.name} onChange={set('name')} autoComplete="name" className={input} />
         </label>
         <label className="block text-sm font-bold">
           メールアドレス{required}
           <input
             required
             type="email"
-            value={inq.email}
+            maxLength={254} value={inq.email}
             onChange={(e) => {
               setEmailError('');
               set('email')(e);
@@ -97,7 +97,7 @@ const InquiryForm: React.FC = () => {
         </label>
         <label className="block text-sm font-bold">
           電話番号{required}
-          <input required pattern="[0-9０-９\-－+ ]{10,}" title="電話番号を入力してください（例：0586-00-0000）" type="tel" value={inq.phone} onChange={set('phone')} autoComplete="tel" className={input} />
+          <input required pattern="[0-9０-９\-－+ ]{10,20}" title="電話番号を入力してください（例：0586-00-0000）" type="tel" value={inq.phone} onChange={set('phone')} autoComplete="tel" className={input} />
         </label>
         <label aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
           ホームページ
@@ -125,7 +125,7 @@ const InquiryForm: React.FC = () => {
 
       <label className="block mt-7 text-sm font-bold">
         お問い合わせの内容{required}
-        <textarea required rows={7} value={inq.message} onChange={set('message')} placeholder="例）社員が10人ほどの会社です。PCやアカウントの管理を任せられるところを探しています。" className={`${input} leading-relaxed resize-y placeholder:text-sumi-muted/70`} />
+        <textarea required rows={7} maxLength={3000} value={inq.message} onChange={set('message')} placeholder="例）社員が10人ほどの会社です。PCやアカウントの管理を任せられるところを探しています。" className={`${input} leading-relaxed resize-y placeholder:text-sumi-muted/70`} />
       </label>
 
       <label className="mt-6 flex items-start gap-2.5 text-xs leading-relaxed text-sumi-muted">

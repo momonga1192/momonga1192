@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, ArrowRight, BarChart3, Bot, Download, Gift, Globe, Lock, Mail, Printer, RotateCcw, Shield } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BarChart3, Bot, Gift, Globe, Lock, Mail, Printer, RotateCcw, Shield } from 'lucide-react';
 import { IconTile, Mark, PageHeader, comicBtn, comicBtnShape, comicIllust } from '../parts';
 import { prices, services } from '../theme';
 import { Bubble, Burst, Caption, panel } from '../comic';
 import { allGoodType, areas, choices, levelLabel, questionCount, scoreAnswers, type AreaScore } from './checkData';
-import { deliverByMail, guidePdf, isDummyEmail, sendLead, type Lead } from './leadForm';
+import { isDummyEmail, sendLead, type Lead } from './leadForm';
 
 // 会社のIT健康診断。20問に答えると、総合点・レーダーチャート・一番弱い分野までは無料で見せ、
 // 分野ごとの解説・進める順番・おすすめサービスは、会社名などを入力すると解禁する。資料PDFは入力されたメールアドレスに送る
@@ -174,7 +174,7 @@ const Intro: React.FC<{ onStart: () => void }> = ({ onStart }) => (
           {[
             { title: '20問に答える', body: '4分野×5問。考え込まずに、いまの会社の様子で答えてください。', icon: '01' },
             { title: 'その場で結果がわかる', body: '総合点と4分野のレーダーチャート、いちばん伸ばしたい分野がすぐに見られます。', icon: '02' },
-            { title: '詳しい解説とDX読本を受け取る', body: `会社名などを入力すると、分野ごとの「まずやること」と進める順番が見られます。『はじめてのDX読本』も${deliverByMail ? 'メールで' : ''}プレゼントします。`, icon: '03' }
+            { title: '詳しい解説とDX読本を受け取る', body: `会社名などを入力すると、分野ごとの「まずやること」と進める順番が見られます。『はじめてのDX読本』もメールでプレゼントします。`, icon: '03' }
           ].map((item, i) => (
             <li
               key={item.title}
@@ -751,20 +751,11 @@ const Details: React.FC<{ byArea: AreaScore[]; order: AreaScore[] }> = ({ byArea
         <div className="p-7 md:p-12">
           <Caption className="-rotate-2">お役立ち資料</Caption>
           <h3 className="font-manga text-[24px] md:text-[32px] leading-snug mt-5 [word-break:auto-phrase]">IT担当がいない会社のための はじめてのDX読本</h3>
-          {deliverByMail ? (
-            <p className="inline-flex items-center gap-2 mt-5 bg-mustard/40 px-5 py-3 text-sm font-manga border-[3px] border-[#111] shadow-[3px_3px_0_#111]">
-              <Mail className="w-4 h-4 shrink-0" strokeWidth={2.6} />
-              ご入力いただいたメールアドレスに、追ってお送りします
-            </p>
-          ) : (
-            <p className="mt-5">
-              <a href={guidePdf} download onClick={() => track('guide_download')} className={`${comicBtnShape} bg-[#111] text-white shadow-[5px_5px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544]`}>
-                <Download className="w-4 h-4" strokeWidth={3} />
-                資料PDFをダウンロード
-              </a>
-            </p>
-          )}
-          <p className="mt-5 text-sm leading-[1.9] text-sumi">今後のDXのご参考に、よくある困りごとや分野ごとの進め方、セルフチェックシート、支援のモデルケースをまとめました。社内での共有にもお使いください。{deliverByMail && 'メールが見当たらないときは、迷惑メールのフォルダもご確認ください。'}</p>
+          <p className="inline-flex items-center gap-2 mt-5 bg-mustard/40 px-5 py-3 text-sm font-manga border-[3px] border-[#111] shadow-[3px_3px_0_#111]">
+            <Mail className="w-4 h-4 shrink-0" strokeWidth={2.6} />
+            ご入力いただいたメールアドレスに、追ってお送りします
+          </p>
+          <p className="mt-5 text-sm leading-[1.9] text-sumi">今後のDXのご参考に、よくある困りごとや分野ごとの進め方、セルフチェックシート、支援のモデルケースをまとめました。社内での共有にもお使いください。メールが見当たらないときは、迷惑メールのフォルダもご確認ください。</p>
           <div className="mt-8 flex flex-wrap gap-4">
             <a href="/contact" className={`${comicBtn} bg-coral text-white`}>
               結果をもとに無料で相談する
@@ -781,6 +772,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
   const [lead, setLead] = useState<Lead>({ company: '', name: '', email: '', phone: '' });
   const [agree, setAgree] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
   const [emailError, setEmailError] = useState('');
   // ロボットよけ：画面には見えない欄。ここが埋まっていたら送信しない
   const [trap, setTrap] = useState('');
@@ -793,10 +785,14 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
       return;
     }
     setSending(true);
+    setError('');
     try {
       if (!trap) await sendLead(lead, summary);
     } catch {
-      /* 送信に失敗しても、入力してくれた人には結果を見せる */
+      // 記録できないと読本のメールも届かないので、入力を残したまま知らせて送り直してもらう
+      setSending(false);
+      setError('送信できませんでした。時間をおいて、もう一度お試しください。');
+      return;
     }
     track('generate_lead', { form: 'it_check' });
     onUnlock();
@@ -818,7 +814,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
           <br />
           プレゼント！
         </p>
-        <p className="mt-3 inline-block bg-white border-2 border-[#111] px-2 py-0.5 text-xs font-bold">PDF・30ページ／{deliverByMail ? 'メールでお届けします' : '入力後すぐにダウンロードできます'}</p>
+        <p className="mt-3 inline-block bg-white border-2 border-[#111] px-2 py-0.5 text-xs font-bold">PDF・30ページ／メールでお届けします</p>
         <img src={comicIllust('contact-check-book')} alt="" className="pop-float absolute -right-3 -top-[86px] w-[142px] sm:w-[150px] pointer-events-none" />
       </div>
       <div className="p-5 sm:p-7 md:p-9">
@@ -827,7 +823,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
           診断結果の続きも、入力で見られます
         </p>
         <ul className="mt-3 space-y-1.5 text-sm font-bold">
-          {['分野ごとの「まずやること」', '御社に合った進める順番と、おすすめのサービス', deliverByMail ? '『はじめてのDX読本』（PDF）をメールでお届け' : '『はじめてのDX読本』（PDF）のダウンロード'].map((t) => (
+          {['分野ごとの「まずやること」', '御社に合った進める順番と、おすすめのサービス', '『はじめてのDX読本』（PDF）をメールでお届け'].map((t) => (
             <li key={t} className="flex items-start gap-2">
               <span className="shrink-0 mt-0.5 grid place-items-center w-5 h-5 bg-svc-josys text-white text-[11px] border-2 border-[#111]">✓</span>
               {t}
@@ -837,18 +833,18 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
         <div className="mt-6 grid gap-4">
           <label className="block text-sm font-bold">
             会社名{required}
-            <input required value={lead.company} onChange={set('company')} autoComplete="organization" className={input} />
+            <input required maxLength={100} value={lead.company} onChange={set('company')} autoComplete="organization" className={input} />
           </label>
           <label className="block text-sm font-bold">
             お名前{required}
-            <input required value={lead.name} onChange={set('name')} autoComplete="name" className={input} />
+            <input required maxLength={50} value={lead.name} onChange={set('name')} autoComplete="name" className={input} />
           </label>
           <label className="block text-sm font-bold">
             メールアドレス{required}
             <input
               required
               type="email"
-              value={lead.email}
+              maxLength={254} value={lead.email}
               onChange={(e) => {
                 setEmailError('');
                 set('email')(e);
@@ -860,7 +856,7 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
             {emailError ? (
               <span className="block mt-1.5 text-xs font-bold text-coral">{emailError}</span>
             ) : (
-              deliverByMail && lead.email && <span className="block mt-1.5 text-xs font-normal text-sumi-muted break-all">『はじめてのDX読本』は「{lead.email}」にお送りします</span>
+              lead.email && <span className="block mt-1.5 text-xs font-normal text-sumi-muted break-all">『はじめてのDX読本』は「{lead.email}」にお送りします</span>
             )}
           </label>
           <label aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
@@ -869,13 +865,18 @@ const UnlockForm: React.FC<{ summary: string; onUnlock: () => void }> = ({ summa
           </label>
           <label className="block text-sm font-bold">
             電話番号{required}
-            <input required pattern="[0-9０-９\-－+ ]{10,}" title="電話番号を入力してください（例：0586-00-0000）" type="tel" value={lead.phone} onChange={set('phone')} autoComplete="tel" className={input} />
+            <input required pattern="[0-9０-９\-－+ ]{10,20}" title="電話番号を入力してください（例：0586-00-0000）" type="tel" value={lead.phone} onChange={set('phone')} autoComplete="tel" className={input} />
           </label>
           <label className="flex items-start gap-2.5 text-xs leading-relaxed text-sumi-muted">
             <input required type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-0.5 w-4 h-4 accent-[#111]" />
             <span>入力いただいた情報は、診断結果と資料のご提供、Arcleからのご連絡・ご案内にのみ使います。<a href="/privacy" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-sumi">プライバシーポリシー</a>に同意して送信します。</span>
           </label>
         </div>
+        {error && (
+          <p role="alert" className="mt-5 text-sm font-bold text-coral">
+            {error}
+          </p>
+        )}
         <button type="submit" disabled={sending} className={`mt-7 w-full ${comicBtnShape} px-4 sm:px-7 text-[15px] sm:text-[16px] whitespace-nowrap bg-[#111] text-white shadow-[5px_5px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544] disabled:opacity-60`}>
           {sending ? '送信しています…' : '結果の続きを見る・読本を受け取る'}
           <ArrowRight className="w-4 h-4" strokeWidth={3} />
