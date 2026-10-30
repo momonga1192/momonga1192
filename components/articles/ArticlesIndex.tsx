@@ -7,6 +7,13 @@ import { serviceByName, services } from '../next/theme';
 
 export const articles = [
   {
+    title: 'Microsoft 365 CopilotとChatGPTの違いと選び方',
+    description: '無料のCopilot Chatと有料版の違い、ChatGPTの法人向けプラン、社内データの扱い、自社に合う方の判断基準と試し方をまとめました。',
+    href: '/articles/copilot-vs-chatgpt-sme',
+    published: '2026-10-31',
+    tag: '生成AI'
+  },
+  {
     title: '売上データの見える化を始める手順',
     description: '最初に見る数字の決め方、集計しやすい元データの整え方、Excelのピボットテーブルでの集計と数字の読み方をまとめました。',
     href: '/articles/sales-data-visualization-first-steps',
