@@ -172,7 +172,8 @@ export const HeroStage: React.FC<{ intro: Intro; className?: string }> = ({ intr
   }, [loading]);
 
   const at = (p: Phase) => reached(p);
-  const woman = at('cheer') ? 'woman-happy' : at('boom') ? 'woman-panic' : 'woman-calm';
+  // 女性が手を組んで喜ぶのは、演出が小さくなってトップページに収まってから（catch）。それまでは青ざめたまま
+  const woman = at('catch') ? 'woman-happy' : at('boom') ? 'woman-panic' : 'woman-calm';
   const dark = at('villain') && !at('smash');
   const smashing = phase === 'smash' || phase === 'cheer';
 
@@ -208,7 +209,7 @@ export const HeroStage: React.FC<{ intro: Intro; className?: string }> = ({ intr
         <img src={part('bg-office')} alt="" className="absolute inset-0 w-full h-full object-cover" />
         {/* ヴィランが出てくるあいだは画面を暗くする */}
         <div className={`absolute inset-0 bg-[#2A1450] transition-opacity duration-700 ${dark ? (at('attack') ? 'opacity-60' : 'opacity-45') : 'opacity-0'}`} />
-        <img src={part(woman)} alt="" className={`absolute left-[1%] bottom-[16%] w-[44%] ${phase === 'calm' ? 'intro-typing' : ''} ${phase === 'attack' || phase === 'whoosh' ? 'intro-tremble' : ''}`} />
+        <img src={part(woman)} alt="" className={`absolute left-[1%] bottom-[16%] w-[44%] ${phase === 'calm' ? 'intro-typing' : ''} ${phase === 'attack' || phase === 'whoosh' ? 'intro-tremble' : ''} ${phase === 'catch' ? 'intro-joy' : ''}`} />
         <img src={part('desk')} alt="" className="absolute left-0 -bottom-[2%] w-full" />
         <img src={part(at('boom') ? 'laptop-broken' : 'laptop-ok')} alt="" className="absolute left-[33%] bottom-[4%] w-[34%]" />
         {at('boom') && !at('smash') && (
@@ -278,7 +279,7 @@ export const HeroStage: React.FC<{ intro: Intro; className?: string }> = ({ intr
       )}
       {at('villain') && !at('whoosh') && (
         <span
-          className="comic-pop absolute left-[44%] top-[17%] z-10 font-comic text-[7cqw] text-[#B98CFF] [paint-order:stroke_fill] [-webkit-text-stroke:0.12em_#111] [text-shadow:0.06em_0.06em_0_#111] [--r:8deg]"
+          className="comic-pop absolute left-[50%] top-[47%] z-10 font-comic text-[7cqw] text-[#B98CFF] [paint-order:stroke_fill] [-webkit-text-stroke:0.12em_#111] [text-shadow:0.06em_0.06em_0_#111] [--r:8deg]"
           aria-hidden="true"
         >
           GRRR...!
@@ -298,8 +299,8 @@ export const HeroStage: React.FC<{ intro: Intro; className?: string }> = ({ intr
       ) : (
         at('cheer') && <Burst wide text="SMAAASH!!" className="w-[40%] left-[24%] top-[3%]" textClass="text-white text-[5.8cqw]" rotate={-8} />
       )}
-      {at('cheer') && (
-        <Bubble className="left-[3%] lg:left-[9%] top-[10%] text-[3.8cqw]" tailAt={72} lean={0.5} rotate={-6} delay={0.3}>
+      {at('catch') && (
+        <Bubble className="left-[3%] lg:left-[9%] top-[10%] text-[3.8cqw]" tailAt={72} lean={0.5} rotate={-6} delay={0.25}>
           MY HERO!
         </Bubble>
       )}

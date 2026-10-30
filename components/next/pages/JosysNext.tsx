@@ -87,11 +87,13 @@ const plans = [
             ];
 
 // アメコミ版の飾り（絵・効果音・コマの番号）。文言は上のデータのまま使う
-// お悩みは1枚の大きなコマ（josys-concerns）に3人を描いてある。スマホは1人ずつ切り出して各カードの上に出す（pos は背景の位置）
+// お悩みは1枚の絵（josys-concerns）に3人を描いてある。1人ずつ切り出して各カードの上に出す（size は絵の拡大率、pos は背景の位置）。
+// PC は縦長のコマにして、pcSize・pcPos で絵の上から下（机の上のPCやプリンター）まで見せる。
+// 縦長のコマ（3:4）を埋めるため、pcSize は 250% 以上にする（絵の縦横比 1200:647）
 const concernArt = [
-  { sfx: 'HUH?', color: '#F07A5A', at: 'left-[22%] top-[6%]', spAt: 'right-[6%] top-[5%]', tilt: -10, size: '280%', pos: '0% 0%' },
-  { sfx: 'PANIC!', color: '#F2B544', at: 'left-[38%] top-[3%]', spAt: 'right-[5%] top-[5%]', tilt: 6, size: '300%', pos: '50% 0%' },
-  { sfx: 'EEK!', color: '#C9A6FF', at: 'left-[60%] top-[8%]', spAt: 'left-[34%] top-[5%]', tilt: 10, size: '250%', pos: '100% 0%' }
+  { sfx: 'HUH?', color: '#F07A5A', spAt: 'right-[6%] top-[5%]', tilt: -10, size: '280%', pos: '0% 0%', pcSize: '250%', pcPos: '0% 50%' },
+  { sfx: 'PANIC!', color: '#F2B544', spAt: 'right-[5%] top-[5%]', tilt: 6, size: '300%', pos: '50% 0%', pcSize: '250%', pcPos: '48% 50%' },
+  { sfx: 'EEK!', color: '#C9A6FF', spAt: 'left-[34%] top-[5%]', tilt: 10, size: '250%', pos: '100% 0%', pcSize: '250%', pcPos: '100% 50%' }
 ];
 const offeringArt = [
   { img: 'josys-svc-helpdesk', sfx: 'CLICK!', at: 'right-[5%] bottom-[8%]', tilt: 8 },
@@ -160,7 +162,7 @@ const JosysNext: React.FC = () => (
       imageMode="panel"
     />
 
-    {/* お悩み：黒い帯の見出し → 3人が困っている大きなコマ → 番号付きの3つのコマ */}
+    {/* お悩み：黒い帯の見出し → 1人1コマの、番号付きの3つのコマ */}
     <section className="pt-16 pb-20 md:pt-24 md:pb-28 bg-mustard comic-dots overflow-x-clip">
       <div className="pop-reveal text-center px-4">
         <span className="inline-block -rotate-3 border-[3px] border-[#111] px-4 pt-1.5 pb-1 font-comic text-xl md:text-2xl tracking-[0.06em] shadow-[4px_4px_0_#111] bg-svc-josys text-white">Your Concerns</span>
@@ -177,24 +179,15 @@ const JosysNext: React.FC = () => (
           コア業務に集中したいのに、ITのトラブルや雑務に時間を奪われている。そんな経営者様・ご担当者様のお悩みを、Arcleが一緒に解決します。
         </p>
 
-        {/* PC：3人を描いた1枚の大きなコマ。左・中央・右がそれぞれ下の 1・2・3 のコマに対応する */}
-        <div className={`pop-reveal hidden md:block relative mt-14 aspect-[1200/647] overflow-hidden bg-white ${panel} rotate-[0.6deg]`}>
-          <img src={comicIllust('josys-concerns')} alt="ITの困りごとに追われる社員たちのイラスト" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
-          {concernArt.map((c, i) => (
-            <React.Fragment key={c.sfx}>
-              <SfxText text={c.sfx} color={c.color} className={`text-[clamp(30px,3.6vw,48px)] ${c.at}`} rotate={c.tilt} delay={0.3 + i * 0.2} />
-              <span className="absolute bottom-[4%] grid place-items-center w-12 h-12 bg-mustard border-[3px] border-[#111] shadow-[3px_3px_0_#111] font-comic text-[30px] leading-none -rotate-6" style={{ left: `calc(${i * 33.3}% + 3%)` }} aria-hidden="true">
-                {i + 1}
-              </span>
-            </React.Fragment>
-          ))}
-        </div>
-
-        <div className="mt-10 md:mt-12 grid md:grid-cols-3 gap-8 md:gap-6">
+        <div className="mt-10 md:mt-14 grid md:grid-cols-3 gap-8 md:gap-6">
           {concerns.map((item, i) => (
             <div key={item.title} style={{ animationDelay: `${i * 100}ms` }} className={`pop-reveal group relative bg-white ${panel} ${i === 1 ? 'md:rotate-[1deg]' : 'md:-rotate-[0.8deg]'}`}>
-              {/* スマホ：大きなコマから、その人のところだけを切り出して見せる */}
-              <div className="md:hidden relative aspect-square border-b-[4px] border-[#111] bg-no-repeat" style={{ backgroundImage: `url(${comicIllust('josys-concerns')})`, backgroundSize: `${concernArt[i].size} auto`, backgroundPosition: concernArt[i].pos }} aria-hidden="true">
+              {/* 3人を描いた1枚の絵から、その人のところだけを切り出して、1人1コマにする */}
+              <div
+                className="relative aspect-square md:aspect-[3/4] overflow-hidden border-b-[4px] border-[#111] bg-no-repeat [background-size:var(--s)_auto] [background-position:var(--p)] md:[background-size:var(--s-pc)_auto] md:[background-position:var(--p-pc)]"
+                style={{ backgroundImage: `url(${comicIllust('josys-concerns')})`, '--s': concernArt[i].size, '--p': concernArt[i].pos, '--s-pc': concernArt[i].pcSize, '--p-pc': concernArt[i].pcPos } as React.CSSProperties}
+                aria-hidden="true"
+              >
                 <SfxText text={concernArt[i].sfx} color={concernArt[i].color} className={`text-[36px] ${concernArt[i].spAt}`} rotate={concernArt[i].tilt} delay={0.3} />
               </div>
               <div className="flex items-start gap-4 p-5 md:p-6">

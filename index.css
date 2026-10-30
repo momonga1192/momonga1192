@@ -179,10 +179,13 @@ body {
 .intro-hover { animation: intro-hover 3s ease-in-out infinite; }
 .intro-flash { animation: intro-flash 0.45s ease-out both; }
 .intro-slam { animation: intro-slam 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+/* 女性が喜んで、ぴょんと跳ねる */
+@keyframes intro-joy { 0% { transform: translateY(3%) scale(0.97); } 45% { transform: translateY(-5%) scale(1.03); } 100% { transform: none; } }
+.intro-joy { transform-origin: 50% 100%; animation: intro-joy 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
 /* Reactが動くまでの黒い幕。JSが止まっても5秒で消える */
 html[data-intro]::after { content: ''; position: fixed; inset: 0; z-index: 70; background: #111; animation: intro-failsafe 0.3s 5s forwards; }
 @media (prefers-reduced-motion: reduce) {
-  .intro-typing, .intro-smoke, .intro-villain, .intro-hover { animation: none; }
+  .intro-typing, .intro-smoke, .intro-villain, .intro-hover, .intro-joy { animation: none; }
 }
 
 /* 部品に分けた絵（トップのお悩みのコマ。HomeComic.tsx の LayerScene）。
