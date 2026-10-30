@@ -1,8 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight } from 'lucide-react';
-import { ContactCta, PageHeader } from '../next/parts';
+import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
+import { ac, promoHeroSrc } from './articleComic';
 
 const title = '愛知・東海の中小企業向け｜売上データの見える化を始める手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -16,15 +17,15 @@ const faqs = [
   { q: '毎月どのくらいの時間をかければよいですか？', a: '会社の規模やデータの量によって変わります。最初は元データの整理に時間がかかりますが、表の形が決まれば、毎月の作業は新しい月の明細を追加して集計を更新するだけに近づきます。作業時間を記録しておくと、自動化を検討するときの判断材料になります。' },
   { q: '数字を見ても、何をすればよいか分からないときは？', a: '数字を見る前に「この数字が下がったら何を確認するか」を決めておくと、次の行動につながりやすくなります。たとえば、ある顧客の売上が前年より下がっていたら、担当者に取引の状況を聞く、といった具合です。数字は話し合いのきっかけとして使いましょう。' }
 ];
-const heading = 'font-head text-2xl md:text-[28px] font-bold text-svc-data [word-break:auto-phrase] mt-12 mb-4';
-const paragraph = 'text-sumi-muted leading-[2] mb-4';
-const subheading = 'font-head text-xl font-bold text-sumi [word-break:auto-phrase] mt-8 mb-3';
+const heading = ac.h2.data;
+const paragraph = ac.p;
+const subheading = ac.h3;
 
 const ArticleSalesVisualization: React.FC = () => {
   const service = services.find((item) => item.key === 'data')!;
 
   return (
-    <div className="bg-cream text-sumi">
+    <div className={ac.page}>
       <Helmet>
         <title>{title} | Arcle</title>
         <meta name="description" content={description} />
@@ -49,14 +50,14 @@ const ArticleSalesVisualization: React.FC = () => {
           }))
         })}</script>
       </Helmet>
-      <PageHeader en="Articles" title={pageTitle} service="data" crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: pageTitle }]} />
-      <article className="bg-white rounded-t-[48px] md:rounded-t-[80px] py-20 md:py-28">
-        <div className="max-w-3xl mx-auto px-5 text-[16px] leading-[2]">
+      <PageHeader en="Articles" title={pageTitle} service="data" compact image={comicIllust('svc-data')} imageMode="panel" crumbs={[{ label: 'お役立ち記事', href: '/articles' }, { label: pageTitle }]} />
+      <article className={ac.article}>
+        <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
-            <span className={`rounded-full px-4 py-1 text-sm font-bold ${service.tint} ${service.text}`}>データ活用</span>
-            <time dateTime={published} className="font-en text-sm text-sumi-muted">{published}</time>
+            <span className={ac.tag.data}>データ活用</span>
+            <time dateTime={published} className={ac.date}>{published}</time>
           </div>
-          <p className="text-sumi-muted leading-[2] mb-8">「売上は毎月集計しているのに、増えた理由も減った理由もよく分からない」。そんな悩みを持つ会社は少なくありません。売上の見える化とは、売上の数字を月や顧客、商品ごとに分けて、表やグラフでひと目で分かる形にすることです。大がかりなシステムがなくても、Excelと手元のデータから始められます。この記事では、最初に見る数字の決め方から、元データの整え方、Excelでの集計、数字の読み方、社内で見る習慣づくりまでを順に整理します。</p>
+          <p className="text-[#30343F] leading-[2] mb-8">「売上は毎月集計しているのに、増えた理由も減った理由もよく分からない」。そんな悩みを持つ会社は少なくありません。売上の見える化とは、売上の数字を月や顧客、商品ごとに分けて、表やグラフでひと目で分かる形にすることです。大がかりなシステムがなくても、Excelと手元のデータから始められます。この記事では、最初に見る数字の決め方から、元データの整え方、Excelでの集計、数字の読み方、社内で見る習慣づくりまでを順に整理します。</p>
 
           <h2 className={heading}>1. 売上の見える化で答えたい問いを決める</h2>
           <p className={paragraph}>見える化を始めるときに、いきなりグラフを作るのは避けましょう。先に決めたいのは「この数字を見て、何を判断したいか」です。問いが決まっていないと、グラフをたくさん作っても眺めて終わりになりがちです。</p>
@@ -65,10 +66,10 @@ const ArticleSalesVisualization: React.FC = () => {
 
           <h2 className={heading}>2. 最初に見る数字と切り口を選ぶ</h2>
           <p className={paragraph}>売上は、どの切り口で分けるかによって見え方が変わります。切り口とは、数字を分ける単位のことです。月、顧客、商品、担当者などがあり、それぞれ分かることと必要なデータが違います。</p>
-          <div className="overflow-x-auto rounded-[28px] border border-warm-line my-6" role="region" aria-label="売上を見る切り口の比較（横にスクロールできます）" tabIndex={0}>
-            <table className="w-full min-w-[640px] text-sm border-collapse text-sumi-muted">
-              <caption className="p-4 text-left font-bold text-sumi bg-cream">売上を見る主な切り口</caption>
-              <thead className={service.tint}><tr><th scope="col" className="p-4 text-left">切り口</th><th scope="col" className="p-4 text-left">分かること</th><th scope="col" className="p-4 text-left">元データに必要な列</th><th scope="col" className="p-4 text-left">向いているグラフ</th></tr></thead>
+          <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="売上を見る切り口の比較（横にスクロールできます）" tabIndex={0}>
+            <table className="w-full min-w-[640px] text-sm border-collapse text-[#30343F]">
+              <caption className={ac.caption}>売上を見る主な切り口</caption>
+              <thead className={ac.thead}><tr><th scope="col" className="p-4 text-left">切り口</th><th scope="col" className="p-4 text-left">分かること</th><th scope="col" className="p-4 text-left">元データに必要な列</th><th scope="col" className="p-4 text-left">向いているグラフ</th></tr></thead>
               <tbody>
                 {[
                   ['月別', '売上の推移、季節による波、前年との比較', '売上日、金額', '折れ線グラフ、棒グラフ'],
@@ -76,7 +77,7 @@ const ArticleSalesVisualization: React.FC = () => {
                   ['商品別', 'よく売れる商品、伸びている商品群', '商品コード、商品名、商品分類、金額', '横向きの棒グラフ（多い順）'],
                   ['担当者・営業所別', '担当ごとの売上の差、目標との差', '担当者、営業所、金額', '棒グラフ、目標と実績の表'],
                   ['粗利（あらり）', '売上から原価を引いた、実際にもうけた額', '金額、原価', '表、棒グラフ']
-                ].map(([axis, know, cols, chart]) => <tr key={axis}><th scope="row" className="p-4 border-t border-warm-line text-left font-bold text-sumi">{axis}</th><td className="p-4 border-t border-warm-line">{know}</td><td className="p-4 border-t border-warm-line">{cols}</td><td className="p-4 border-t border-warm-line">{chart}</td></tr>)}
+                ].map(([axis, know, cols, chart]) => <tr key={axis}><th scope="row" className="p-4 border-t-2 border-[#111]/20 text-left font-bold text-sumi">{axis}</th><td className="p-4 border-t-2 border-[#111]/20">{know}</td><td className="p-4 border-t-2 border-[#111]/20">{cols}</td><td className="p-4 border-t-2 border-[#111]/20">{chart}</td></tr>)}
               </tbody>
             </table>
           </div>
@@ -88,9 +89,9 @@ const ArticleSalesVisualization: React.FC = () => {
           <p className={paragraph}>集計しやすい表の基本は、1行に1件の取引を書き、1列に1種類の項目を入れることです。見た目を整えるために月ごとに表を分けたり、顧客ごとに小計の行を挟んだりした表は、人が読むには便利でも集計には向きません。月ごとのシートに分かれている場合は、一つのシートにまとめ、売上日の列で月を区別します。</p>
           <h3 className={subheading}>コードと表記をそろえる</h3>
           <p className={paragraph}>同じ顧客が「株式会社〇〇」「（株）〇〇」「〇〇」と別々に書かれていると、集計では別の顧客として扱われます。顧客や商品にはコード（番号）を付け、名前ではなくコードで集計できるようにしましょう。システムから書き出したデータなら、多くの場合コードの列がすでにあります。</p>
-          <div className="rounded-[28px] bg-cream p-6 md:p-8 my-6">
-            <p className="font-head font-bold text-sumi mb-3">元データの確認チェックリスト</p>
-            <ul className="space-y-2 text-sumi-muted leading-[2]">
+          <div className={ac.box}>
+            <p className={ac.boxTitle}>元データの確認チェックリスト</p>
+            <ul className="space-y-2 text-[#30343F] leading-[2]">
               {[
                 '見出しの行が1行だけで、列の名前が重複していないか',
                 '結合したセルや、途中の空白行・小計の行がないか',
@@ -100,14 +101,14 @@ const ArticleSalesVisualization: React.FC = () => {
                 '返品や値引きをどう記録しているか（マイナスの行か、別の列か）が決まっているか',
                 '税抜きと税込みのどちらで集計するかがそろっているか',
                 '毎月どこからデータを取り出し、誰が追加するかが決まっているか'
-              ].map((item) => <li key={item} className="flex gap-3"><span aria-hidden="true" className="mt-[0.55em] h-3 w-3 shrink-0 rounded-[4px] border-2 border-svc-data" />{item}</li>)}
+              ].map((item) => <li key={item} className="flex gap-3"><span aria-hidden="true" className={ac.check} />{item}</li>)}
             </ul>
           </div>
           <p className={paragraph}>見出しを1行にする、列の中の値の種類をそろえる、といった考え方は、ExcelだけでなくBIツールにデータを読み込むときにも共通する基本です。ここで整えた表は、あとでツールを替えてもそのまま使えます。</p>
 
           <h2 className={heading}>4. Excelのピボットテーブルで集計とグラフを作る</h2>
           <p className={paragraph}>元データが整ったら、Excelのピボットテーブルで集計します。ピボットテーブルは、関数を書かずに、項目を選ぶだけで合計や件数を集計できる機能です。手順は次のとおりです。</p>
-          <ol className="list-decimal pl-6 text-sumi-muted leading-[2] space-y-3">
+          <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-3">
             <li><strong className="text-sumi">元データをテーブルにする：</strong>明細の範囲を選び、テーブルとして書式設定します。テーブルにしておくと、行を追加したときに集計の範囲が自動で広がります。</li>
             <li><strong className="text-sumi">ピボットテーブルを作る：</strong>テーブル内のセルを選んでピボットテーブルを挿入し、新しいシートに置きます。</li>
             <li><strong className="text-sumi">月別に集計する：</strong>行に売上日、値に金額を入れます。日付は月や四半期、年の単位にグループ化できます。</li>
@@ -117,8 +118,10 @@ const ArticleSalesVisualization: React.FC = () => {
           </ol>
           <p className={`${paragraph} mt-4`}>グラフは種類を増やしすぎないことが大切です。円グラフや立体のグラフは見栄えはしても、項目が多いと差が読み取りにくくなります。一つのグラフで伝えることは一つに絞り、タイトルに「月別売上の推移（前年比較）」のように、何を見るグラフかを書いておきましょう。画面の操作や名前はExcelの版によって異なることがあるため、迷ったときはMicrosoftのサポートページで確認してください。</p>
 
-          <div className={`mt-10 p-6 md:p-8 rounded-[28px] border ${service.border} ${service.tint}`}>
-            <p className="font-head text-sumi font-bold mb-2">売上の見える化を一緒に始めたい方へ</p>
+          <div className={ac.promo}>
+            <img src={promoHeroSrc} alt="" className={ac.promoHero} loading="lazy" />
+            <span aria-hidden="true" className={ac.promoLabel}>ARCLE TIP!</span>
+            <p className={ac.promoTitle}>売上の見える化を一緒に始めたい方へ</p>
             <p className={paragraph}>Arcleのデータ活用支援では、売上などのテーマを一つ決めて、Excelや既存システムのデータから自動で更新されるダッシュボードを作るところから支援しています。どの数字から見ればよいかの整理や、作ったあとの操作の説明も含めてご相談いただけます。</p>
             <a href={service.href} className="inline-flex items-center gap-2 text-svc-data font-bold hover:underline underline-offset-4">データ活用支援の内容を確認する<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
@@ -135,7 +138,7 @@ const ArticleSalesVisualization: React.FC = () => {
 
           <h2 className={heading}>6. 社内で見る習慣をつくり、次の段階を考える</h2>
           <p className={paragraph}>見える化は、作って終わりではなく、決まったタイミングで見られて初めて役に立ちます。次の三つを決めておくと、続けやすくなります。</p>
-          <ul className="list-disc pl-6 text-sumi-muted leading-[2] space-y-2">
+          <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>更新の担当と期日：誰が、毎月何日までに新しい月のデータを追加するかを決めます。</li>
             <li>見る場面：月初の営業会議や経営会議など、数字を見る場を決め、最初の数分で確認する流れにします。</li>
             <li>置き場所：最新のファイルを一つの共有フォルダに置き、古い版のコピーが出回らないようにします。</li>
@@ -148,23 +151,23 @@ const ArticleSalesVisualization: React.FC = () => {
 
           <section className="mt-14">
             <h2 className={heading}>よくある質問</h2>
-            <div className="space-y-5 text-sumi-muted leading-[2] [&>div]:rounded-[28px] [&>div]:bg-cream [&>div]:p-6 [&_h3]:mb-2">
-              {faqs.map((faq) => <div key={faq.q}><h3 className="font-head font-bold text-sumi [word-break:auto-phrase]">{faq.q}</h3><p>{faq.a}</p></div>)}
+            <div className={ac.faq}>
+              {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
-          <section className="mt-14 border-t border-warm-line pt-10">
-            <h2 className="font-head text-2xl md:text-[28px] font-bold text-svc-data [word-break:auto-phrase] mb-4">関連記事</h2>
+          <section className={ac.related}>
+            <h2 className={ac.h2Flat.data}>関連記事</h2>
             <div className="space-y-3">
-              <a href="/articles/excel-report-automation-power-bi" className="block text-svc-data hover:underline underline-offset-4 py-1">Excel集計を自動化する｜Power BIで月次報告</a>
-              <a href="/articles/sme-bi-tableau-powerbi" className="block text-svc-data hover:underline underline-offset-4 py-1">中小企業のためのTableauとPower BIの選び方</a>
-              <a href="/articles" className="block text-sumi-muted hover:text-sumi underline">記事一覧を見る</a>
+              <a href="/articles/excel-report-automation-power-bi" className={ac.relatedLink}>Excel集計を自動化する｜Power BIで月次報告</a>
+              <a href="/articles/sme-bi-tableau-powerbi" className={ac.relatedLink}>中小企業のためのTableauとPower BIの選び方</a>
+              <a href="/articles" className={ac.allLink}>記事一覧を見る</a>
             </div>
           </section>
-          <section className={`mt-14 rounded-[28px] p-6 md:p-8 ${service.tint}`}>
-            <h2 className="font-head text-2xl font-bold [word-break:auto-phrase]">関連サービス</h2>
-            <a href={service.href} className="mt-5 inline-flex items-center gap-2 rounded-full bg-sumi text-white px-6 py-3 font-bold hover:opacity-90">{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
+          <section className={ac.svcBox.data}>
+            <h2 className={ac.svcTitle}>関連サービス</h2>
+            <a href={service.href} className={ac.svcBtn}>{service.name}を詳しく見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </section>
-          <p className="mt-10 text-sm text-sumi-muted">この記事を書いた人：栗原 勇太（Arcle代表）<br /><a href="/company/message" className="text-svc-data hover:underline underline-offset-4">代表メッセージを見る</a></p>
+          <p className={ac.author}>この記事を書いた人：栗原 勇太（Arcle代表）<br /><a href="/company/message" className="text-svc-data hover:underline underline-offset-4">代表メッセージを見る</a></p>
         </div>
       </article>
       <ContactCta />
