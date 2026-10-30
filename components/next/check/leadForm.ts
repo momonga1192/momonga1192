@@ -1,7 +1,7 @@
 // 診断結果の解禁フォームと、お問い合わせフォームの送り先（Googleスプレッドシート＋Apps Script のウェブアプリ）
 // 送られた内容をシートに記録する。資料PDFのメールはArcleが手作業で送る。スクリプトと設定手順は docs/it-check-gas.md
 export const leadForm = {
-  endpoint: 'https://script.google.com/macros/s/AKfycbzllpLYVb3-jGw-EKIK386zkHI0lvD5fDYy1rb1Vq-IjaxTCnn4hCO2GYCgtaI8-RKciQ/exec'
+  endpoint: 'https://script.google.com/macros/s/AKfycbxE6hFt-15kfeB4-iBzMM4geQaHep5gYkSu7wtRk0dJOlMhy8lZm5FlAGtz3rIGN09Ggw/exec'
 };
 
 // 資料PDF（はじめてのDX読本、scripts/dx-guide/build.mjs で作る）はArcleがメールで渡す。適当な入力で手に入らないよう、URLはサイトに書かない
