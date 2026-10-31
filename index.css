@@ -279,3 +279,10 @@ html { overflow-x: clip; }
   .js-motion .pop-reveal { opacity: 1 !important; animation: none !important; }
   .print-card { break-inside: avoid; }
 }
+
+/* 高さの低いPC画面では、診断への案内を文字中心のコンパクトな表示にする。 */
+@media (min-width: 768px) and (max-height: 800px) {
+  .it-check-banner-art {
+    display: none;
+  }
+}
