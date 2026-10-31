@@ -148,7 +148,7 @@ const ArticleWebCompanyGuide: React.FC = () => {
             <h2 className={ac.h2Flat.web}>関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/monthly-vs-one-time-website" className={ac.relatedLink}>月額制と一括払いのホームページ制作を比較する</a>
-              <a href="/samples" target="_blank" rel="noopener" className={ac.relatedLink}>業種別のホームページ作例を見る</a>
+              <a href="/samples" className={ac.relatedLink}>業種別のホームページ作例を見る</a>
               <a href="/articles" className={ac.allLink}>記事一覧を見る</a>
             </div>
           </section>

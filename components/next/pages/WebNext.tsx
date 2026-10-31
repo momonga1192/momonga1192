@@ -91,14 +91,48 @@ const samples = [
   { slug: 'aoba-dental', name: 'あおば通り歯科クリニック', type: '歯科医院', plan: 'スタンダード' },
   { slug: 'manabiya-ippo', name: '個別指導塾 まなびや一歩', type: '学習塾', plan: 'ライト' },
   { slug: 'inaho-setsubi', name: '稲穂設備工業株式会社', type: '設備工事業', plan: 'ライト' },
-  { slug: 'salon-nagi', name: 'リラクゼーションサロン 凪', type: 'リラクゼーション', plan: 'オーダーメイド' },
+  { slug: 'salon-nagi', name: 'リラクゼーションサロン 凪', type: 'リラクゼーション', plan: 'スタンダード' },
   { slug: 'sakurazaka-sr', name: 'さくら坂社会保険労務士事務所', type: '社会保険労務士', plan: 'スタンダード' }
 ];
+
+// 同じ会社（葉月建設）を3つのプランで作った作例。marks は画面の写しに重ねる番号の位置（%）で、points の番号と対応する
+const planVersions = [
+  {
+    slug: 'hazuki-kensetsu-light',
+    plan: 'ライト',
+    price: 4800,
+    catch: 'テンプレートを選んで、そのまま使う',
+    marks: [[52, 24], [82, 62], [42, 8]],
+    points: ['色はテンプレートの配色のまま', '大きな写真に見出しを重ねた、決まった型', 'メニューは4ページ']
+  },
+  {
+    slug: 'hazuki-kensetsu',
+    plan: 'スタンダード',
+    price: 7500,
+    catch: 'テンプレートを、会社に合わせて作り変える',
+    marks: [[42, 72], [82, 56], [62, 8]],
+    points: ['会社の色（深緑と黄土）に変える', '写真を斜めに切り抜き、実績の数字を並べる型に', 'メニューは6ページ（採用・よくある質問を追加）']
+  },
+  {
+    slug: 'hazuki-kensetsu-order',
+    plan: 'オーダーメイド',
+    price: 9800,
+    catch: 'テンプレートを使わず、ゼロから描く',
+    marks: [[24, 20], [64, 46], [5, 8]],
+    points: ['色も書体も、この会社のために（図面の方眼と朱の線）', '図面を線で描いてから、竣工写真に変わるトップ', 'ロゴマーク・メニュー・横に流れる施工事例も専用']
+  }
+];
+
+const MarkNum: React.FC<{ n: number; className?: string; style?: React.CSSProperties }> = ({ n, className = '', style }) => (
+  <span style={style} className={`grid place-items-center w-7 h-7 shrink-0 rounded-full bg-coral text-white border-[2.5px] border-[#111] font-comic text-[15px] leading-none shadow-[2px_2px_0_#111] ${className}`} aria-hidden="true">
+    {n}
+  </span>
+);
 
 // 作例のカード：1つのコマに、ブラウザの窓に入れたファーストビューを貼る
 const SampleCard: React.FC<{ sample: (typeof samples)[number]; hidden?: boolean }> = ({ sample, hidden }) => (
   <li className="w-[280px] md:w-[360px] shrink-0" aria-hidden={hidden || undefined}>
-    <a href={`/samples/${sample.slug}`} target="_blank" rel="noopener" tabIndex={hidden ? -1 : undefined} className={`group block bg-white p-3 ${card} ${press}`}>
+    <a href={`/samples/${sample.slug}`} tabIndex={hidden ? -1 : undefined} className={`group block bg-white p-3 ${card} ${press}`}>
       <div className="pop-tilt overflow-hidden border-[3px] border-[#111] bg-[#FAF3E0]">
         <div className="flex gap-1.5 px-3 py-2 border-b-[3px] border-[#111] bg-white" aria-hidden="true">
           <span className="w-2.5 h-2.5 rounded-full border-2 border-[#111] bg-coral" />
@@ -454,8 +488,61 @@ const WebNext: React.FC = () => (
         </div>
       </div>
       <div className="relative max-w-6xl mx-auto px-4 sm:px-5 mt-12 text-center">
-        <a href="/samples" target="_blank" rel="noopener" className={button}>作例をすべて見る<ArrowRight className="w-4 h-4" strokeWidth={3} /></a>
+        <a href="/samples" className={button}>作例をすべて見る<ArrowRight className="w-4 h-4" strokeWidth={3} /></a>
         <p className="text-xs font-bold text-sumi-muted mt-6">※作例の会社名・人物・連絡先はすべて架空のものです。</p>
+      </div>
+    </section>
+
+    {/* 同じ会社を3つのプランで：画面の写しに番号を重ね、下に違いを書く */}
+    <section className="relative py-20 md:py-28 comic-dots overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-5">
+        <SectionHead
+          en="Light / Standard / Order Made"
+          title={<>同じ会社を、<Mark>3つのプラン</Mark>で作ると</>}
+          lead="架空の建設会社「葉月建設」を、文章と写真はそのままに、プランだけを変えて作りました。番号のところが、プランによって変わるところです。"
+          enClass={service.text}
+          center
+        />
+        <ol className="grid lg:grid-cols-3 gap-12 lg:gap-6">
+          {planVersions.map((v, i) => (
+            <li key={v.slug} style={{ animationDelay: `${i * 110}ms` }} className="pop-reveal">
+              <a href={`/samples/${v.slug}`} className={`group relative block h-full bg-white p-3 ${card} ${press}`}>
+                <Caption className={`absolute z-10 -top-4 left-3 ${i % 2 ? 'rotate-2' : '-rotate-2'}`} tone={i === 1 ? 'bg-svc-web text-white' : 'bg-mustard text-[#111]'}>
+                  {v.plan}　月額{v.price.toLocaleString()}円
+                </Caption>
+                <div className="relative border-[3px] border-[#111] bg-[#FAF3E0]">
+                  <div className="flex gap-1.5 px-3 py-2 border-b-[3px] border-[#111] bg-white" aria-hidden="true">
+                    <span className="w-2.5 h-2.5 rounded-full border-2 border-[#111] bg-coral" />
+                    <span className="w-2.5 h-2.5 rounded-full border-2 border-[#111] bg-mustard" />
+                    <span className="w-2.5 h-2.5 rounded-full border-2 border-[#111] bg-svc-web" />
+                  </div>
+                  <div className="relative">
+                    <img src={`/images/samples/${v.slug}.webp`} alt={`葉月建設の作例（${v.plan}）のトップページ`} width={800} height={500} className="block w-full aspect-[8/5] object-cover object-top" loading="lazy" />
+                    {v.marks.map(([x, y], n) => (
+                      <MarkNum key={n} n={n + 1} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${x}%`, top: `${y}%` }} />
+                    ))}
+                  </div>
+                </div>
+                <div className="px-1 pt-5 pb-1">
+                  <p className="font-manga text-[17px] leading-snug [word-break:auto-phrase]">{v.catch}</p>
+                  <ul className="mt-3 space-y-2">
+                    {v.points.map((point, n) => (
+                      <li key={point} className="flex gap-2.5 text-sm font-bold leading-relaxed [word-break:auto-phrase]">
+                        <MarkNum n={n + 1} className="!w-6 !h-6 !text-[13px] mt-[1px]" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className={`mt-4 flex items-center gap-1.5 font-manga text-sm ${service.text}`}>
+                    この作例を開く
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" strokeWidth={3} />
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-8 text-xs font-bold text-sumi-muted text-center">※葉月建設は作例のための架空の会社です。</p>
       </div>
     </section>
 
