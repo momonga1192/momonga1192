@@ -79,18 +79,18 @@ const CheckBanner: React.FC = () => {
   // バナー：1つのコマ。上（PC）／左（スマホ）は青い集中線に、聴診器とクリップボードのヒーローが枠から飛び出す。
   // 下／右は白い地に、診断の名前とプレゼントの案内。英字の吹き出しは飾り
   return (
-    <div className={`no-print fixed z-40 inset-x-3 bottom-3 md:inset-x-auto md:right-5 md:bottom-5 md:w-[256px] ${motion}`}>
+    <div className={`no-print fixed z-40 inset-x-3 bottom-3 md:inset-x-auto md:right-5 md:bottom-5 md:w-[224px] ${motion}`}>
       <a
         href="/it-check"
         onClick={click}
         className="group relative flex md:flex-col items-stretch bg-white text-[#111] border-[3px] border-[#111] shadow-[5px_5px_0_#F07A5A,7px_7px_0_#111] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#F07A5A,4px_4px_0_#111]"
       >
         {/* 絵のコマ：左右と下は枠で切り、上だけはみ出させる */}
-        <span className="relative shrink-0 w-[92px] md:w-auto md:h-[128px] comic-rays [--ray-a:#3B6FE0] [--ray-b:#4A7DEA] border-r-[3px] md:border-r-0 md:border-b-[3px] border-[#111] [clip-path:inset(-100%_0_0_0)]">
+        <span className="relative shrink-0 w-[76px] md:w-auto md:h-[104px] comic-rays [--ray-a:#3B6FE0] [--ray-b:#4A7DEA] border-r-[3px] md:border-r-0 md:border-b-[3px] border-[#111] [clip-path:inset(-100%_0_0_0)]">
           <img
             src="/images/illust-comic/contact-check-banner.webp"
             alt=""
-            className="pop-tilt absolute bottom-0 left-1/2 -translate-x-1/2 w-[104px] md:w-[196px] max-w-none"
+            className="pop-tilt absolute bottom-0 left-1/2 -translate-x-1/2 w-[88px] md:w-[168px] max-w-none"
           />
           <span
             className="hidden md:block comic-pop absolute -left-3 top-2 bg-white border-[3px] border-[#111] rounded-[50%] px-2.5 py-1 font-comic text-[17px] leading-none tracking-[0.04em] shadow-[2px_2px_0_#111]"
@@ -100,20 +100,20 @@ const CheckBanner: React.FC = () => {
             CHECK UP!
           </span>
         </span>
-        <span className="flex-1 min-w-0 flex md:block items-center gap-2 pl-3 pr-9 py-2.5 md:px-4 md:pt-3.5 md:pb-4 comic-dots">
+        <span className="flex-1 min-w-0 flex md:block items-center gap-2 pl-2.5 pr-9 py-2 md:px-3 md:pt-3 md:pb-3 comic-dots">
           <span className="block min-w-0">
             <span className="block text-[10px] md:text-xs font-bold">
               <span className="inline-block -rotate-3 mr-1.5 bg-mustard px-1.5 text-[10px] font-manga text-[#111] border-2 border-[#111]">無料</span>
               3分でわかる
             </span>
-            <span className="block font-manga text-[16px] md:text-[20px] leading-tight mt-1 text-white [paint-order:stroke_fill] [-webkit-text-stroke:5px_#111] [text-shadow:2px_2px_0_#111]">会社のIT健康診断</span>
+            <span className="block font-manga text-[16px] md:text-[18px] leading-tight mt-1 text-white [paint-order:stroke_fill] [-webkit-text-stroke:5px_#111] [text-shadow:2px_2px_0_#111]">会社のIT健康診断</span>
             {/* 診断の続きを入力すると、資料PDFがもらえる */}
-            <span className="mt-1 md:mt-2 inline-flex items-center gap-1 bg-white border-2 border-[#111] px-1.5 py-px text-[10px] md:text-[11px] font-black text-svc-josys">
+            <span className="mt-1 md:mt-1.5 inline-flex items-center gap-1 bg-white border-2 border-[#111] px-1.5 py-px text-[10px] md:text-[11px] font-black text-svc-josys">
               <Gift className="w-3 h-3 md:w-3.5 md:h-3.5 shrink-0" strokeWidth={2.6} />
               はじめてのDX読本プレゼント
             </span>
           </span>
-          <span className="hidden md:flex mt-3 w-full justify-center items-center gap-1 -rotate-1 bg-coral text-white px-3.5 py-2 text-[13px] font-manga border-[3px] border-[#111] shadow-[3px_3px_0_#111]">
+          <span className="hidden md:flex mt-2.5 w-full justify-center items-center gap-1 -rotate-1 bg-coral text-white px-3 py-1.5 text-[13px] font-manga border-[3px] border-[#111] shadow-[3px_3px_0_#111]">
             診断してみる
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" strokeWidth={3} />
           </span>
