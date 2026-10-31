@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Check, ArrowRight, Wallet, Server, RefreshCw, Headphones, Smartphone, Mail, Globe, ShieldCheck, BarChart3, MessageSquare, Newspaper, ChevronDown, MapPin } from 'lucide-react';
+import { Check, ArrowRight, Wallet, Server, RefreshCw, Headphones, Smartphone, Mail, Globe, ShieldCheck, BarChart3, MessageSquare, Newspaper, ChevronDown } from 'lucide-react';
 import { PageHeader, SectionHead, ContactCta, IconTile, Mark, PlanCard, Sticker, Ticker, card, press, comicBtn, comicBtnShape, comicIllust } from '../parts';
 import { Bubble, Burst, Caption, SfxText, SlantPanel, panel } from '../comic';
 import { services } from '../theme';
@@ -12,6 +12,7 @@ import ServiceArticles from '../../articles/ServiceArticles';
 const plans = [
   {
     name: 'Light',
+    samplePlan: 'light',
     sub: 'ライト',
     desc: 'まずは名刺代わりのホームページを',
     price: 4800,
@@ -22,6 +23,7 @@ const plans = [
   },
   {
     name: 'Standard',
+    samplePlan: 'standard',
     sub: 'スタンダード',
     desc: '会社の魅力をしっかり伝えたい',
     price: 7500,
@@ -33,6 +35,7 @@ const plans = [
   },
   {
     name: 'Order Made',
+    samplePlan: 'order',
     sub: 'オーダーメイド',
     desc: 'ブランドに合わせた完全オリジナルで',
     price: 9800,
@@ -75,8 +78,6 @@ const flow = [
   { title: '確認・公開', desc: '公開前に一緒に最終確認し、修正を反映して公開します。更新方法もご説明します。' },
   { title: '運用サポート', desc: '公開後も文章・写真の差し替えやお知らせの掲載をお手伝いします。' }
 ];
-
-const areas = ['愛知県', '岐阜県', '三重県'];
 
 // 作例（public/samples）。画像は各作例のファーストビュー
 const samples = [
@@ -246,8 +247,8 @@ const storyContent = (s: (typeof story)[number]) => (
 const WebNext: React.FC = () => (
   <div className="bg-[#FAF3E0] text-sumi overflow-x-clip">
       <Helmet>
-        <title>月額制ホームページ制作 | 愛知・東海 初期費用0円・月額4,800円〜 - Arcle</title>
-        <meta name="description" content="愛知・東海の中小企業向け、月額制のホームページ制作。初期費用0円、月額4,800円（税抜）から。サーバー・ドメイン・独自ドメインのメール・スマホ対応・公開後の更新まで込み。東海エリアは訪問打ち合わせにも対応します。" />
+        <title>月額制ホームページ制作 | 全国対応・初期費用0円・月額4,800円〜 - Arcle</title>
+        <meta name="description" content="全国の中小企業向け、月額制のホームページ制作。初期費用0円、月額4,800円（税抜）から。サーバー・ドメイン・独自ドメインのメール・スマホ対応・公開後の更新まで込み。オンラインでの打ち合わせで全国に対応します。" />
         <link rel="canonical" href="https://www.arcle.net/web-production" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -263,7 +264,7 @@ const WebNext: React.FC = () => (
           "name": "月額制ホームページ制作",
           "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "初期費用0円・月額4,800円から。サーバー・ドメイン・メール・スマホ対応・公開後の更新まで込みのホームページ制作",
-          "areaServed": areas.map((name) => ({ "@type": "State", "name": name })),
+          "areaServed": { "@type": "Country", "name": "日本", "identifier": "JP" },
           "offers": plans.map((plan) => ({
             "@type": "Offer",
             "name": plan.sub,
@@ -411,7 +412,9 @@ const WebNext: React.FC = () => (
               key={plan.name}
               index={index}
               service="web"
-              cta="このプランで相談する"
+              cta="作例を見る"
+              ctaLabel={`${plan.sub}プランの作例を見る`}
+              ctaHref={`/samples?plan=${plan.samplePlan}`}
               plan={{ ...plan, chip: '初期費用 0円', prefix: '月額', amount: plan.price.toLocaleString(), unit: '円', priceNote: `（税込 ${withTax(plan.price)}円）`, note: `公開までの目安：${plan.term}` }}
             />
           ))}
@@ -511,10 +514,7 @@ const WebNext: React.FC = () => (
 
     <section className="py-20 md:py-28 bg-white comic-dots border-y-[4px] border-[#111]">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
-        <SectionHead en="Area" title="対応エリア" lead="東海エリア（愛知・岐阜・三重）は訪問での打ち合わせにも対応します。オンライン打ち合わせなら全国どこからでもご依頼いただけます。" enClass={service.text} center />
-        <ul className="max-w-3xl mx-auto flex flex-wrap justify-center gap-4">{areas.map((area, i) => (
-          <li key={area} className={`pop-wiggle border-[3px] border-[#111] bg-[#FAF3E0] px-5 py-2.5 font-manga text-[17px] inline-flex items-center gap-2 shadow-[4px_4px_0_#111] ${i % 2 ? 'rotate-2' : '-rotate-2'}`}><MapPin className={`w-4 h-4 ${service.text}`} strokeWidth={3} />{area}</li>
-        ))}</ul>
+        <SectionHead en="Area" title="全国対応" lead="オンラインでの打ち合わせで、全国どこからでもホームページ制作をご依頼いただけます。制作から公開後の更新・運用までサポートします。" enClass={service.text} center />
       </div>
     </section>
 

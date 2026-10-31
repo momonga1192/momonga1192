@@ -277,7 +277,7 @@ export type Plan = {
   recommended?: boolean;
 };
 
-export const PlanCard: React.FC<{ plan: Plan; service: ServiceKey; index: number; cta?: string; ctaLabel?: string }> = ({ plan, service, index, cta = 'お問い合わせ', ctaLabel }) => {
+export const PlanCard: React.FC<{ plan: Plan; service: ServiceKey; index: number; cta?: string; ctaLabel?: string; ctaHref?: string }> = ({ plan, service, index, cta = 'お問い合わせ', ctaLabel, ctaHref = '/contact' }) => {
   const s = services.find((item) => item.key === service)!;
   const hot = plan.recommended;
   const included = plan.features.filter((f) => f.endsWith('プランの全内容'));
@@ -340,7 +340,7 @@ export const PlanCard: React.FC<{ plan: Plan; service: ServiceKey; index: number
             ))}
           </ul>
           {plan.note && <p className="text-xs text-sumi-muted mt-7">{plan.note}</p>}
-          <a href="/contact" aria-label={ctaLabel} className={`mt-6 ${hot ? `${comicBtnShape} bg-[#111] text-white shadow-[5px_5px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544]` : `${comicBtn} bg-white text-[#111]`}`}>
+          <a href={ctaHref} aria-label={ctaLabel} className={`mt-6 ${hot ? `${comicBtnShape} bg-[#111] text-white shadow-[5px_5px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544]` : `${comicBtn} bg-white text-[#111]`}`}>
             {cta}
             <ArrowRight className="w-4 h-4" strokeWidth={3} aria-hidden="true" />
           </a>
