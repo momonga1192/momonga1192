@@ -68,8 +68,9 @@ const fullRect = (right = false, whole = false) => {
 };
 
 export const useHeroIntro = () => {
-  const [phase, setPhase] = useState<Phase>(() => (shouldPlay() ? 'calm' : 'done'));
-  const playing = useRef(phase !== 'done');
+  // 書き出したHTMLと同じ最後の場面で描き始め、流すときは画面に出る前に最初の場面へ戻す（ハイドレーションのずれを防ぐ）
+  const [phase, setPhase] = useState<Phase>('done');
+  const playing = useRef(false);
   const [ready, setReady] = useState(false);
   const timers = useRef<number[]>([]);
 
@@ -79,6 +80,12 @@ export const useHeroIntro = () => {
     playing.current = false;
     document.documentElement.style.overflow = '';
     setPhase('done');
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!shouldPlay()) return;
+    playing.current = true;
+    setPhase('calm');
   }, []);
 
   useEffect(() => {
@@ -122,11 +129,12 @@ type Intro = ReturnType<typeof useHeroIntro>;
 export const HeroStage: React.FC<{ intro: Intro; className?: string }> = ({ intro, className = '' }) => {
   const { phase, reached, skip } = intro;
   const slot = useRef<HTMLDivElement>(null);
-  const [rect, setRect] = useState<React.CSSProperties | null>(() => (phase === 'done' ? null : typeof window === 'undefined' ? null : fullRect()));
+  const [rect, setRect] = useState<React.CSSProperties | null>(null);
   const loading = !reached('shrink');
 
   // 縮むときは、画面いっぱいの位置から定位置へ動かす
   useLayoutEffect(() => {
+    if (phase === 'calm') setRect(fullRect());
     if (phase === 'shrink' && slot.current) {
       const r = slot.current.getBoundingClientRect();
       setRect({ left: r.left, top: r.top, width: r.width, height: r.height });

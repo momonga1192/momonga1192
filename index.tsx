@@ -49,9 +49,15 @@ if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
+const app = (
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
+
+// 本番は書き出したHTML（scripts/prerender.mjs）をそのまま引き継ぐ。開発サーバーでは中身が空なので最初から描く
+if (rootElement.hasChildNodes()) {
+  ReactDOM.hydrateRoot(rootElement, app);
+} else {
+  ReactDOM.createRoot(rootElement).render(app);
+}
