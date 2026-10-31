@@ -1,6 +1,6 @@
 export type WorkService = '情シス代行' | 'データ活用' | '生成AI' | 'Web制作';
 
-// よくあるご相談をもとにした架空のモデルケース。企業名・数値は説明のためのもの
+// 実際の支援をもとに、企業の特定や機密情報の開示を避けるため一部情報を加工
 export interface WorkCase {
   slug: string;
   title: string;

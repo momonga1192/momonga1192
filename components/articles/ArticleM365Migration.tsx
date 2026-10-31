@@ -157,8 +157,8 @@ const ArticleM365Migration: React.FC = () => {
             <h2 className={ac.h2Flat.josys}>関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/ichinomiya-josys-outsourcing-guide" className={ac.relatedLink}>中小企業向け 情シス代行の選び方</a>
-              <a href="/works/accounting-office-m365-security" className={ac.relatedLink}>Microsoft 365・セキュリティの支援モデルケース</a>
-              <p className="text-sm text-sumi-muted">支援モデルケースは架空のモデルケースであり、実際のお客様の導入実績ではありません。</p>
+              <a href="/works/accounting-office-m365-security" className={ac.relatedLink}>Microsoft 365・セキュリティの支援事例</a>
+              <p className="text-sm text-sumi-muted">実際の支援をもとに、企業の特定や機密情報の開示を避けるため、一部情報を加工しています。</p>
               <a href="/articles" className={ac.allLink}>記事一覧を見る</a>
             </div>
           </section>

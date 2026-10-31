@@ -4,7 +4,7 @@ import { services } from './theme';
 
 const nav = [
   { label: 'サービス', href: '/services', children: services.map((s) => ({ label: s.name, href: s.href })) },
-  { label: '支援モデルケース', href: '/works' },
+  { label: '支援事例', href: '/works' },
   { label: '事業者概要', href: '/company' },
   { label: 'ご相談の流れ', href: '/flow' },
   { label: 'お役立ち記事', href: '/articles' }

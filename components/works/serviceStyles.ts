@@ -45,7 +45,7 @@ export const serviceStyles: Record<
   }
 };
 
-// モデルケースの表紙の絵（アメコミ版）。同じ事業が続いても単調にならないよう、事業の絵とお悩みの絵を交互に使う
+// 支援事例の表紙の絵（アメコミ版）。同じ事業が続いても単調にならないよう、事業の絵とお悩みの絵を交互に使う
 const worryArt: Record<ServiceKey, string> = { josys: 'worry-pc', data: 'worry-data', ai: 'worry-ai', web: 'worry-web' };
 export const caseArt = (service: ServiceKey, index: number) => (index % 2 ? worryArt[service] : `svc-${service}`);
 export const worryArtOf = (service: ServiceKey) => worryArt[service];

@@ -755,7 +755,7 @@ const Details: React.FC<{ byArea: AreaScore[]; order: AreaScore[] }> = ({ byArea
             <Mail className="w-4 h-4 shrink-0" strokeWidth={2.6} />
             ご入力いただいたメールアドレスに、追ってお送りします
           </p>
-          <p className="mt-5 text-sm leading-[1.9] text-sumi">今後のDXのご参考に、よくある困りごとや分野ごとの進め方、セルフチェックシート、支援のモデルケースをまとめました。社内での共有にもお使いください。メールが見当たらないときは、迷惑メールのフォルダもご確認ください。</p>
+          <p className="mt-5 text-sm leading-[1.9] text-sumi">今後のDXのご参考に、よくある困りごとや分野ごとの進め方、セルフチェックシート、支援事例をまとめました。社内での共有にもお使いください。メールが見当たらないときは、迷惑メールのフォルダもご確認ください。</p>
           <div className="mt-8 flex flex-wrap gap-4">
             <a href="/contact" className={`${comicBtn} bg-coral text-white`}>
               結果をもとに無料で相談する

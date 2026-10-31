@@ -139,7 +139,7 @@ const ArticleExcelToPowerBI: React.FC = () => {
             <h2 className={heading}>関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/sme-bi-tableau-powerbi" className={ac.relatedLink}>TableauとPower BIはどちらを選ぶべき？</a>
-              <a href="/works/wholesale-powerbi-dashboard" className={ac.relatedLink}>卸売業のPower BIダッシュボード（架空のモデルケース）</a>
+              <a href="/works/wholesale-powerbi-dashboard" className={ac.relatedLink}>卸売業のPower BIダッシュボード（一部情報を加工）</a>
               <a href="/articles" className={ac.allLink}>記事一覧を見る</a>
             </div>
           </section>

@@ -424,11 +424,11 @@ const HomeComic: React.FC = () => {
         </div>
       </section>
 
-      {/* 支援モデルケース */}
+      {/* 支援事例 */}
       <section className="py-20 md:py-28 bg-white comic-dots">
         <div className="max-w-6xl mx-auto px-4 sm:px-5">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <ComicHead en="CASE FILES" enTone="bg-svc-data text-white" title="支援モデルケース" lead="中小企業によくあるご相談をもとに、Arcleならどう支援するかをまとめました。" />
+            <ComicHead en="CASE FILES" enTone="bg-svc-data text-white" title="支援事例" lead="中小企業の課題に、Arcleがどのように取り組んだかをご紹介します。" />
             <a href="/works" className={`md:mb-16 self-start md:self-auto shrink-0 ${ctaButton} py-2.5 px-5 text-[14px] bg-white text-[#111]`}>
               すべて見る
               <ArrowRight className="w-4 h-4" strokeWidth={3} />
@@ -457,7 +457,7 @@ const HomeComic: React.FC = () => {
               );
             })}
           </div>
-          <p className="mt-6 text-xs text-sumi-muted">※掲載しているのは、よくあるご相談をもとにした架空のモデルケースです。</p>
+          <p className="mt-6 text-xs text-sumi-muted">※実際の支援をもとに、企業の特定や機密情報の開示を避けるため、一部情報を加工しています。</p>
         </div>
       </section>
 

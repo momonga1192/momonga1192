@@ -39,11 +39,11 @@ const WorkDetail: React.FC = () => {
           <title>ページが見つかりません | Arcle</title>
           <meta name="robots" content="noindex" />
         </Helmet>
-        <PageHeader en="Works" title="ページが見つかりません" crumbs={[{ label: '支援モデルケース', href: '/works' }, { label: 'ページが見つかりません' }]} />
+        <PageHeader en="Works" title="ページが見つかりません" crumbs={[{ label: '支援事例', href: '/works' }, { label: 'ページが見つかりません' }]} />
         <div className="max-w-6xl mx-auto px-4 sm:px-5 py-14">
           <a href="/works" className={`${comicBtn} bg-white text-[#111]`}>
             <ArrowLeft className="w-4 h-4" strokeWidth={3} />
-            モデルケース一覧へ戻る
+            支援事例一覧へ戻る
           </a>
         </div>
         <ContactCta />
@@ -53,7 +53,7 @@ const WorkDetail: React.FC = () => {
 
   const style = serviceStyles[work.service];
   const url = `https://www.arcle.net/works/${work.slug}`;
-  // ほかのモデルケースは、同じサービスのものを先に並べる
+  // ほかの支援事例は、同じサービスのものを先に並べる
   const others = publishedWorks
     .filter((w) => w.slug !== work.slug)
     .sort((a, b) => Number(b.service === work.service) - Number(a.service === work.service))
@@ -69,7 +69,7 @@ const WorkDetail: React.FC = () => {
   return (
     <article className="bg-[#FAF3E0] text-sumi min-h-screen overflow-x-clip">
       <Helmet>
-        <title>{`${work.title} | 支援モデルケース - Arcle`}</title>
+        <title>{`${work.title} | 支援事例 - Arcle`}</title>
         <meta name="description" content={work.summary} />
         <link rel="canonical" href={url} />
         <script type="application/ld+json">
@@ -78,7 +78,7 @@ const WorkDetail: React.FC = () => {
             '@type': 'BreadcrumbList',
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'ホーム', item: 'https://www.arcle.net/' },
-              { '@type': 'ListItem', position: 2, name: '支援モデルケース', item: 'https://www.arcle.net/works' },
+              { '@type': 'ListItem', position: 2, name: '支援事例', item: 'https://www.arcle.net/works' },
               { '@type': 'ListItem', position: 3, name: work.title, item: url }
             ]
           })}
@@ -92,7 +92,7 @@ const WorkDetail: React.FC = () => {
         service={style.service}
         image={comicIllust(`svc-${style.service}`)}
         imageMode="panel"
-        crumbs={[{ label: '支援モデルケース', href: '/works' }, { label: work.title }]}
+        crumbs={[{ label: '支援事例', href: '/works' }, { label: work.title }]}
         lead={<span className="block lg:max-w-[30rem]">{work.summary}</span>}
       />
 
@@ -105,7 +105,7 @@ const WorkDetail: React.FC = () => {
               NOTE
             </Caption>
             <p className="text-sm font-bold text-[#111] leading-[1.9]">
-              これは、よくあるご相談をもとに作成した架空のモデルケースです。企業名・数値は説明のためのもので、実在の企業や実績ではありません。
+              実際の支援をもとに、企業の特定や機密情報の開示を避けるため、一部情報を加工しています。
             </p>
           </div>
 
@@ -308,12 +308,12 @@ const WorkDetail: React.FC = () => {
       </div>
       </div>
 
-      {/* その他のモデルケース */}
+      {/* その他の支援事例 */}
       {others.length > 0 && (
         <section className="mt-24 md:mt-28 py-20 md:py-24 bg-white comic-dots border-y-[4px] border-[#111]">
           <div className="max-w-6xl mx-auto px-4 sm:px-5">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <ComicHead en="MORE CASES" enTone={`${style.accent} text-white`} title="その他のモデルケース" />
+              <ComicHead en="MORE CASES" enTone={`${style.accent} text-white`} title="その他の支援事例" />
               <div className="hidden md:block md:mb-16 shrink-0">
                 <a href="/works" className={`${comicBtn} py-2.5 px-5 text-[14px] bg-white text-[#111]`}>
                   一覧を見る
@@ -342,7 +342,7 @@ const WorkDetail: React.FC = () => {
             </div>
             <a href="/works" className={`md:hidden mt-10 ${comicBtn} py-3 px-5 text-[14px] bg-white text-[#111]`}>
               <ArrowLeft className="w-4 h-4" strokeWidth={3} />
-              モデルケース一覧へ戻る
+              支援事例一覧へ戻る
             </a>
           </div>
         </section>

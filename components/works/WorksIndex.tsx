@@ -9,7 +9,7 @@ import { services } from '../next/theme';
 
 const filters: ('すべて' | WorkService)[] = ['すべて', '情シス代行', 'データ活用', '生成AI', 'Web制作'];
 
-// 支援モデルケースの一覧（アメコミ版）。1件ずつ「事件ファイル」の表紙のようなコマにする
+// 支援事例の一覧（アメコミ版）。1件ずつ「事件ファイル」の表紙のようなコマにする
 const WorksIndex: React.FC = () => {
   const [filter, setFilter] = useState<(typeof filters)[number]>('すべて');
   const visibleFilters = filters.filter((f) => f === 'すべて' || publishedWorks.some((w) => w.service === f));
@@ -18,21 +18,21 @@ const WorksIndex: React.FC = () => {
   return (
     <div className="bg-[#FAF3E0] text-sumi min-h-screen overflow-x-clip">
       <Helmet>
-        <title>支援モデルケース | 中小企業のIT・データ・AI・Web活用 - Arcle</title>
+        <title>支援事例 | 中小企業のIT・データ・AI・Web活用 - Arcle</title>
         <meta
           name="description"
-          content="Arcleの支援モデルケースです。中小企業によくある情シス・データ活用・生成AI・Web制作のご相談をもとに、課題の背景から支援の流れ、想定される効果までを紹介します。"
+          content="Arcleの支援事例です。中小企業の情シス・データ活用・生成AI・Web制作について、課題の背景から支援の流れまでを紹介します。"
         />
         <link rel="canonical" href="https://www.arcle.net/works" />
       </Helmet>
 
       <PageHeader
         en="Case Files"
-        title="支援モデルケース"
-        crumbs={[{ label: '支援モデルケース' }]}
+        title="支援事例"
+        crumbs={[{ label: '支援事例' }]}
         image={comicIllust('works-articles-works-header')}
         imageMode="panel"
-        lead={<span className="block lg:max-w-[30rem]">よくあるご相談をもとに、Arcleならどのように支援するかをまとめました。<br className="hidden md:block" />課題の背景から支援の流れ、想定される効果までをご紹介します。</span>}
+        lead={<span className="block lg:max-w-[30rem]">中小企業の課題に、Arcleがどのように取り組んだかをまとめました。<br className="hidden md:block" />課題の背景から具体的な支援内容までをご紹介します。</span>}
       />
 
       <section className="comic-dots pt-14 md:pt-20">
@@ -43,7 +43,7 @@ const WorksIndex: React.FC = () => {
               NOTE
             </Caption>
             <p className="text-sm font-bold text-[#111] leading-[1.9]">
-              掲載しているのは、よくあるご相談をもとに作成した架空のモデルケースです。企業名・数値は説明のためのもので、実在の企業や実績ではありません。効果はお客様の状況により異なります。
+              実際の支援をもとに、企業の特定や機密情報の開示を避けるため、一部情報を加工しています。効果はお客様の状況により異なります。
             </p>
           </div>
 
@@ -80,7 +80,7 @@ const WorksIndex: React.FC = () => {
       <section className="comic-dots pt-12 pb-20 md:pt-14 md:pb-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-5">
           {works.length === 0 ? (
-            <p className="text-sumi-muted py-16 text-center">モデルケースは準備中です。</p>
+            <p className="text-sumi-muted py-16 text-center">支援事例は準備中です。</p>
           ) : (
             <div className="grid md:grid-cols-2 gap-10 md:gap-x-10 md:gap-y-14">
               {works.map((work, i) => {
@@ -109,7 +109,7 @@ const WorksIndex: React.FC = () => {
                       <span className={`absolute right-3 top-3 rotate-2 inline-flex items-center gap-1.5 border-[3px] border-[#111] bg-white px-2.5 py-1 font-manga text-xs text-[#111] shadow-[3px_3px_0_#111]`}>
                         <Icon className={`w-3.5 h-3.5 ${style.text}`} strokeWidth={2.5} />
                         {work.service}
-                        <span className="font-sans font-bold text-sumi-muted">モデルケース</span>
+                        <span className="font-sans font-bold text-sumi-muted">支援事例</span>
                       </span>
                     </div>
 

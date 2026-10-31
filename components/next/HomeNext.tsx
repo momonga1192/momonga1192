@@ -151,11 +151,11 @@ const HomeNext: React.FC = () => {
         </div>
       </section>
 
-      {/* 支援モデルケース */}
+      {/* 支援事例 */}
       <section className="py-20 md:py-28 bg-white rounded-[48px] md:rounded-[80px] mx-2 md:mx-5">
         <div className="max-w-6xl mx-auto px-5">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <SectionHead en="Model Cases" title="支援モデルケース" lead="中小企業によくあるご相談をもとに、Arcleならどう支援するかをまとめました。" />
+            <SectionHead en="Case Studies" title="支援事例" lead="中小企業の課題に、Arcleがどのように取り組んだかをご紹介します。" />
             <a href="/works" className="md:mb-16 shrink-0 inline-flex items-center gap-2 font-bold text-svc-josys">
               すべて見る
               <ArrowRight className="w-4 h-4" />
@@ -184,7 +184,7 @@ const HomeNext: React.FC = () => {
               );
             })}
           </div>
-          <p className="mt-6 text-xs text-sumi-muted">※掲載しているのは、よくあるご相談をもとにした架空のモデルケースです。</p>
+          <p className="mt-6 text-xs text-sumi-muted">※実際の支援をもとに、企業の特定や機密情報の開示を避けるため、一部情報を加工しています。</p>
         </div>
       </section>
 

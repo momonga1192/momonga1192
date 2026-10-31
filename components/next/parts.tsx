@@ -98,7 +98,7 @@ export const PageHeader: React.FC<{
   service?: ServiceKey;
   image?: string;
   imageMode?: 'panel' | 'cutout';
-  // 長いタイトル（記事・モデルケースなど）は compact で一回り小さくする
+  // 長いタイトル（記事・支援事例など）は compact で一回り小さくする
   compact?: boolean;
 }> = ({ en, title, lead, crumbs, service, image, imageMode, compact }) => {
   const s = services.find((item) => item.key === service);

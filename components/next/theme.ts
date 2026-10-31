@@ -85,5 +85,5 @@ export const services: {
   }
 ];
 
-// 支援モデルケースの service（'生成AI' など）から事業を引く
+// 支援事例の service（'生成AI' など）から事業を引く
 export const serviceByName = (name: string) => services.find((service) => service.name.startsWith(name));
