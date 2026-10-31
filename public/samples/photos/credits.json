@@ -192,5 +192,69 @@
   "redline-gym/reception": {
     "source": "AI生成（Codex 画像生成）",
     "license": "Arcle作成"
+  },
+  "tsukishiro-shuzo/bottles": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "tsukishiro-shuzo/hero": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "tsukishiro-shuzo/kai": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "tsukishiro-shuzo/koji": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "tsukishiro-shuzo/pour": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "tsukishiro-shuzo/rice": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "tsukishiro-shuzo/steam": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "tsukishiro-shuzo/toji": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "komugi-no-oka/baker": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "komugi-no-oka/cafe": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "komugi-no-oka/croissant": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "komugi-no-oka/dough": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "komugi-no-oka/front": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "komugi-no-oka/hero": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "komugi-no-oka/oven": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
+  },
+  "komugi-no-oka/shokupan": {
+    "source": "AI生成（Codex 画像生成）",
+    "license": "Arcle作成"
   }
 }

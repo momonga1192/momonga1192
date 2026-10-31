@@ -92,7 +92,9 @@ const samples = [
   { slug: 'manabiya-ippo', name: '個別指導塾 まなびや一歩', type: '学習塾', plan: 'ライト' },
   { slug: 'inaho-setsubi', name: '稲穂設備工業株式会社', type: '設備工事業', plan: 'ライト' },
   { slug: 'salon-nagi', name: 'リラクゼーションサロン 凪', type: 'リラクゼーション', plan: 'スタンダード' },
-  { slug: 'sakurazaka-sr', name: 'さくら坂社会保険労務士事務所', type: '社会保険労務士', plan: 'スタンダード' }
+  { slug: 'sakurazaka-sr', name: 'さくら坂社会保険労務士事務所', type: '社会保険労務士', plan: 'スタンダード' },
+  { slug: 'tsukishiro-shuzo', name: '月白酒造', type: '酒蔵', plan: 'オーダーメイド' },
+  { slug: 'komugi-no-oka', name: 'こむぎの丘ベーカリー', type: 'パン屋・カフェ', plan: 'オーダーメイド' }
 ];
 
 // 同じ会社（葉月建設）を3つのプランで作った作例。marks は画面の写しに重ねる番号の位置（%）で、points の番号と対応する
