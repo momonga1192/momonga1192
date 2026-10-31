@@ -412,7 +412,7 @@ const WebNext: React.FC = () => (
               key={plan.name}
               index={index}
               service="web"
-              cta="作例を見る"
+              cta="このプランの作例を見る"
               ctaLabel={`${plan.sub}プランの作例を見る`}
               ctaHref={`/samples?plan=${plan.samplePlan}`}
               plan={{ ...plan, chip: '初期費用 0円', prefix: '月額', amount: plan.price.toLocaleString(), unit: '円', priceNote: `（税込 ${withTax(plan.price)}円）`, note: `公開までの目安：${plan.term}` }}
