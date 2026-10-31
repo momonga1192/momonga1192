@@ -7,9 +7,9 @@ import { ac, promoHeroSrc } from './articleComic';
 const title = "愛知・東海の中小企業向け｜情シス代行の選び方と料金";
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = "中小企業向け 情シス代行の選び方";
-const description = "愛知・東海の中小企業向けに、情シス代行の選び方を解説。対応範囲や受付時間の比較、委託前の棚卸し、権限管理、導入手順とよくある失敗を整理します。Arcleの料金を参考に、専任IT担当者がいない会社の判断基準を紹介します。";
+const description = "愛知・東海の中小企業向けに、情シス代行の選び方を解説。対応範囲や現地対応の有無、ツール導入の支援、委託前の棚卸し、権限管理、導入手順とよくある失敗を整理します。Arcleの料金を参考に、専任IT担当者がいない会社の判断基準を紹介します。";
 const canonical = "https://www.arcle.net/articles/ichinomiya-josys-outsourcing-guide";
-const faqs = [{ "question": "情シス代行はどの規模の会社に向いていますか？", "answer": "専任のIT担当者がいない、または兼任担当者の負担が大きい中小企業に向いています。人数だけでなく、問い合わせ量や管理の抜け漏れから必要な支援を判断します。" }, { "question": "費用はどれくらい見込むべきですか？", "answer": "Arcleの情シス代行は、ライトプラン3万円〜、スタンダードプラン15万円〜、プレミアムプラン30万円〜です（税抜）。企業規模や対応範囲に応じて内容を調整できるため、正確な費用はお見積もりでご確認ください。" }, { "question": "導入前に何を準備すればよいですか？", "answer": "問い合わせ内容、IT作業時間、機器・契約・アカウントの一覧、社内の承認者を整理します。不明な項目は不明のまま記録し、調査が必要な作業として共有すると進めやすくなります。" }];
+const faqs = [{ "question": "情シス代行はどの規模の会社に向いていますか？", "answer": "専任のIT担当者がいない、または兼任担当者の負担が大きい中小企業に向いています。人数だけでなく、問い合わせ量や管理の抜け漏れから必要な支援を判断します。" }, { "question": "費用はどれくらい見込むべきですか？", "answer": "Arcleの情シス代行は、ライトプラン3万円〜、スタンダードプラン15万円〜、プレミアムプラン30万円〜です（税抜）。企業規模や対応範囲に応じて内容を調整できるため、正確な費用はお見積もりでご確認ください。" }, { "question": "遠方の情シス代行会社でも大丈夫ですか？", "answer": "日常の相談やクラウドの設定はリモートでも対応できます。ただ、社内のサーバーやネットワークの障害、パソコンの設定など、現地での作業が必要な場面もあります。自社の所在地まで来てもらえるか、到着までの目安と費用を契約前に確認してください。" }, { "question": "導入前に何を準備すればよいですか？", "answer": "問い合わせ内容、IT作業時間、機器・契約・アカウントの一覧、社内の承認者を整理します。不明な項目は不明のまま記録し、調査が必要な作業として共有すると進めやすくなります。" }];
 const headingClass = ac.h2.josys;
 const ArticleJosysGuide: React.FC = () => {
     const service = services.find((item) => item.key === 'josys')!;
@@ -20,7 +20,7 @@ const ArticleJosysGuide: React.FC = () => {
         <link rel="canonical" href={canonical}/>
         <script type="application/ld+json">{JSON.stringify({
             '@context': 'https://schema.org', '@type': 'Article',
-            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-10-27',
+            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-10-31',
             author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
             publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
             mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -44,10 +44,11 @@ const ArticleJosysGuide: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.josys}>{service.name}</span>
             <time dateTime="2026-03-06" className={ac.dateJa}>公開日 2026-03-06</time>
-            <time dateTime="2026-10-27" className={ac.dateJa}>更新日 2026-10-27</time>
+            <time dateTime="2026-10-31" className={ac.dateJa}>更新日 2026-10-31</time>
           </div>
     <p className={ac.p}>中小企業が情シス代行を選ぶときは、月額料金だけでなく「誰の、どの仕事を、どこまで任せるか」を決めることが大切です。情シスとは、社内のパソコンやアカウント、ネットワークなどを管理する情報システム部門のことです。専任者がいない会社では、総務担当者や詳しい社員に対応が集中し、本来の仕事が止まってしまいます。外部への委託を検討する経営者・総務担当者に向けて、比較から引き継ぎまでの判断基準を整理します。</p>
     <h2 className={ac.h2.josys}>情シス代行が必要か、社内の負担を棚卸しする</h2>
+    <p className={ac.p}>Arcleに届く情シス代行の相談で特に多いのは、「何が止まっていて、何が終わっていないのかが分からない」というものです。IT担当者がいないため、まず何から手を付ければよいのか、次に何をすればよいのかを判断できる人が社内にいません。だからこそ、委託先を探す前に、今の状態を書き出すところから始めます。</p>
     <p className={ac.p}>最初に確認するのは従業員数よりも、毎月発生している作業と放置されている課題です。例えば、入社日にパソコンが間に合わない、退職者のアカウントが残っている、メールが使えなくなるたびに総務が調べる、といった状態を記録します。担当者が努力して対応できていても、その人の不在時に止まる仕事は委託を検討する対象です。</p>
     <p className={ac.p}>棚卸し表には「作業名・発生頻度・実作業時間・影響する部署・現在の担当者」を書きます。問い合わせ件数だけでなく、調べたり業者に連絡したりする時間も含めます。記録の目的は社員の評価ではなく、支援が必要な場所を見つけることです。正確な集計が難しければ、直近のメールやカレンダーを見ながら分かる範囲から埋めてください。</p>
     <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2 mb-4"><li>入退社時のパソコン設定とアカウント発行・停止は、誰が管理していますか。</li><li>契約中のクラウドサービスと更新日、管理者を一覧にできますか。</li><li>バックアップから必要なファイルを戻す手順を確認していますか。</li><li>障害時の連絡先と、止めてはいけない業務を共有していますか。</li></ul>
@@ -56,7 +57,9 @@ const ArticleJosysGuide: React.FC = () => {
 
     <h2 className={ac.h2.josys}>情シス代行の対応範囲を比較する</h2>
     <p className={ac.p}>「IT全般に対応」という説明だけでは、契約後の役割を判断できません。ヘルプデスクは社員からの問い合わせ窓口、キッティングはパソコンを業務で使える状態に初期設定する作業です。こうした言葉を実際の依頼に置き換えて、標準料金に含まれる作業と個別見積もりになる作業を確認しましょう。</p>
-    <div className={`overflow-x-auto my-7 ${ac.tableWrap}`}><table className="w-full min-w-[560px] text-left text-sm leading-[1.9]"><caption className={ac.caption}>情シス代行の対応範囲を比較する：確認表</caption><thead className={ac.thead}><tr><th scope="col" className="p-4 font-bold text-sumi">比較項目</th><th scope="col" className="p-4 font-bold text-sumi">確認すること</th><th scope="col" className="p-4 font-bold text-sumi">曖昧な場合の困りごと</th></tr></thead><tbody><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">問い合わせ対応</th><td className="p-4 text-[#30343F]">受付方法・対象機器・利用者の範囲</td><td className="p-4 text-[#30343F]">社員が直接依頼できず総務に集中する</td></tr><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">入退社の対応</th><td className="p-4 text-[#30343F]">申請期限・設定項目・停止の確認方法</td><td className="p-4 text-[#30343F]">当日まで準備や停止が終わらない</td></tr><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">セキュリティ管理</th><td className="p-4 text-[#30343F]">更新・権限確認・バックアップの分担</td><td className="p-4 text-[#30343F]">対策済みと思っていた作業が残る</td></tr><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">訪問・導入支援</th><td className="p-4 text-[#30343F]">対象地域・交通費・追加作業の条件</td><td className="p-4 text-[#30343F]">必要な作業が追加費用になる</td></tr></tbody></table></div>
+    <div className={`overflow-x-auto my-7 ${ac.tableWrap}`}><table className="w-full min-w-[560px] text-left text-sm leading-[1.9]"><caption className={ac.caption}>情シス代行の対応範囲を比較する：確認表</caption><thead className={ac.thead}><tr><th scope="col" className="p-4 font-bold text-sumi">比較項目</th><th scope="col" className="p-4 font-bold text-sumi">確認すること</th><th scope="col" className="p-4 font-bold text-sumi">曖昧な場合の困りごと</th></tr></thead><tbody><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">問い合わせ対応</th><td className="p-4 text-[#30343F]">受付方法・対象機器・利用者の範囲</td><td className="p-4 text-[#30343F]">社員が直接依頼できず総務に集中する</td></tr><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">入退社の対応</th><td className="p-4 text-[#30343F]">申請期限・設定項目・停止の確認方法</td><td className="p-4 text-[#30343F]">当日まで準備や停止が終わらない</td></tr><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">セキュリティ管理</th><td className="p-4 text-[#30343F]">更新・権限確認・バックアップの分担</td><td className="p-4 text-[#30343F]">対策済みと思っていた作業が残る</td></tr><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">現地（オンサイト）対応</th><td className="p-4 text-[#30343F]">現地に来られるか・到着までの目安・対象地域と交通費</td><td className="p-4 text-[#30343F]">サーバーやネットワークの障害で、リモート対応しかできず復旧が遅れる</td></tr><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">ツールの選定・導入支援</th><td className="p-4 text-[#30343F]">比較・要件の整理・現場への説明まで入るか</td><td className="p-4 text-[#30343F]">導入しても現場で使われない</td></tr></tbody></table></div>
+    <p className={ac.p}>筆者（Arcle代表の栗原）が情シス代行を選ぶなら、まず対応範囲を確認します。中でも見落とされやすいのが、現地（オンサイト）での対応です。拠点が遠い会社だと、対応がリモートに限られることが少なくありません。社内のサーバーが止まった、社内ネットワークがつながらない、パソコンをこう設定してほしい、といった現地での作業が必要なときに、来てもらえないことがあります。</p>
+    <p className={ac.p}>相談してみると、対応範囲が自社と合わないケースは意外と多いものです。「訪問対応あり」と書かれていても、すぐに来てもらえるのか、そもそも自社の所在地が対象なのかまでは、細かく説明されないことがほとんどです。見積もりの段階で、自社の拠点の住所を伝えて、到着までの目安と費用を具体的に聞いておきましょう。</p>
     <p className={ac.p}>実際の相談内容を同じ条件で候補先に渡すと比較しやすくなります。「来月の入社に合わせて端末とメールを用意したい」「共有フォルダーが開けない」といった依頼例に対し、誰が何を行い、社内に何が残るのか回答をもらいます。製品名の一覧よりも、自社の困りごとを最後まで解決できるかが重要です。</p>
     <p className={ac.p}>外部の販売会社や既存の保守業者との関係も確認します。原因調査は代行会社、回線修理は通信事業者など、複数の窓口が関わる場合があります。代行会社が連絡を取りまとめるのか、社内で手配するのかを決めておけば、担当範囲の境目で対応が止まることを防ぎやすくなります。</p>
     <p className={ac.p}>社内の連絡窓口を一人に集める場合は、代理担当を置きます。外部の支援があっても、購入や設定変更の承認が特定の人で止まれば作業は進みません。通常の相談は現場から直接、費用や権限が変わる依頼は総務の承認後など、依頼の種類で手順を分ける方法もあります。会社の規模に合う簡単な流れを優先しましょう。</p>
@@ -71,6 +74,11 @@ const ArticleJosysGuide: React.FC = () => {
             <img src={promoHeroSrc} alt="" className={ac.promoHero} loading="lazy" />
             <span aria-hidden="true" className={ac.promoLabel}>ARCLE TIP!</span>
     <p className={ac.promoTitle}>社内だけで整理が難しいときは</p><p className={ac.p}>相談先の整理から運用まで支援が必要なら、Arcleの情シス代行をご覧ください。ITヘルプデスク、セキュリティ・資産管理、クラウド・インフラ支援など、サービス内容を確認できます。</p><a href={service.href} className={`inline-flex items-center gap-2 font-bold underline underline-offset-4 ${service.text}`}>{service.name}の支援内容を見る<ArrowRight className="w-4 h-4" aria-hidden="true"/></a></div>
+    <h2 className={ac.h2.josys}>新しいツールの選定と、現場への定着まで任せられるか</h2>
+    <p className={ac.p}>IT担当者がいなくて困る場面として、トラブル対応と同じくらい多いのが、新しいシステムやツールを入れるときです。そのツールが本当に自社に合っているのか、良いところと悪いところを分かったうえで選ぶ必要があります。何をできるようにしたいのかを書き出して決める「要件定義」も欠かせません。社内にこの判断ができる人がいないと、営業担当者の説明だけで決めてしまいがちです。</p>
+    <p className={ac.p}>もう一つの山場が、導入したあとです。実際にツールを使う部署の担当者に使い方を説明し、使いこなせるように浸透させる必要があります。ツールの販売元が導入支援を用意していることも多いですが、説明が通り一遍で、「自分の業務だとどうなるのか」までは見てもらえないことがあります。情シス代行を比べるときは、ツールの比較や要件の整理、部署ごとの業務に合わせた説明まで頼めるかを確認しましょう。</p>
+    <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2 mb-4"><li>候補のツールを比べて、自社にとっての良い点・悪い点を整理してもらえますか。</li><li>何をできるようにしたいか（要件）を、一緒に書き出してもらえますか。</li><li>使う部署ごとに、その部署の業務に合わせた使い方を説明してもらえますか。</li><li>導入後に出てくる質問や、使われなくなった機能の見直しまで相談できますか。</li></ul>
+
     <h2 className={ac.h2.josys}>情シス代行の料金は作業範囲と合わせて見る</h2>
     <p className={ac.p}>料金を比較するときは、月額費用、初期の整理作業、個別プロジェクト、機器代やソフトの利用料を分けて見ます。同じ月額でも、相談だけを含む契約と端末設定まで含む契約では役割が違います。見積もりには対象人数・拠点・端末・依頼内容をそろえて伝え、追加費用が発生する条件を明記してもらいましょう。</p>
     <div className={`overflow-x-auto my-7 ${ac.tableWrap}`}><table className="w-full min-w-[560px] text-left text-sm leading-[1.9]"><caption className={ac.caption}>情シス代行の料金は作業範囲と合わせて見る：確認表</caption><thead className={ac.thead}><tr><th scope="col" className="p-4 font-bold text-sumi">Arcleのプラン</th><th scope="col" className="p-4 font-bold text-sumi">掲載料金の参考</th><th scope="col" className="p-4 font-bold text-sumi">サービスページにある主な内容</th></tr></thead><tbody><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">ライト</th><td className="p-4 text-[#30343F]">3万円〜（税抜）</td><td className="p-4 text-[#30343F]">メール・チャット相談、簡易トラブル対応、リモート支援</td></tr><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">スタンダード</th><td className="p-4 text-[#30343F]">15万円〜（税抜）</td><td className="p-4 text-[#30343F]">ライトの内容、PC初期設定、アカウント管理、訪問、基本対策</td></tr><tr className={ac.row}><th scope="row" className="p-4 font-bold text-sumi">プレミアム</th><td className="p-4 text-[#30343F]">30万円〜（税抜）</td><td className="p-4 text-[#30343F]">スタンダードの内容、IT戦略、DX戦略、高度な対策、運用・保守</td></tr></tbody></table></div>
