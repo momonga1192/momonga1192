@@ -32,7 +32,7 @@ type Worry = {
 
 // 部品に分けた絵（奥から順に重ねる）。depth はスクロールしたときのずれ方（back は遅れ、front は先に動く）、
 // motion は画面に入ったときの動きと、そのあと続ける小さな動き。部品は public/images/illust-comic/layers/ に置く
-type Layer = { img: string; depth: 'back' | 'mid' | 'front'; motion: 'bg' | 'pop' | 'rise' | 'fly' | 'smoke' | 'glow' | 'recoil' | 'sigh' | 'hero' | 'spark' | 'wobble'; alt?: string };
+type Layer = { img: string; depth: 'back' | 'mid' | 'front'; motion: 'bg' | 'pop' | 'rise' | 'fly' | 'smoke' | 'glow' | 'recoil' | 'sigh' | 'hero' | 'spark' | 'wobble' | 'panic' | 'fling' | 'cheer'; alt?: string };
 // box は絵の箱の置き方（コマより絵が大きいときに、どこを見せるか）。既定は正方形の絵を上に合わせる
 const LayerScene: React.FC<{ layers: Layer[]; className?: string; box?: string }> = ({ layers, className = '', box = 'inset-x-0 top-0 aspect-square' }) => (
   <span className={`layer-scene pop-reveal pop-late absolute ${box} block transition-transform duration-300 ${className}`}>
@@ -79,9 +79,9 @@ const worryPanels: Worry[][] = [
       layers: [
         { img: 'wd-bg', depth: 'back', motion: 'bg' },
         { img: 'wd-piles', depth: 'mid', motion: 'wobble' },
-        { img: 'wd-man', depth: 'mid', motion: 'pop' },
+        { img: 'wd-man', depth: 'mid', motion: 'panic' },
         { img: 'wd-front', depth: 'front', motion: 'rise' },
-        { img: 'wd-fly', depth: 'front', motion: 'fly' }
+        { img: 'wd-fly', depth: 'front', motion: 'fling' }
       ]
     }
   ],
@@ -339,7 +339,7 @@ const HomeComic: React.FC = () => {
                   { img: 'wo-bg', depth: 'back', motion: 'bg' },
                   { img: 'wo-hero', depth: 'mid', motion: 'hero', alt: '困っていた社員たちに、ヒーローに扮したArcleが「まるごと相談できる」と教えるイラスト' },
                   { img: 'wo-spark', depth: 'mid', motion: 'spark' },
-                  { img: 'wo-crowd', depth: 'front', motion: 'rise' }
+                  { img: 'wo-crowd', depth: 'front', motion: 'cheer' }
                 ]}
               />
               <span className="pop-reveal pop-late absolute inset-0 block">

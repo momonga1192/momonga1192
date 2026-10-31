@@ -211,28 +211,43 @@ html[data-intro]::after { content: ''; position: fixed; inset: 0; z-index: 70; b
 .layer-scene.is-in .layer-fly { transform-origin: 20% 70%; animation: layer-fly 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1) 0.35s both, layer-float 3.2s ease-in-out 1.2s infinite; }
 .layer-scene.is-in .layer-smoke { transform-origin: 80% 60%; animation: layer-smoke-in 0.8s ease-out 0.3s both, layer-puff 2.6s ease-in-out 1.1s infinite; }
 .layer-scene.is-in .layer-flash { animation: layer-flash 0.6s ease-out 0.15s both; }
-/* 生成AIのロボット：チラつきながら現れ、そのあとは光が強まったり弱まったり */
-@keyframes layer-glow { 0% { opacity: 0; transform: scale(0.94); } 20% { opacity: 0.7; } 30% { opacity: 0.15; } 45% { opacity: 0.9; } 55% { opacity: 0.4; } 100% { opacity: 1; transform: none; } }
-@keyframes layer-hum { 0%, 100% { opacity: 1; translate: 0 0; } 50% { opacity: 0.82; translate: 0 -1.2%; } }
-.layer-scene.is-in .layer-glow { animation: layer-glow 0.9s steps(1, end) 0.2s both, layer-hum 2.8s ease-in-out 1.2s infinite; }
-/* 社長：ロボットから逃げるようにのけぞる */
-@keyframes layer-recoil { 0% { transform: translateX(6%) rotate(3deg); } 55% { transform: translateX(-2.5%) rotate(-2deg); } 100% { transform: none; } }
-.layer-scene.is-in .layer-recoil { transform-origin: 40% 90%; animation: layer-recoil 0.7s cubic-bezier(0.3, 1.4, 0.5, 1) 0.45s both, layer-panic 0.5s ease-in-out 1.2s 2; }
-/* ため息：飛び出さず、ゆっくり沈んで、そのあとも小さく上下する */
-@keyframes layer-sigh-in { from { transform: translateY(-5%); } }
-@keyframes layer-sigh { 0%, 100% { translate: 0 0; } 50% { translate: 0 1%; } }
-.layer-scene.is-in .layer-sigh { animation: layer-sigh-in 1.6s ease-in-out both, layer-sigh 4s ease-in-out 1.6s infinite; }
-/* 解決のヒーロー：右上から現れて、そのあとは宙に浮いたように上下する */
-@keyframes layer-hero { 0% { transform: translate(14%, -10%) scale(0.9); opacity: 0; } 60% { transform: translate(-1.5%, 1%) scale(1.02); opacity: 1; } 100% { transform: none; opacity: 1; } }
-@keyframes layer-hover { 0%, 100% { translate: 0 0; } 50% { translate: 0 -1.5%; } }
-.layer-scene.is-in .layer-hero { animation: layer-hero 0.75s cubic-bezier(0.3, 1.3, 0.5, 1) 0.1s both, layer-hover 3s ease-in-out 0.9s infinite; }
-/* 稲妻の光：ぽんと出て、そのあとまたたく */
-@keyframes layer-spark-in { 0% { transform: scale(0.3); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: none; opacity: 1; } }
-@keyframes layer-twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-.layer-scene.is-in .layer-spark { transform-origin: 82% 25%; animation: layer-spark-in 0.4s ease-out 0.7s both, layer-twinkle 1.1s ease-in-out 1.1s infinite; }
-/* 書類の山：せり上がって、ぐらぐら揺れる */
-@keyframes layer-wobble { 0%, 100% { rotate: 0deg; } 50% { rotate: 0.7deg; } }
-.layer-scene.is-in .layer-wobble { transform-origin: 50% 100%; animation: layer-rise 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.1) both, layer-wobble 2.4s ease-in-out 0.7s infinite; }
+/* ここから下は情シス代行以外のコマ。情シス代行のコマより少し大きく動かす */
+/* 生成AIのロボット：チラつきながら現れ、そのあとは光りながら上下にふわふわ浮く */
+@keyframes layer-glow { 0% { opacity: 0; transform: scale(0.86); } 20% { opacity: 0.7; } 30% { opacity: 0.12; transform: scale(0.93); } 45% { opacity: 0.92; } 55% { opacity: 0.38; } 70% { transform: scale(1.03); } 100% { opacity: 1; transform: none; } }
+@keyframes layer-hum { 0%, 100% { opacity: 1; translate: 0 0; scale: 1; } 50% { opacity: 0.8; translate: 0 -2.3%; scale: 1.015; } }
+.layer-scene.is-in .layer-glow { transform-origin: 50% 60%; animation: layer-glow 1s steps(1, end) 0.2s both, layer-hum 2.6s ease-in-out 1.2s infinite; }
+/* 社長：ロボットからのけぞり、そのあとも時々身を引く */
+@keyframes layer-recoil { 0% { transform: translateX(10%) rotate(4.5deg); } 55% { transform: translateX(-3.8%) rotate(-3deg); } 100% { transform: none; } }
+@keyframes layer-flinch { 0%, 100% { translate: 0 0; rotate: 0deg; } 35%, 55% { translate: -1.3% 0; rotate: -1.3deg; } }
+.layer-scene.is-in .layer-recoil { transform-origin: 40% 90%; animation: layer-recoil 0.8s cubic-bezier(0.3, 1.4, 0.5, 1) 0.45s both, layer-flinch 2.6s ease-in-out 1.3s infinite; }
+/* ため息：上からゆっくり沈み込み、そのあとも肩を落とすように上下する */
+@keyframes layer-sigh-in { from { transform: translateY(-8.5%); } }
+@keyframes layer-sigh { 0%, 100% { translate: 0 0; rotate: 0deg; } 50% { translate: 0 1.9%; rotate: 0.6deg; } }
+.layer-scene.is-in .layer-sigh { transform-origin: 50% 100%; animation: layer-sigh-in 1.7s ease-in-out both, layer-sigh 3.8s ease-in-out 1.7s infinite; }
+/* 解決のヒーロー：右上から勢いよく飛び込み、そのあとは宙に浮いたように上下する */
+@keyframes layer-hero { 0% { transform: translate(22%, -16%) scale(0.82); opacity: 0; } 60% { transform: translate(-2.2%, 1.5%) scale(1.03); opacity: 1; } 100% { transform: none; opacity: 1; } }
+@keyframes layer-hover { 0%, 100% { translate: 0 0; } 50% { translate: 0 -2.5%; } }
+.layer-scene.is-in .layer-hero { animation: layer-hero 0.85s cubic-bezier(0.3, 1.3, 0.5, 1) 0.1s both, layer-hover 2.8s ease-in-out 0.95s infinite; }
+/* 稲妻の光：はじけて出て、そのあとまたたく */
+@keyframes layer-spark-in { 0% { transform: scale(0.25); opacity: 0; } 70% { transform: scale(1.18); opacity: 1; } 100% { transform: none; opacity: 1; } }
+@keyframes layer-twinkle { 0%, 100% { opacity: 1; scale: 1; } 50% { opacity: 0.3; scale: 1.04; } }
+.layer-scene.is-in .layer-spark { transform-origin: 82% 25%; animation: layer-spark-in 0.5s ease-out 0.7s both, layer-twinkle 1s ease-in-out 1.2s infinite; }
+/* 解決のコマの群衆：せり上がって、そのあとは喜んでかすかに跳ねる */
+@keyframes layer-rise-big { 0% { transform: translateY(13%); } 70% { transform: translateY(-1%); } 100% { transform: none; } }
+@keyframes layer-hop { 0%, 40%, 100% { translate: 0 0; } 20% { translate: 0 -1%; } }
+.layer-scene.is-in .layer-cheer { animation: layer-rise-big 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1) 0.2s both, layer-hop 1.4s ease-in-out 1s infinite; }
+/* 書類の山：下からせり上がり、そのあとは崩れそうに左右へ揺れる（下の端は動かさない） */
+@keyframes layer-pile-in { 0% { transform: translateY(20%); } 60% { transform: translateY(-3%); } 80% { transform: translateY(1%); } 100% { transform: none; } }
+@keyframes layer-wobble { 0%, 100% { transform: none; } 25% { transform: skewX(-1.8deg); } 75% { transform: skewX(1.8deg); } }
+.layer-scene.is-in .layer-wobble { transform-origin: 50% 100%; animation: layer-pile-in 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1) both, layer-wobble 2.4s ease-in-out 0.9s infinite; }
+/* 書類の山の男性：飛び出し、そのあとも時々あわてて震える */
+@keyframes layer-panic-in { 0% { transform: translateY(17%) scale(0.84); } 55% { transform: translateY(-3%) scale(1.05); } 100% { transform: none; } }
+@keyframes layer-fret { 0%, 30%, 100% { rotate: 0deg; } 5%, 15% { rotate: -1.3deg; } 10%, 20% { rotate: 1.3deg; } 25% { rotate: -0.6deg; } }
+.layer-scene.is-in .layer-panic { transform-origin: 50% 80%; animation: layer-panic-in 0.75s cubic-bezier(0.3, 1.4, 0.5, 1) 0.1s both, layer-fret 3.2s ease-in-out 0.9s infinite; }
+/* 舞い上がる書類：遠くから舞い込み、そのあとはひらひら揺れる */
+@keyframes layer-fling { 0% { transform: translate(-15%, 32%) rotate(-23deg) scale(0.5); opacity: 0; } 100% { transform: none; opacity: 1; } }
+@keyframes layer-flutter { 0%, 100% { rotate: 0deg; translate: 0 0; } 33% { rotate: 2.8deg; translate: 0.6% -2.2%; } 66% { rotate: -2deg; translate: -0.6% -1.2%; } }
+.layer-scene.is-in .layer-fling { transform-origin: 20% 70%; animation: layer-fling 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1) 0.35s both, layer-flutter 2.9s ease-in-out 1.3s infinite; }
 /* サービスの立体カード（HomeComic.tsx の ServiceArt）。--tx・--ty（-1〜1）はマウスの位置で、JSが入れる */
 .tilt-card { transform: perspective(900px) rotateY(calc(var(--tx, 0) * 7deg)) rotateX(calc(var(--ty, 0) * -6deg)) scale(1.06); transition: transform 0.3s ease-out; }
 .tilt-card > span, .tilt-card img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
