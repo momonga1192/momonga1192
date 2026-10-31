@@ -5,6 +5,7 @@ import { PageHeader, PlanCard, SectionHead, ContactCta, IconTile, Mark, Ticker, 
 import { Bubble, Burst, Caption, SfxText, SlantPanel, panel } from '../comic';
 import DashboardSample from '../DashboardSample';
 import { services } from '../theme';
+import ServiceArticles from '../../articles/ServiceArticles';
 
 const service = services.find((s) => s.key === 'data')!;
 
@@ -415,6 +416,8 @@ const DataNext: React.FC = () => (
         </div>
       </div>
     </section>
+
+    <ServiceArticles service="data" />
 
     <ContactCta
       title={<>データの力で、<br />ビジネスを加速させる。</>}

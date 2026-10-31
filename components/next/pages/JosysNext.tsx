@@ -4,6 +4,7 @@ import { ArrowRight, Check, Cpu, Globe, Shield, Users, Zap } from 'lucide-react'
 import { ContactCta, IconTile, Mark, PageHeader, PlanCard, SectionHead, Ticker, comicBtn, comicBtnShape, comicIllust } from '../parts';
 import { Caption, SfxText, panel } from '../comic';
 import { services } from '../theme';
+import ServiceArticles from '../../articles/ServiceArticles';
 
 const service = services.find((s) => s.key === 'josys')!;
 const concerns = [
@@ -270,6 +271,8 @@ const JosysNext: React.FC = () => (
         </div>
       </div>
     </section>
+
+    <ServiceArticles service="josys" />
 
     <ContactCta
       title={<span className="[word-break:auto-phrase]">ITの悩み、<br />お気軽にお聞かせください。</span>}
