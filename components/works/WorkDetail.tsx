@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { publishedWorks, serviceLinks } from './worksData';
+import { workInsights } from './workInsights';
 import { metricAfter, serviceStyles, worryArtOf } from './serviceStyles';
 import { ContactCta, PageHeader, comicBtn, comicBtnShape, comicIllust } from '../next/parts';
 import { Caption, ComicHead, SfxText, panel, panelPress } from '../next/comic';
@@ -51,6 +52,7 @@ const WorkDetail: React.FC = () => {
     );
   }
 
+  const insight = workInsights[work.slug];
   const style = serviceStyles[work.service];
   const url = `https://www.arcle.net/works/${work.slug}`;
   // ほかの支援事例は、同じサービスのものを先に並べる
@@ -141,9 +143,9 @@ const WorkDetail: React.FC = () => {
       <div className="comic-dots">
       <div className="max-w-6xl mx-auto px-4 sm:px-5 pt-16 md:pt-24 grid lg:grid-cols-[1fr_300px] gap-14 lg:gap-14">
         <div className="min-w-0 space-y-24 md:space-y-28">
-          {/* 想定する状況：ナレーションの箱 */}
+          {/* 相談時の状況：ナレーションの箱 */}
           <section>
-            <ChapterHead no="01" en="Background" title="想定する状況" tone={style.accent} />
+            <ChapterHead no="01" en="Background" title="相談時の状況" tone={style.accent} />
             <div className="space-y-7">
               {work.background.map((p, i) => (
                 <div
@@ -218,9 +220,42 @@ const WorkDetail: React.FC = () => {
             </ol>
           </section>
 
+          {/* 事例ごとの業務に沿った設計・運用の解説 */}
+          {insight && (
+            <section aria-labelledby="case-design-title">
+              <div id="case-design-title">
+                <ChapterHead no="04" en="Design & Operations" title={insight.title} tone={style.accent} />
+              </div>
+              <p className="text-sm text-sumi-muted leading-7 mb-8">この支援を検討するときに押さえておきたい、設計と運用の考え方を解説します。</p>
+              <div className="space-y-9">
+                {insight.sections.map((section) => (
+                  <div key={section.title} className={`bg-white ${panel} p-5 sm:p-7`}>
+                    <h3 className="font-manga text-[20px] md:text-[24px] text-[#111] leading-snug mb-5 [word-break:auto-phrase]">{section.title}</h3>
+                    <div className="space-y-5">
+                      {section.paragraphs.map((paragraph) => (
+                        <p key={paragraph} className="text-[#30343F] leading-8">{paragraph}</p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-9 bg-[#FCEBC0] border-[3px] border-[#111] p-5 sm:p-7">
+                <h3 className="font-manga text-[20px] text-[#111] mb-4">同じ課題を相談する前に整理しておきたいもの</h3>
+                <ul className="list-disc pl-5 space-y-3 text-sm text-[#30343F] leading-7">
+                  {insight.preparation.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+                <p className="mt-5 text-sm leading-7 text-sumi-muted">資料がそろっていなくてもご相談いただけます。まずは現在の管理方法や、困っている場面をお聞かせください。</p>
+              </div>
+              <a href={insight.article.href} className="group mt-7 flex items-center justify-between gap-4 border-b-2 border-[#111] py-4 text-sm font-bold text-[#111] hover:underline underline-offset-4">
+                <span><span className="block text-xs text-sumi-muted mb-1">関連する解説記事</span>{insight.article.title}</span>
+                <ArrowRight className="w-5 h-5 shrink-0" aria-hidden="true" />
+              </a>
+            </section>
+          )}
+
           {/* 想定される効果：喜ぶ場面のコマ＋効果のコマ */}
           <section>
-            <ChapterHead no="04" en="Expected Results" title="想定される効果" tone={style.accent} />
+            <ChapterHead no="05" en="Expected Results" title="想定される効果" tone={style.accent} />
             <div className={`pop-reveal relative aspect-[3/2] overflow-hidden bg-[#111] ${panel} rotate-[0.6deg] mb-10`}>
               <img src={comicIllust('works-articles-result')} alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
               <SfxText text="HOORAY!" color="#F2B544" className="left-[4%] top-[6%] text-[clamp(28px,6vw,50px)]" rotate={-8} delay={0.3} />

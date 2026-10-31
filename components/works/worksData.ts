@@ -113,7 +113,7 @@ const works: WorkCase[] = [
   },
   {
     slug: 'wholesale-powerbi-dashboard',
-    title: 'Excelの手集計をやめ、Power BIで売上をリアルタイムに可視化',
+    title: 'Excelの手集計をやめ、Power BIで営業所別の売上・粗利を毎朝確認',
     client: '卸売業B社',
     industry: '卸売業',
     employees: '従業員80名',
