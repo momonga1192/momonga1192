@@ -18,6 +18,7 @@ import ArticleAIMeetingMinutes from './components/articles/ArticleAIMeetingMinut
 import ArticlePasswordMFA from './components/articles/ArticlePasswordMFA';
 import ArticleSalesVisualization from './components/articles/ArticleSalesVisualization';
 import ArticleCopilotVsChatGPT from './components/articles/ArticleCopilotVsChatGPT';
+import ArticleRetiredEmployeeM365 from './components/articles/ArticleRetiredEmployeeM365';
 import WorksIndex from './components/works/WorksIndex';
 import WorkDetail from './components/works/WorkDetail';
 import HomeComic from './components/next/HomeComic';
@@ -111,6 +112,7 @@ export const AppContent: React.FC = () => (
         <Route path="/articles/sme-password-management-mfa" element={<ArticlePasswordMFA />} />
         <Route path="/articles/sales-data-visualization-first-steps" element={<ArticleSalesVisualization />} />
         <Route path="/articles/copilot-vs-chatgpt-sme" element={<ArticleCopilotVsChatGPT />} />
+        <Route path="/articles/retired-employee-m365-account" element={<ArticleRetiredEmployeeM365 />} />
         <Route path="/works" element={<WorksIndex />} />
         <Route path="/works/:slug" element={<WorkDetail />} />
         <Route path="/lp/josys-rescue" element={<JosysRescue />} />

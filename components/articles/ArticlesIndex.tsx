@@ -7,6 +7,13 @@ import { serviceByName, services } from '../next/theme';
 
 export const articles = [
   {
+    title: '退職者のMicrosoft 365アカウントの止め方とデータの引き継ぎ',
+    description: '退職日のサインイン停止、メールを共有メールボックスにして引き継ぐ方法、OneDriveのファイルの移し方、ライセンスの支払いの止め方をまとめました。',
+    href: '/articles/retired-employee-m365-account',
+    published: '2026-11-02',
+    tag: '情シス代行'
+  },
+  {
     title: 'Microsoft 365 CopilotとChatGPTの違いと選び方',
     description: '無料のCopilot Chatと有料版の違い、ChatGPTの法人向けプラン、社内データの扱い、自社に合う方の判断基準と試し方をまとめました。',
     href: '/articles/copilot-vs-chatgpt-sme',
