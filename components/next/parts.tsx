@@ -183,7 +183,7 @@ const rayColor: Record<ServiceKey, [string, string]> = {
 };
 
 // 下層ページの最後に置く相談への誘導。トップの「CALL ARCLE!」のコマと同じ形に、受話器を持ったヒーローをはみ出させる
-export const ContactCta: React.FC<{ title?: React.ReactNode; body?: string }> = ({
+export const ContactCta: React.FC<{ title?: React.ReactNode; body?: string; href?: string }> = ({
   title = (
     <>
       「何から相談すればいいか
@@ -191,7 +191,8 @@ export const ContactCta: React.FC<{ title?: React.ReactNode; body?: string }> = 
       わからない」でも大丈夫です。
     </>
   ),
-  body = 'いまの困りごとをお聞きして、やるべきことの順番から一緒に整理します。ご相談・お見積りは無料です。'
+  body = 'いまの困りごとをお聞きして、やるべきことの順番から一緒に整理します。ご相談・お見積りは無料です。',
+  href = '/contact'
 }) => (
   <section data-hide-banner className="py-20 md:py-28 comic-dots bg-[#FAF3E0] overflow-x-clip">
     <div className="max-w-6xl mx-auto px-4 sm:px-5">
@@ -217,7 +218,7 @@ export const ContactCta: React.FC<{ title?: React.ReactNode; body?: string }> = 
           <h2 className="font-manga text-[23px] md:text-[32px] leading-snug mt-5 [paint-order:stroke_fill] [-webkit-text-stroke:6px_#111] [word-break:auto-phrase]">{title}</h2>
           <p className="mt-5 bg-white text-sumi border-[3px] border-[#111] px-4 py-3 leading-[1.9] font-bold max-w-lg shadow-[4px_4px_0_#111]">{body}</p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
-            <a href="/contact" className={`${comicBtn} bg-mustard text-[#111]`}>
+            <a href={href} className={`${comicBtn} bg-mustard text-[#111]`}>
               無料で相談する
               <ArrowRight className="w-5 h-5" strokeWidth={3} />
             </a>
@@ -272,6 +273,7 @@ export type Plan = {
   prefix?: string;
   chip?: string;
   priceNote?: string;
+  campaign?: string;
   features: string[];
   note?: string;
   recommended?: boolean;
@@ -317,6 +319,7 @@ export const PlanCard: React.FC<{ plan: Plan; service: ServiceKey; index: number
               <span className="font-manga text-lg ml-1">{plan.unit}</span>
             </p>
             {plan.priceNote && <p className="text-xs font-bold text-sumi-muted mt-1">{plan.priceNote}</p>}
+            {plan.campaign && <p className="mt-2 inline-block -rotate-2 bg-coral text-white border-2 border-[#111] px-2.5 py-0.5 text-[13px] font-manga shadow-[2px_2px_0_#111]">{plan.campaign}</p>}
           </div>
         </div>
         {/* 内容 */}

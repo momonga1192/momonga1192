@@ -11,7 +11,7 @@
           "value": "meishi"
         }
       ],
-      "destination": "/web-production",
+      "destination": "/web-production/meishi",
       "permanent": false
     },
     {

@@ -30,7 +30,7 @@ const plans = [
     pages: 'TOP＋6ページ（追加可）',
     design: 'セミオーダーデザイン',
     term: '約1ヶ月',
-    features: ['TOP＋6ページ（追加可）', 'テンプレートを御社向けにカスタマイズ', 'お知らせ更新機能', 'お問い合わせフォーム', '5年経過後は月額4,800円'],
+    features: ['TOP＋6ページ（追加可）', 'テンプレートを御社向けにカスタマイズ', 'お知らせ更新機能', 'お問い合わせフォーム'],
     recommended: true
   },
   {
@@ -42,7 +42,7 @@ const plans = [
     pages: 'TOP＋6ページ（追加可）',
     design: '完全オリジナルデザイン',
     term: '約1.5〜2ヶ月',
-    features: ['TOP＋6ページ（追加可）', '完全オリジナルデザイン', 'お知らせ更新機能', 'お問い合わせフォーム', '5年経過後は月額4,800円']
+    features: ['TOP＋6ページ（追加可）', '完全オリジナルデザイン', 'お知らせ更新機能', 'お問い合わせフォーム']
   }
 ];
 
@@ -160,31 +160,11 @@ const SampleCard: React.FC<{ sample: (typeof samples)[number]; hidden?: boolean 
 const faqs = [
   {
     q: '本当に初期費用は0円ですか？',
-    a: 'はい、0円です。制作費は月額料金に含まれているため、契約時にまとまったお支払いは発生しません。プランに含まれない機能（予約システムやページの大幅な追加など）を希望される場合のみ、オプション料金を事前にお見積りします。'
-  },
-  {
-    q: '契約期間はどれくらいですか？',
-    a: '最低契約期間は1年で、1〜5年の間でお選びいただけます。制作費を月々に分けてお支払いいただく仕組みのため、5年契約がもっとも月額を抑えられます。'
-  },
-  {
-    q: '途中で解約できますか？',
-    a: '可能です。ただし契約期間の途中で解約される場合は、制作費のうちまだお支払いいただいていない分を解約金としてご請求します。金額の計算方法はご契約前に必ずご説明します。'
-  },
-  {
-    q: '解約したらホームページはどうなりますか？',
-    a: '制作費のお支払いが済んでいれば、ホームページのデータをお渡しします。ご自身で用意したサーバー・ドメインへ移して、御社のホームページとしてそのまま使い続けることができます。なお、デザインやプログラムの著作権はArcleに帰属します。'
-  },
-  {
-    q: '支払い方法を教えてください。',
-    a: '毎月、請求書をお送りしますので、銀行振込でお支払いください。初期費用はかからず、お支払いはホームページの公開月の翌月から始まります。'
+    a: 'はい、0円です。契約時にまとまったお支払いは発生しません。プランに含まれない機能（予約システムやページの大幅な追加など）を希望される場合のみ、オプション料金を事前にお見積りします。'
   },
   {
     q: '今のドメインやメールアドレスはそのまま使えますか？',
     a: '基本的にはそのまま引き継げます。現在のサーバー・ドメインの契約状況を確認したうえで、切り替えの手順もこちらで進めます。'
-  },
-  {
-    q: 'ドメイン代は月額料金に含まれますか？',
-    a: '.com・.jp・.net などのドメイン1つ分は月額料金に含まれます。.co.jp などの属性型JPドメインをご希望の場合は、通常のドメインとの差額（実費）を年に一度ご請求します。'
   },
   {
     q: '公開後の更新はどこまで無料ですか？',
@@ -280,9 +260,25 @@ const storyContent = (s: (typeof story)[number]) => (
   </>
 );
 
-const WebNext: React.FC = () => (
+// 名刺のQRから来た方向けの版（/web-production/meishi）。月額料金が最初の3ヶ月無料になるキャンペーンを、冒頭と料金プランに出す
+const campaignMonths = 3;
+
+const CampaignBand: React.FC = () => (
+  <section className="relative bg-coral comic-dots-light border-b-[4px] border-[#111] overflow-hidden">
+    <div className="relative max-w-6xl mx-auto px-4 sm:px-5 py-5 md:py-6 flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
+      <Caption className="self-start -rotate-2">名刺をお受け取りの方へ</Caption>
+      <p className="flex-1 font-manga text-white text-[22px] md:text-[28px] leading-snug [paint-order:stroke_fill] [-webkit-text-stroke:5px_#111] [word-break:auto-phrase]">月額料金が、最初の{campaignMonths}ヶ月無料！</p>
+      <a href="#plans" className={`self-start md:self-center ${comicBtn} bg-white text-[#111]`}>キャンペーンの料金を見る<ArrowRight className="w-4 h-4" strokeWidth={3} /></a>
+    </div>
+  </section>
+);
+
+const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
+  const contactHref = campaign ? '/contact?campaign=meishi' : '/contact';
+  return (
   <div className="bg-[#FAF3E0] text-sumi overflow-x-clip">
       <Helmet>
+        {campaign && <meta name="robots" content="noindex, follow" />}
         <title>月額制ホームページ制作 | 全国対応・初期費用0円・月額4,800円〜 - Arcle</title>
         <meta name="description" content="全国の中小企業向け、月額制のホームページ制作。初期費用0円、月額4,800円（税抜）から。サーバー・ドメイン・独自ドメインのメール・スマホ対応・公開後の更新まで込み。オンラインでの打ち合わせで全国に対応します。" />
         <link rel="canonical" href="https://www.arcle.net/web-production" />
@@ -323,6 +319,7 @@ const WebNext: React.FC = () => (
           }))
         })}</script>
       </Helmet>
+    {campaign && <CampaignBand />}
     <PageHeader
       en="Web Production"
       title={<>ホームページは、<br /><Mark className="bg-white"><span className={service.text}>月額制</span></Mark>でつくる時代へ。</>}
@@ -361,6 +358,15 @@ const WebNext: React.FC = () => (
         {/* 料金のコマ */}
         <div className={`pop-reveal relative z-10 -mt-4 md:-mt-12 mx-1 md:mx-8 lg:mx-14 bg-white ${panel} shadow-[10px_10px_0_#111] p-5 pt-9 sm:p-8 sm:pt-10 md:p-10 grid lg:grid-cols-[0.9fr_1.2fr] gap-8 items-center`}>
           <Caption className="absolute -top-4 left-4 md:left-6 -rotate-2 font-comic! tracking-[0.08em] text-[20px] md:text-[22px]">THE NEW WAY!</Caption>
+          {campaign && (
+            <Burst
+              text={<>{campaignMonths}ヶ月<br />無料!</>}
+              className="w-24 md:w-28 -top-12 -right-2 md:-right-6"
+              textClass="font-manga text-[17px] md:text-[20px] text-center text-white [-webkit-text-stroke:5px_#111]"
+              rotate={10}
+              delay={0.2}
+            />
+          )}
           <div>
             <div className="grid grid-cols-[0.8fr_1fr] gap-3 sm:gap-4">
               {[{ label: '初期費用', amount: '0', unit: '円' }, { label: '月額', amount: '4,800', unit: '円〜' }].map((price, i) => (
@@ -380,7 +386,7 @@ const WebNext: React.FC = () => (
               ))}
             </ul>
             <div className="flex flex-wrap gap-4 mt-7">
-              <a href='/contact' className={button}>無料で相談・見積もり<ArrowRight className="w-4 h-4" strokeWidth={3} /></a>
+              <a href={contactHref} className={button}>無料で相談・見積もり<ArrowRight className="w-4 h-4" strokeWidth={3} /></a>
               <a href="#plans" className={subButton}>料金プランを見る</a>
             </div>
           </div>
@@ -388,7 +394,7 @@ const WebNext: React.FC = () => (
       </div>
     </section>
 
-    <Ticker items={['初期費用0円', '月額4,800円〜', 'サーバー・ドメイン・メール込み', 'スマホ・タブレット対応', '公開後の更新もお任せ', '最短約2週間で公開']} tone="bg-svc-web text-white" className="-mb-4" />
+    <Ticker items={[...(campaign ? [`名刺の方は${campaignMonths}ヶ月無料`] : []), '初期費用0円', '月額4,800円〜', 'サーバー・ドメイン・メール込み', 'スマホ・タブレット対応', '公開後の更新もお任せ', '最短約2週間で公開']} tone="bg-svc-web text-white" className="-mb-4" />
 
     {/* 選ばれる理由：Web制作の色の地に、4つのコマ */}
     <section className="relative py-20 md:py-28 bg-svc-web comic-dots-light border-y-[4px] border-[#111] overflow-hidden">
@@ -442,6 +448,22 @@ const WebNext: React.FC = () => (
     <section id="plans" className="py-20 md:py-28 scroll-mt-20 bg-white border-y-[4px] border-[#111]">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead en="Pricing" title="料金プラン" lead="すべてのプランで初期費用0円です。" enClass={service.text} center />
+        {campaign && (
+          <div className="pop-reveal relative max-w-4xl mx-auto mb-16 bg-coral comic-dots-light text-white p-6 pt-10 md:p-9 md:pt-11 border-[4px] border-[#111] shadow-[8px_8px_0_#111]">
+            <Caption className="absolute -top-4 left-4 md:left-6 -rotate-2">名刺キャンペーン</Caption>
+            <Burst
+              text={<>{campaignMonths}ヶ月<br />無料!</>}
+              className="w-24 md:w-32 -top-10 -right-3 md:-right-6"
+              textClass="font-manga text-[18px] md:text-[24px] text-center text-white [-webkit-text-stroke:5px_#111]"
+              rotate={10}
+              delay={0.2}
+            />
+            <p className="font-manga text-[22px] md:text-[30px] leading-snug pr-16 md:pr-24 [paint-order:stroke_fill] [-webkit-text-stroke:6px_#111] [word-break:auto-phrase]">どのプランも、最初の{campaignMonths}ヶ月は月額0円。</p>
+            <p className="mt-4 inline-block bg-white text-sumi border-[3px] border-[#111] px-4 py-3 text-sm md:text-base font-bold leading-[1.9] shadow-[4px_4px_0_#111] [word-break:auto-phrase]">
+              お支払いが始まる公開の翌月から{campaignMonths}ヶ月分の月額料金が無料になります。たとえばスタンダードなら、{(Math.round(7500 * 1.1) * campaignMonths).toLocaleString()}円（税込）がかかりません。
+            </p>
+          </div>
+        )}
         <div className="grid lg:grid-cols-3 gap-12 lg:gap-6 items-stretch pt-4">
           {plans.map((plan, index) => (
             <PlanCard
@@ -451,7 +473,7 @@ const WebNext: React.FC = () => (
               cta="このプランの作例を見る"
               ctaLabel={`${plan.sub}プランの作例を見る`}
               ctaHref={`/samples?plan=${plan.samplePlan}`}
-              plan={{ ...plan, chip: '初期費用 0円', prefix: '月額', amount: plan.price.toLocaleString(), unit: '円', priceNote: `（税込 ${withTax(plan.price)}円）`, note: `公開までの目安：${plan.term}` }}
+              plan={{ ...plan, chip: '初期費用 0円', campaign: campaign ? `最初の${campaignMonths}ヶ月 0円` : undefined, prefix: '月額', amount: plan.price.toLocaleString(), unit: '円', priceNote: `（税込 ${withTax(plan.price)}円）`, note: `公開までの目安：${plan.term}` }}
             />
           ))}
         </div>
@@ -469,6 +491,7 @@ const WebNext: React.FC = () => (
           </div>
         </div>
         <div className="mt-7 space-y-2 text-xs font-bold text-sumi-muted leading-relaxed">
+          {campaign && <p>※名刺キャンペーンは、名刺をお受け取りの方のライト・スタンダード・オーダーメイドが対象です（運用おまかせプランは対象外です）。このページからお問い合わせいただくと、キャンペーンの対象として承ります。</p>}
           <p>※最低契約期間は1年です。契約期間は1〜5年からお選びいただけます。</p>
           <p>※LP単体の制作や、予約・会員機能などのシステム連携は個別にお見積りします。</p>
         </div>
@@ -635,8 +658,9 @@ const WebNext: React.FC = () => (
 
     <ServiceArticles service="web" />
 
-    <ContactCta title={<>まずは、お見積りから<br />お気軽にどうぞ。</>} body="新規制作もリニューアルも、ご相談・お見積りは無料です。「どのプランが合うか分からない」という段階でも大丈夫です。" />
+    <ContactCta href={contactHref} title={<>まずは、お見積りから<br />お気軽にどうぞ。</>} body="新規制作もリニューアルも、ご相談・お見積りは無料です。「どのプランが合うか分からない」という段階でも大丈夫です。" />
   </div>
-);
+  );
+};
 
 export default WebNext;

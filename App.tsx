@@ -92,6 +92,7 @@ export const AppContent: React.FC = () => (
         <Route path="/data-consulting" element={<DataNext />} />
         <Route path="/gen-ai" element={<GenAINext />} />
         <Route path="/web-production" element={<WebNext />} />
+        <Route path="/web-production/meishi" element={<WebNext campaign />} />
         <Route path="/company" element={<CompanyNext />} />
         <Route path="/company/message" element={<MessageNext />} />
         <Route path="/flow" element={<FlowNext />} />

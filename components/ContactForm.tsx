@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, FileText, Handshake, Mail, MapPin, MessagesSquare, User } from 'lucide-react';
 import { Mark, PageHeader, SectionHead, comicBtn, comicBtnShape, comicIllust } from './next/parts';
@@ -27,6 +27,9 @@ const InquiryForm: React.FC = () => {
   const [emailError, setEmailError] = useState('');
   // ロボットよけ：画面には見えない欄。ここが埋まっていたら送信しない
   const [trap, setTrap] = useState('');
+  // 名刺キャンペーンのページ（/web-production/meishi）から来たときは、内容の頭に印を付けて送る
+  const [campaign, setCampaign] = useState(false);
+  useEffect(() => setCampaign(new URLSearchParams(window.location.search).get('campaign') === 'meishi'), []);
   const set = (key: keyof Inquiry) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setInq({ ...inq, [key]: e.target.value });
 
   const submit = async (e: React.FormEvent) => {
@@ -38,14 +41,14 @@ const InquiryForm: React.FC = () => {
     setSending(true);
     setError('');
     try {
-      if (!trap) await sendInquiry(inq);
+      if (!trap) await sendInquiry(campaign ? { ...inq, message: `【名刺キャンペーン：月額3ヶ月無料】\n${inq.message}` } : inq);
     } catch {
       // 通信できなかったときは、入力を残したまま知らせる
       setSending(false);
       setError('送信できませんでした。通信の状態を確かめて、時間をおいてもう一度お試しください。');
       return;
     }
-    track('generate_lead', { form: 'contact' });
+    track('generate_lead', { form: 'contact', ...(campaign && { campaign: 'meishi' }) });
     setSent(true);
     // フォームのコマの頭（見出し）まで戻して、受け付けた表示を見せる
     window.scrollTo({ top: (document.getElementById('inquiry')?.parentElement?.getBoundingClientRect().top ?? 0) + window.scrollY - 100, behavior: 'smooth' });
@@ -135,6 +138,9 @@ const InquiryForm: React.FC = () => {
           <a href="/privacy" target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-sumi">プライバシーポリシー</a>に同意して送信します。
         </span>
       </label>
+      {campaign && (
+        <p className="mt-6 inline-block -rotate-1 bg-coral text-white border-[3px] border-[#111] px-3 py-1.5 text-sm font-manga shadow-[3px_3px_0_#111]">名刺キャンペーン（月額料金が最初の3ヶ月無料）の対象として送信します</p>
+      )}
       {error && (
         <p role="alert" className="mt-4 text-sm font-bold text-coral">
           {error}

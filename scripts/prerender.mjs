@@ -13,8 +13,8 @@ const template = readFileSync(join(distDir, 'index.html'), 'utf-8');
 // Pages to prerender are taken from the sitemap so the two never drift apart
 const sitemap = readFileSync(join(distDir, 'sitemap.xml'), 'utf-8');
 const routes = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
-// Ad landing pages are noindex, so they stay out of the sitemap but still need static HTML
-routes.push('/lp/josys-rescue', '/lp/mieruka', '/lp/hajimete-ai', '/lp/web-madoguchi');
+// Ad landing pages and the business-card campaign page are noindex, so they stay out of the sitemap but still need static HTML
+routes.push('/lp/josys-rescue', '/lp/mieruka', '/lp/hajimete-ai', '/lp/web-madoguchi', '/web-production/meishi');
 
 const pick = (tagHtml, pattern) => tagHtml.match(pattern)?.[1];
 
