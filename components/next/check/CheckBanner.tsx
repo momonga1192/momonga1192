@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 import { ArrowRight, Gift, X } from 'lucide-react';
 
 // スクロールすると出てくる「会社のIT健康診断」への誘導バナー
-// 診断・問い合わせのページでは出さず、相談の案内（data-hide-banner）やフッターが見えている間は引っ込める
+// 診断・問い合わせ・名刺キャンペーンのページでは出さず、相談の案内（data-hide-banner）やフッターが見えている間は引っ込める
 // ×は消さずに小さな丸ボタンにたたむ（同じタブの間は、たたんだまま）
-const HIDE_ON = ['/it-check', '/contact'];
+const HIDE_ON = ['/it-check', '/contact', '/web-production/meishi'];
 const MINI = 'check-banner-mini';
 
 const CheckBanner: React.FC = () => {

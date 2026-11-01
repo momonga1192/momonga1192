@@ -275,6 +275,61 @@ const CampaignBand: React.FC = () => (
 
 const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
   const contactHref = campaign ? '/contact?campaign=meishi' : '/contact';
+  // 料金プラン。名刺の版では、冒頭のコマのすぐ下に上げる
+  const pricing = (
+      <section id="plans" className="py-14 md:py-28 scroll-mt-20 bg-white border-y-[4px] border-[#111]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-5">
+          <SectionHead en="Pricing" title="料金プラン" lead="すべてのプランで初期費用0円です。" enClass={service.text} center />
+          {campaign && (
+            <div className="pop-reveal relative max-w-4xl mx-auto mb-16 bg-coral comic-dots-light text-white p-6 pt-10 md:p-9 md:pt-11 border-[4px] border-[#111] shadow-[8px_8px_0_#111]">
+              <Caption className="absolute -top-4 left-4 md:left-6 -rotate-2">名刺キャンペーン</Caption>
+              <Burst
+                text={<>{campaignMonths}ヶ月<br />無料!</>}
+                className="w-24 md:w-32 -top-10 -right-3 md:-right-6"
+                textClass="font-manga text-[18px] md:text-[24px] text-center text-white [-webkit-text-stroke:5px_#111]"
+                rotate={10}
+                delay={0.2}
+              />
+              <p className="font-manga text-[22px] md:text-[30px] leading-snug pr-16 md:pr-24 [paint-order:stroke_fill] [-webkit-text-stroke:6px_#111] [word-break:auto-phrase]">どのプランも、最初の{campaignMonths}ヶ月は月額0円。</p>
+              <p className="mt-4 inline-block bg-white text-sumi border-[3px] border-[#111] px-4 py-3 text-sm md:text-base font-bold leading-[1.9] shadow-[4px_4px_0_#111] [word-break:auto-phrase]">
+                お支払いが始まる公開の翌月から{campaignMonths}ヶ月分の月額料金が無料になります。たとえばスタンダードなら、{(Math.round(7500 * 1.1) * campaignMonths).toLocaleString()}円（税込）がかかりません。
+              </p>
+            </div>
+          )}
+          <div className="grid lg:grid-cols-3 gap-12 lg:gap-6 items-stretch pt-4">
+            {plans.map((plan, index) => (
+              <PlanCard
+                key={plan.name}
+                index={index}
+                service="web"
+                cta="このプランの作例を見る"
+                ctaLabel={`${plan.sub}プランの作例を見る`}
+                ctaHref={`/samples?plan=${plan.samplePlan}`}
+                plan={{ ...plan, chip: '初期費用 0円', campaign: campaign ? `最初の${campaignMonths}ヶ月 0円` : undefined, prefix: '月額', amount: plan.price.toLocaleString(), unit: '円', priceNote: `（税込 ${withTax(plan.price)}円）`, note: `公開までの目安：${plan.term}` }}
+              />
+            ))}
+          </div>
+          {/* 運用おまかせプラン：上のプランと同じ値札を、横長のコマに */}
+          <div className={`group pop-reveal relative mt-16 bg-[#FAF3E0] p-6 pt-10 md:p-10 md:pt-12 flex flex-col md:flex-row md:items-center gap-6 ${panel}`}>
+            <span className="absolute inset-0 comic-dots opacity-40" aria-hidden="true" />
+            <Caption className="absolute z-10 -top-4 left-4 md:left-6 -rotate-2">今あるホームページはそのままで</Caption>
+            <div className="relative flex-1">
+              <h3 className="font-manga text-[24px] md:text-[30px] leading-snug [word-break:auto-phrase]">運用おまかせプラン</h3>
+              <p className="mt-3 text-sm text-sumi leading-[1.9]">他社で制作したホームページの更新・管理を引き継ぎます。サーバーやドメインの管理、文章・写真の差し替えまでまとめてお任せいただけます。</p>
+            </div>
+            <div className="pop-wiggle relative shrink-0 self-start md:self-center rotate-2 bg-white border-[3px] border-[#111] px-5 py-3 shadow-[5px_5px_0_#111]">
+              <p className="flex items-baseline whitespace-nowrap"><span className="font-manga text-[15px] mr-1.5">月額</span><span className={`${bigNum} text-[56px]`}>4,800</span><span className="font-manga text-lg ml-1">円</span></p>
+              <p className="text-xs font-bold text-sumi-muted mt-1">（税込 5,280円）</p>
+            </div>
+          </div>
+          <div className="mt-7 space-y-2 text-xs font-bold text-sumi-muted leading-relaxed">
+            {campaign && <p>※名刺キャンペーンは、名刺をお受け取りの方のライト・スタンダード・オーダーメイドが対象です（運用おまかせプランは対象外です）。このページからお問い合わせいただくと、キャンペーンの対象として承ります。</p>}
+            <p>※最低契約期間は1年です。契約期間は1〜5年からお選びいただけます。</p>
+            <p>※LP単体の制作や、予約・会員機能などのシステム連携は個別にお見積りします。</p>
+          </div>
+        </div>
+      </section>
+  );
   return (
   <div className="bg-[#FAF3E0] text-sumi overflow-x-clip">
       <Helmet>
@@ -394,10 +449,12 @@ const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
       </div>
     </section>
 
+    {campaign && pricing}
+
     <Ticker items={[...(campaign ? [`名刺の方は${campaignMonths}ヶ月無料`] : []), '初期費用0円', '月額4,800円〜', 'サーバー・ドメイン・メール込み', 'スマホ・タブレット対応', '公開後の更新もお任せ', '最短約2週間で公開']} tone="bg-svc-web text-white" className="-mb-4" />
 
     {/* 選ばれる理由：Web制作の色の地に、4つのコマ */}
-    <section className="relative py-20 md:py-28 bg-svc-web comic-dots-light border-y-[4px] border-[#111] overflow-hidden">
+    <section className="relative py-14 md:py-28 bg-svc-web comic-dots-light border-y-[4px] border-[#111] overflow-hidden">
       <div className="absolute inset-0 comic-speed [--speed:rgb(255_255_255/0.12)]" aria-hidden="true" />
       <div className="relative max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead en="Why Arcle" enTone="bg-mustard text-[#111]" title={<>選ばれる<Mark>4つの理由</Mark></>} dark />
@@ -422,7 +479,7 @@ const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
     </section>
 
     {/* 月額料金に含まれるもの：荷物をまとめて抱えたヒーローのコマ＋8つの小さなコマ */}
-    <section className="py-20 md:py-28 comic-dots">
+    <section className="py-14 md:py-28 comic-dots">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead en="All Included" title={<>月額料金に<Mark>含まれるもの</Mark></>} lead="どのプランでも、ホームページの運営に必要なものがそろっています。" enClass={service.text} center />
         <div className="grid lg:grid-cols-[0.82fr_1.18fr] gap-14 lg:gap-12 items-start">
@@ -445,61 +502,10 @@ const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
       </div>
     </section>
 
-    <section id="plans" className="py-20 md:py-28 scroll-mt-20 bg-white border-y-[4px] border-[#111]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-5">
-        <SectionHead en="Pricing" title="料金プラン" lead="すべてのプランで初期費用0円です。" enClass={service.text} center />
-        {campaign && (
-          <div className="pop-reveal relative max-w-4xl mx-auto mb-16 bg-coral comic-dots-light text-white p-6 pt-10 md:p-9 md:pt-11 border-[4px] border-[#111] shadow-[8px_8px_0_#111]">
-            <Caption className="absolute -top-4 left-4 md:left-6 -rotate-2">名刺キャンペーン</Caption>
-            <Burst
-              text={<>{campaignMonths}ヶ月<br />無料!</>}
-              className="w-24 md:w-32 -top-10 -right-3 md:-right-6"
-              textClass="font-manga text-[18px] md:text-[24px] text-center text-white [-webkit-text-stroke:5px_#111]"
-              rotate={10}
-              delay={0.2}
-            />
-            <p className="font-manga text-[22px] md:text-[30px] leading-snug pr-16 md:pr-24 [paint-order:stroke_fill] [-webkit-text-stroke:6px_#111] [word-break:auto-phrase]">どのプランも、最初の{campaignMonths}ヶ月は月額0円。</p>
-            <p className="mt-4 inline-block bg-white text-sumi border-[3px] border-[#111] px-4 py-3 text-sm md:text-base font-bold leading-[1.9] shadow-[4px_4px_0_#111] [word-break:auto-phrase]">
-              お支払いが始まる公開の翌月から{campaignMonths}ヶ月分の月額料金が無料になります。たとえばスタンダードなら、{(Math.round(7500 * 1.1) * campaignMonths).toLocaleString()}円（税込）がかかりません。
-            </p>
-          </div>
-        )}
-        <div className="grid lg:grid-cols-3 gap-12 lg:gap-6 items-stretch pt-4">
-          {plans.map((plan, index) => (
-            <PlanCard
-              key={plan.name}
-              index={index}
-              service="web"
-              cta="このプランの作例を見る"
-              ctaLabel={`${plan.sub}プランの作例を見る`}
-              ctaHref={`/samples?plan=${plan.samplePlan}`}
-              plan={{ ...plan, chip: '初期費用 0円', campaign: campaign ? `最初の${campaignMonths}ヶ月 0円` : undefined, prefix: '月額', amount: plan.price.toLocaleString(), unit: '円', priceNote: `（税込 ${withTax(plan.price)}円）`, note: `公開までの目安：${plan.term}` }}
-            />
-          ))}
-        </div>
-        {/* 運用おまかせプラン：上のプランと同じ値札を、横長のコマに */}
-        <div className={`group pop-reveal relative mt-16 bg-[#FAF3E0] p-6 pt-10 md:p-10 md:pt-12 flex flex-col md:flex-row md:items-center gap-6 ${panel}`}>
-          <span className="absolute inset-0 comic-dots opacity-40" aria-hidden="true" />
-          <Caption className="absolute z-10 -top-4 left-4 md:left-6 -rotate-2">今あるホームページはそのままで</Caption>
-          <div className="relative flex-1">
-            <h3 className="font-manga text-[24px] md:text-[30px] leading-snug [word-break:auto-phrase]">運用おまかせプラン</h3>
-            <p className="mt-3 text-sm text-sumi leading-[1.9]">他社で制作したホームページの更新・管理を引き継ぎます。サーバーやドメインの管理、文章・写真の差し替えまでまとめてお任せいただけます。</p>
-          </div>
-          <div className="pop-wiggle relative shrink-0 self-start md:self-center rotate-2 bg-white border-[3px] border-[#111] px-5 py-3 shadow-[5px_5px_0_#111]">
-            <p className="flex items-baseline whitespace-nowrap"><span className="font-manga text-[15px] mr-1.5">月額</span><span className={`${bigNum} text-[56px]`}>4,800</span><span className="font-manga text-lg ml-1">円</span></p>
-            <p className="text-xs font-bold text-sumi-muted mt-1">（税込 5,280円）</p>
-          </div>
-        </div>
-        <div className="mt-7 space-y-2 text-xs font-bold text-sumi-muted leading-relaxed">
-          {campaign && <p>※名刺キャンペーンは、名刺をお受け取りの方のライト・スタンダード・オーダーメイドが対象です（運用おまかせプランは対象外です）。このページからお問い合わせいただくと、キャンペーンの対象として承ります。</p>}
-          <p>※最低契約期間は1年です。契約期間は1〜5年からお選びいただけます。</p>
-          <p>※LP単体の制作や、予約・会員機能などのシステム連携は個別にお見積りします。</p>
-        </div>
-      </div>
-    </section>
+    {!campaign && pricing}
 
     {/* 作例：流れるコマの帯 */}
-    <section className="relative py-20 md:py-28 bg-svc-web/10 comic-dots overflow-hidden">
+    <section className="relative py-14 md:py-28 bg-svc-web/10 comic-dots overflow-hidden">
       <div className="absolute inset-0 comic-speed [--speed:rgb(200_80_159/0.18)]" aria-hidden="true" />
       <div className="relative max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead en="Samples" title="業種別の作例をご覧ください" lead="建設・介護・保育・教室・美容・飲食・士業など、さまざまな業種の作例をご用意しています。気に入ったデザインをもとに、御社の情報と写真でお作りします。" enClass={service.text} center />
@@ -519,7 +525,7 @@ const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
     </section>
 
     {/* 同じ会社を3つのプランで：画面の写しに番号を重ね、下に違いを書く */}
-    <section className="relative py-20 md:py-28 comic-dots overflow-hidden">
+    <section className="relative py-14 md:py-28 comic-dots overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead
           en="Light / Standard / Order Made"
@@ -572,7 +578,7 @@ const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
     </section>
 
     {/* 比較：1つのコマの表。Arcle の列を太い枠で囲む */}
-    <section className="py-20 md:py-28 bg-white comic-dots border-y-[4px] border-[#111]">
+    <section className="py-14 md:py-28 bg-white comic-dots border-y-[4px] border-[#111]">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead en="Comparison" title="他の制作方法との比較" enClass={service.text} center />
         <div className="pop-reveal relative">
@@ -601,7 +607,7 @@ const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
     </section>
 
     {/* 公開までの流れ：打ち合わせのコマ＋番号付きの7つのコマ */}
-    <section className="py-20 md:py-28 comic-dots">
+    <section className="py-14 md:py-28 comic-dots">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead en="Flow" title="公開までの流れ" lead="ご契約までは費用はかかりません。" enClass={service.text} />
         <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-10 items-start">
@@ -624,14 +630,14 @@ const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
       </div>
     </section>
 
-    <section className="py-20 md:py-28 bg-white comic-dots border-y-[4px] border-[#111]">
+    <section className="py-14 md:py-28 bg-white comic-dots border-y-[4px] border-[#111]">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead en="Area" title="全国対応" lead="オンラインでの打ち合わせで、全国どこからでもホームページ制作をご依頼いただけます。制作から公開後の更新・運用までサポートします。" enClass={service.text} center />
       </div>
     </section>
 
     {/* よくある質問：質問会のコマ＋質問のコマ */}
-    <section className="py-20 md:py-28 comic-dots">
+    <section className="py-14 md:py-28 comic-dots">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
         <SectionHead en="FAQ" title="よくある質問" enClass={service.text} center />
         <div className={`pop-reveal relative max-w-4xl mx-auto mb-14 aspect-[3/2] md:aspect-[2/1] overflow-hidden bg-white ${panel}`} aria-hidden="true">
