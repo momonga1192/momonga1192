@@ -3,6 +3,18 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/contact",
+      "has": [
+        {
+          "type": "query",
+          "key": "ref",
+          "value": "meishi"
+        }
+      ],
+      "destination": "/web-production",
+      "permanent": false
+    },
+    {
       "source": "/data",
       "destination": "/data-consulting",
       "permanent": true
