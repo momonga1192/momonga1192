@@ -7,6 +7,13 @@ import { serviceByName, services } from '../next/theme';
 
 export const articles = [
   {
+    title: 'freeeの会計データをPower BIで見る手順',
+    description: 'freeeとPower BIのつなぎ方の選び方、仕訳帳のCSVの書き出し、タグの付け方、取り込みと毎月の更新、試算表と数字が合わないときの確認方法をまとめました。',
+    href: '/articles/freee-data-power-bi',
+    published: '2026-11-05',
+    tag: 'データ活用'
+  },
+  {
     title: '退職者のMicrosoft 365アカウントの止め方とデータの引き継ぎ',
     description: '退職日のサインイン停止、メールを共有メールボックスにして引き継ぐ方法、OneDriveのファイルの移し方、ライセンスの支払いの止め方をまとめました。',
     href: '/articles/retired-employee-m365-account',

@@ -6,7 +6,6 @@
 
 | slug | タグ | 仮タイトル（地域名なし） | 狙う検索語 |
 |---|---|---|---|
-| freee-data-power-bi | データ活用 | freeeの会計データをPower BIで見る手順 | freee Power BI / freee データ 分析 |
 | genai-data-protection-settings | 生成AI | ChatGPTに入力した情報を学習させない設定 | ChatGPT 学習させない 設定 / 法人 情報漏えい |
 | google-business-profile-owner-transfer | Web制作 | Googleビジネスプロフィールのオーナー権限を取り戻す方法 | Googleビジネスプロフィール オーナー 変更 / 前の業者 権限 |
 | shared-mailbox-info-address | 情シス代行 | info@などの共有メールアドレスを複数人で管理する方法 | 共有メールボックス 使い方 / info@ 複数人 管理 |
@@ -41,3 +40,4 @@
 | sales-data-visualization-first-steps | データ活用 | 売上データの見える化を始める手順 | 2026-10-30 |
 | copilot-vs-chatgpt-sme | 生成AI | Microsoft 365 CopilotとChatGPTの違いと選び方 | 2026-10-31 |
 | retired-employee-m365-account | 情シス代行 | 退職者のMicrosoft 365アカウントの止め方とデータの引き継ぎ | 2026-11-02 |
+| freee-data-power-bi | データ活用 | freeeの会計データをPower BIで見る手順 | 2026-11-05 |

@@ -164,7 +164,7 @@
   </url>
   <url>
     <loc>https://www.arcle.net/articles</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -237,6 +237,12 @@
   <url>
     <loc>https://www.arcle.net/articles/retired-employee-m365-account</loc>
     <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.arcle.net/articles/freee-data-power-bi</loc>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
