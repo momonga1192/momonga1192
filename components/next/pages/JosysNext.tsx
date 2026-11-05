@@ -7,6 +7,13 @@ import { services } from '../theme';
 import ServiceArticles from '../../articles/ServiceArticles';
 
 const service = services.find((s) => s.key === 'josys')!;
+
+// 訪問できる範囲（東海3県）。拠点は一宮市。市名は地域の検索で拾われるよう、主な市を書く
+const areas = [
+  { pref: '愛知県', cities: ['一宮市', '名古屋市', '稲沢市', '江南市', '岩倉市', '北名古屋市', '清須市', '小牧市', '春日井市', '犬山市', '津島市', '愛西市', '豊田市', '岡崎市', '安城市', '刈谷市', '豊橋市'] },
+  { pref: '岐阜県', cities: ['岐阜市', '羽島市', '各務原市', '大垣市', '関市', '美濃加茂市', '可児市', '多治見市'] },
+  { pref: '三重県', cities: ['桑名市', '四日市市', '鈴鹿市', '津市'] }
+];
 const concerns = [
                   { title: "専門知識の不足", desc: "「誰に聞けばいいか分からない」を解消", icon: Users },
                   { title: "リソース不足", desc: "ノンコア業務に費やす時間を削減", icon: Zap },
@@ -109,8 +116,8 @@ const titleTag = 'inline-block px-2 my-1 bg-svc-josys text-white border-[3px] bo
 const JosysNext: React.FC = () => (
   <div className="bg-[#FAF3E0] text-sumi overflow-x-clip">
       <Helmet>
-        <title>情シス代行サービス | 愛知・東海の中小企業のIT担当を代行 - Arcle</title>
-        <meta name="description" content="愛知・東海の中小企業向けの情シス代行サービス。IT専任担当者がいない会社に代わって、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額3万円〜で包括サポート。" />
+        <title>情シス代行・ITサポート | 一宮・名古屋など愛知・岐阜・三重の中小企業 - Arcle</title>
+        <meta name="description" content="一宮市を拠点に、愛知・岐阜・三重の中小企業へ訪問もする情シス代行・ITサポート。IT専任担当者がいない会社に代わって、ヘルプデスク・PCキッティング・SaaS導入・セキュリティ対策・ネットワーク構築を月額3万円〜で包括サポート。" />
         <link rel="canonical" href="https://www.arcle.net/josys" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -126,7 +133,7 @@ const JosysNext: React.FC = () => (
           "name": "情シス代行サービス",
           "provider": { "@id": "https://www.arcle.net/#organization" },
           "description": "IT専任担当者不在の企業向けに、ITヘルプデスク・システム導入・セキュリティ対策・クラウド支援を包括サポート",
-          "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
+          "areaServed": areas.flatMap((a) => [{ "@type": "State", "name": a.pref }, ...a.cities.map((c) => ({ "@type": "City", "name": c, "containedInPlace": { "@type": "State", "name": a.pref } }))]),
           "offers": [
             { "@type": "Offer", "name": "ライトプラン", "price": "30000", "priceCurrency": "JPY", "description": "IT相談窓口・簡易トラブルシューティング" },
             { "@type": "Offer", "name": "スタンダードプラン", "price": "150000", "priceCurrency": "JPY", "description": "情シス業務を包括サポート" },
@@ -269,6 +276,24 @@ const JosysNext: React.FC = () => (
           <p>※料金は税抜です。企業規模や対応範囲に応じてカスタマイズ可能です。</p>
           <p>※東海エリアは訪問にも対応します。</p>
         </div>
+      </div>
+    </section>
+
+    {/* 対応エリア：一宮市の拠点から東海3県へ訪問。リモートは地域を問わない */}
+    <section className="pt-20 md:pt-24 pb-4 bg-[#FAF3E0] comic-dots">
+      <div className="max-w-6xl mx-auto px-4 sm:px-5">
+        <SectionHead en="Service Area" enClass={service.text} title="対応エリア" lead="愛知県一宮市を拠点に、愛知・岐阜・三重の東海3県へ訪問します。リモートで対応できることは、地域を問わずご相談ください。" center />
+        <div className="grid md:grid-cols-3 gap-8 md:gap-6">
+          {areas.map((area, i) => (
+            <div key={area.pref} style={{ animationDelay: `${i * 80}ms` }} className={`pop-reveal relative bg-white px-5 pt-9 pb-6 md:px-6 ${panel} ${i === 1 ? 'md:rotate-[0.8deg]' : 'md:-rotate-[0.6deg]'}`}>
+              <Caption tone="bg-svc-josys text-white" className="absolute -top-4 left-4 -rotate-2">
+                <h3 className="font-manga text-[19px] leading-none">{area.pref}</h3>
+              </Caption>
+              <p className="text-[15px] font-bold leading-[1.9] [word-break:auto-phrase]">{area.cities.join('・')} など</p>
+            </div>
+          ))}
+        </div>
+        <p className="pop-reveal mt-8 text-center text-sm font-bold text-sumi leading-[1.9] [word-break:auto-phrase]">ここにない市町村も、東海3県なら訪問できます。日程はご相談のうえで決めます。</p>
       </div>
     </section>
 
