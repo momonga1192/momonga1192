@@ -334,7 +334,7 @@ const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
   <div className="bg-[#FAF3E0] text-sumi overflow-x-clip">
       <Helmet>
         {campaign && <meta name="robots" content="noindex, follow" />}
-        <title>月額制ホームページ制作 | 全国対応・初期費用0円・月額4,800円〜 - Arcle</title>
+        <title>{`${campaign ? '名刺キャンペーン（月額3ヶ月無料） | ' : ''}月額制ホームページ制作 | 全国対応・初期費用0円・月額4,800円〜 - Arcle`}</title>
         <meta name="description" content="全国の中小企業向け、月額制のホームページ制作。初期費用0円、月額4,800円（税抜）から。サーバー・ドメイン・独自ドメインのメール・スマホ対応・公開後の更新まで込み。オンラインでの打ち合わせで全国に対応します。" />
         <link rel="canonical" href="https://www.arcle.net/web-production" />
         <script type="application/ld+json">{JSON.stringify({

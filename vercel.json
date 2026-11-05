@@ -11,7 +11,7 @@
           "value": "meishi"
         }
       ],
-      "destination": "/web-production/meishi",
+      "destination": "/web-production/meishi?utm_source=meishi&utm_medium=qr&utm_campaign=meishi",
       "permanent": false
     },
     {

@@ -11,10 +11,32 @@ declare global {
   }
 }
 
+// 自分のアクセスを数えない。?internal=1 で開いたブラウザと、開発サーバー（UM350）から移ってきたブラウザに印を付ける（?internal=0 で外す）
+const INTERNAL_KEY = 'arcle_internal';
+const isInternalVisit = () => {
+  try {
+    const flag = new URLSearchParams(window.location.search).get('internal');
+    if (flag === '0') localStorage.removeItem(INTERNAL_KEY);
+    let fromDev = false;
+    try {
+      fromDev = /^(um350|100\.75\.216\.83|localhost|127\.0\.0\.1|192\.168\.)/.test(new URL(document.referrer).hostname);
+    } catch {
+      // リファラーなし
+    }
+    if (flag === '1' || fromDev) localStorage.setItem(INTERNAL_KEY, '1');
+    return localStorage.getItem(INTERNAL_KEY) === '1';
+  } catch {
+    return false;
+  }
+};
+
 const initGoogleAnalytics = () => {
   const measurementId = gaMeasurementId;
   // 本番のドメインだけ計測する（手元の確認やVercelのプレビューを数えない）
   if (!measurementId || typeof window === 'undefined' || window.location.hostname !== 'www.arcle.net') {
+    return;
+  }
+  if (isInternalVisit()) {
     return;
   }
 
