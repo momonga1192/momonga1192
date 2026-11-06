@@ -41,3 +41,6 @@ dist-ssr
 scripts/dx-guide/.data.mjs
 scripts/dx-guide/guide.html
 scripts/dx-guide/.img/
+
+# アクセスのダッシュボードのデータ（scripts/dashboard-data.mjs が作る）
+dashboard/data/

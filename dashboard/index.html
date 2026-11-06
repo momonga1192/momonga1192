@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Arcle アクセス</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 rx=%223%22 fill=%22%232a78d6%22/%3E%3Cpath d=%22M3 12 L6 8 L9 10 L13 4%22 stroke=%22white%22 stroke-width=%222%22 fill=%22none%22/%3E%3C/svg%3E">
+<style>
+  /* 色はロールで持つ（明るい／暗いを1か所で切り替える）。系列色は dataviz の既定パレットの1・2番 */
+  .viz-root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.10);
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+    --wash-1: rgba(42, 120, 214, 0.10);
+    --track: #eef3fb;
+    --up: #006300;
+    --down: #d03b3b;
+    --chip: #f0efec;
+  }
+  @media (prefers-color-scheme: dark) {
+    .viz-root {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface-1: #1a1a19;
+      --text-primary: #f0efec;
+      --text-secondary: #c3c2b7;
+      --text-muted: #898781;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --wash-1: rgba(57, 135, 229, 0.12);
+      --track: #1f2a38;
+      --up: #0ca30c;
+      --down: #e66767;
+      --chip: #2c2c2a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 20px 16px 48px; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin-bottom: 14px; }
+  h1 { font-size: 20px; margin: 0; font-weight: 700; }
+  .meta { color: var(--text-secondary); font-size: 12px; }
+  .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 16px; }
+  .filters .label { color: var(--text-secondary); font-size: 13px; }
+  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-1); }
+  .seg button {
+    font: inherit; font-size: 13px; padding: 6px 14px; border: 0; background: transparent; color: var(--text-secondary); cursor: pointer;
+  }
+  .seg button + button { border-left: 1px solid var(--border); }
+  .seg button[aria-pressed="true"] { color: var(--text-primary); font-weight: 700; background: var(--chip); }
+  .seg button:focus-visible { outline: 2px solid var(--series-1); outline-offset: -2px; }
+  .range-note { color: var(--text-muted); font-size: 12px; }
+  .grid { display: grid; gap: 12px; }
+  .tiles { grid-template-columns: repeat(6, 1fr); margin-bottom: 12px; }
+  .two { grid-template-columns: 1fr 1fr; margin-bottom: 12px; }
+  @media (max-width: 960px) { .tiles { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+  .card h2 { font-size: 14px; margin: 0; font-weight: 700; }
+  .card .sub { color: var(--text-secondary); font-size: 12px; margin: 2px 0 10px; }
+  .tile .t-label { color: var(--text-secondary); font-size: 12px; }
+  .tile .t-value { font-size: 26px; font-weight: 600; line-height: 1.25; margin-top: 2px; }
+  .tile .t-delta { font-size: 12px; margin-top: 4px; color: var(--text-secondary); }
+  .t-delta .up { color: var(--up); font-weight: 600; }
+  .t-delta .down { color: var(--down); font-weight: 600; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--text-secondary); margin: -4px 0 6px; }
+  .legend .key { display: inline-block; width: 14px; height: 2px; border-radius: 1px; vertical-align: middle; margin-right: 6px; }
+  .chart { position: relative; }
+  .chart svg { display: block; width: 100%; overflow: visible; }
+  .chart svg:focus-visible { outline: 2px solid var(--series-1); outline-offset: 4px; border-radius: 4px; }
+  .axis-text { fill: var(--text-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .end-label { fill: var(--text-secondary); font-size: 12px; font-weight: 600; }
+  .note-text { fill: var(--text-muted); font-size: 11px; }
+  .tip {
+    position: fixed; z-index: 10; pointer-events: none; background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    min-width: 120px; display: none;
+  }
+  .tip .tip-head { color: var(--text-secondary); margin-bottom: 4px; }
+  .tip .tip-row { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .tip .tip-row strong { font-size: 14px; font-variant-numeric: tabular-nums; }
+  .tip .tip-row span.name { color: var(--text-secondary); }
+  .tip .key { display: inline-block; width: 12px; height: 2px; border-radius: 1px; }
+  .bars { display: grid; gap: 10px; }
+  .bar-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: center; cursor: default; }
+  .bar-row .b-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar-row .b-label small { color: var(--text-muted); margin-left: 6px; }
+  .bar-row .b-value { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; }
+  .bar-row .b-track { grid-column: 1 / -1; height: 10px; }
+  .bar-row .b-fill { height: 10px; background: var(--series-1); border-radius: 0 4px 4px 0; min-width: 0; transition: filter .1s; }
+  .bar-row:hover .b-fill, .bar-row:focus-visible .b-fill { filter: brightness(1.15); }
+  .bar-row:focus-visible { outline: 2px solid var(--series-1); outline-offset: 3px; border-radius: 4px; }
+  .empty { color: var(--text-muted); font-size: 13px; padding: 8px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: var(--text-secondary); font-weight: 600; font-size: 12px; padding: 4px 6px; border-bottom: 1px solid var(--grid); }
+  td { padding: 6px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.q { word-break: break-all; }
+  .chip { display: inline-block; font-size: 11px; line-height: 1.5; padding: 0 6px; border-radius: 999px; background: var(--chip); color: var(--text-secondary); margin-left: 4px; white-space: nowrap; }
+  .chip.local { border: 1px solid var(--series-1); }
+  .chip.new { border: 1px solid var(--series-2); }
+  details { margin-top: 8px; }
+  details summary { cursor: pointer; color: var(--text-secondary); font-size: 12px; }
+  details .scroll { max-height: 260px; overflow: auto; margin-top: 6px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-bottom: 6px; font-size: 12px; color: var(--text-secondary); }
+  .toolbar label { display: inline-flex; gap: 4px; align-items: center; cursor: pointer; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 13px; }
+  .kv dt { color: var(--text-secondary); }
+  .kv dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stale { color: var(--down); font-weight: 600; }
+  footer { color: var(--text-muted); font-size: 12px; margin-top: 18px; }
+  .loading { opacity: .5; }
+</style>
+</head>
+<body class="viz-root">
+<div class="wrap">
+  <header>
+    <h1>Arcle アクセス</h1>
+    <span class="meta" id="meta">読み込み中…</span>
+  </header>
+
+  <div class="filters" role="group" aria-label="期間">
+    <span class="label">期間</span>
+    <div class="seg" id="range">
+      <button type="button" data-n="7" aria-pressed="false">7日</button>
+      <button type="button" data-n="28" aria-pressed="true">28日</button>
+      <button type="button" data-n="90" aria-pressed="false">90日</button>
+    </div>
+    <span class="range-note" id="range-note"></span>
+  </div>
+
+  <div id="main">
+    <section class="grid tiles" id="tiles" aria-label="主な数字"></section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>サイトへの訪問</h2>
+        <p class="sub" id="sessions-sub">セッション数／日（GA4）</p>
+        <div class="chart" id="chart-sessions"></div>
+        <details><summary>表で見る</summary><div class="scroll" id="table-sessions"></div></details>
+      </div>
+      <div class="card">
+        <h2>Google検索での表示とクリック</h2>
+        <p class="sub" id="search-sub">回数／日（Search Console）</p>
+        <div class="legend" id="legend-search"></div>
+        <div class="chart" id="chart-search"></div>
+        <details><summary>表で見る</summary><div class="scroll" id="table-search"></div></details>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>どこから来たか</h2>
+        <p class="sub">参照元ごとのセッション数</p>
+        <div class="bars" id="bars-sources"></div>
+      </div>
+      <div class="card">
+        <h2>問い合わせまでの流れ</h2>
+        <p class="sub">IT健康診断と問い合わせのイベント数</p>
+        <div class="bars" id="bars-funnel"></div>
+        <dl class="kv" id="campaign" style="margin-top:14px"></dl>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>よく見られたページ</h2>
+        <p class="sub">ページビュー数</p>
+        <div class="bars" id="bars-pages"></div>
+      </div>
+      <div class="card">
+        <h2>検索語</h2>
+        <p class="sub" id="queries-sub">表示回数の多い順（Search Console）</p>
+        <div class="toolbar">
+          <label><input type="checkbox" id="hide-brand" checked> 「arcle」での指名検索を除く</label>
+          <label><input type="checkbox" id="only-local"> 情シス・地域だけ</label>
+        </div>
+        <div class="scroll" id="table-queries" style="max-height:420px;overflow:auto"></div>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>検索で表示されたページ</h2>
+        <p class="sub">表示回数の多い順（Search Console）</p>
+        <div id="table-search-pages"></div>
+      </div>
+      <div class="card">
+        <h2>見方のメモ</h2>
+        <ul style="margin:6px 0 0;padding-left:1.2em;color:var(--text-secondary);font-size:13px">
+          <li>GA4の計測は10/29から。それより前のグラフは空白です。</li>
+          <li>自分のアクセス（<code>?internal=1</code> を開いたブラウザ・UM350の開発サーバー経由）は除いています。</li>
+          <li>Search Consoleは2〜3日遅れて確定するので、検索の数字は確定している最後の日までです。</li>
+          <li>増減は、同じ長さの直前の期間と比べています。</li>
+          <li>検索語の「情シス・地域」は、情シス・ITサポート・パソコン・地域名などを含むもの。「新」は、その前の28日に表示がなかった語です。</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <footer id="footer">データは毎時自動で更新（scripts/dashboard-data.mjs）。</footer>
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+'use strict';
+const $ = (id) => document.getElementById(id);
+const nf = new Intl.NumberFormat('ja-JP');
+const fmt = (v) => (v == null ? '—' : nf.format(v));
+const md = (ymd) => `${Number(ymd.slice(5, 7))}/${Number(ymd.slice(8, 10))}`;
+const wd = (ymd) => '日月火水木金土'[new Date(ymd + 'T00:00:00Z').getUTCDay()];
+const css = (name) => getComputedStyle(document.body).getPropertyValue(name).trim();
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs = {}, text) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') e.className = v; else if (k === 'style') e.style.cssText = v; else e.setAttribute(k, v);
+  }
+  if (text != null) e.textContent = text;
+  return e;
+}
+function svg(tag, attrs = {}, text) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+// --- ツールチップ（値を先に強く、名前は後ろに控えめに） ---
+const tip = $('tip');
+function showTip(x, y, head, rows) {
+  tip.replaceChildren();
+  if (head) tip.append(el('div', { class: 'tip-head' }, head));
+  for (const r of rows) {
+    const row = el('div', { class: 'tip-row' });
+    if (r.color) row.append(el('span', { class: 'key', style: `background:${r.color}` }));
+    row.append(el('strong', {}, r.value), el('span', { class: 'name' }, r.name));
+    tip.append(row);
+  }
+  tip.style.display = 'block';
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let left = x + 14, top = y - h - 10;
+  if (left + w > window.innerWidth - 8) left = x - w - 14;
+  if (left < 8) left = 8;
+  if (top < 8) top = y + 16;
+  tip.style.left = left + 'px';
+  tip.style.top = top + 'px';
+}
+const hideTip = () => { tip.style.display = 'none'; };
+
+// --- 折れ線（共通の1軸。null は線を切る。十字線と、全系列の値を出すツールチップ） ---
+function niceMax(v) {
+  if (v <= 4) return 4;
+  const p = Math.pow(10, Math.floor(Math.log10(v)));
+  for (const m of [1, 2, 2.5, 5, 10]) if (m * p >= v) return m * p;
+  return 10 * p;
+}
+function lineChart(host, { dates, series, height = 220, note }) {
+  host.replaceChildren();
+  const W = Math.max(host.clientWidth, 280), H = height;
+  const m = { l: 34, r: 40, t: 14, b: 24 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const all = series.flatMap((s) => s.values).filter((v) => v != null);
+  const ymax = niceMax(Math.max(1, ...all));
+  const n = dates.length;
+  const X = (i) => m.l + (n <= 1 ? iw / 2 : (i / (n - 1)) * iw);
+  const Y = (v) => m.t + ih - (v / ymax) * ih;
+  const root = svg('svg', { viewBox: `0 0 ${W} ${H}`, height: H, role: 'img', tabindex: '0' });
+  root.setAttribute('aria-label', series.map((s) => s.name).join('と') + 'の推移。左右の矢印キーで日付を動かせます');
+  // 横の目盛り線（細く、控えめに）
+  const ticks = 4;
+  for (let k = 0; k <= ticks; k++) {
+    const v = (ymax / ticks) * k, y = Y(v);
+    root.append(svg('line', { x1: m.l, x2: m.l + iw, y1: y, y2: y, stroke: k === 0 ? css('--axis') : css('--grid'), 'stroke-width': 1 }));
+    root.append(svg('text', { x: m.l - 6, y: y + 4, 'text-anchor': 'end', class: 'axis-text' }, nf.format(Math.round(v * 10) / 10)));
+  }
+  // 日付の目盛り（5つ前後）
+  const step = Math.max(1, Math.ceil(n / 6));
+  for (let i = 0; i < n; i += step) {
+    root.append(svg('text', { x: X(i), y: H - 6, 'text-anchor': i === 0 ? 'start' : 'middle', class: 'axis-text' }, md(dates[i])));
+  }
+  // 計測前の範囲に一言
+  const firstIdx = series[0].values.findIndex((v) => v != null);
+  if (note && firstIdx > 0) {
+    const cx = (m.l + X(firstIdx)) / 2;
+    if (X(firstIdx) - m.l > 70) root.append(svg('text', { x: cx, y: m.t + ih / 2, 'text-anchor': 'middle', class: 'note-text' }, note));
+  }
+  series.forEach((s, si) => {
+    const color = css(s.color);
+    // 1系列のときだけ面を薄く塗る
+    if (series.length === 1) {
+      let d = '', open = false, startI = 0;
+      const close = (endI) => { d += `L${X(endI)},${Y(0)}L${X(startI)},${Y(0)}Z`; };
+      s.values.forEach((v, i) => {
+        if (v == null) { if (open) { close(i - 1); open = false; } return; }
+        if (!open) { d += `M${X(i)},${Y(v)}`; open = true; startI = i; } else d += `L${X(i)},${Y(v)}`;
+      });
+      if (open) close(s.values.length - 1);
+      root.append(svg('path', { d, fill: css('--wash-1'), stroke: 'none' }));
+    }
+    let d = '', pen = false;
+    s.values.forEach((v, i) => {
+      if (v == null) { pen = false; return; }
+      d += `${pen ? 'L' : 'M'}${X(i)},${Y(v)}`;
+      pen = true;
+    });
+    root.append(svg('path', { d, fill: 'none', stroke: color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+    // 終点の点と値
+    const li = s.values.length - 1, lv = s.values[li];
+    if (lv != null) {
+      root.append(svg('circle', { cx: X(li), cy: Y(lv), r: 4, fill: color, stroke: css('--surface-1'), 'stroke-width': 2 }));
+      root.append(svg('text', { x: X(li) + 8, y: Y(lv) + (series.length > 1 ? (si === 0 ? -6 : 14) : 4), class: 'end-label' }, fmt(lv)));
+    }
+  });
+  // 十字線とツールチップ
+  const cross = svg('line', { y1: m.t, y2: m.t + ih, stroke: css('--axis'), 'stroke-width': 1, visibility: 'hidden' });
+  const dots = series.map((s) => svg('circle', { r: 4, fill: css(s.color), stroke: css('--surface-1'), 'stroke-width': 2, visibility: 'hidden' }));
+  root.append(cross, ...dots);
+  const hit = svg('rect', { x: m.l, y: 0, width: iw, height: H, fill: 'transparent' });
+  root.append(hit);
+  let cur = -1;
+  const show = (i, cx, cy) => {
+    cur = i;
+    cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i)); cross.setAttribute('visibility', 'visible');
+    series.forEach((s, si) => {
+      const v = s.values[i];
+      if (v == null) { dots[si].setAttribute('visibility', 'hidden'); return; }
+      dots[si].setAttribute('cx', X(i)); dots[si].setAttribute('cy', Y(v)); dots[si].setAttribute('visibility', 'visible');
+    });
+    const rect = root.getBoundingClientRect();
+    const px = cx ?? rect.left + (X(i) / W) * rect.width, py = cy ?? rect.top + m.t + 10;
+    showTip(px, py, `${md(dates[i])}（${wd(dates[i])}）`, series.map((s) => ({
+      color: css(s.color), name: s.name, value: s.values[i] == null ? '計測なし' : fmt(s.values[i])
+    })));
+  };
+  const hide = () => { cross.setAttribute('visibility', 'hidden'); dots.forEach((d) => d.setAttribute('visibility', 'hidden')); hideTip(); };
+  root.addEventListener('pointermove', (e) => {
+    const rect = root.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * W;
+    const i = Math.max(0, Math.min(n - 1, Math.round(((x - m.l) / iw) * (n - 1))));
+    show(i, e.clientX, e.clientY);
+  });
+  root.addEventListener('pointerleave', hide);
+  root.addEventListener('blur', hide);
+  root.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault();
+    const i = cur < 0 ? n - 1 : Math.max(0, Math.min(n - 1, cur + (e.key === 'ArrowRight' ? 1 : -1)));
+    show(i);
+  });
+  host.append(root);
+}
+
+// --- 横棒（1系列。棒の行全体がホバーの的） ---
+function bars(host, rows, { unit = '' } = {}) {
+  host.replaceChildren();
+  if (!rows.length) { host.append(el('div', { class: 'empty' }, 'この期間はまだありません')); return; }
+  const max = Math.max(1, ...rows.map((r) => r.value));
+  for (const r of rows) {
+    const row = el('div', { class: 'bar-row', tabindex: '0' });
+    const label = el('div', { class: 'b-label' }, r.label);
+    if (r.small) label.append(el('small', {}, r.small));
+    const track = el('div', { class: 'b-track' });
+    track.append(el('div', { class: 'b-fill', style: `width:${(r.value / max) * 100}%` }));
+    row.append(label, el('div', { class: 'b-value' }, fmt(r.value) + unit), track);
+    const tipRows = [{ color: css('--series-1'), value: fmt(r.value) + unit, name: r.metric || '' }, ...(r.extra || [])];
+    row.addEventListener('pointermove', (e) => showTip(e.clientX, e.clientY, r.full || r.label, tipRows));
+    row.addEventListener('pointerleave', hideTip);
+    row.addEventListener('focus', () => { const b = row.getBoundingClientRect(); showTip(b.left + 40, b.top, r.full || r.label, tipRows); });
+    row.addEventListener('blur', hideTip);
+    host.append(row);
+  }
+}
+
+function table(host, cols, rows) {
+  host.replaceChildren();
+  if (!rows.length) { host.append(el('div', { class: 'empty' }, 'この期間はまだありません')); return; }
+  const t = el('table');
+  const tr = el('tr');
+  cols.forEach((c) => tr.append(el('th', c.num ? { class: 'num' } : {}, c.label)));
+  const thead = el('thead'); thead.append(tr); t.append(thead);
+  const tb = el('tbody');
+  for (const r of rows) {
+    const row = el('tr');
+    cols.forEach((c) => {
+      const td = el('td', { class: c.num ? 'num' : (c.cls || '') });
+      const v = c.get(r);
+      if (v instanceof Node) td.append(v); else td.textContent = v;
+      row.append(td);
+    });
+    tb.append(row);
+  }
+  t.append(tb);
+  host.append(t);
+}
+
+// --- 名前の言い換え ---
+const SOURCE_NAMES = {
+  '(direct) / (none)': '直接（ブックマーク・URL入力・QRなど）',
+  'google / organic': 'Google検索',
+  'yahoo / organic': 'Yahoo!検索',
+  'bing / organic': 'Bing検索',
+  'meishi / qr': '名刺のQR',
+  'google / organic (gbp)': 'Googleマップ',
+  '(not set)': '不明'
+};
+const sourceLabel = (s) => {
+  if (SOURCE_NAMES[s]) return SOURCE_NAMES[s];
+  const [src, med] = s.split(' / ');
+  if (med === 'referral') return `${src}（リンク）`;
+  if (med === 'organic') return `${src}（検索）`;
+  return s;
+};
+const PAGE_NAMES = {
+  '/': 'トップ', '/josys': '情シス代行', '/data-consulting': 'データ活用', '/gen-ai': '生成AI活用', '/web-production': 'Web制作',
+  '/web-production/meishi': 'Web制作（名刺キャンペーン）', '/services': 'サービス一覧', '/company': '事業者概要', '/company/message': '代表メッセージ',
+  '/flow': 'ご相談の流れ', '/contact': 'お問い合わせ', '/it-check': 'IT健康診断', '/articles': '記事一覧', '/works': '支援事例', '/privacy': 'プライバシーポリシー'
+};
+const pageLabel = (p) => PAGE_NAMES[p] || p;
+const FUNNEL_NAMES = {
+  it_check_banner_click: '診断バナーのクリック', it_check_start: '診断の開始', it_check_complete: '診断の完了', generate_lead: '問い合わせ・申し込み'
+};
+
+// --- 描画 ---
+let DATA = null, N = 28;
+const params = new URLSearchParams(location.search);
+if (['7', '28', '90'].includes(params.get('days'))) N = Number(params.get('days'));
+
+function delta(cur, prev, { measured = true, partial = false, lowerIsBetter = false, label }) {
+  const box = el('div', { class: 't-delta' });
+  if (!measured) { box.textContent = `${label}は計測前`; return box; }
+  if (cur == null || prev == null) { box.textContent = `${label}：—`; return box; }
+  const d = Math.round((cur - prev) * 10) / 10;
+  if (d === 0) { box.textContent = `${label}と同じ`; }
+  else {
+    const good = lowerIsBetter ? d < 0 : d > 0;
+    box.append(`${label}より `, el('span', { class: good ? 'up' : 'down' }, `${d > 0 ? '▲' : '▼'} ${nf.format(Math.abs(d))}${lowerIsBetter ? '位' : ''}`));
+  }
+  if (partial) box.append('（一部のみ計測）');
+  return box;
+}
+
+function render() {
+  const D = DATA, R = D.ranges[N];
+  document.querySelectorAll('#range button').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.n) === N)));
+  $('range-note').textContent = `訪問 ${md(R.ga.start)}〜${md(R.ga.end)}／検索 ${md(R.sc.start)}〜${md(R.sc.end)}`;
+  const stale = (Date.now() - Date.parse(D.generatedAt.replace(' ', 'T') + ':00+09:00')) / 3600e3 > 26;
+  $('meta').replaceChildren(`更新 ${D.generatedAt}`, ...(stale ? [' ', el('span', { class: 'stale' }, '（更新が止まっています）')] : []), `　今日ここまで ${fmt(D.todaySoFar.sessions)}セッション`);
+
+  // 数字のタイル
+  const prevLabel = `前の${N}日`;
+  const T = R.totals;
+  const gaOpt = { measured: R.ga.prevMeasured, partial: R.ga.prevPartial, label: prevLabel };
+  const tiles = [
+    ['セッション', T.sessions, gaOpt],
+    ['ユーザー', T.users, gaOpt],
+    ['ページビュー', T.pageviews, gaOpt],
+    ['問い合わせ・申し込み', T.leads, gaOpt],
+    ['検索での表示回数', T.impressions, { label: prevLabel }],
+    ['検索からのクリック', T.clicks, { label: prevLabel }]
+  ];
+  const tilesHost = $('tiles');
+  tilesHost.replaceChildren();
+  for (const [label, [cur, prev], opt] of tiles) {
+    const c = el('div', { class: 'card tile' });
+    c.append(el('div', { class: 't-label' }, label), el('div', { class: 't-value' }, fmt(cur)), delta(cur, prev, opt));
+    tilesHost.append(c);
+  }
+
+  // 訪問の推移
+  const gaDays = D.daily.ga.slice(-N);
+  lineChart($('chart-sessions'), { dates: gaDays.map((d) => d.date), series: [{ name: 'セッション', color: '--series-1', values: gaDays.map((d) => d.sessions) }], note: `${md(D.gaStart)}から計測` });
+  table($('table-sessions'), [
+    { label: '日付', get: (r) => `${md(r.date)}（${wd(r.date)}）` },
+    { label: 'セッション', num: true, get: (r) => fmt(r.sessions) },
+    { label: 'ユーザー', num: true, get: (r) => fmt(r.users) },
+    { label: 'ページビュー', num: true, get: (r) => fmt(r.pageviews) },
+    { label: '問い合わせ', num: true, get: (r) => fmt(r.leads) }
+  ], [...gaDays].reverse());
+
+  // 検索の推移
+  const scDays = D.daily.sc.slice(-N);
+  const legend = $('legend-search');
+  legend.replaceChildren();
+  [['表示回数', '--series-1'], ['クリック', '--series-2']].forEach(([name, c]) => {
+    const item = el('span'); item.append(el('span', { class: 'key', style: `background:var(${c})` }), name); legend.append(item);
+  });
+  lineChart($('chart-search'), { dates: scDays.map((d) => d.date), series: [
+    { name: '表示回数', color: '--series-1', values: scDays.map((d) => d.impressions) },
+    { name: 'クリック', color: '--series-2', values: scDays.map((d) => d.clicks) }
+  ] });
+  $('search-sub').textContent = `回数／日（Search Console・${md(D.scEnd)}まで確定）`;
+  table($('table-search'), [
+    { label: '日付', get: (r) => `${md(r.date)}（${wd(r.date)}）` },
+    { label: '表示回数', num: true, get: (r) => fmt(r.impressions) },
+    { label: 'クリック', num: true, get: (r) => fmt(r.clicks) },
+    { label: '平均順位', num: true, get: (r) => (r.position == null ? '—' : r.position) }
+  ], [...scDays].reverse());
+
+  // 参照元
+  bars($('bars-sources'), R.sources.map((s) => ({
+    label: sourceLabel(s.name), full: s.name, value: s.sessions, metric: 'セッション',
+    extra: [{ value: `${Math.round((s.engaged / Math.max(s.sessions, 1)) * 100)}%`, name: 'エンゲージメント率' }]
+  })));
+
+  // 問い合わせまでの流れ
+  bars($('bars-funnel'), R.funnel.map((f) => ({ label: FUNNEL_NAMES[f.name] || f.name, full: FUNNEL_NAMES[f.name], value: f.count, metric: '回' })));
+  const camp = $('campaign');
+  camp.replaceChildren(
+    el('dt', {}, `${D.campaign.name}（${md(D.campaign.start)}から）`), el('dd', {}, `${fmt(D.campaign.sessions)}セッション・問い合わせ ${fmt(D.campaign.leads)}件`)
+  );
+  if (R.leads.length) {
+    camp.append(el('dt', {}, '問い合わせの内訳'), el('dd', {}, R.leads.map((l) => `${l.form === 'it_check' ? 'IT健康診断' : l.form === 'contact' ? 'フォーム' : '不明'}${l.campaign && l.campaign !== '(not set)' ? '・' + l.campaign : ''} ${l.count}`).join('、')));
+  }
+
+  // ページ
+  bars($('bars-pages'), R.pages.slice(0, 12).map((p) => ({
+    label: pageLabel(p.path), small: PAGE_NAMES[p.path] ? p.path : '', full: p.path, value: p.views, metric: 'ページビュー',
+    extra: [{ value: fmt(p.users), name: '人' }]
+  })));
+
+  renderQueries();
+
+  // 検索で表示されたページ
+  table($('table-search-pages'), [
+    { label: 'ページ', cls: 'q', get: (r) => {
+      const path = r.url.replace('https://www.arcle.net', '').replace('https://arcle.net', 'arcle.net');
+      return pageLabel(path) === path ? path : `${pageLabel(path)}（${path}）`;
+    } },
+    { label: '表示', num: true, get: (r) => fmt(r.impressions) },
+    { label: 'クリック', num: true, get: (r) => fmt(r.clicks) },
+    { label: '順位', num: true, get: (r) => r.position }
+  ], R.searchPages.slice(0, 12));
+}
+
+function renderQueries() {
+  const R = DATA.ranges[N];
+  const hideBrand = $('hide-brand').checked, onlyLocal = $('only-local').checked;
+  const rows = R.queries.filter((q) => (!hideBrand || !q.isBrand) && (!onlyLocal || q.isLocal));
+  $('queries-sub').textContent = `表示回数の多い順（Search Console）・${rows.length}語`;
+  table($('table-queries'), [
+    { label: '検索語', cls: 'q', get: (q) => {
+      const f = document.createDocumentFragment();
+      f.append(q.query);
+      if (q.isLocal) f.append(el('span', { class: 'chip local' }, '情シス・地域'));
+      if (q.isNew) f.append(el('span', { class: 'chip new' }, '新'));
+      return f;
+    } },
+    { label: '表示', num: true, get: (q) => fmt(q.impressions) },
+    { label: 'クリック', num: true, get: (q) => fmt(q.clicks) },
+    { label: '順位', num: true, get: (q) => q.position }
+  ], rows);
+}
+
+$('range').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  N = Number(b.dataset.n);
+  const u = new URL(location.href); u.searchParams.set('days', N); history.replaceState(null, '', u);
+  render();
+});
+$('hide-brand').addEventListener('change', renderQueries);
+$('only-local').addEventListener('change', renderQueries);
+let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => DATA && render(), 150); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => DATA && render());
+
+async function load() {
+  const main = $('main');
+  if (DATA) main.classList.add('loading');
+  try {
+    const r = await fetch('data/data.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error(r.status);
+    DATA = await r.json();
+    render();
+  } catch (e) {
+    if (!DATA) $('meta').textContent = 'データを読めませんでした（' + e.message + '）';
+  } finally {
+    main.classList.remove('loading');
+  }
+}
+load();
+setInterval(load, 15 * 60 * 1000);
+</script>
+</body>
+</html>
