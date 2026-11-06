@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
+import ArticleWorks from '../works/ArticleWorks';
 
 const title = '月額制と買い切りのホームページ比較｜愛知・東海の会社向け';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -154,7 +155,8 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
               {faqs.map((item) => <div key={item.q}><h3 className={ac.faqQ}>{item.q}</h3><p>{item.a}</p></div>)}
             </div>
           </section>
-          <section className={ac.related}>
+          <ArticleWorks service="web"/>
+    <section className={ac.related}>
             <h2 className={ac.h2Flat.web}>関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/website-company-guide-aichi-tokai" className={ac.relatedLink}>中小企業向け ホームページ制作会社の選び方</a>

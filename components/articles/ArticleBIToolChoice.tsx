@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
+import ArticleWorks from '../works/ArticleWorks';
 const title = "愛知・東海の中小企業へ｜TableauとPower BIの選び方";
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = "中小企業のためのTableauとPower BIの選び方";
@@ -98,6 +99,7 @@ const ArticleBIToolChoice: React.FC = () => {
     <div className={ac.faq}>
     {faqs.map((faq) => <div key={faq.question}><h3 className={ac.faqQ}>{faq.question}</h3><p>{faq.answer}</p></div>)}
     </div></section>
+    <ArticleWorks service="data"/>
     <section className={ac.related}><h2 className={headingClass}>関連記事</h2><div className="space-y-3"><a href="/articles/excel-report-automation-power-bi" className={ac.relatedLink}>Excel集計をPower BIで自動化する進め方</a>
     <a href="/articles/ichinomiya-josys-outsourcing-guide" className={ac.relatedLink}>中小企業向け 情シス代行の選び方</a>
     <a href="/articles/chatgpt-security-policy-sme" className={ac.relatedLink}>ChatGPT導入前に作るべき社内ルール</a>

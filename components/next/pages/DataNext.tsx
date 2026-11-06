@@ -6,6 +6,7 @@ import { Bubble, Burst, Caption, SfxText, SlantPanel, panel } from '../comic';
 import DashboardSample from '../DashboardSample';
 import { services } from '../theme';
 import ServiceArticles from '../../articles/ServiceArticles';
+import ServiceWorks from '../../works/ServiceWorks';
 
 const service = services.find((s) => s.key === 'data')!;
 
@@ -417,6 +418,7 @@ const DataNext: React.FC = () => (
       </div>
     </section>
 
+    <ServiceWorks service="data" />
     <ServiceArticles service="data" />
 
     <ContactCta

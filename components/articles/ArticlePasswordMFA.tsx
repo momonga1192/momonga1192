@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
+import ArticleWorks from '../works/ArticleWorks';
 
 const title = '愛知・東海の中小企業向け｜パスワード管理と多要素認証の始め方';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -176,7 +177,8 @@ const ArticlePasswordMFA: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
-          <section className={ac.related}>
+          <ArticleWorks service="josys"/>
+    <section className={ac.related}>
             <h2 className={ac.h2Flat.josys}>関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/microsoft-365-migration-sme" className={ac.relatedLink}>中小企業のMicrosoft 365導入・移行手順</a>

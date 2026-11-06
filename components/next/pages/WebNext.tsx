@@ -5,6 +5,7 @@ import { PageHeader, SectionHead, ContactCta, IconTile, Mark, PlanCard, Sticker,
 import { Bubble, Burst, Caption, SfxText, SlantPanel, panel } from '../comic';
 import { services } from '../theme';
 import ServiceArticles from '../../articles/ServiceArticles';
+import ServiceWorks from '../../works/ServiceWorks';
 
 // Web制作のページ（アメコミ版）。トップ（HomeComic.tsx）と同じコミックの1冊として、
 // 「古いホームページ → 新しいホームページ」の2コマから始め、料金・中身・作例・流れ・質問をコマに収める
@@ -662,6 +663,7 @@ const WebNext: React.FC<{ campaign?: boolean }> = ({ campaign = false }) => {
       </div>
     </section>
 
+    <ServiceWorks service="web" />
     <ServiceArticles service="web" />
 
     <ContactCta href={contactHref} title={<>まずは、お見積りから<br />お気軽にどうぞ。</>} body="新規制作もリニューアルも、ご相談・お見積りは無料です。「どのプランが合うか分からない」という段階でも大丈夫です。" />

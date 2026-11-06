@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
+import ArticleWorks from '../works/ArticleWorks';
 
 const title = '愛知・東海の中小企業向け｜生成AIで議事録を作る手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -174,7 +175,8 @@ const ArticleAIMeetingMinutes: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
-          <section className={ac.related}>
+          <ArticleWorks service="ai"/>
+    <section className={ac.related}>
             <h2 className={ac.h2Flat.ai}>関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/chatgpt-security-policy-sme" className={ac.relatedLink}>ChatGPT導入前に作るべき社内ルール</a>

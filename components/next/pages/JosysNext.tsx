@@ -5,6 +5,7 @@ import { ContactCta, IconTile, Mark, PageHeader, PlanCard, SectionHead, Ticker, 
 import { Caption, SfxText, panel } from '../comic';
 import { services } from '../theme';
 import ServiceArticles from '../../articles/ServiceArticles';
+import ServiceWorks from '../../works/ServiceWorks';
 
 const service = services.find((s) => s.key === 'josys')!;
 
@@ -340,6 +341,7 @@ const JosysNext: React.FC = () => (
       </div>
     </section>
 
+    <ServiceWorks service="josys" />
     <ServiceArticles service="josys" />
 
     <ContactCta

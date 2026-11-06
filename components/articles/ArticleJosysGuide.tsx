@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
+import ArticleWorks from '../works/ArticleWorks';
 // 「情シス代行 愛知」のような依頼の検索はサービスページ（/josys）に任せるため、タイトルに地域名を入れない
 const title = "情シス代行の選び方｜委託前の棚卸しと比べ方";
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -102,6 +103,7 @@ const ArticleJosysGuide: React.FC = () => {
     <div className={ac.faq}>
     {faqs.map((faq) => <div key={faq.question}><h3 className={ac.faqQ}>{faq.question}</h3><p>{faq.answer}</p></div>)}
     </div></section>
+    <ArticleWorks service="josys"/>
     <section className={ac.related}><h2 className={headingClass}>関連記事</h2><div className="space-y-3"><a href="/articles/microsoft-365-migration-sme" className={ac.relatedLink}>中小企業のMicrosoft 365移行ガイド</a>
     <a href="/articles/sme-bi-tableau-powerbi" className={ac.relatedLink}>TableauとPower BIはどちらを選ぶべき？</a>
     <a href="/articles/chatgpt-security-policy-sme" className={ac.relatedLink}>ChatGPT導入前に作るべき社内ルール</a>

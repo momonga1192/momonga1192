@@ -33,7 +33,7 @@ Orcaの定期実行（automation「お役立ち記事の作成（月・木）」
 
 ## 3. ファイルの作り方
 
-既存の記事 `components/articles/ArticleWebCompanyGuide.tsx` を雛形にする（Helmet、JSON-LD 3つ、PageHeader、本文、FAQ、関連記事、関連サービス、著者欄）。
+既存の記事 `components/articles/ArticleWebCompanyGuide.tsx` を雛形にする（Helmet、JSON-LD 3つ、PageHeader、本文、FAQ、関連する支援事例（`<ArticleWorks service="<key>"/>`）、関連記事、関連サービス、著者欄）。関連する支援事例は、記事と同じサービスの事例へのリンクで、事例のページを孤立させないために必ず入れる。
 
 - ファイル名：`components/articles/Article<英語のPascalCase>.tsx`
 - `title`：検索向けのタイトル。地域名を入れてよい。32字前後。

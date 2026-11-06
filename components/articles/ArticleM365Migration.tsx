@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
+import ArticleWorks from '../works/ArticleWorks';
 
 const title = '愛知・東海の中小企業へ｜Microsoft 365導入・移行手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -153,7 +154,8 @@ const ArticleM365Migration: React.FC = () => {
               {faqs.map(({ question, answer }) => <div key={question}><h3 className={ac.faqQ}>{question}</h3><p>{answer}</p></div>)}
             </div>
           </section>
-          <section className={ac.related}>
+          <ArticleWorks service="josys"/>
+    <section className={ac.related}>
             <h2 className={ac.h2Flat.josys}>関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/ichinomiya-josys-outsourcing-guide" className={ac.relatedLink}>中小企業向け 情シス代行の選び方</a>

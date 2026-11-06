@@ -5,6 +5,7 @@ import { ContactCta, IconTile, Mark, PageHeader, PlanCard, SectionHead, Ticker, 
 import { Bubble, Caption, SfxText, SlantPanel, panel, panelPress } from '../comic';
 import { services } from '../theme';
 import ServiceArticles from '../../articles/ServiceArticles';
+import ServiceWorks from '../../works/ServiceWorks';
 
 // 生成AI活用支援のページ（アメコミ版）。相棒ロボットが「AI」の役で、お悩みのコマの答えとプランの案内に出る
 const ai = services.find((service) => service.key === 'ai')!;
@@ -312,6 +313,7 @@ const GenAINext: React.FC = () => (
       </div>
     </section>
 
+    <ServiceWorks service="ai" />
     <ServiceArticles service="ai" />
 
     <ContactCta title={<span className="[word-break:auto-phrase]">AIの可能性を、<br />あなたのビジネスに。</span>} body="「何から始めればいいか分からない」という段階でも大丈夫です。AI活用の第一歩を、私たちがサポートします。" />

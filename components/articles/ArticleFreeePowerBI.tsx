@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
+import ArticleWorks from '../works/ArticleWorks';
 
 const title = '愛知・東海の中小企業向け｜freeeの会計データをPower BIで見る';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -156,7 +157,8 @@ const ArticleFreeePowerBI: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
-          <section className={ac.related}>
+          <ArticleWorks service="data"/>
+    <section className={ac.related}>
             <h2 className={ac.h2Flat.data}>関連記事</h2>
             <div className="space-y-3">
               <a href="/articles/excel-report-automation-power-bi" className={ac.relatedLink}>Excel集計を自動化する｜Power BIで月次報告</a>

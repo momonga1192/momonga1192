@@ -81,7 +81,8 @@ const WorkDetail: React.FC = () => {
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'ホーム', item: 'https://www.arcle.net/' },
               { '@type': 'ListItem', position: 2, name: '支援事例', item: 'https://www.arcle.net/works' },
-              { '@type': 'ListItem', position: 3, name: work.title, item: url }
+              { '@type': 'ListItem', position: 3, name: work.service, item: `https://www.arcle.net${serviceLinks[work.service]}` },
+              { '@type': 'ListItem', position: 4, name: work.title, item: url }
             ]
           })}
         </script>
@@ -94,7 +95,7 @@ const WorkDetail: React.FC = () => {
         service={style.service}
         image={comicIllust(`svc-${style.service}`)}
         imageMode="panel"
-        crumbs={[{ label: '支援事例', href: '/works' }, { label: work.title }]}
+        crumbs={[{ label: '支援事例', href: '/works' }, { label: work.service, href: serviceLinks[work.service] }, { label: work.title }]}
         lead={<span className="block lg:max-w-[30rem]">{work.summary}</span>}
       />
 
