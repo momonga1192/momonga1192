@@ -4,10 +4,11 @@ import { ArrowRight } from 'lucide-react';
 import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
-const title = "愛知・東海の中小企業向け｜情シス代行の選び方と料金";
+// 「情シス代行 愛知」のような依頼の検索はサービスページ（/josys）に任せるため、タイトルに地域名を入れない
+const title = "情シス代行の選び方｜委託前の棚卸しと比べ方";
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = "中小企業向け 情シス代行の選び方";
-const description = "愛知・東海の中小企業向けに、情シス代行の選び方を解説。対応範囲や現地対応の有無、ツール導入の支援、委託前の棚卸し、権限管理、導入手順とよくある失敗を整理します。Arcleの料金を参考に、専任IT担当者がいない会社の判断基準を紹介します。";
+const description = "情シス代行の選び方を解説。対応範囲や現地対応の有無、ツール導入の支援、委託前の棚卸し、権限管理、導入手順とよくある失敗を整理します。専任のIT担当者がいない中小企業が、依頼先を比べるときの判断基準です。";
 const canonical = "https://www.arcle.net/articles/ichinomiya-josys-outsourcing-guide";
 const faqs = [{ "question": "情シス代行はどの規模の会社に向いていますか？", "answer": "専任のIT担当者がいない、または兼任担当者の負担が大きい中小企業に向いています。人数だけでなく、問い合わせ量や管理の抜け漏れから必要な支援を判断します。" }, { "question": "費用はどれくらい見込むべきですか？", "answer": "Arcleの情シス代行は、ライトプラン3万円〜、スタンダードプラン15万円〜、プレミアムプラン30万円〜です（税抜）。企業規模や対応範囲に応じて内容を調整できるため、正確な費用はお見積もりでご確認ください。" }, { "question": "遠方の情シス代行会社でも大丈夫ですか？", "answer": "日常の相談やクラウドの設定はリモートでも対応できます。ただ、社内のサーバーやネットワークの障害、パソコンの設定など、現地での作業が必要な場面もあります。自社の所在地まで来てもらえるか、到着までの目安と費用を契約前に確認してください。" }, { "question": "導入前に何を準備すればよいですか？", "answer": "問い合わせ内容、IT作業時間、機器・契約・アカウントの一覧、社内の承認者を整理します。不明な項目は不明のまま記録し、調査が必要な作業として共有すると進めやすくなります。" }];
 const headingClass = ac.h2.josys;
@@ -20,7 +21,7 @@ const ArticleJosysGuide: React.FC = () => {
         <link rel="canonical" href={canonical}/>
         <script type="application/ld+json">{JSON.stringify({
             '@context': 'https://schema.org', '@type': 'Article',
-            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-10-31',
+            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-11-06',
             author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
             publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
             mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -44,9 +45,10 @@ const ArticleJosysGuide: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.josys}>{service.name}</span>
             <time dateTime="2026-03-06" className={ac.dateJa}>公開日 2026-03-06</time>
-            <time dateTime="2026-10-31" className={ac.dateJa}>更新日 2026-10-31</time>
+            <time dateTime="2026-11-06" className={ac.dateJa}>更新日 2026-11-06</time>
           </div>
     <p className={ac.p}>中小企業が情シス代行を選ぶときは、月額料金だけでなく「誰の、どの仕事を、どこまで任せるか」を決めることが大切です。情シスとは、社内のパソコンやアカウント、ネットワークなどを管理する情報システム部門のことです。専任者がいない会社では、総務担当者や詳しい社員に対応が集中し、本来の仕事が止まってしまいます。外部への委託を検討する経営者・総務担当者に向けて、比較から引き継ぎまでの判断基準を整理します。</p>
+    <p className={ac.p}>Arcleの情シス代行の料金と対応エリアは、<a href="/josys" className={`font-bold underline underline-offset-4 ${service.text}`}>愛知・東海の情シス代行のページ</a>にまとめています。</p>
     <h2 className={ac.h2.josys}>情シス代行が必要か、社内の負担を棚卸しする</h2>
     <p className={ac.p}>Arcleに届く情シス代行の相談で特に多いのは、「何が止まっていて、何が終わっていないのかが分からない」というものです。IT担当者がいないため、まず何から手を付ければよいのか、次に何をすればよいのかを判断できる人が社内にいません。だからこそ、委託先を探す前に、今の状態を書き出すところから始めます。</p>
     <p className={ac.p}>最初に確認するのは従業員数よりも、毎月発生している作業と放置されている課題です。例えば、入社日にパソコンが間に合わない、退職者のアカウントが残っている、メールが使えなくなるたびに総務が調べる、といった状態を記録します。担当者が努力して対応できていても、その人の不在時に止まる仕事は委託を検討する対象です。</p>
@@ -73,7 +75,7 @@ const ArticleJosysGuide: React.FC = () => {
     <div className={ac.promo}>
             <img src={promoHeroSrc} alt="" className={ac.promoHero} loading="lazy" />
             <span aria-hidden="true" className={ac.promoLabel}>ARCLE TIP!</span>
-    <p className={ac.promoTitle}>社内だけで整理が難しいときは</p><p className={ac.p}>相談先の整理から運用まで支援が必要なら、Arcleの情シス代行をご覧ください。ITヘルプデスク、セキュリティ・資産管理、クラウド・インフラ支援など、サービス内容を確認できます。</p><a href={service.href} className={`inline-flex items-center gap-2 font-bold underline underline-offset-4 ${service.text}`}>{service.name}の支援内容を見る<ArrowRight className="w-4 h-4" aria-hidden="true"/></a></div>
+    <p className={ac.promoTitle}>社内だけで整理が難しいときは</p><p className={ac.p}>相談先の整理から運用まで支援が必要なら、Arcleの情シス代行をご覧ください。ITヘルプデスク、セキュリティ・資産管理、クラウド・インフラ支援など、サービス内容を確認できます。</p><a href={service.href} className={`inline-flex items-center gap-2 font-bold underline underline-offset-4 ${service.text}`}>愛知・岐阜・三重の情シス代行（料金・対応エリア）を見る<ArrowRight className="w-4 h-4" aria-hidden="true"/></a></div>
     <h2 className={ac.h2.josys}>新しいツールの選定と、現場への定着まで任せられるか</h2>
     <p className={ac.p}>IT担当者がいなくて困る場面として、トラブル対応と同じくらい多いのが、新しいシステムやツールを入れるときです。そのツールが本当に自社に合っているのか、良いところと悪いところを分かったうえで選ぶ必要があります。何をできるようにしたいのかを書き出して決める「要件定義」も欠かせません。社内にこの判断ができる人がいないと、営業担当者の説明だけで決めてしまいがちです。</p>
     <p className={ac.p}>もう一つの山場が、導入したあとです。実際にツールを使う部署の担当者に使い方を説明し、使いこなせるように浸透させる必要があります。ツールの販売元が導入支援を用意していることも多いですが、説明が通り一遍で、「自分の業務だとどうなるのか」までは見てもらえないことがあります。情シス代行を比べるときは、ツールの比較や要件の整理、部署ごとの業務に合わせた説明まで頼めるかを確認しましょう。</p>

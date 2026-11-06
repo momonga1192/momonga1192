@@ -1,12 +1,20 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Check, Cpu, Globe, Shield, Users, Zap } from 'lucide-react';
+import { ArrowRight, Check, Cpu, Globe, Plus, Shield, Users, Zap } from 'lucide-react';
 import { ContactCta, IconTile, Mark, PageHeader, PlanCard, SectionHead, Ticker, comicBtn, comicBtnShape, comicIllust } from '../parts';
 import { Caption, SfxText, panel } from '../comic';
 import { services } from '../theme';
 import ServiceArticles from '../../articles/ServiceArticles';
 
 const service = services.find((s) => s.key === 'josys')!;
+
+// よくある質問（サイトに書いてある事実の範囲で。FAQPageの構造化データにも使う）
+const faqs = [
+  { q: '情シス代行の料金はいくらですか？', a: '月額3万円〜のライトプラン（IT相談窓口・簡易トラブルシューティング）、月額15万円〜のスタンダードプラン（情シス業務を包括サポート）、月額30万円〜のプレミアムプラン（IT戦略パートナー）があります（いずれも税抜）。企業規模や対応範囲に応じてカスタマイズできます。' },
+  { q: '愛知県以外でも訪問してもらえますか？', a: '愛知県一宮市を拠点に、愛知・岐阜・三重の東海3県へ訪問します。リモートで対応できる業務は、地域を問わずご相談ください。' },
+  { q: 'どんな業務を任せられますか？', a: 'ITヘルプデスク、PCキッティング、SaaSの導入、セキュリティ対策、ネットワーク構築など、IT専任担当者がいない会社のIT業務をまとめてお任せいただけます。' },
+  { q: '相談や見積もりは無料ですか？', a: 'はい、初回のご相談・お見積もりは無料です。お問い合わせフォームからご連絡いただければ、通常2営業日以内にArcleからご連絡します。' }
+];
 
 // 訪問できる範囲（東海3県）。拠点は一宮市。市名は地域の検索で拾われるよう、主な市を書く
 const areas = [
@@ -140,6 +148,11 @@ const JosysNext: React.FC = () => (
             { "@type": "Offer", "name": "プレミアムプラン", "price": "300000", "priceCurrency": "JPY", "description": "IT戦略パートナー" }
           ]
         })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqs.map((item) => ({ "@type": "Question", "name": item.q, "acceptedAnswer": { "@type": "Answer", "text": item.a } }))
+        })}</script>
       </Helmet>
     <PageHeader
       en="Information Systems Outsourcing"
@@ -156,6 +169,7 @@ const JosysNext: React.FC = () => (
       lead={
         <>
           <p>あなたの会社の「見えない情シス部門」として。<br />技術と信頼で、ビジネスの成長を足元から支えます。</p>
+          <p className="mt-3">愛知県一宮市を拠点に、愛知・岐阜・三重の中小企業のIT担当を代行します。</p>
           <div className="mt-8 flex flex-wrap gap-4">
             <a href='/contact' className={`${comicBtnShape} bg-[#111] text-white shadow-[5px_5px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544]`}>
               まずは無料で相談する<ArrowRight className="w-4 h-4" strokeWidth={3} aria-hidden="true" />
@@ -294,6 +308,35 @@ const JosysNext: React.FC = () => (
           ))}
         </div>
         <p className="pop-reveal mt-8 text-center text-sm font-bold text-sumi leading-[1.9] [word-break:auto-phrase]">ここにない市町村も、東海3県なら訪問できます。日程はご相談のうえで決めます。</p>
+      </div>
+    </section>
+
+    {/* よくある質問：ご相談の流れのページと同じ、Q と A の札を付けたコマ */}
+    <section className="py-20 md:py-24 bg-white comic-dots">
+      <div className="max-w-3xl mx-auto px-4 sm:px-5">
+        <SectionHead en="Q & A" enClass={service.text} title="情シス代行のよくある質問" center />
+        <div className="space-y-6">
+          {faqs.map((item, i) => (
+            <details
+              key={item.q}
+              className="group pop-reveal bg-[#FAF3E0] border-[3px] border-[#111] shadow-[6px_6px_0_#111] open:shadow-[6px_6px_0_#F2B544,9px_9px_0_#111]"
+              style={{ animationDelay: `${i * 70}ms` }}
+              open={i === 0}
+            >
+              <summary className="flex items-center gap-4 p-5 sm:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <span className="grid place-items-center w-10 h-10 shrink-0 -rotate-6 bg-svc-josys text-white font-comic text-[26px] leading-none border-[3px] border-[#111] shadow-[2px_2px_0_#111]">Q</span>
+                <h3 className="flex-1 font-manga text-[16px] md:text-[18px] leading-relaxed text-[#111] [word-break:auto-phrase]">{item.q}</h3>
+                <span className="w-9 h-9 shrink-0 bg-mustard border-[3px] border-[#111] grid place-items-center group-open:rotate-45 transition-transform">
+                  <Plus className="w-4 h-4" strokeWidth={3.5} aria-hidden="true" />
+                </span>
+              </summary>
+              <div className="flex gap-4 px-5 pb-6 sm:px-6">
+                <span className="grid place-items-center w-10 h-10 shrink-0 -rotate-6 bg-coral text-white font-comic text-[26px] leading-none border-[3px] border-[#111] shadow-[2px_2px_0_#111]">A</span>
+                <p className="flex-1 min-w-0 bg-white border-[3px] border-[#111] px-4 py-3 leading-[1.9] font-bold text-sumi">{item.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
       </div>
     </section>
 

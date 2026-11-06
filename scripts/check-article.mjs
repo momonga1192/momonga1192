@@ -12,7 +12,9 @@ const html = readFileSync(`dist/articles/${slug}.html`, 'utf8');
 const body = html.split('<body')[1].replace(/<script[\s\S]*?<\/script>/g, '');
 const article = body.split('<article')[1]?.split('</article>')[0] ?? '';
 const text = article.replace(/<[^>]+>/g, '');
-const regions = body.match(/愛知|東海|一宮|名古屋/g) ?? [];
+// サービスページへのリンクの文字（例：「愛知・東海の情シス代行のページ」）は、依頼の検索をサービスページへ送るためのものなので数えない
+const serviceLink = /<a[^>]*href="\/(josys|data-consulting|gen-ai|web-production)"[^>]*>[\s\S]*?<\/a>/g;
+const regions = body.replace(serviceLink, '').match(/愛知|東海|一宮|名古屋/g) ?? [];
 
 const checks = [
   ['title', /<title[^>]*>[^<]+<\/title>/.test(html)],
