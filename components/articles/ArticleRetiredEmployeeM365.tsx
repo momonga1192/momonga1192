@@ -5,6 +5,7 @@ import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
+import ArticleToc from './ArticleToc';
 
 const title = '愛知・東海の中小企業向け｜退職者のMicrosoft 365アカウントの止め方';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -61,12 +62,13 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
           </div>
           <p className="text-[#30343F] leading-[2] mb-8">社員が退職したあと、その人のMicrosoft 365のアカウントをどうすればよいか迷う会社は少なくありません。すぐに削除すると、取引先とのメールや作りかけの資料が消えてしまうかもしれません。反対に放置すると、退職者が社外から会社のメールやファイルを見られる状態が続き、ライセンスの料金も払い続けることになります。この記事では、IT担当者がいない会社でも進められるよう、退職日にアカウントを止める手順から、メールとファイルの引き継ぎ、ライセンスの後片付けまでを順に整理します。</p>
 
-          <h2 className={heading}>1. 退職者のアカウントで最初に決めること</h2>
+          <ArticleToc service="josys" items={[{"id":"sec-1","label":"退職者のアカウントで最初に決めること"},{"id":"sec-2","label":"退職日にサインインを止める手順"},{"id":"sec-3","label":"メールの引き継ぎ方を選ぶ"},{"id":"sec-4","label":"OneDriveのファイルを引き継ぐ"},{"id":"sec-5","label":"ライセンスとアカウントを片付ける"},{"id":"sec-6","label":"退職時のアカウント手続きチェックリスト"},{"id":"sec-7","label":"まとめ：止める・引き継ぐ・片付けるの順で進める"},{"id":"faq","label":"よくある質問"}]}/>
+          <h2 id="sec-1" className={heading}>1. 退職者のアカウントで最初に決めること</h2>
           <p className={paragraph}>Microsoft 365のアカウントは、メール（Outlook）、ファイルの保存場所（OneDrive）、チャットや会議（Teams）をまとめて使うための入り口です。退職者のアカウントには、仕事で使ったメールやファイルがすべて結び付いています。そのため、いきなり削除するのではなく、「止める」「引き継ぐ」「片付ける」の三段階に分けて進めるのが基本です。</p>
           <p className={paragraph}>作業を始める前に、次の三つを決めておきましょう。一つ目は、アカウントを止める日時です。最終出社日の終業後にするのか、有給休暇の消化が終わる退職日にするのかで、引き継ぎの段取りが変わります。二つ目は、メールとファイルを引き継ぐ後任者です。三つ目は、作業を担当する人です。Microsoft 365の管理者の権限を持つ人が社内にいるか、委託先の業者がいるかを確認します。</p>
           <p className={paragraph}>あわせて、退職者本人に依頼しておくことも整理します。たとえば、取引先への担当交代の連絡、OneDriveにある資料のうち共有フォルダに移すもの、パスワードを知っている社内システムの一覧などです。本人がいるうちに済ませておくと、退職後に管理者が探し回る手間を減らせます。</p>
 
-          <h2 className={heading}>2. 退職日にサインインを止める手順</h2>
+          <h2 id="sec-2" className={heading}>2. 退職日にサインインを止める手順</h2>
           <p className={paragraph}>退職日に最初に行うのは、退職者がMicrosoft 365に入れないようにすることです。Microsoftの公式ドキュメントでは、元従業員を削除するまでの流れを7つの手順に分けて案内しており、最初の手順がサインインを止めることです（<a href="https://learn.microsoft.com/ja-jp/microsoft-365/admin/add-users/remove-former-employee" className={link} target="_blank" rel="noopener">Microsoft Learn：元従業員を削除する - 概要</a>）。</p>
           <h3 className={subheading}>パスワードを変えて、すべての端末からサインアウトさせる</h3>
           <p className={paragraph}>Microsoft 365 管理センターの「ユーザー」から「アクティブなユーザー」を開き、退職者を選んで「パスワードのリセット」を行います。続けて、「アカウント」タブの「すべてのセッションからサインアウト」を選びます。公式ドキュメントでは、これで1時間以内、または利用中のページを離れた時点で、もう一度サインインを求められると説明されています。</p>
@@ -75,7 +77,7 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
           <h3 className={subheading}>スマホやメールソフトからの接続も確認する</h3>
           <p className={paragraph}>退職者が個人のスマホで会社のメールを見ていた場合は、その端末からの接続も止めます。Exchange 管理センターでは、メールボックスごとに、Outlookのアプリやスマホのメールアプリなど、接続方法ごとにオンとオフを切り替えられます。会社が貸し出したスマホやパソコンは、返却を受けてから初期化の要否を判断しましょう。</p>
 
-          <h2 className={heading}>3. メールの引き継ぎ方を選ぶ</h2>
+          <h2 id="sec-3" className={heading}>3. メールの引き継ぎ方を選ぶ</h2>
           <p className={paragraph}>退職者のメールアドレスには、退職後も取引先からメールが届くことがあります。過去のメールを残したいのか、これから届くメールを受け取りたいのかによって、選ぶ方法が変わります。主な方法を表にまとめました。</p>
           <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="退職者のメールの引き継ぎ方法の比較（横にスクロールできます）" tabIndex={0}>
             <table className="w-full min-w-[640px] text-sm border-collapse text-[#30343F]">
@@ -97,7 +99,7 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
           <h3 className={subheading}>転送を設定する場合の注意</h3>
           <p className={paragraph}>転送は、管理センターの「メール」タブにある「メール転送の管理」から設定します。転送されるのは、設定したあとに届く新しいメールだけです。公式ドキュメントでは、転送を設定したアカウントはライセンスを外せず、外すと転送が止まると案内されています。料金がかかり続けるため、転送は「取引先に担当交代を伝え終えるまで」など、期間を決めて使うとよいでしょう。</p>
 
-          <h2 className={heading}>4. OneDriveのファイルを引き継ぐ</h2>
+          <h2 id="sec-4" className={heading}>4. OneDriveのファイルを引き継ぐ</h2>
           <p className={paragraph}>OneDriveは、社員一人ひとりに用意されるファイルの保存場所です。退職者が見積書や提案書を自分のOneDriveに置いていた場合は、削除の前に共有フォルダや後任者のOneDriveへ移します。チームで使うSharePointのファイルは、退職者のアカウントを削除しても残るため、移す必要はありません。</p>
           <h3 className={subheading}>管理センターからファイルを開いて移す</h3>
           <p className={paragraph}>管理センターで退職者を選び、「OneDrive」タブの「ファイルへのリンクの作成」を選ぶと、退職者のOneDriveを開けます。そこから、必要なファイルを共有フォルダにコピーしたり、パソコンにダウンロードしたりします。公式ドキュメントでは、変更の履歴が残っているファイルを移すと、最新の版だけが移ると説明されています（<a href="https://learn.microsoft.com/ja-jp/microsoft-365/admin/add-users/remove-former-employee-step-5" className={link} target="_blank" rel="noopener">Microsoft Learn：別の従業員に OneDrive と Outlook のデータへのアクセス権を付与する</a>）。</p>
@@ -112,7 +114,7 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
             <a href={service.href} className="inline-flex items-center gap-2 text-svc-josys font-bold hover:underline underline-offset-4">情シス代行の対応内容を確認する<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
 
-          <h2 className={heading}>5. ライセンスとアカウントを片付ける</h2>
+          <h2 id="sec-5" className={heading}>5. ライセンスとアカウントを片付ける</h2>
           <p className={paragraph}>メールとファイルの引き継ぎが終わったら、ライセンスとアカウントを片付けます。ここで見落としやすいのが、料金の止め方です。公式ドキュメントでは、ユーザーを削除してもライセンスの支払いは続くと説明されています（<a href="https://learn.microsoft.com/ja-jp/microsoft-365/admin/add-users/delete-a-user" className={link} target="_blank" rel="noopener">Microsoft Learn：組織からユーザーを削除する</a>）。</p>
           <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-3">
             <li><strong className="text-sumi">ライセンスを後任者に回すか決める：</strong>近いうちに新しい社員が入るなら、外したライセンスをその人に割り当てます。ライセンスが自動でほかの人に付くことはありません。</li>
@@ -122,7 +124,7 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
           </ol>
           <p className={`${paragraph} mt-4`}>自社の契約が月ごとか年ごとか分からない場合は、管理センターの「課金情報」で確認するか、契約した販売店に問い合わせてください。画面の名前や手順は変わることがあるため、作業の前に最新の公式ドキュメントも確認しましょう。</p>
 
-          <h2 className={heading}>6. 退職時のアカウント手続きチェックリスト</h2>
+          <h2 id="sec-6" className={heading}>6. 退職時のアカウント手続きチェックリスト</h2>
           <p className={paragraph}>退職のたびに手順を思い出すのは大変です。次のチェックリストを社内の手順書に入れておくと、担当者が替わっても同じ流れで進められます。</p>
           <div className={ac.box}>
             <p className={ac.boxTitle}>退職者のMicrosoft 365アカウント 手続きチェックリスト</p>
@@ -144,11 +146,11 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
           <p className={paragraph}>見落としがちなのが、Microsoft 365以外のサービスです。会計ソフトや勤怠管理、ネット銀行、ホームページの管理画面など、退職者が使っていたサービスは会社によってさまざまです。在職中から、誰がどのサービスを使っているかを一覧にしておくと、退職時に止め忘れを防げます。パスワードの管理全般は、<a href="/articles/sme-password-management-mfa" className={link}>中小企業のパスワード管理と多要素認証の始め方</a>でも紹介しています。</p>
           <p className={paragraph}>入社のときの手順と対にしておくことも大切です。たとえば、入社時に「上司（マネージャー）の登録」を済ませておけば、退職時にOneDriveの閲覧の権限が自動で上司に付きます。入社のときにどのサービスのアカウントを作ったかを記録しておけば、退職時の一覧づくりもすぐに終わります。</p>
 
-          <h2 className={heading}>まとめ：止める・引き継ぐ・片付けるの順で進める</h2>
+          <h2 id="sec-7" className={heading}>まとめ：止める・引き継ぐ・片付けるの順で進める</h2>
           <p className={paragraph}>退職者のMicrosoft 365アカウントは、すぐに削除するのではなく、サインインを止め、メールとファイルを引き継いでから片付けるのが安全です。メールは共有メールボックスにすると過去のやり取りも残せますが、アカウントを削除しないことと、変換前後にパスワードを変えることを忘れないようにしましょう。ライセンスは、外すだけでなく契約の数を減らさないと料金がかかり続けることがあります。まずは今いる社員とアカウントの一覧を見比べて、退職者のアカウントが残っていないかを確かめるところから始めてみてください。</p>
 
           <section className="mt-14">
-            <h2 className={heading}>よくある質問</h2>
+            <h2 id="faq" className={heading}>よくある質問</h2>
             <div className={ac.faq}>
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>

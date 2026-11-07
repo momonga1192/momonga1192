@@ -270,6 +270,9 @@ html[data-intro]::after { content: ''; position: fixed; inset: 0; z-index: 70; b
 /* 斜めのテープなどで、ページの横幅がはみ出さないようにする */
 html { overflow-x: clip; }
 
+/* 記事の目次から見出しへ、なめらかに移る（動きを減らす設定の人には動かさない） */
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
 /* 診断結果の印刷・PDF保存：ヘッダー・フッター・ボタン・追尾バナーを隠し、色をそのまま刷る */
 @media print {
   @page { size: A4; margin: 12mm; }

@@ -5,6 +5,7 @@ import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
+import ArticleToc from './ArticleToc';
 
 const title = '愛知・東海の中小企業向け｜パスワード管理と多要素認証の始め方';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -61,12 +62,13 @@ const ArticlePasswordMFA: React.FC = () => {
           </div>
           <p className="text-[#30343F] leading-[2] mb-8">メール、会計ソフト、ネットバンキング、取引先とのファイル共有など、仕事で使うサービスにはどれもIDとパスワードがあります。IT担当者がいない会社では、パスワードの決め方も保管のしかたも社員任せになりがちです。この記事では、社内のパスワードルールの決め方から、多要素認証の選び方と導入手順、つまずきやすい点まで、今日から始められる順に整理します。</p>
 
-          <h2 className={heading}>1. パスワード管理が会社の守りになる理由</h2>
+          <ArticleToc service="josys" items={[{"id":"sec-1","label":"パスワード管理が会社の守りになる理由"},{"id":"sec-2","label":"社内のパスワードルールを決める"},{"id":"sec-3","label":"パスワードの保管と共有のしかた"},{"id":"sec-4","label":"多要素認証の仕組みと方式の選び方"},{"id":"sec-5","label":"多要素認証を社内に導入する手順"},{"id":"sec-6","label":"導入後につまずきやすい場面と備え"},{"id":"sec-7","label":"今日から使えるチェックリスト"},{"id":"sec-8","label":"まとめ：ルールを短く決め、管理者から多要素認証を"},{"id":"faq","label":"よくある質問"}]}/>
+          <h2 id="sec-1" className={heading}>1. パスワード管理が会社の守りになる理由</h2>
           <p className={paragraph}>不正ログインの多くは、特別な技術よりも、弱いパスワードや使い回しから起こります。あるサービスから流出したIDとパスワードを、攻撃者が別のサービスで試す手口があるためです。社員が私用のサービスと同じパスワードを仕事のメールに使っていれば、会社とは関係のない流出から社内に入られるおそれがあります。</p>
           <p className={paragraph}>IPA（情報処理推進機構）が中小企業向けにまとめた「情報セキュリティ6か条」でも、「パスワードを強化しよう！」が基本対策の一つに挙げられています。パスワードは「長く」「複雑に」「使い回さない」ようにして強化し、可能な場合は多要素認証やパスキーなどの認証を強める機能を使う、という内容です。詳しくは<a href="https://www.ipa.go.jp/security/guide/sme/about.html" className={link} target="_blank" rel="noopener">IPAの「中小企業の情報セキュリティ対策ガイドライン」</a>で確認できます。</p>
           <p className={paragraph}>メールのアカウントに入られると、取引先へのなりすましメールや、請求書の振込先を書き換える詐欺に使われることがあります。被害は自社だけにとどまりません。パスワード管理は、取引先からの信頼を守るための仕事でもあります。</p>
 
-          <h2 className={heading}>2. 社内のパスワードルールを決める</h2>
+          <h2 id="sec-2" className={heading}>2. 社内のパスワードルールを決める</h2>
           <p className={paragraph}>まずは、社員全員が守れる短いルールを決めます。以前は「3か月ごとに変更する」「記号を必ず入れる」といったルールがよく使われていました。しかし、頻繁に変えさせると「末尾の数字だけ変える」ような規則的なパスワードが増え、かえって推測されやすくなります。</p>
           <p className={paragraph}>総務省の「国民のためのサイバーセキュリティサイト」では、流出の事実がなければパスワードを変更する必要はなく、定期的に変えるよりも、機器やサービスの間で使い回しのない固有のパスワードを設定することが求められる、としています（<a href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/security/business/staff/06/" className={link} target="_blank" rel="noopener">安全なパスワードの設定・管理</a>）。社内ルールも、この考え方に合わせて見直しましょう。</p>
           <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="パスワードルールの見直し（横にスクロールできます）" tabIndex={0}>
@@ -86,7 +88,7 @@ const ArticlePasswordMFA: React.FC = () => {
           </div>
           <p className={paragraph}>ルールは一枚の紙に収まる量にし、なぜそうするのかを一言ずつ添えます。たとえば「使い回さない：ほかのサービスで流出したときに、会社のアカウントまで入られないようにするため」と書けば、社員も納得して守りやすくなります。ルールの対象は、会社のメールやクラウドサービスだけでなく、ルーターや複合機の管理画面、ネットバンキングまで含めて考えましょう。</p>
 
-          <h2 className={heading}>3. パスワードの保管と共有のしかた</h2>
+          <h2 id="sec-3" className={heading}>3. パスワードの保管と共有のしかた</h2>
           <h3 className={subheading}>付箋やExcelの一覧は見直す</h3>
           <p className={paragraph}>パスワードを長く、サービスごとに別にすると、覚えきれなくなります。そこで、モニターに付箋を貼ったり、パスワードを並べたExcelファイルを共有フォルダに置いたりする会社は少なくありません。付箋は来客や清掃の業者からも見えますし、Excelの一覧は、共有フォルダに入られたときにすべてのパスワードを一度に渡すことになります。</p>
           <h3 className={subheading}>パスワード管理ツールを会社で選ぶ</h3>
@@ -95,7 +97,7 @@ const ArticlePasswordMFA: React.FC = () => {
           <h3 className={subheading}>共有アカウントは減らし、残すなら管理者を決める</h3>
           <p className={paragraph}>「受付用」「経理用」のように、複数の人が同じIDとパスワードを使うアカウントは、誰がいつ使ったのかが分からなくなります。退職者が出るたびにパスワードを変える必要もあり、変更し忘れも起きやすくなります。サービスが対応していれば、一人ひとりにアカウントを発行し、必要な権限を付ける形に切り替えましょう。どうしても共有が必要なアカウントは、管理する人を決め、パスワード管理ツールの共有機能で必要な人だけに渡します。チャットや通常のメールにパスワードをそのまま書いて送るのは避けてください。</p>
 
-          <h2 className={heading}>4. 多要素認証の仕組みと方式の選び方</h2>
+          <h2 id="sec-4" className={heading}>4. 多要素認証の仕組みと方式の選び方</h2>
           <p className={paragraph}>多要素認証は、「知っているもの」（パスワードなど）、「持っているもの」（スマホやセキュリティキーなど）、「本人に関するもの」（指紋や顔など）のうち、二つ以上を組み合わせて本人を確かめる仕組みです。パスワードが漏れても、もう一つの要素がなければログインできないため、不正ログインの被害を大きく減らせます。Googleでは同じような仕組みを「2段階認証プロセス」と呼んでいます。</p>
           <p className={paragraph}>方式にはいくつかの種類があり、手軽さと強さが違います。社員のスマホの状況や、使っているサービスが対応している方式を見て選びましょう。</p>
           <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="多要素認証の方式の比較（横にスクロールできます）" tabIndex={0}>
@@ -114,7 +116,7 @@ const ArticlePasswordMFA: React.FC = () => {
           </div>
           <p className={paragraph}>IPAの解説では、パスキーはパスワードや確認コードを入力しないため、偽サイトに認証情報を盗まれにくい方式だと説明されています。一方で、SMSで届く確認コードを盗もうとする手口も確認されているとして、不審なメールやサイトに注意するよう呼びかけています。最初は認証アプリを基本にし、対応しているサービスから順にパスキーを使う、という進め方が取り組みやすいでしょう。</p>
 
-          <h2 className={heading}>5. 多要素認証を社内に導入する手順</h2>
+          <h2 id="sec-5" className={heading}>5. 多要素認証を社内に導入する手順</h2>
           <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-3">
             <li><strong className="text-sumi">使っているサービスを洗い出す：</strong>メール、ファイル共有、会計、勤怠、ネットバンキング、ホームページの管理画面などを一覧にし、多要素認証に対応しているかを確認します。社外に情報が出たときの影響が大きいものから優先します。</li>
             <li><strong className="text-sumi">管理者アカウントから始める：</strong>設定を変えられる管理者のアカウントは、狙われたときの被害が大きくなります。社員に広げる前に、管理者が先に設定し、登録の手順や画面を確かめておきます。</li>
@@ -136,7 +138,7 @@ const ArticlePasswordMFA: React.FC = () => {
             <a href={service.href} className="inline-flex items-center gap-2 text-svc-josys font-bold hover:underline underline-offset-4">情シス代行の対応内容を確認する<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
 
-          <h2 className={heading}>6. 導入後につまずきやすい場面と備え</h2>
+          <h2 id="sec-6" className={heading}>6. 導入後につまずきやすい場面と備え</h2>
           <p className={paragraph}>多要素認証は、設定したあとの運用でつまずくことが多い仕組みです。よくある場面を先に想定し、対応を決めておきましょう。</p>
           <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>スマホの機種変更：古いスマホを手放す前に、認証アプリの引き継ぎか、新しいスマホでの登録をやり直すよう案内します。手放してから気づくと、管理者による再設定が必要になります。</li>
@@ -147,7 +149,7 @@ const ArticlePasswordMFA: React.FC = () => {
           </ul>
           <p className={`${paragraph} mt-4`}>こうした対応は、担当者の頭の中だけにあると、休みや異動のときに止まってしまいます。手順は短い文書にまとめ、管理者が見られる場所に置いておきましょう。</p>
 
-          <h2 className={heading}>7. 今日から使えるチェックリスト</h2>
+          <h2 id="sec-7" className={heading}>7. 今日から使えるチェックリスト</h2>
           <p className={paragraph}>自社の状況を確かめるために、次の項目を順に見てください。できていない項目があれば、上から順に取り組むと進めやすくなります。</p>
           <div className={ac.box}>
             <p className={ac.boxTitle}>パスワード管理と多要素認証のチェックリスト</p>
@@ -168,11 +170,11 @@ const ArticlePasswordMFA: React.FC = () => {
           </div>
           <p className={paragraph}>すべてを一度に整える必要はありません。たとえば今月は管理者アカウントの多要素認証とルールづくり、来月は社員への展開、その次はパスワード管理ツールの検討、というように、月ごとに一つずつ進める計画でも十分に効果があります。</p>
 
-          <h2 className={heading}>まとめ：ルールを短く決め、管理者から多要素認証を</h2>
+          <h2 id="sec-8" className={heading}>まとめ：ルールを短く決め、管理者から多要素認証を</h2>
           <p className={paragraph}>パスワード管理は、長く、推測されにくく、使い回さないパスワードを、安全な方法で保管することが基本です。定期的な変更よりも、流出したときにすぐ変えられる体制を整えましょう。そのうえで多要素認証を加えれば、パスワードが漏れたときの被害を大きく減らせます。まずは仕事で使うサービスを一覧にし、管理者アカウントの多要素認証から始めてみてください。</p>
 
           <section className="mt-14">
-            <h2 className={heading}>よくある質問</h2>
+            <h2 id="faq" className={heading}>よくある質問</h2>
             <div className={ac.faq}>
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>

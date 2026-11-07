@@ -5,6 +5,7 @@ import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
+import ArticleToc from './ArticleToc';
 
 const title = '愛知・東海の中小企業向け｜売上データの見える化を始める手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -60,12 +61,13 @@ const ArticleSalesVisualization: React.FC = () => {
           </div>
           <p className="text-[#30343F] leading-[2] mb-8">「売上は毎月集計しているのに、増えた理由も減った理由もよく分からない」。そんな悩みを持つ会社は少なくありません。売上の見える化とは、売上の数字を月や顧客、商品ごとに分けて、表やグラフでひと目で分かる形にすることです。大がかりなシステムがなくても、Excelと手元のデータから始められます。この記事では、最初に見る数字の決め方から、元データの整え方、Excelでの集計、数字の読み方、社内で見る習慣づくりまでを順に整理します。</p>
 
-          <h2 className={heading}>1. 売上の見える化で答えたい問いを決める</h2>
+          <ArticleToc service="data" items={[{"id":"sec-1","label":"売上の見える化で答えたい問いを決める"},{"id":"sec-2","label":"最初に見る数字と切り口を選ぶ"},{"id":"sec-3","label":"元データを集計しやすい形に整える"},{"id":"sec-4","label":"Excelのピボットテーブルで集計とグラフを作る"},{"id":"sec-5","label":"見える化した売上の数字を読むポイント"},{"id":"sec-6","label":"社内で見る習慣をつくり、次の段階を考える"},{"id":"sec-7","label":"まとめ：問いを決め、整った明細から小さく始める"},{"id":"faq","label":"よくある質問"}]}/>
+          <h2 id="sec-1" className={heading}>1. 売上の見える化で答えたい問いを決める</h2>
           <p className={paragraph}>見える化を始めるときに、いきなりグラフを作るのは避けましょう。先に決めたいのは「この数字を見て、何を判断したいか」です。問いが決まっていないと、グラフをたくさん作っても眺めて終わりになりがちです。</p>
           <p className={paragraph}>中小企業で最初の問いになりやすいのは、次のようなものです。今月の売上は去年の同じ月と比べてどうか。売上を支えている顧客や商品はどれか。減っている取引先はないか。担当者や営業所によって差があるか。このうち、経営者や営業の責任者がいちばん知りたいものを一つか二つ選びます。</p>
           <p className={paragraph}>問いを選んだら、その答えを見たあとに取る行動も書き出しておきます。たとえば「前年より売上が下がった顧客が分かったら、担当者に状況を聞く」といった形です。行動まで決めておくと、必要な数字の細かさや、どのくらいの頻度で見ればよいかが見えてきます。</p>
 
-          <h2 className={heading}>2. 最初に見る数字と切り口を選ぶ</h2>
+          <h2 id="sec-2" className={heading}>2. 最初に見る数字と切り口を選ぶ</h2>
           <p className={paragraph}>売上は、どの切り口で分けるかによって見え方が変わります。切り口とは、数字を分ける単位のことです。月、顧客、商品、担当者などがあり、それぞれ分かることと必要なデータが違います。</p>
           <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="売上を見る切り口の比較（横にスクロールできます）" tabIndex={0}>
             <table className="w-full min-w-[640px] text-sm border-collapse text-[#30343F]">
@@ -84,7 +86,7 @@ const ArticleSalesVisualization: React.FC = () => {
           </div>
           <p className={paragraph}>最初は「月別」と、もう一つだけを選ぶのがおすすめです。月別の推移は、どの会社でも基本になるうえ、売上日と金額があれば作れます。二つ目は、第1章で決めた問いに合わせて、顧客別か商品別を選びましょう。粗利は経営判断に役立つ数字ですが、原価のデータがそろっていないことも多いため、売上の見える化が回り始めてから加えても遅くありません。</p>
 
-          <h2 className={heading}>3. 元データを集計しやすい形に整える</h2>
+          <h2 id="sec-3" className={heading}>3. 元データを集計しやすい形に整える</h2>
           <p className={paragraph}>見える化でいちばん手間がかかるのは、グラフ作りではなく元データの準備です。元データとは、集計のもとになる売上の明細のことです。販売管理システムや会計ソフトから書き出したもの、請求書を手入力した一覧などが当てはまります。</p>
           <h3 className={subheading}>1行に1件の取引を書く</h3>
           <p className={paragraph}>集計しやすい表の基本は、1行に1件の取引を書き、1列に1種類の項目を入れることです。見た目を整えるために月ごとに表を分けたり、顧客ごとに小計の行を挟んだりした表は、人が読むには便利でも集計には向きません。月ごとのシートに分かれている場合は、一つのシートにまとめ、売上日の列で月を区別します。</p>
@@ -107,7 +109,7 @@ const ArticleSalesVisualization: React.FC = () => {
           </div>
           <p className={paragraph}>見出しを1行にする、列の中の値の種類をそろえる、といった考え方は、ExcelだけでなくBIツールにデータを読み込むときにも共通する基本です。ここで整えた表は、あとでツールを替えてもそのまま使えます。</p>
 
-          <h2 className={heading}>4. Excelのピボットテーブルで集計とグラフを作る</h2>
+          <h2 id="sec-4" className={heading}>4. Excelのピボットテーブルで集計とグラフを作る</h2>
           <p className={paragraph}>元データが整ったら、Excelのピボットテーブルで集計します。ピボットテーブルは、関数を書かずに、項目を選ぶだけで合計や件数を集計できる機能です。手順は次のとおりです。</p>
           <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-3">
             <li><strong className="text-sumi">元データをテーブルにする：</strong>明細の範囲を選び、テーブルとして書式設定します。テーブルにしておくと、行を追加したときに集計の範囲が自動で広がります。</li>
@@ -127,7 +129,7 @@ const ArticleSalesVisualization: React.FC = () => {
             <a href={service.href} className="inline-flex items-center gap-2 text-svc-data font-bold hover:underline underline-offset-4">データ活用支援の内容を確認する<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
 
-          <h2 className={heading}>5. 見える化した売上の数字を読むポイント</h2>
+          <h2 id="sec-5" className={heading}>5. 見える化した売上の数字を読むポイント</h2>
           <p className={paragraph}>集計ができたら、次は数字の読み方です。同じグラフでも、どこを見るかを決めておかないと、人によって受け取り方がばらばらになります。</p>
           <h3 className={subheading}>前月より前年同月と比べる</h3>
           <p className={paragraph}>売上には季節の波があることが多いため、前の月と比べるだけでは、増減が季節によるものか、本当の変化かを区別できません。去年の同じ月と比べる「前年同月比」を基本にしましょう。月ごとの増減が大きい業種では、1月からの累計や、直近12か月の合計の推移もあわせて見ると、流れをつかみやすくなります。</p>
@@ -137,7 +139,7 @@ const ArticleSalesVisualization: React.FC = () => {
           <p className={paragraph}>売上が下がったとき、原因が「取引の件数が減った」のか「1件あたりの金額が下がった」のかで、打つ手は変わります。売上の合計だけでなく、取引の件数と平均の単価も並べて見ておくと、原因を探しやすくなります。ピボットテーブルでは、値に金額の合計と件数を並べれば確認できます。</p>
           <p className={paragraph}>数字の変化に気づいたら、すぐに結論を出さず、現場の担当者に事情を聞きましょう。大口の受注が前倒しになっただけ、ということもあります。数字は判断の材料であり、話し合いのきっかけとして使うのが現実的です。</p>
 
-          <h2 className={heading}>6. 社内で見る習慣をつくり、次の段階を考える</h2>
+          <h2 id="sec-6" className={heading}>6. 社内で見る習慣をつくり、次の段階を考える</h2>
           <p className={paragraph}>見える化は、作って終わりではなく、決まったタイミングで見られて初めて役に立ちます。次の三つを決めておくと、続けやすくなります。</p>
           <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>更新の担当と期日：誰が、毎月何日までに新しい月のデータを追加するかを決めます。</li>
@@ -147,11 +149,11 @@ const ArticleSalesVisualization: React.FC = () => {
           <p className={`${paragraph} mt-4`}>しばらく続けると、「毎月の更新に時間がかかる」「複数のシステムのデータを合わせたい」「スマートフォンでも見たい」といった要望が出てきます。そのときがBIツールを検討する時期です。BIツールは、データを集めて自動で集計し、グラフや表にまとめて共有できるソフトです。たとえばMicrosoftのPower BI Desktopは、レポートを無料で作成できるアプリとして案内されています。一方、Power BIのサービス上でレポートを同僚と共有するには、Power BI Proなどの有料ライセンスが必要になる場合があります。料金や条件は変わることがあるため、最新の情報は公式サイトで確認してください。</p>
           <p className={paragraph}>Excelで月次の報告を自動化する流れは<a href="/articles/excel-report-automation-power-bi" className="text-svc-data hover:underline underline-offset-4">Excel集計を自動化する｜Power BIで月次報告</a>で、ツールの選び方は<a href="/articles/sme-bi-tableau-powerbi" className="text-svc-data hover:underline underline-offset-4">中小企業のためのTableauとPower BIの選び方</a>で紹介しています。Excelで見る数字と表の形が決まっていれば、ツールを移すときの手戻りを減らせます。</p>
 
-          <h2 className={heading}>まとめ：問いを決め、整った明細から小さく始める</h2>
+          <h2 id="sec-7" className={heading}>まとめ：問いを決め、整った明細から小さく始める</h2>
           <p className={paragraph}>売上データの見える化は、答えたい問いを決め、月別ともう一つの切り口に絞って始めるのが近道です。いちばん手間がかかるのは、1行1取引の明細にそろえる元データの準備です。ここを整えれば、Excelのピボットテーブルだけでも、前年同月比や上位の顧客を確かめられます。まずは直近2年分の売上明細を書き出し、月別の推移を一枚のグラフにするところから始めてみてください。</p>
 
           <section className="mt-14">
-            <h2 className={heading}>よくある質問</h2>
+            <h2 id="faq" className={heading}>よくある質問</h2>
             <div className={ac.faq}>
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>

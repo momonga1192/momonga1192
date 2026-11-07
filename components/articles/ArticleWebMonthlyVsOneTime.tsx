@@ -5,6 +5,7 @@ import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
+import ArticleToc from './ArticleToc';
 
 const title = '月額制と買い切りのホームページ比較｜愛知・東海の会社向け';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -81,7 +82,8 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
             ホームページの月額制と買い切りを比較するとき、「初期費用が少ないほうが安心」「一度払えば安く済む」と迷うことはありませんか。大切なのは、公開してから誰が更新し、何年使い、いくら支払うかです。IT担当者のいない中小企業が選ぶ場合も、制作と運営を一緒に考えると判断しやすくなります。この記事では、費用の整理方法から契約前の確認事項まで順に解説します。
           </p>
 
-          <h2 className={heading}>1．ホームページの月額制と買い切りを比較</h2>
+          <ArticleToc service="web" items={[{"id":"sec-1","label":"ホームページの月額制と買い切りを比較"},{"id":"sec-2","label":"初期費用より利用期間全体の総額を見る"},{"id":"sec-3","label":"月額制ホームページ制作のメリット・デメリット"},{"id":"sec-4","label":"買い切り制作の利点と運営で起きやすい失敗"},{"id":"sec-5","label":"どちらが向く会社かを判断する手順"},{"id":"sec-6","label":"契約前に確認する期間・データ・更新範囲"},{"id":"sec-7","label":"まとめ：制作費と運営の負担を一緒に比べる"},{"id":"faq","label":"よくある質問"}]}/>
+          <h2 id="sec-1" className={heading}>1．ホームページの月額制と買い切りを比較</h2>
           <p className={paragraph}>月額制は、毎月の料金で制作や運営を利用する方式です。買い切りは、制作費を支払ってホームページの納品を受ける方式を指します。ただし、名称だけではサービスの中身は決まりません。月額制でも更新が別料金の場合があり、買い切りでも保守契約を別途結ぶ場合があります。保守とは、公開後の点検や不具合への対応など、サイトを維持するための作業です。</p>
           <p className={paragraph}>まずは次の表を使い、見積書の同じ欄に条件を書き込んでください。「含まれる」とだけ書かれている項目は、どの作業までかを質問します。表は比較の観点であり、すべての制作会社に共通する条件ではありません。</p>
           <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="月額制と買い切りの比較表（横にスクロールできます）" tabIndex={0}>
@@ -95,7 +97,7 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
             </table>
           </div>
 
-          <h2 className={heading}>2．初期費用より利用期間全体の総額を見る</h2>
+          <h2 id="sec-2" className={heading}>2．初期費用より利用期間全体の総額を見る</h2>
           <p className={paragraph}>比較する期間は、社内で使う予定に合わせて統一します。例えば「まずは3年間運営する」と置き、両方の見積もりを同じ期間で合計します。片方は制作費だけ、もう片方は更新込みの月額では、公平に比べられません。消費税の扱いもそろえ、初年度だけ無料の項目があれば翌年度以降も確認しましょう。</p>
           <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2 mb-4">
             <li>月額制の総額：初期費用＋月額費用×利用月数＋範囲外の作業費＋終了時に必要な費用</li>
@@ -104,7 +106,7 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
           <p className={paragraph}>サーバーはサイトのデータを置く場所、ドメインは「example.com」のようなインターネット上の住所です。制作費を払っても、公開を続けるための契約や更新手続きは残ります。メールを同じ契約で使うなら、その料金も表に入れます。外部サービスを追加する場合は、最新の料金は公式サイトで確認してください。</p>
           <p className={paragraph}>更新費は「年に何回、何を変えるか」を仮に決めると比較できます。営業日のお知らせ、採用情報の修正、施工写真の差し替えなど、自社で起きる作業を列挙しましょう。総務担当が作業する場合も、原稿確認や操作に使う時間は必要です。支払額だけでなく、担当者が無理なく続けられるかも評価します。</p>
 
-          <h2 className={heading}>3．月額制ホームページ制作のメリット・デメリット</h2>
+          <h2 id="sec-3" className={heading}>3．月額制ホームページ制作のメリット・デメリット</h2>
           <h3 className={ac.h3}>初期負担と日々の運営をまとめて考えられる</h3>
           <p className={paragraph}>初期費用を抑えられるプランなら、開業時や設備投資の時期に支出を分散できます。更新やサーバー管理も含む契約であれば、社内では変更内容をまとめて依頼する流れを作れます。担当者が交代しても窓口が決まっていることは、運営を続けるうえでの利点です。ただし、対応内容や受付方法は事前に確認してください。</p>
           <h3 className={ac.h3}>支払いの継続と契約上の制約を確認する</h3>
@@ -119,12 +121,12 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
             <a href={service.href} className="inline-flex items-center gap-2 font-bold text-svc-web hover:underline underline-offset-4">月額制ホームページの料金・範囲を見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
 
-          <h2 className={heading}>4．買い切り制作の利点と運営で起きやすい失敗</h2>
+          <h2 id="sec-4" className={heading}>4．買い切り制作の利点と運営で起きやすい失敗</h2>
           <p className={paragraph}>買い切りは、制作時の要件と納品物を決め、公開後の運営を自社で組み立てたい会社に向いています。要件とは「何ページ必要か」「どの機能を付けるか」といった制作の条件です。更新できる担当者や保守の依頼先が決まっている場合は、必要な作業ごとに発注する運営も選べます。ただし、デザインの自由度やデータの利用範囲は契約次第です。</p>
           <p className={paragraph}>よくある失敗は、納品後に誰も更新しなくなることです。担当者を決めずに公開すると、求人の募集状況や営業時間が古いまま残るおそれがあります。社内で更新するなら、文章を修正する画面の使い方、操作手順の引き継ぎ先、困ったときの相談先まで決めておきましょう。</p>
           <p className={paragraph}>別の失敗は、安い制作費だけを見て保守を外し、障害時の連絡先が分からなくなることです。データの控えを取るバックアップや、使用している仕組みの更新を誰が行うか確認します。買い切りでも、すべての権利や管理用アカウントが自動的に自社へ渡ると決めつけず、納品一覧に残すことが必要です。</p>
 
-          <h2 className={heading}>5．どちらが向く会社かを判断する手順</h2>
+          <h2 id="sec-5" className={heading}>5．どちらが向く会社かを判断する手順</h2>
           <p className={paragraph}>方式を選ぶ前に、ホームページの目的を一つか二つに絞ります。「取引先に会社概要を確認してもらう」「採用応募につなげる」など、見る人に取ってほしい行動を決めましょう。必要なページと更新頻度が具体的になり、不要な機能を減らせます。</p>
           <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-2 mb-4">
             <li>目的と必須ページを整理し、今すぐ必要な機能と将来の希望を分けます。</li>
@@ -134,7 +136,7 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
           </ol>
           <p className={paragraph}>初期支出を抑えたい、管理を任せたい、社内に更新担当を置きにくい会社は、運営を含む月額制を検討しやすいでしょう。一方、社内に更新できる体制があり、制作と運営を分けて管理したい会社は、買い切りも候補になります。既存サイトの内容を保ったまま管理だけ任せたい場合は、作り直し以外に運用支援を依頼できるか相談する方法もあります。</p>
 
-          <h2 className={heading}>6．契約前に確認する期間・データ・更新範囲</h2>
+          <h2 id="sec-6" className={heading}>6．契約前に確認する期間・データ・更新範囲</h2>
           <p className={paragraph}>最後は、営業説明と見積書、契約書の内容が一致しているかを確認します。口頭で「全部込み」と聞くだけでは判断できません。次の項目を質問し、回答を残しておくと、担当者の交代や将来の移行にも備えられます。</p>
           <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2 mb-4">
             <li>最低契約期間、更新の方法、解約を申し出る期限はいつか。</li>
@@ -146,11 +148,11 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
           <p className={paragraph}>Arcleでは、途中解約時は制作費の未払い分を解約金として請求し、計算方法は契約前に説明します。制作費の支払いが済んでいればデータをお渡しし、ご自身で用意したサーバー・ドメインへ移して使い続けられます。ただし、デザインやプログラムの著作権はArcleに帰属します。データを受け取れることと、著作権を持つことは区別して確認してください。</p>
           <p className={paragraph}>また、Arcleの軽微な修正には文章・写真の差し替え、お知らせの掲載を含みますが、ページの新規追加やデザイン変更など作業量が大きいものは事前見積もりです。解約時の既存ドメインの扱いや具体的な移行手順は、契約前に個別に確認しましょう。日々の依頼例と終了時の希望を伝えると、必要な条件を整理しやすくなります。</p>
 
-          <h2 className={heading}>まとめ：制作費と運営の負担を一緒に比べる</h2>
+          <h2 id="sec-7" className={heading}>まとめ：制作費と運営の負担を一緒に比べる</h2>
           <p className={paragraph}>月額制と買い切りの選択は、初期費用だけでは決まりません。同じ利用期間で総額を計算し、誰が更新するか、契約終了後も使えるかを確認しましょう。比較前に「目的・必須ページ・更新内容・社内担当・利用期間」を一枚にまとめれば、相談時にも条件をそろえやすくなります。契約条件が曖昧な部分は、署名前に書面で確かめてください。</p>
 
           <section className="mt-14">
-            <h2 className={heading}>よくある質問</h2>
+            <h2 id="faq" className={heading}>よくある質問</h2>
             <div className={ac.faq}>
               {faqs.map((item) => <div key={item.q}><h3 className={ac.faqQ}>{item.q}</h3><p>{item.a}</p></div>)}
             </div>

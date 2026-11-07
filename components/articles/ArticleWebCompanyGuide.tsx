@@ -5,6 +5,7 @@ import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
+import ArticleToc from './ArticleToc';
 
 const title = '愛知・東海の中小企業向けホームページ制作会社の選び方';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -60,7 +61,8 @@ const ArticleWebCompanyGuide: React.FC = () => {
           </div>
           <p className="text-[#30343F] leading-[2] mb-8">ホームページ制作を検討する中小企業にとって、制作会社の選び方は悩みやすいテーマです。見た目や金額だけでは、公開後に更新を続けられるか、困ったときに相談できるかまでは分かりません。IT担当者がいない会社でも比較できるよう、依頼前の準備から見積り、契約、公開までの確認ポイントを順に整理します。</p>
 
-          <h2 className={heading}>1. ホームページ制作の依頼前に目的を決める</h2>
+          <ArticleToc service="web" items={[{"id":"sec-1","label":"ホームページ制作の依頼前に目的を決める"},{"id":"sec-2","label":"ホームページ制作会社の選び方は見積りの条件から"},{"id":"sec-3","label":"更新・スマホ・サポート・権利・SEOを確認する"},{"id":"sec-4","label":"地元の制作会社に頼むメリットと判断基準"},{"id":"sec-5","label":"よくある失敗を契約前に防ぐ"},{"id":"sec-6","label":"相談から公開までの依頼の流れ"},{"id":"sec-7","label":"まとめ：同じ条件で比べ、運用まで決める"},{"id":"faq","label":"よくある質問"}]}/>
+          <h2 id="sec-1" className={heading}>1. ホームページ制作の依頼前に目的を決める</h2>
           <p className={paragraph}>最初に決めたいのは「誰に、何を知ってもらい、どう行動してほしいか」です。新規の取引先に事業内容を伝えるサイトと、求職者に職場の雰囲気を伝えるサイトでは、必要な情報が変わります。「会社の信頼を伝える」を目的にする場合も、設備、仕事の進め方、担当者の紹介など、何を根拠として載せるかまで考えましょう。</p>
           <p className={paragraph}>目的が複数あるときは優先順位を付けます。問い合わせを増やしたいなら、対象となる仕事、対応地域、相談方法を先に整理します。採用が中心なら、仕事内容や働く環境、応募方法が優先です。最初からすべてを盛り込まず、公開時に必要なものと後で追加するものを分けると、見積りも判断しやすくなります。</p>
           <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2">
@@ -72,7 +74,7 @@ const ArticleWebCompanyGuide: React.FC = () => {
           </ul>
           <p className={`${paragraph} mt-4`}>既存サイトがある場合は、残したいページ、古い情報、利用中のメールアドレスも一覧にします。管理会社や契約書が分からないときは、その状態も相談時に伝えてください。パスワードをいきなり送る必要はありません。まず契約先と管理担当者を確認し、必要な情報の受け渡し方法を決めます。</p>
 
-          <h2 className={heading}>2. ホームページ制作会社の選び方は見積りの条件から</h2>
+          <h2 id="sec-2" className={heading}>2. ホームページ制作会社の選び方は見積りの条件から</h2>
           <p className={paragraph}>見積りは、同じ依頼内容を渡したうえで比較しましょう。ページ数だけでなく、原稿作成、撮影、修正、公開後の更新まで条件をそろえることが大切です。「制作一式」とだけ書かれている場合は、何が含まれ、何が別料金かを一覧にしてもらいます。回答が具体的かどうかも、依頼先を判断する材料になります。</p>
           <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="見積りの比較ポイント（横にスクロールできます）" tabIndex={0}>
             <table className="w-full min-w-[600px] text-sm border-collapse text-[#30343F]">
@@ -93,7 +95,7 @@ const ArticleWebCompanyGuide: React.FC = () => {
 
           <p className={paragraph}>比較の結果は「含まれる・別料金・未確認」の三つで記録すると、社内でも説明しやすくなります。たとえば写真撮影が別料金でも、必要な写真と自社で用意できる写真が分かれば判断できます。反対に、料金に含まれるという回答でも、対象や回数が不明なら再確認が必要です。希望が予算を超えるときは、目的に直結するページを先に公開し、追加部分は別の計画に分けられるかを相談しましょう。</p>
 
-          <h2 className={heading}>3. 更新・スマホ・サポート・権利・SEOを確認する</h2>
+          <h2 id="sec-3" className={heading}>3. 更新・スマホ・サポート・権利・SEOを確認する</h2>
           <h3 className={subheading}>更新のしやすさは実際の操作で判断する</h3>
           <p className={paragraph}>CMSは、専門的なコードを書かずに情報を更新する仕組みです。ただし、導入するだけで担当者が使えるとは限りません。「お知らせを掲載する」「写真を差し替える」といった日常の操作を実演してもらい、自社で変更できる範囲を確認します。操作説明や手順書、担当者交代時の引き継ぎ方法も聞いておきましょう。更新時間を確保できないなら、制作会社に依頼する運用も選択肢です。</p>
           <h3 className={subheading}>スマホ対応は問い合わせまで試す</h3>
@@ -112,11 +114,11 @@ const ArticleWebCompanyGuide: React.FC = () => {
             <a href={service.href} className="inline-flex items-center gap-2 text-svc-web font-bold hover:underline underline-offset-4">Web制作の対応内容を確認する<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
 
-          <h2 className={heading}>4. 地元の制作会社に頼むメリットと判断基準</h2>
+          <h2 id="sec-4" className={heading}>4. 地元の制作会社に頼むメリットと判断基準</h2>
           <p className={paragraph}>地元の会社に依頼する利点は、必要に応じて対面で相談し、現場や商品を見ながら説明しやすいことです。設備の用途や接客の流れなど、言葉だけでは伝えにくい内容も共有しやすくなります。ただし、所在地が近いだけで訪問対応や業務理解が保証されるわけではありません。担当者が誰か、訪問の条件は何かを確かめましょう。</p>
           <p className={paragraph}>制作会社を探すときは、距離に加えて「専門用語をかみ砕いて説明するか」「こちらの目的を聞いて提案するか」「確認事項を文章で残すか」を見てください。Arcleは訪問での打ち合わせにも、オンラインでの相談にも対応しています。自社の都合に合わせ、素材確認は対面、進捗確認はオンラインなど、必要な場面から打ち合わせ方法を考えるとよいでしょう。</p>
 
-          <h2 className={heading}>5. よくある失敗を契約前に防ぐ</h2>
+          <h2 id="sec-5" className={heading}>5. よくある失敗を契約前に防ぐ</h2>
           <p className={paragraph}>避けたいのは、安さだけで決めた後に必要な作業が追加になったり、確認者が増えて公開が遅れたりすることです。契約前に役割と判断基準を決めれば、相談時の認識のずれを減らせます。口頭の説明で気になる点があれば、その場で質問し、回答を見積書やメールに残しましょう。</p>
           <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>デザインだけで決める：作例を見ながら、読者が欲しい情報と問い合わせへの進みやすさも確認します。</li>
@@ -126,7 +128,7 @@ const ArticleWebCompanyGuide: React.FC = () => {
           </ul>
           <p className={`${paragraph} mt-4`}>また、写真や紹介文は、自社が掲載してよいものかを確認してください。作例はデザインの参考として見て、架空の会社を使ったサンプルと実際の顧客事例を区別します。「同じ見た目にしたい」に加え、どこが使いやすいと感じたかまで伝えると、希望を共有しやすくなります。</p>
 
-          <h2 className={heading}>6. 相談から公開までの依頼の流れ</h2>
+          <h2 id="sec-6" className={heading}>6. 相談から公開までの依頼の流れ</h2>
           <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-3">
             <li><strong className="text-sumi">相談・要件整理：</strong>目的、読者、予算、公開希望日を伝えます。必要なページと自社で準備する素材を整理し、不明点は宿題として残します。</li>
             <li><strong className="text-sumi">提案・見積り・契約：</strong>制作範囲、運用費、修正条件、解約や移行の条件を確認します。追加費用が生じる場合は、着手前に承認する手順を決めます。</li>
@@ -136,11 +138,11 @@ const ArticleWebCompanyGuide: React.FC = () => {
           </ol>
           <p className={`${paragraph} mt-4`}>公開希望日だけでなく、素材提出日と社内の確認日も予定に入れます。経営者の最終確認が必要なら、その時間を先に確保してください。公開後も営業時間や採用状況などの変更があれば更新し、情報が現状と合っているかを定期的に確かめましょう。</p>
 
-          <h2 className={heading}>まとめ：同じ条件で比べ、運用まで決める</h2>
+          <h2 id="sec-7" className={heading}>まとめ：同じ条件で比べ、運用まで決める</h2>
           <p className={paragraph}>ホームページ制作会社を選ぶときは、目的と必要なページを整理し、制作・更新・保守・契約終了時の条件を同じ表で比べることが出発点です。説明に納得できるか、社内で無理なく運用できるかも判断に含めましょう。まずは会社案内と既存サイトの困りごとを用意し、分からない項目を確認する相談から進めてください。</p>
 
           <section className="mt-14">
-            <h2 className={heading}>よくある質問</h2>
+            <h2 id="faq" className={heading}>よくある質問</h2>
             <div className={ac.faq}>
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>

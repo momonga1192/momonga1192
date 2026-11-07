@@ -5,6 +5,7 @@ import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
+import ArticleToc from './ArticleToc';
 
 const title = '愛知・東海の中小企業向け｜生成AIで議事録を作る手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -81,11 +82,12 @@ const ArticleAIMeetingMinutes: React.FC = () => {
           </div>
           <p className="text-[#30343F] leading-[2] mb-8">会議のあとに録音を聞き直し、発言をまとめて議事録に仕上げる作業は、思った以上に時間がかかります。生成AIを使えば、文字起こしから要点の整理までの下書きを短い時間で作れます。ただし、録音のしかたや指示の出し方、情報の扱いを決めずに始めると、使えない下書きができたり、社外に出してはいけない情報を入力してしまったりします。この記事では、生成AIで議事録を作るための準備から確認、社内での定着までを順に整理します。</p>
 
-          <h2 className={heading}>1. 生成AIに任せられること、人が担うこと</h2>
+          <ArticleToc service="ai" items={[{"id":"sec-1","label":"生成AIに任せられること、人が担うこと"},{"id":"sec-2","label":"議事録を作る三つの方法を比べる"},{"id":"sec-3","label":"生成AIで議事録を作る手順"},{"id":"sec-4","label":"情報漏えいを防ぐために決めておくこと"},{"id":"sec-5","label":"AIの議事録で間違えやすい箇所を確認する"},{"id":"sec-6","label":"社内で定着させるコツ"},{"id":"sec-7","label":"まとめ：下書きはAI、判断と確認は人"},{"id":"faq","label":"よくある質問"}]}/>
+          <h2 id="sec-1" className={heading}>1. 生成AIに任せられること、人が担うこと</h2>
           <p className={paragraph}>議事録づくりは、大きく「記録する」「まとめる」「確認して共有する」の三つに分かれます。生成AIが得意なのは、長い文字起こしから議題ごとの要点、決定事項、宿題を抜き出して、決まった形に整える部分です。話し言葉の言い直しや脱線を取り除き、読みやすい文章にするのも任せられます。</p>
           <p className={paragraph}>一方で、何が決まったのかを最終的に判断するのは人です。会議では「その方向で」「いったん持ち帰り」のようなあいまいな言い方がよく出ます。生成AIは、こうした発言を決定事項として書いてしまうことがあります。数字や日付、担当者の名前も、録音の聞き取りに誤りがあればそのまま残ります。生成AIは下書きを作る道具と考え、確認と共有は人が担う前提で進めましょう。</p>
 
-          <h2 className={heading}>2. 議事録を作る三つの方法を比べる</h2>
+          <h2 id="sec-2" className={heading}>2. 議事録を作る三つの方法を比べる</h2>
           <p className={paragraph}>生成AIで議事録を作る方法は、会議の形によって選びます。オンライン会議と対面の会議、社内だけの会議と社外の方が入る会議では、使える道具や気をつける点が変わります。</p>
           <div className={`overflow-x-auto my-7 ${ac.tableWrap}`} role="region" aria-label="議事録を作る方法の比較（横にスクロールできます）" tabIndex={0}>
             <table className="w-full min-w-[640px] text-sm border-collapse text-[#30343F]">
@@ -102,7 +104,7 @@ const ArticleAIMeetingMinutes: React.FC = () => {
           </div>
           <p className={paragraph}>すでにWeb会議ツールを使っている会社なら、まずはそのツールの文字起こし機能を確かめるのが近道です。使える機能は契約しているプランによって違うため、最新の対応状況は各サービスの公式サイトで確認してください。新しいツールを入れる前に、今ある道具で一度試してみると、自社に必要なものが見えてきます。</p>
 
-          <h2 className={heading}>3. 生成AIで議事録を作る手順</h2>
+          <h2 id="sec-3" className={heading}>3. 生成AIで議事録を作る手順</h2>
           <h3 className={subheading}>手順1：会議の前に、録音と議事録づくりを伝える</h3>
           <p className={paragraph}>会議の案内や冒頭で、録音して議事録づくりに使うことを伝え、参加者の了承を得ます。社外の方が参加する会議では、事前に案内しておくと当日の確認がスムーズです。あわせて、会議名、日時、参加者、議題を一枚にまとめておきます。社名や製品名、専門用語の一覧も用意しておくと、あとで要約を頼むときに役立ちます。</p>
           <h3 className={subheading}>手順2：聞き取りやすく録音する</h3>
@@ -127,7 +129,7 @@ const ArticleAIMeetingMinutes: React.FC = () => {
             <a href={service.href} className="inline-flex items-center gap-2 text-svc-ai font-bold hover:underline underline-offset-4">生成AI活用の支援内容を確認する<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
 
-          <h2 className={heading}>4. 情報漏えいを防ぐために決めておくこと</h2>
+          <h2 id="sec-4" className={heading}>4. 情報漏えいを防ぐために決めておくこと</h2>
           <p className={paragraph}>会議の内容には、取引条件、人事の話、まだ公表していない計画など、社外に出せない情報が含まれます。議事録づくりに生成AIを使う前に、次の点を社内で決めておきましょう。</p>
           <ul className="list-disc pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>使ってよいツールとアカウント：会社で契約したものに限り、個人のアカウントや無料版は使わない、といった線引きをします。</li>
@@ -138,7 +140,7 @@ const ArticleAIMeetingMinutes: React.FC = () => {
           </ul>
           <p className={`${paragraph} mt-4`}>生成AIの社内ルール全体の作り方は、<a href="/articles/chatgpt-security-policy-sme" className="text-svc-ai hover:underline underline-offset-4">ChatGPT導入前に作るべき社内ルール</a>で詳しく紹介しています。議事録づくりは、こうしたルールを試す最初の業務としても取り組みやすいテーマです。</p>
 
-          <h2 className={heading}>5. AIの議事録で間違えやすい箇所を確認する</h2>
+          <h2 id="sec-5" className={heading}>5. AIの議事録で間違えやすい箇所を確認する</h2>
           <p className={paragraph}>生成AIが作る議事録は、文章が整っているぶん、誤りに気づきにくいことがあります。確認する人が毎回同じ観点で見られるよう、チェックリストにしておきましょう。</p>
           <div className={ac.box}>
             <p className={ac.boxTitle}>議事録の確認チェックリスト</p>
@@ -156,7 +158,7 @@ const ArticleAIMeetingMinutes: React.FC = () => {
           </div>
           <p className={paragraph}>確認で見つかった誤りは、次回の指示文に反映します。たとえば、毎回同じ製品名を誤変換するなら固有名詞の一覧に加え、決定事項と検討中の区別があいまいなら「決定事項には、会議で合意したと明言された内容だけを書く」と指示を足します。指示文を少しずつ育てることで、確認の手間が減っていきます。</p>
 
-          <h2 className={heading}>6. 社内で定着させるコツ</h2>
+          <h2 id="sec-6" className={heading}>6. 社内で定着させるコツ</h2>
           <p className={paragraph}>議事録づくりを生成AIに置き換えるときは、全部の会議で一度に始めないことが大切です。毎週の定例会議のように、参加者も議題の形も決まっている会議から試すと、指示文や確認の手順を整えやすくなります。</p>
           <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-3">
             <li><strong className="text-sumi">議事録の形式をそろえる：</strong>議題ごとの要点、決定事項、宿題、次回の確認事項など、社内で使う形式を一つ決めます。指示文もこの形式に合わせます。</li>
@@ -166,11 +168,11 @@ const ArticleAIMeetingMinutes: React.FC = () => {
           </ol>
           <p className={`${paragraph} mt-4`}>使い方を社内に広げる段階では、担当者が一人で抱えないようにしましょう。指示文と確認の手順を共有フォルダに置き、誰でも同じ手順で議事録を作れる状態にしておくと、担当者が休んだときや異動したときも困りません。</p>
 
-          <h2 className={heading}>まとめ：下書きはAI、判断と確認は人</h2>
+          <h2 id="sec-7" className={heading}>まとめ：下書きはAI、判断と確認は人</h2>
           <p className={paragraph}>生成AIを使うと、議事録づくりのうち、文字起こしの整理と要点の抜き出しにかかる時間を減らせます。効果を出すには、聞き取りやすい録音、使い回せる指示文、決まった観点での確認の三つをそろえることが大切です。あわせて、使ってよいツールや入力してはいけない情報を先に決めておきましょう。まずは社内の定例会議を一つ選び、今ある道具で試すところから始めてみてください。</p>
 
           <section className="mt-14">
-            <h2 className={heading}>よくある質問</h2>
+            <h2 id="faq" className={heading}>よくある質問</h2>
             <div className={ac.faq}>
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>

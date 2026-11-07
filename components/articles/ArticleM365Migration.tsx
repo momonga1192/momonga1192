@@ -5,6 +5,7 @@ import { ContactCta, PageHeader, comicIllust } from '../next/parts';
 import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
+import ArticleToc from './ArticleToc';
 
 const title = '愛知・東海の中小企業へ｜Microsoft 365導入・移行手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -59,7 +60,8 @@ const ArticleM365Migration: React.FC = () => {
           </div>
           <p className="text-[#30343F] leading-[2] mb-8">中小企業でMicrosoft 365の導入を進めるとき、最初に必要なのは契約ではなく、現在の仕事とデータの整理です。メールが届かない、共有資料が見つからないといった混乱を避けるため、何を移し、誰が確認し、いつ切り替えるかを決めます。この記事では、IT担当者がいない会社の経営者・総務担当者に向けて、Microsoft 365の移行手順と導入後の管理を解説します。</p>
 
-          <h2 className={heading}>1. Microsoft 365導入前の棚卸し</h2>
+          <ArticleToc service="josys" items={[{"id":"sec-1","label":"Microsoft 365導入前の棚卸し"},{"id":"sec-2","label":"中小企業のプラン選びは業務から"},{"id":"sec-3","label":"Microsoft 365のメール移行手順"},{"id":"sec-4","label":"ファイル移行は保存先と権限を先に決定"},{"id":"sec-5","label":"アカウント管理と多要素認証を整える"},{"id":"sec-6","label":"バックアップと入退社の運用を決める"},{"id":"sec-7","label":"まとめ：移行前の最終チェックリスト"},{"id":"faq","label":"よくある質問"}]}/>
+          <h2 id="sec-1" className={heading}>1. Microsoft 365導入前の棚卸し</h2>
           <p className={paragraph}>まず「利用者・契約・データ・端末」の台帳を作ります。社員名簿だけでは、代表メール、複合機の送信設定、退職者のPCにしかない資料などを見落とします。各部署に確認し、利用目的と管理者、移行の要否を一つの表にまとめてください。</p>
           <ul className={list}>
             <li>アカウント：利用者、部署、ログイン名、契約中のサービス、管理者、共有利用の有無を確認します。</li>
@@ -71,7 +73,7 @@ const ArticleM365Migration: React.FC = () => {
           <p className={`${paragraph} mt-4`}>ドメインは会社のメールアドレスなどに使う名前、DNSはその宛先を案内する設定です。Web制作会社が管理している場合もあるため、変更を依頼できる窓口まで押さえます。台帳にはパスワードを書かず、認証情報は閲覧者を限定した別の方法で管理してください。</p>
           <p className={paragraph}>次に「移行する」「保管だけする」「所有者に確認する」に分類します。使われていないデータまで無条件に移すと、不要な共有権限も持ち込みがちです。削除は保存義務や業務上の必要性を確認して承認を得てから行い、移行対象を確定します。</p>
 
-          <h2 className={heading}>2. 中小企業のプラン選びは業務から</h2>
+          <h2 id="sec-2" className={heading}>2. 中小企業のプラン選びは業務から</h2>
           <p className={paragraph}>プラン名だけで選ぶと、必要な機能が不足したり、使わない機能を契約したりします。「メールを移すか」「PCにインストールするOfficeが必要か」「端末も管理したいか」を利用者ごとに整理しましょう。メールや会議などを含む範囲は契約により異なるため、必要機能が含まれるかを個別に確認します。</p>
           <div className={`overflow-x-auto my-7 ${ac.tableWrap}`}>
             <table className="w-full min-w-[560px] text-left text-sm text-[#30343F] leading-[2]">
@@ -87,7 +89,7 @@ const ArticleM365Migration: React.FC = () => {
           <p className={paragraph}>全員に同じ使い方を求めず、事務、営業、現場などの役割で必要条件を分けます。利用人数だけでなく、移行作業、社員への説明、運用に必要な担当者の時間も見積もってください。既存のOffice契約と重複しないか、更新日や契約条件も確認します。</p>
           <p className={paragraph}>契約前には、必要機能を記した一覧と公式の仕様を照合します。最新の料金は公式サイトで確認してください。機能と契約条件は、<a href="https://www.microsoft.com/ja-jp/microsoft-365/business/microsoft-365-plans-and-pricing" className="text-svc-josys underline underline-offset-4">Microsoft公式の一般法人向けプラン比較</a>を参照できます。</p>
 
-          <h2 className={heading}>3. Microsoft 365のメール移行手順</h2>
+          <h2 id="sec-3" className={heading}>3. Microsoft 365のメール移行手順</h2>
           <p className={paragraph}>メールは移行元によって方法が変わります。メール本文だけでなく、連絡先、予定表、共有窓口も対象にするかを決めます。ある方法でメールをコピーできても、他の情報まで同時に移るとは限りません。<a href="https://learn.microsoft.com/en-us/exchange/mailbox-migration/mailbox-migration" className="text-svc-josys underline underline-offset-4">Microsoft公式のメール移行方法</a>で対象と制約を確認し、試験してから本番に進みます。</p>
           <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-2">
             <li>移行計画を作ります。責任者、作業日、問い合わせ先、業務への影響、延期や切り戻しの条件を決めます。</li>
@@ -107,7 +109,7 @@ const ArticleM365Migration: React.FC = () => {
             <a href={service.href} className="inline-flex items-center gap-2 mt-4 text-svc-josys font-bold hover:underline underline-offset-4">情シス代行の支援内容を見る<ArrowRight className="w-4 h-4" aria-hidden="true" /></a>
           </div>
 
-          <h2 className={heading}>4. ファイル移行は保存先と権限を先に決定</h2>
+          <h2 id="sec-4" className={heading}>4. ファイル移行は保存先と権限を先に決定</h2>
           <p className={paragraph}>ファイルはコピーを始める前に、個人の作業用と会社で共有する資料を分けます。OneDriveは個人の作業ファイル、SharePointは部署や会社で共有する資料の置き場として使い分ける考え方があります。担当者が退職しても会社の資料を引き継げる構成にすることが重要です。</p>
           <p className={paragraph}>部署の責任者とフォルダー構成を決め、閲覧だけの人、編集できる人、社外へ共有できる人を整理します。権限は業務上必要な範囲に絞り、原則として部署や役割のグループ単位で付けると、異動時の変更漏れを減らせます。移行先で古い共有リンクをそのまま使えるとは考えず、案内の更新も予定します。</p>
           <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-2">
@@ -118,13 +120,13 @@ const ArticleM365Migration: React.FC = () => {
           </ol>
           <p className={`${paragraph} mt-4`}>よくあるつまずきは「コピーは終わったが業務で使えない」状態です。Excelの外部参照、マクロ、業務ソフトの保存先、スキャナーの保存設定も検証してください。部署ごとに確認者を置き、問題を記録して対応済みかどうかを判断できるようにします。</p>
 
-          <h2 className={heading}>5. アカウント管理と多要素認証を整える</h2>
+          <h2 id="sec-5" className={heading}>5. アカウント管理と多要素認証を整える</h2>
           <p className={paragraph}>アカウントは原則として一人ずつ発行し、同じIDとパスワードの使い回しを避けます。共通窓口のメールも、対応する社員に必要な権限を付ける方式を検討します。利用条件やライセンス要件を確認し、「共有だから全員で同じ認証情報を使う」という運用を残さないようにしましょう。</p>
           <p className={paragraph}>多要素認証は、パスワードに加えて認証アプリなど別の要素でも本人を確認する仕組みです。管理者から先に設定し、利用者には登録方法と問い合わせ先を案内します。<a href="https://support.microsoft.com/en-us/office/account-management/set-up-your-microsoft-365-sign-in-for-multi-factor-authentication" className="text-svc-josys underline underline-offset-4">Microsoft公式の多要素認証の登録案内</a>も参考になります。</p>
           <p className={paragraph}>スマートフォンの紛失・機種変更、認証できない場合の本人確認と復旧手順も決めます。困った社員のために安易に認証を外すのではなく、申請者が本人であることを確認してから再登録を支援してください。管理者権限は通常業務用と分け、必要な人に必要な範囲だけ付けます。</p>
           <p className={paragraph}>管理者が一人しかいないと、不在時に誰も復旧できなくなります。予備の管理手段と緊急時の連絡経路を用意し、保管情報へのアクセスを限定します。外部支援を使う場合も、会社自身が管理権限と契約情報を把握し、支援終了時に権限を外せる状態にしてください。</p>
 
-          <h2 className={heading}>6. バックアップと入退社の運用を決める</h2>
+          <h2 id="sec-6" className={heading}>6. バックアップと入退社の運用を決める</h2>
           <p className={paragraph}>クラウドへの同期は、別の場所に同じ状態を反映する仕組みです。削除や上書きも反映され得るため、それだけで十分なバックアップとは判断できません。「どのデータを、いつの状態まで、どれくらいの時間で戻すか」を決め、契約と設定に応じた復元可能な範囲を確認します。</p>
           <p className={paragraph}>標準のごみ箱や履歴、保持機能で満たせない要件があれば、追加のバックアップを検討します。対象のメール・ファイル、保存期間、復元権限、費用を確認し、実際に復元するテストを行いましょう。バックアップの成功通知を見るだけでなく、業務で開けるデータに戻るかまで確認します。</p>
           <ul className={list}>
@@ -136,7 +138,7 @@ const ArticleM365Migration: React.FC = () => {
           </ul>
           <p className={`${paragraph} mt-4`}>退職者のアカウントを先に削除すると、必要な情報を取り出せなくなるおそれがあります。停止、引き継ぎ、保管、削除を別の作業として管理してください。人事から誰にいつ連絡するか、実施後に誰が確認するかまで決めると、忙しい時期にも対応漏れを防ぎやすくなります。</p>
 
-          <h2 className={heading}>7. まとめ：移行前の最終チェックリスト</h2>
+          <h2 id="sec-7" className={heading}>7. まとめ：移行前の最終チェックリスト</h2>
           <p className={paragraph}>Microsoft 365の導入は、契約やコピーの完了ではなく、社員が仕事を続けられ、会社が管理を引き継げたところを完了とします。次の項目を責任者と確認し、未完了の項目には担当と期限を付けてください。</p>
           <ul className={list}>
             <li>アカウント・メール・ファイル・PCと、ドメイン管理者を把握しましたか。</li>
@@ -149,7 +151,7 @@ const ArticleM365Migration: React.FC = () => {
           <p className={`${paragraph} mt-4`}>最初からすべてを一度に変えず、試験で課題を見つけてから対象を広げると、判断しやすくなります。移行後も問い合わせを集め、使い方の説明と設定を見直し、日常の運用に定着させましょう。</p>
 
           <section className="mt-14">
-            <h2 className={heading}>よくある質問</h2>
+            <h2 id="faq" className={heading}>よくある質問</h2>
             <div className={ac.faq}>
               {faqs.map(({ question, answer }) => <div key={question}><h3 className={ac.faqQ}>{question}</h3><p>{answer}</p></div>)}
             </div>

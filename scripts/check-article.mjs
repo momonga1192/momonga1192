@@ -23,6 +23,7 @@ const checks = [
   ['h1が1つ', (body.match(/<h1[\s>]/g) ?? []).length === 1],
   ['本文4,000字以上', text.length >= 4000],
   ['本文に地域名なし', regions.length === 0],
+  ['目次がある', /<nav aria-label="目次"/.test(article) && article.includes('href="#sec-1"') && article.includes('id="sec-1"')],
   ['sitemapに登録', readFileSync('public/sitemap.xml', 'utf8').includes(`/articles/${slug}<`)]
 ];
 

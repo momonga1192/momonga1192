@@ -35,6 +35,8 @@ Orcaの定期実行（automation「お役立ち記事の作成（月・木）」
 
 既存の記事 `components/articles/ArticleWebCompanyGuide.tsx` を雛形にする（Helmet、JSON-LD 3つ、PageHeader、本文、FAQ、関連する支援事例（`<ArticleWorks service="<key>"/>`）、関連記事、関連サービス、著者欄）。関連する支援事例は、記事と同じサービスの事例へのリンクで、事例のページを孤立させないために必ず入れる。
 
+導入文のすぐ下（最初のh2の直前）に目次 `<ArticleToc service="<key>" items={[...]}/>` を必ず入れる。本文の大見出しに上から `id="sec-1"`、`id="sec-2"`…を、よくある質問に `id="faq"` を付け、items に同じ順で `{ id, label }` を書く（label は見出しの先頭の番号を除いた文字）。関連する支援事例・関連記事・関連サービスは目次に入れない。
+
 - ファイル名：`components/articles/Article<英語のPascalCase>.tsx`
 - `title`：検索向けのタイトル。地域名を入れてよい。32字前後。
 - `pageTitle`：画面に出す見出し。地域名を入れない。

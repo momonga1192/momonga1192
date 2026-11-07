@@ -5,7 +5,7 @@ import type { ServiceKey } from '../next/theme';
 // Tailwindが検出できるよう、クラス名は完全な文字列で持つ
 
 const h2Base =
-  'relative w-fit max-w-full -ml-1 sm:-ml-3 -rotate-[0.6deg] border-[3px] border-[#111] px-4 py-2.5 font-manga text-[20px] md:text-[24px] leading-[1.5] text-white shadow-[4px_4px_0_#111] [word-break:auto-phrase]';
+  'relative scroll-mt-28 w-fit max-w-full -ml-1 sm:-ml-3 -rotate-[0.6deg] border-[3px] border-[#111] px-4 py-2.5 font-manga text-[20px] md:text-[24px] leading-[1.5] text-white shadow-[4px_4px_0_#111] [word-break:auto-phrase]';
 
 export const ac = {
   // ページ全体と、本文を載せる白い紙のコマ
