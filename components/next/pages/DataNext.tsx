@@ -7,6 +7,7 @@ import DashboardSample from '../DashboardSample';
 import { services } from '../theme';
 import ServiceArticles from '../../articles/ServiceArticles';
 import ServiceWorks from '../../works/ServiceWorks';
+import ServiceFaq, { serviceFaqLd } from '../ServiceFaq';
 
 const service = services.find((s) => s.key === 'data')!;
 
@@ -137,6 +138,15 @@ const plans = [
   }
 ];
 
+// よくある質問（このページに書いてある事実の範囲で。FAQPageの構造化データにも使う）
+const faqs = [
+  { q: 'データ活用支援の料金はいくらですか？', a: 'Lightプランが月額5万円〜（1つのテーマのダッシュボード）、Standardプランが月額15万円〜（複数のダッシュボード、KPIの設計、月1回の定例ミーティング）、Premiumプランが月額30万円〜（データをまとめる基盤づくり、品質・管理ルールの整備、AIを使った分析）です。いずれも税抜です。' },
+  { q: '初期費用はかかりますか？', a: 'かかりません。ダッシュボードの構築作業も月額に含まれます。最低契約期間は6ヶ月です。データの整理に大きな手間がかかる場合は、ヒアリングのうえ別途お見積もりします。' },
+  { q: 'Power BIとTableauのどちらに対応していますか？', a: 'どちらも、導入・設定からダッシュボードの構築まで支援します。Power BI・TableauなどのBIツールのライセンス費は、別途必要です。' },
+  { q: 'Excelで管理しているデータでも始められますか？', a: 'はい。Lightプランでは、Excelや既存システムのデータから自動で更新されるダッシュボードを、まず1つのテーマ（売上など）で作ります。毎月の手作業の集計をなくすところから始められます。' },
+  { q: '相談や見積もりは無料ですか？', a: 'はい、初回のご相談・お見積もりは無料です。お問い合わせフォームからご連絡いただければ、通常2営業日以内にArcleからご連絡します。' }
+];
+
 // 困り事のコマに出す、困っている人の顔（脇役の設定画から切り抜き）
 const caseFaces = ['data-face-blonde', 'data-face-man', 'data-face-boss', 'data-face-bob'];
 
@@ -189,6 +199,7 @@ const DataNext: React.FC = () => (
           "areaServed": [{ "@type": "State", "name": "愛知県" }, { "@type": "State", "name": "岐阜県" }, { "@type": "State", "name": "三重県" }],
           "offers": plans.map((plan) => ({ "@type": "Offer", "name": `${plan.name}（${plan.sub}）`, "price": String(plan.price * 10000), "priceCurrency": "JPY" }))
         })}</script>
+        <script type="application/ld+json">{JSON.stringify(serviceFaqLd(faqs))}</script>
       </Helmet>
 
     {/* 表紙：紙の山から「データの原石」を掘り出して掲げるヒーロー */}
@@ -417,6 +428,8 @@ const DataNext: React.FC = () => (
         </div>
       </div>
     </section>
+
+    <ServiceFaq service="data" title="データ活用支援のよくある質問" faqs={faqs} />
 
     <ServiceWorks service="data" />
     <ServiceArticles service="data" />

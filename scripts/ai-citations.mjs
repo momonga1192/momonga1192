@@ -102,7 +102,8 @@ for (const item of questions) {
         const row = {
           date, engine, model: e.model, service: item.service, question: item.q, try: i + 1,
           mentioned: NAME.test(answer), cited: domains.some((d) => SITE.test(d)),
-          domains, answer: answer.slice(0, 1500)
+          domains, sources: sources.filter((x) => hostOf(x.url)).slice(0, 15).map((x) => ({ title: String(x.title || '').slice(0, 120), url: x.url })),
+          answer: answer.slice(0, 1500)
         };
         appendFileSync(OUT, JSON.stringify(row) + '\n');
         ok++;
@@ -116,3 +117,34 @@ for (const item of questions) {
 }
 console.log(`${OUT} に ${ok}件を記録しました（失敗 ${failed}件）`);
 if (!ok) process.exit(1);
+await citedPages();
+
+// 掲載を頼む先の候補（じんらいの「掲載依頼先の抽出」のまね）。今回の地域・サービスの質問で、AIが出典にした arcle.net 以外のページを
+// 多い順に並べ、ページを開いて Arcle がすでに載っているかを確かめる。結果は ai-cited-pages.json（ダッシュボードが読む）
+async function citedPages() {
+  const rows = readFileSync(OUT, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.date === date && r.service !== 'brand');
+  const pages = {};
+  for (const r of rows) {
+    for (const s of r.sources || []) {
+      const domain = hostOf(s.url);
+      if (!domain || SITE.test(domain)) continue;
+      const url = s.url.replace(/[?#].*$/, '');
+      const p = (pages[url] ||= { url, title: s.title, domain, count: 0, questions: new Set(), engines: new Set() });
+      p.count++; p.questions.add(r.question); p.engines.add(r.engine);
+    }
+  }
+  const kindOf = (d) => /\.(go|lg)\.jp$|^pref\.|\.pref\.|^city\.|\.city\./.test(d) ? '公的機関' : /cci|shokokai|商工/.test(d) ? '商工団体' : 'サイト';
+  const list = Object.values(pages).sort((a, b) => b.count - a.count).slice(0, 40);
+  for (const p of list) {
+    try {
+      const r = await fetch(p.url, { headers: { 'user-agent': 'Mozilla/5.0 (arcle-citation-check)' }, signal: AbortSignal.timeout(15000) });
+      p.listed = r.ok ? NAME.test(await r.text()) : null;
+    } catch { p.listed = null; }
+  }
+  const out = join(dirname(OUT), 'ai-cited-pages.json');
+  writeFileSync(out, JSON.stringify({
+    date,
+    pages: list.map((p) => ({ ...p, kind: kindOf(p.domain), questions: [...p.questions], engines: [...p.engines] }))
+  }, null, 1));
+  console.log(`${out} に出典のページ ${list.length}件（Arcleが載っている ${list.filter((p) => p.listed).length}件）`);
+}

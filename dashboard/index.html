@@ -137,6 +137,15 @@
   .cite-no { color:var(--text-muted); }
   .ai-cite-sum { font-size:14px; color:var(--text-secondary); margin:2px 0 10px; }
   .ai-cite-sum b { color:var(--text-primary); }
+  .score { font-variant-numeric: tabular-nums; font-weight:600; }
+  .fails { color:var(--text-secondary); font-size:12px; }
+  .rank { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px; font-weight:700; font-size:12px; background:var(--chip); color:var(--text-primary); }
+  .rank.A { border:2px solid var(--series-2); }
+  .rank.B { border:2px solid var(--series-1); }
+  .site-checks { list-style:none; padding:0; margin:0 0 10px; display:grid; gap:2px; font-size:13px; }
+  .site-checks .ok::before { content:'✓ '; color:var(--up); font-weight:700; }
+  .site-checks .ng::before { content:'✕ '; color:var(--down); font-weight:700; }
+  td a { color:inherit; }
 </style>
 </head>
 <body class="viz-root">
@@ -207,6 +216,27 @@
 
     <section class="grid two">
       <div class="card">
+        <h2>ページの診断</h2>
+        <p class="sub" id="geo-sub">AIの答えに引用されやすい形になっているかを、ページごとに100点満点で採点（scripts/geo-audit.mjs）</p>
+        <div id="geo-audit"></div>
+      </div>
+      <div class="card">
+        <h2>掲載を頼む先の候補</h2>
+        <p class="sub" id="cited-sub">AIが地域・サービスの質問の出典にしたページ（arcle.net以外）。Arcleが載っていない比較・まとめサイトが候補です</p>
+        <div id="cited-pages"></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card" style="margin-bottom:12px">
+        <h2>記事とサービスページの手直しの順番</h2>
+        <p class="sub" id="rewrite-sub">Search Consoleの直近90日の表示と順位から分けています。A：すぐ直す　B：タイトルと説明文を直す　C：狙う言葉やリンクを見直す　D：様子を見る・今のままでよい</p>
+        <div class="scroll" id="rewrite" style="max-height:520px;overflow:auto"></div>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
         <h2>よく見られたページ</h2>
         <p class="sub">ページビュー数</p>
         <div class="bars" id="bars-pages"></div>
@@ -236,6 +266,8 @@
           <li>Search Consoleは2〜3日遅れて確定するので、検索の数字は確定している最後の日までです。</li>
           <li>増減は、同じ長さの直前の期間と比べています。</li>
           <li>「AIの答えに出たか」は、同じ質問をClaudeとCodex（ChatGPTの代わり）にWeb検索つきで2回ずつ聞いた結果です。「名前」はArcleの名前が答えにあった回数、「出典」はarcle.netが出典に入った回数です。AIの答えは毎回変わるので、1回の結果より月ごとの推移を見ます。</li>
+          <li>「ページの診断」は、構造化データ・よくある質問・記事の結論・出典・一文の長さ・具体的な数字などを、ページの種類ごとに見て採点しています。毎朝7時に本番のサイトで測ります。</li>
+          <li>「手直しの順番」は、A：表示が5回以上で8〜30位、B：表示が10回以上で8位以内なのにクリック率3%未満、C：表示が5回未満で公開から45日以上、D：それ以外、です。</li>
           <li>検索語の「情シス・地域」は、情シス・ITサポート・パソコン・地域名などを含むもの。「新」は、その前の28日に表示がなかった語です。</li>
         </ul>
       </div>
@@ -564,6 +596,9 @@ function render() {
   bars($('bars-ai-sources'), A.sources.map((s) => ({ label: s.name, value: s.sessions, metric: 'セッション' })));
   bars($('bars-ai-pages'), A.pages.map((p) => ({ label: pageLabel(p.path), small: PAGE_NAMES[p.path] ? p.path : '', full: p.path, value: p.sessions, metric: 'セッション' })));
   renderCitations();
+  renderGeoAudit();
+  renderCitedPages();
+  renderRewrite();
 
   // ページ
   bars($('bars-pages'), R.pages.slice(0, 12).map((p) => ({
@@ -623,6 +658,79 @@ function renderCitations() {
       { label: '出典', num: true, get: (r) => fmt(r.cited) }
     ], [...C.history].reverse());
   }
+}
+
+function renderGeoAudit() {
+  const G = DATA.geoAudit, host = $('geo-audit');
+  host.replaceChildren();
+  if (!G) { host.append(el('div', { class: 'empty' }, 'まだ診断していません（毎朝7時に scripts/geo-audit.mjs が本番のサイトを診断します）。')); return; }
+  $('geo-sub').textContent = `AIの答えに引用されやすい形になっているかを、ページごとに100点満点で採点（${md(G.date)}・${G.pages.length}ページ）`;
+  const total = el('div', { class: 'ai-total' });
+  total.append(el('b', {}, `${G.average}点`), el('span', { class: 'meta' }, `全${G.pages.length}ページの平均。100点は ${G.pages.filter((p) => p.score === 100).length}ページ`));
+  host.append(total);
+  const ul = el('ul', { class: 'site-checks' });
+  for (const c of G.site) ul.append(el('li', { class: c.ok ? 'ok' : 'ng' }, c.label + (c.note ? `（${c.note}）` : '')));
+  host.append(ul);
+  if (G.commonFails.length) {
+    host.append(el('h3', { class: 'mini' }, '足りない項目'));
+    const b = el('div', { class: 'bars' }); host.append(b);
+    bars(b, G.commonFails.map((f) => ({ label: f.label, value: f.count, unit: '', metric: 'ページ' })), { unit: 'ページ' });
+  }
+  const low = G.pages.filter((p) => p.score < 100).sort((a, b) => a.score - b.score);
+  if (low.length) {
+    const d = el('details'); d.append(el('summary', {}, `100点でないページ（${low.length}）`));
+    const t = el('div', { class: 'scroll' }); d.append(t); host.append(d);
+    table(t, [
+      { label: 'ページ', cls: 'q', get: (p) => { const f = document.createDocumentFragment(); f.append(p.title || pageLabel(p.path)); f.append(el('div', { class: 'fails' }, p.fails.join('・'))); return f; } },
+      { label: '点', num: true, get: (p) => el('span', { class: 'score' }, p.score) }
+    ], low);
+  }
+}
+
+function renderCitedPages() {
+  const C = DATA.citedPages, host = $('cited-pages');
+  host.replaceChildren();
+  if (!C || !C.pages.length) { host.append(el('div', { class: 'empty' }, 'まだ記録がありません。毎月1日のAIへの質問のあとに、出典のページを集めます。')); return; }
+  $('cited-sub').textContent = `AIが地域・サービスの質問の出典にしたページ（${md(C.date)}・arcle.net以外）。Arcleが載っていない比較・まとめサイトが候補です`;
+  const notListed = C.pages.filter((p) => p.listed === false && p.kind === 'サイト').length;
+  const sum = el('p', { class: 'ai-cite-sum' });
+  sum.append(`${C.pages.length}ページのうち、Arcleが載っていないサイト `, el('b', {}, `${notListed}ページ`));
+  host.append(sum);
+  const t = el('div', { class: 'scroll', style: 'max-height:420px;overflow:auto' }); host.append(t);
+  const listedText = (v) => v === true ? '載っている' : v === false ? 'なし' : '開けない';
+  table(t, [
+    { label: 'ページ', cls: 'q', get: (p) => {
+      const f = document.createDocumentFragment();
+      const a = el('a', { href: p.url, target: '_blank', rel: 'noopener noreferrer' }, p.title || p.domain);
+      f.append(a, el('span', { class: 'chip' }, p.kind));
+      f.append(el('div', { class: 'fails' }, `${p.domain}・${p.questions.length}つの質問で出典`));
+      return f;
+    } },
+    { label: '回数', num: true, get: (p) => fmt(p.count) },
+    { label: 'Arcle', get: (p) => el('span', { class: p.listed ? 'cite-yes' : 'cite-no' }, listedText(p.listed)) }
+  ], C.pages);
+}
+
+function renderRewrite() {
+  const R = DATA.rewrite, host = $('rewrite');
+  host.replaceChildren();
+  if (!R) { host.append(el('div', { class: 'empty' }, 'ページの診断の結果がまだありません。')); return; }
+  table(host, [
+    { label: '', get: (r) => el('span', { class: `rank ${r.rank}` }, r.rank) },
+    { label: 'ページ', cls: 'q', get: (r) => {
+      const f = document.createDocumentFragment();
+      f.append(el('a', { href: 'https://www.arcle.net' + r.path, target: '_blank', rel: 'noopener noreferrer' }, r.title || pageLabel(r.path)));
+      f.append(el('div', { class: 'fails' }, r.reason));
+      if (r.queries.length) f.append(el('div', { class: 'fails' }, '検索語：' + r.queries.join('、')));
+      if (r.fails.length) f.append(el('div', { class: 'fails' }, '診断で足りない：' + r.fails.join('・')));
+      return f;
+    } },
+    { label: '表示', num: true, get: (r) => fmt(r.impressions) },
+    { label: 'クリック', num: true, get: (r) => fmt(r.clicks) },
+    { label: '順位', num: true, get: (r) => r.position ?? '—' },
+    { label: '診断', num: true, get: (r) => `${r.score}点` }
+  ], R.rows);
+  $('rewrite-sub').textContent = `Search Consoleの${md(R.start)}〜${md(R.end)}の表示と順位から分けています。A：すぐ直す　B：タイトルと説明文を直す　C：狙う言葉やリンクを見直す　D：様子を見る・今のままでよい`;
 }
 
 function renderQueries() {

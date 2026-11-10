@@ -1,11 +1,12 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Check, Cpu, Globe, Plus, Shield, Users, Zap } from 'lucide-react';
+import { ArrowRight, Check, Cpu, Globe, Shield, Users, Zap } from 'lucide-react';
 import { ContactCta, IconTile, Mark, PageHeader, PlanCard, SectionHead, Ticker, comicBtn, comicBtnShape, comicIllust } from '../parts';
 import { Caption, SfxText, panel } from '../comic';
 import { services } from '../theme';
 import ServiceArticles from '../../articles/ServiceArticles';
 import ServiceWorks from '../../works/ServiceWorks';
+import ServiceFaq, { serviceFaqLd } from '../ServiceFaq';
 
 const service = services.find((s) => s.key === 'josys')!;
 
@@ -149,11 +150,7 @@ const JosysNext: React.FC = () => (
             { "@type": "Offer", "name": "プレミアムプラン", "price": "300000", "priceCurrency": "JPY", "description": "IT戦略パートナー" }
           ]
         })}</script>
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": faqs.map((item) => ({ "@type": "Question", "name": item.q, "acceptedAnswer": { "@type": "Answer", "text": item.a } }))
-        })}</script>
+        <script type="application/ld+json">{JSON.stringify(serviceFaqLd(faqs))}</script>
       </Helmet>
     <PageHeader
       en="Information Systems Outsourcing"
@@ -312,34 +309,7 @@ const JosysNext: React.FC = () => (
       </div>
     </section>
 
-    {/* よくある質問：ご相談の流れのページと同じ、Q と A の札を付けたコマ */}
-    <section className="py-20 md:py-24 bg-white comic-dots">
-      <div className="max-w-3xl mx-auto px-4 sm:px-5">
-        <SectionHead en="Q & A" enClass={service.text} title="情シス代行のよくある質問" center />
-        <div className="space-y-6">
-          {faqs.map((item, i) => (
-            <details
-              key={item.q}
-              className="group pop-reveal bg-[#FAF3E0] border-[3px] border-[#111] shadow-[6px_6px_0_#111] open:shadow-[6px_6px_0_#F2B544,9px_9px_0_#111]"
-              style={{ animationDelay: `${i * 70}ms` }}
-              open={i === 0}
-            >
-              <summary className="flex items-center gap-4 p-5 sm:p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                <span className="grid place-items-center w-10 h-10 shrink-0 -rotate-6 bg-svc-josys text-white font-comic text-[26px] leading-none border-[3px] border-[#111] shadow-[2px_2px_0_#111]">Q</span>
-                <h3 className="flex-1 font-manga text-[16px] md:text-[18px] leading-relaxed text-[#111] [word-break:auto-phrase]">{item.q}</h3>
-                <span className="w-9 h-9 shrink-0 bg-mustard border-[3px] border-[#111] grid place-items-center group-open:rotate-45 transition-transform">
-                  <Plus className="w-4 h-4" strokeWidth={3.5} aria-hidden="true" />
-                </span>
-              </summary>
-              <div className="flex gap-4 px-5 pb-6 sm:px-6">
-                <span className="grid place-items-center w-10 h-10 shrink-0 -rotate-6 bg-coral text-white font-comic text-[26px] leading-none border-[3px] border-[#111] shadow-[2px_2px_0_#111]">A</span>
-                <p className="flex-1 min-w-0 bg-white border-[3px] border-[#111] px-4 py-3 leading-[1.9] font-bold text-sumi">{item.a}</p>
-              </div>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
+    <ServiceFaq service="josys" title="情シス代行のよくある質問" faqs={faqs} />
 
     <ServiceWorks service="josys" />
     <ServiceArticles service="josys" />

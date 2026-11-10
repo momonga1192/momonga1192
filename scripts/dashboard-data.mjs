@@ -198,6 +198,45 @@ function aiCitations() {
   };
 }
 
+// ページの診断（scripts/geo-audit.mjs の結果）と、記事・サービスページの手直しの順番（じんらいの「リライト優先度」のまね）。
+// Search Consoleの直近90日のページ別の表示・順位から A〜D に分ける
+const STATE = join(homedir(), '.local', 'state', 'arcle-report');
+const readJson = (name) => { const f = join(STATE, name); return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : null; };
+const geoAudit = readJson('geo-audit.json');
+async function rewritePlan() {
+  if (!geoAudit) return null;
+  const start = addDays(scEnd, -89);
+  const [byPage, byPageQuery] = await Promise.all([sc(start, scEnd, ['page'], 1000), sc(start, scEnd, ['page', 'query'], 5000)]);
+  const pathOf = (u) => { try { return new URL(u).pathname.replace(/\.html$/, '').replace(/^\/index$/, '/') || '/'; } catch { return u; } };
+  const stats = {};
+  for (const r of byPage) {
+    const s = (stats[pathOf(r.keys[0])] ||= { impressions: 0, clicks: 0, posSum: 0, queries: {} });
+    s.impressions += r.impressions; s.clicks += r.clicks; s.posSum += r.position * r.impressions;
+  }
+  for (const r of byPageQuery) {
+    const s = stats[pathOf(r.keys[0])];
+    if (s) s.queries[r.keys[1]] = (s.queries[r.keys[1]] || 0) + r.impressions;
+  }
+  const rows = geoAudit.pages.filter((p) => p.type === 'article' || p.type === 'service').map((p) => {
+    const s = stats[p.path] || { impressions: 0, clicks: 0, posSum: 0, queries: {} };
+    const position = s.impressions ? Math.round((s.posSum / s.impressions) * 10) / 10 : null;
+    const ctr = s.impressions ? s.clicks / s.impressions : 0;
+    const age = daysBetween(p.datePublished || '2026-03-06', today);
+    let rank, reason;
+    if (s.impressions >= 5 && position > 8 && position <= 30) { rank = 'A'; reason = '表示はあるが2〜3ページ目。見出しと中身を足せば1ページ目に届く'; }
+    else if (s.impressions >= 10 && position <= 8 && ctr < 0.03) { rank = 'B'; reason = '上位に出ているのにクリックが少ない。タイトルと説明文を直す'; }
+    else if (s.impressions < 5 && age >= 45) { rank = 'C'; reason = '検索にほとんど出ていない。狙う言葉を見直すか、ほかのページからリンクを足す'; }
+    else { rank = 'D'; reason = age < 45 ? '公開から日が浅いので様子を見る' : '今のままでよい'; }
+    return {
+      path: p.path, title: p.title, type: p.type, rank, reason, impressions: s.impressions, clicks: s.clicks, position,
+      queries: Object.entries(s.queries).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([q]) => q),
+      score: p.score, fails: p.fails
+    };
+  });
+  return { start, end: scEnd, rows: rows.sort((a, b) => a.rank.localeCompare(b.rank) || b.impressions - a.impressions || a.score - b.score) };
+}
+const rewrite = await rewritePlan();
+
 const data = {
   generatedAt: jstNow().toISOString().slice(0, 16).replace('T', ' '),
   today, gaStart: GA_START, gaEnd, scEnd, scLagDays: daysBetween(scEnd, today),
@@ -205,6 +244,9 @@ const data = {
   campaign: { name: '名刺キャンペーン', start: CAMPAIGN_START, sessions: meishi[0], users: meishi[1], leads: meishiLeads },
   daily: { ga: gaDaily, sc: scDaily },
   aiCitations: aiCitations(),
+  geoAudit: geoAudit && { date: geoAudit.date, average: geoAudit.average, site: geoAudit.site, commonFails: geoAudit.commonFails, pages: geoAudit.pages.map(({ path, type, title, score, fails }) => ({ path, type, title, score, fails })) },
+  rewrite,
+  citedPages: readJson('ai-cited-pages.json'),
   ranges
 };
 

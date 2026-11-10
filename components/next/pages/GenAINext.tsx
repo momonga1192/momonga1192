@@ -6,6 +6,7 @@ import { Bubble, Caption, SfxText, SlantPanel, panel, panelPress } from '../comi
 import { services } from '../theme';
 import ServiceArticles from '../../articles/ServiceArticles';
 import ServiceWorks from '../../works/ServiceWorks';
+import ServiceFaq, { serviceFaqLd } from '../ServiceFaq';
 
 // 生成AI活用支援のページ（アメコミ版）。相棒ロボットが「AI」の役で、お悩みのコマの答えとプランの案内に出る
 const ai = services.find((service) => service.key === 'ai')!;
@@ -138,6 +139,14 @@ const plans = [
     ]
   }
 ];
+// よくある質問（このページに書いてある事実の範囲で。FAQPageの構造化データにも使う）
+const faqs = [
+  { q: '生成AI活用支援の料金はいくらですか？', a: '導入支援プランが5万円〜、活用定着プランが20万円〜、独自開発プランが50万円〜です（いずれも税抜）。独自開発プランは、要件定義のあとに個別にお見積もりします。' },
+  { q: '何から始めればいいか分からない段階でも相談できますか？', a: 'はい。導入支援プランでは、ビジネス向け生成AIツールの導入、セキュリティポリシーと利用ガイドラインの作成、AI基礎研修、業務別のプロンプトのテンプレートの提供までをまとめて行い、導入後1ヶ月間は質問にお答えします。' },
+  { q: '社員がAIに社内の情報を入力しないか心配です。', a: '導入支援プランで、セキュリティポリシーと利用ガイドラインを作ります。入力してよい情報と禁止する情報、使ってよい業務を決めてから使い始めることで、情報漏えいのリスクを抑えます。' },
+  { q: '社内の資料をもとに答えるAIチャットボットは作れますか？', a: 'はい。独自開発プランで、社内データを使うRAGシステムと専用のAIチャットボットを開発します。既存システムとのデータ連携、セキュアなプライベート環境の構築、運用保守と精度の改善まで担当します。' },
+  { q: '相談や見積もりは無料ですか？', a: 'はい、初回のご相談・お見積もりは無料です。お問い合わせフォームからご連絡いただければ、通常2営業日以内にArcleからご連絡します。' }
+];
 const features = ['最新のAIモデルに対応', 'セキュアな導入プロセスの徹底', '継続的な活用ロードマップ提示'];
 
 // 生成AIの色の集中線
@@ -203,6 +212,7 @@ const GenAINext: React.FC = () => (
             { "@type": "Offer", "name": "独自開発プラン", "price": "500000", "priceCurrency": "JPY" }
           ]
         })}</script>
+        <script type="application/ld+json">{JSON.stringify(serviceFaqLd(faqs))}</script>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" />
     </Helmet>
 
@@ -312,6 +322,8 @@ const GenAINext: React.FC = () => (
         </div>
       </div>
     </section>
+
+    <ServiceFaq service="ai" title="生成AI活用支援のよくある質問" faqs={faqs} />
 
     <ServiceWorks service="ai" />
     <ServiceArticles service="ai" />
