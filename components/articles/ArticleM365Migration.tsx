@@ -6,8 +6,9 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
 
-const title = '愛知・東海の中小企業へ｜Microsoft 365導入・移行手順';
+const title = 'Microsoft 365の導入・移行手順｜中小企業の6つのステップ';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = '中小企業のMicrosoft 365導入・移行手順';
 const description = '愛知・東海の中小企業向けに、Microsoft 365の導入・移行手順を解説。アカウント・メール・ファイル・PCの棚卸し、プラン選定、多要素認証、バックアップ、入退社時の管理まで、担当者が確認できるチェックリスト付きで紹介します。';
@@ -58,6 +59,7 @@ const ArticleM365Migration: React.FC = () => {
             <span className={ac.tag.josys}>情シス代行</span>
             <time dateTime={published} className={ac.date}>{published}</time>
           </div>
+          <ArticleSummary service="josys">Microsoft 365への移行は、アカウント・メール・ファイル・パソコンの棚卸しから始めます。プランは業務に必要な機能から選び、メールとファイルは保存先と権限を決めてから移します。あわせて多要素認証、バックアップ、入退社の手順を整えます。契約やデータのコピーが終わった時点ではなく、社員が仕事を続けられ、会社が管理を引き継げた時点を完了とします。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">中小企業でMicrosoft 365の導入を進めるとき、最初に必要なのは契約ではなく、現在の仕事とデータの整理です。メールが届かない、共有資料が見つからないといった混乱を避けるため、何を移し、誰が確認し、いつ切り替えるかを決めます。この記事では、IT担当者がいない会社の経営者・総務担当者に向けて、Microsoft 365の移行手順と導入後の管理を解説します。</p>
 
           <ArticleToc service="josys" items={[{"id":"sec-1","label":"Microsoft 365導入前の棚卸し"},{"id":"sec-2","label":"中小企業のプラン選びは業務から"},{"id":"sec-3","label":"Microsoft 365のメール移行手順"},{"id":"sec-4","label":"ファイル移行は保存先と権限を先に決定"},{"id":"sec-5","label":"アカウント管理と多要素認証を整える"},{"id":"sec-6","label":"バックアップと入退社の運用を決める"},{"id":"sec-7","label":"まとめ：移行前の最終チェックリスト"},{"id":"faq","label":"よくある質問"}]}/>

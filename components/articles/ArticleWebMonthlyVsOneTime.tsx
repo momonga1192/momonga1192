@@ -6,8 +6,9 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
 
-const title = '月額制と買い切りのホームページ比較｜愛知・東海の会社向け';
+const title = 'ホームページは月額制と買い切りどちらがいい？総額の比べ方';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = 'ホームページは月額制と買い切りのどちらがいい？比較と選び方';
 const description = '愛知・東海の中小企業向けに、ホームページの月額制と買い切り制作を比較。初期費用だけでなく総額、更新費、サーバー・ドメイン代、最低契約期間や解約時のデータの扱いまで、会社に合う選び方と契約前の確認事項を解説します。';
@@ -78,6 +79,7 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
             <span className={ac.tag.web}>Web制作</span>
             <time dateTime={date} className={ac.date}>{date}</time>
           </div>
+          <ArticleSummary service="web">ホームページの月額制と買い切りは、初期費用ではなく、同じ利用期間の総額（月額×利用月数に初期費用や追加費用を足したもの）で比べます。月額制は初期費用を抑えられる一方、利用中の支払いが続きます。あわせて、誰が更新するか、最低契約期間、契約が終わったあとにデータやドメインを使い続けられるかを確認して選びます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">
             ホームページの月額制と買い切りを比較するとき、「初期費用が少ないほうが安心」「一度払えば安く済む」と迷うことはありませんか。大切なのは、公開してから誰が更新し、何年使い、いくら支払うかです。IT担当者のいない中小企業が選ぶ場合も、制作と運営を一緒に考えると判断しやすくなります。この記事では、費用の整理方法から契約前の確認事項まで順に解説します。
           </p>

@@ -130,6 +130,13 @@
   .stale { color: var(--down); font-weight: 600; }
   footer { color: var(--text-muted); font-size: 12px; margin-top: 18px; }
   .loading { opacity: .5; }
+  .ai-total { display:flex; align-items:baseline; gap:10px; margin:4px 0 12px; }
+  .ai-total b { font-size:28px; font-weight:600; color:var(--text-primary); }
+  h3.mini { font-size:13px; font-weight:600; color:var(--text-secondary); margin:16px 0 6px; }
+  .cite-yes { color:var(--text-primary); font-weight:600; }
+  .cite-no { color:var(--text-muted); }
+  .ai-cite-sum { font-size:14px; color:var(--text-secondary); margin:2px 0 10px; }
+  .ai-cite-sum b { color:var(--text-primary); }
 </style>
 </head>
 <body class="viz-root">
@@ -184,6 +191,22 @@
 
     <section class="grid two">
       <div class="card">
+        <h2>AIから来た訪問</h2>
+        <p class="sub">ChatGPT・Perplexity・Gemini・Copilotなどの答えのリンクから来たセッション</p>
+        <div class="ai-total" id="ai-total"></div>
+        <div class="bars" id="bars-ai-sources"></div>
+        <h3 class="mini">入ってきたページ</h3>
+        <div class="bars" id="bars-ai-pages"></div>
+      </div>
+      <div class="card">
+        <h2>AIの答えにArcleが出たか</h2>
+        <p class="sub" id="ai-cite-sub">見込み客が聞きそうな質問をAIに聞いた結果（毎月1日）</p>
+        <div id="ai-cite"></div>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
         <h2>よく見られたページ</h2>
         <p class="sub">ページビュー数</p>
         <div class="bars" id="bars-pages"></div>
@@ -212,6 +235,7 @@
           <li>自分のアクセス（<code>?internal=1</code> を開いたブラウザ・UM350の開発サーバー経由）は除いています。</li>
           <li>Search Consoleは2〜3日遅れて確定するので、検索の数字は確定している最後の日までです。</li>
           <li>増減は、同じ長さの直前の期間と比べています。</li>
+          <li>「AIの答えに出たか」は、同じ質問を各AIに2回ずつ聞いた結果です。「名前」はArcleの名前が答えにあった回数、「出典」はarcle.netが出典に入った回数です。AIの答えは毎回変わるので、1回の結果より月ごとの推移を見ます。</li>
           <li>検索語の「情シス・地域」は、情シス・ITサポート・パソコン・地域名などを含むもの。「新」は、その前の28日に表示がなかった語です。</li>
         </ul>
       </div>
@@ -533,6 +557,14 @@ function render() {
     camp.append(el('dt', {}, '問い合わせの内訳'), el('dd', {}, R.leads.map((l) => `${l.form === 'it_check' ? 'IT健康診断' : l.form === 'contact' ? 'フォーム' : '不明'}${l.campaign && l.campaign !== '(not set)' ? '・' + l.campaign : ''} ${l.count}`).join('、')));
   }
 
+  // AIから来た訪問
+  const A = R.ai || { sessions: [0, 0], sources: [], pages: [] };
+  const aiTotal = $('ai-total');
+  aiTotal.replaceChildren(el('b', {}, fmt(A.sessions[0])), 'セッション', delta(A.sessions[0], A.sessions[1], gaOpt));
+  bars($('bars-ai-sources'), A.sources.map((s) => ({ label: s.name, value: s.sessions, metric: 'セッション' })));
+  bars($('bars-ai-pages'), A.pages.map((p) => ({ label: pageLabel(p.path), small: PAGE_NAMES[p.path] ? p.path : '', full: p.path, value: p.sessions, metric: 'セッション' })));
+  renderCitations();
+
   // ページ
   bars($('bars-pages'), R.pages.slice(0, 12).map((p) => ({
     label: pageLabel(p.path), small: PAGE_NAMES[p.path] ? p.path : '', full: p.path, value: p.views, metric: 'ページビュー',
@@ -551,6 +583,46 @@ function render() {
     { label: 'クリック', num: true, get: (r) => fmt(r.clicks) },
     { label: '順位', num: true, get: (r) => r.position }
   ], R.searchPages.slice(0, 12));
+}
+
+const ENGINE_NAMES = { gemini: 'Gemini', chatgpt: 'ChatGPT', perplexity: 'Perplexity' };
+function renderCitations() {
+  const C = DATA.aiCitations, host = $('ai-cite');
+  host.replaceChildren();
+  if (!C) {
+    host.append(el('div', { class: 'empty' }, 'まだ記録がありません。AIのキーを .env.local に入れると、毎月1日に記録します（scripts/ai-citations.mjs）。'));
+    return;
+  }
+  $('ai-cite-sub').textContent = `見込み客が聞きそうな質問をAIに聞いた結果（${md(C.last)}・${C.engines.map((e) => ENGINE_NAMES[e] || e).join('・')}）`;
+  const general = C.results.filter((r) => r.service !== 'brand');
+  const sum = el('p', { class: 'ai-cite-sum' });
+  const tries = general.reduce((a, r) => a + r.tries, 0);
+  sum.append('地域・サービスの質問 ', el('b', {}, `${tries}回`), ' のうち、名前が出た ', el('b', {}, `${general.reduce((a, r) => a + r.mentioned, 0)}回`), '・出典に入った ', el('b', {}, `${general.reduce((a, r) => a + r.cited, 0)}回`));
+  host.append(sum);
+  const tableHost = el('div', { class: 'scroll' });
+  host.append(tableHost);
+  const mark = (n, t) => el('span', { class: n ? 'cite-yes' : 'cite-no' }, `${n}/${t}`);
+  table(tableHost, [
+    { label: '質問', cls: 'q', get: (r) => { const f = document.createDocumentFragment(); f.append(r.question); if (r.service === 'brand') f.append(el('span', { class: 'chip new' }, '指名')); return f; } },
+    { label: 'AI', get: (r) => ENGINE_NAMES[r.engine] || r.engine },
+    { label: '名前', num: true, get: (r) => mark(r.mentioned, r.tries) },
+    { label: '出典', num: true, get: (r) => mark(r.cited, r.tries) }
+  ], C.results);
+  if (C.domains.length) {
+    const d = el('details'); d.append(el('summary', {}, 'AIがよく出典にしたサイト'));
+    const b = el('div', { class: 'bars' }); d.append(b); host.append(d);
+    bars(b, C.domains.map((x) => ({ label: x.domain, value: x.count, metric: '回' })));
+  }
+  if (C.history.length > 1) {
+    const d = el('details'); d.append(el('summary', {}, '月ごとの推移'));
+    const t = el('div', { class: 'scroll' }); d.append(t); host.append(d);
+    table(t, [
+      { label: '日付', get: (r) => md(r.date) },
+      { label: '回数', num: true, get: (r) => fmt(r.answers) },
+      { label: '名前', num: true, get: (r) => fmt(r.mentioned) },
+      { label: '出典', num: true, get: (r) => fmt(r.cited) }
+    ], [...C.history].reverse());
+  }
 }
 
 function renderQueries() {

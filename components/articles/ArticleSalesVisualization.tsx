@@ -6,8 +6,9 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
 
-const title = '愛知・東海の中小企業向け｜売上データの見える化を始める手順';
+const title = '売上データの見える化を始める手順｜Excelでできる6つのステップ';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = '売上データの見える化を始める手順';
 const description = '愛知・東海の中小企業向けに、売上データの見える化を始める手順を解説します。最初に見る数字の決め方、集計しやすい元データの整え方、Excelのピボットテーブルでの集計とグラフ化、前年同月比や顧客別の読み方、社内で見る習慣のつくり方までまとめました。';
@@ -59,6 +60,7 @@ const ArticleSalesVisualization: React.FC = () => {
             <span className={ac.tag.data}>データ活用</span>
             <time dateTime={published} className={ac.date}>{published}</time>
           </div>
+          <ArticleSummary service="data">売上の見える化は、答えたい問いを決め、月別ともう1つの切り口に絞って始めるのが近道です。いちばん手間がかかるのは、元データを1行1取引の明細にそろえる準備です。ここが整えば、Excelのピボットテーブルだけでも前年同月比や上位の顧客を確かめられます。まず直近2年分の売上明細を書き出し、月別の推移を1枚のグラフにします。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">「売上は毎月集計しているのに、増えた理由も減った理由もよく分からない」。そんな悩みを持つ会社は少なくありません。売上の見える化とは、売上の数字を月や顧客、商品ごとに分けて、表やグラフでひと目で分かる形にすることです。大がかりなシステムがなくても、Excelと手元のデータから始められます。この記事では、最初に見る数字の決め方から、元データの整え方、Excelでの集計、数字の読み方、社内で見る習慣づくりまでを順に整理します。</p>
 
           <ArticleToc service="data" items={[{"id":"sec-1","label":"売上の見える化で答えたい問いを決める"},{"id":"sec-2","label":"最初に見る数字と切り口を選ぶ"},{"id":"sec-3","label":"元データを集計しやすい形に整える"},{"id":"sec-4","label":"Excelのピボットテーブルで集計とグラフを作る"},{"id":"sec-5","label":"見える化した売上の数字を読むポイント"},{"id":"sec-6","label":"社内で見る習慣をつくり、次の段階を考える"},{"id":"sec-7","label":"まとめ：問いを決め、整った明細から小さく始める"},{"id":"faq","label":"よくある質問"}]}/>

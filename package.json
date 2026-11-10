@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vite build --ssr entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "build": "vite build && vite build --ssr entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs && node scripts/llms.mjs",
     "preview": "vite preview",
     "gsc:submit-sitemap": "bash scripts/search-console.sh submit-sitemap sc-domain:arcle.net https://www.arcle.net/sitemap.xml",
     "gsc:inspect:new": "bash scripts/search-console.sh inspect-batch sc-domain:arcle.net scripts/new-article-urls.txt"

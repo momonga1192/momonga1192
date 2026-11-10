@@ -6,8 +6,9 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
 
-const title = '愛知・東海の中小企業向け｜パスワード管理と多要素認証の始め方';
+const title = 'パスワード管理と多要素認証の始め方｜社内ルールとチェックリスト';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = '中小企業のパスワード管理と多要素認証の始め方';
 const description = '愛知・東海の中小企業向けに、パスワード管理と多要素認証の始め方を解説します。社内のパスワードルールの決め方、保管と共有の方法、認証方式の選び方、Microsoft 365やGoogle Workspaceでの導入手順、機種変更や退職時の注意点まで、チェックリスト付きでまとめました。';
@@ -60,6 +61,7 @@ const ArticlePasswordMFA: React.FC = () => {
             <span className={ac.tag.josys}>情シス代行</span>
             <time dateTime={published} className={ac.date}>{published}</time>
           </div>
+          <ArticleSummary service="josys">会社のパスワードは、長く、推測されにくく、使い回さないものにし、安全な方法で保管するのが基本です。定期的な変更より、流出したときにすぐ変えられる体制を整えます。そのうえで多要素認証を加えると、パスワードが漏れたときの被害を大きく減らせます。まず仕事で使うサービスを一覧にし、管理者アカウントの多要素認証から始めます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">メール、会計ソフト、ネットバンキング、取引先とのファイル共有など、仕事で使うサービスにはどれもIDとパスワードがあります。IT担当者がいない会社では、パスワードの決め方も保管のしかたも社員任せになりがちです。この記事では、社内のパスワードルールの決め方から、多要素認証の選び方と導入手順、つまずきやすい点まで、今日から始められる順に整理します。</p>
 
           <ArticleToc service="josys" items={[{"id":"sec-1","label":"パスワード管理が会社の守りになる理由"},{"id":"sec-2","label":"社内のパスワードルールを決める"},{"id":"sec-3","label":"パスワードの保管と共有のしかた"},{"id":"sec-4","label":"多要素認証の仕組みと方式の選び方"},{"id":"sec-5","label":"多要素認証を社内に導入する手順"},{"id":"sec-6","label":"導入後につまずきやすい場面と備え"},{"id":"sec-7","label":"今日から使えるチェックリスト"},{"id":"sec-8","label":"まとめ：ルールを短く決め、管理者から多要素認証を"},{"id":"faq","label":"よくある質問"}]}/>

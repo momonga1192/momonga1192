@@ -6,8 +6,10 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
-const title = '愛知・東海の中小企業向け｜freeeの会計データをPower BIで見る';
+const title = 'freeeの会計データをPower BIで見る方法｜3つのつなぎ方';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = 'freeeの会計データをPower BIで見る手順';
 const description = '愛知・東海の中小企業向けに、freee会計のデータをPower BIで見る手順を解説します。仕訳帳のCSVの書き出し、つなぎ方の選び方、部門や品目のタグの付け方、取り込みと整形、毎月の更新、試算表と数字が合わないときの確認方法までまとめました。';
@@ -59,6 +61,7 @@ const ArticleFreeePowerBI: React.FC = () => {
             <span className={ac.tag.data}>データ活用</span>
             <time dateTime={published} className={ac.date}>{published}</time>
           </div>
+          <ArticleSummary service="data">freeeの会計データをPower BIで見るなら、仕訳帳をCSVで書き出して決めた場所に置き、Power BIでまとめて取り込む方法が始めやすい選択です。その前に、見たい数字とタグの付け方をそろえておくと、部門別・取引先別に分析できます。毎月の更新手順を決め、試算表と照らし合わせてから共有します。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">freee会計で日々の記帳を進めていると、「部門ごとの利益を毎月並べて見たい」「販売管理のExcelと合わせて分析したい」と感じる場面が出てきます。そんなときの選択肢の一つが、Power BIです。Power BIは、Microsoftが提供するBIツール（データを集めてグラフや表で見られるようにするツール）です。この記事では、freeeの会計データをPower BIで見るための、つなぎ方の選び方から書き出し、取り込み、毎月の更新までを順に説明します。</p>
 
           <ArticleToc service="data" items={[{"id":"sec-1","label":"freeeとPower BIの役割を分けて考える"},{"id":"sec-2","label":"freeeのデータをPower BIにつなぐ三つの方法"},{"id":"sec-3","label":"始める前に、見る数字とタグの付け方を決める"},{"id":"sec-4","label":"freeeから仕訳帳をCSVで書き出す"},{"id":"sec-5","label":"Power BIで取り込んで、会計の形に整える"},{"id":"sec-6","label":"毎月の更新と共有の流れを決める"},{"id":"sec-7","label":"試算表と数字が合わないときの確認ポイント"},{"id":"sec-8","label":"まとめ：CSVで小さく始め、毎月の照合で信頼を育てる"},{"id":"faq","label":"よくある質問"}]}/>
@@ -159,6 +162,10 @@ const ArticleFreeePowerBI: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="data" items={[
+            { label: 'Microsoft Learn「Power BI でのデータの更新」', url: 'https://learn.microsoft.com/ja-jp/power-bi/connect-data/refresh-data' },
+            { label: 'Microsoft Learn「Power Query connectors」', url: 'https://learn.microsoft.com/en-us/power-query/connectors/' }
+          ]}/>
           <ArticleWorks service="data"/>
     <section className={ac.related}>
             <h2 className={ac.h2Flat.data}>関連記事</h2>

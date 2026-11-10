@@ -20,8 +20,12 @@ Orcaの定期実行（automation「お役立ち記事の作成（月・木）」
 - 読者：IT担当者がいない中小企業の経営者・総務担当者。専門用語は初出で一言説明する。
 - 分量：本文で4,500〜7,000字（check-article の数え方）。見出し（h2）は5〜7個に加え、「まとめ」と「よくある質問（3〜4問）」を入れる。
 - 表かチェックリストを最低1つ入れる。手順や判断基準など、読んだあとにすぐ使える形にする。
-- 地域名（愛知・東海・一宮など）は `title` と `description` にだけ入れる。本文、`pageTitle`、見出し、FAQには入れない。
-- ただし、サービス名（情シス代行・データ活用支援・生成AI活用支援・ホームページ制作）と地域名を、同じ `title` に入れない。「情シス代行 愛知」のような依頼の検索はサービスページに任せる（記事がサービスページより上に出てしまうため。2026-11-06）。
+- 地域名（愛知・東海・一宮など）は `description` にだけ入れる。`title`、本文、`pageTitle`、見出し、FAQには入れない。
+  - 記事が狙うのは「やり方・選び方」を調べる検索で、地域名を付けて調べる人はほとんどいない。地域名を付けた依頼の検索（「情シス代行 愛知」など）はサービスページに任せる（記事がサービスページより上に出てしまうため。2026-11-06、2026-11-10）。
+- `title` は、狙う検索語を先頭に置き、本文の作りに数があれば「〜の5つの手順」「比べる4つの点」のように数を入れる。数は本文の見出しや表と一致させる（例：手順の見出しが5つなら「5つの手順」）。
+- 日付のすぐ下に「この記事の結論」（`<ArticleSummary>`）を置き、記事の答えを3〜4文・150〜200字で先に書く。読む人が最初に答えを知れるようにし、AIの答えにも引用されやすくするため。本文に書いていないことは書かない。
+- 「Arcleの現場では」の段落：`docs/articles/topics.md` の「現場メモ」に、その記事の slug のメモがあれば、合う見出しの中に1段落で入れる。「Arcleが支援した会社では、〜でした」のように、メモにあることだけを書き、数字や出来事を足さない。メモがなければこの段落は書かない（作り話の体験談を書かない）。
+- 記事の最後（よくある質問のすぐ下）に「出典」（`<ArticleSources>`）を置き、書く前に確かめた公式の情報（メーカーの公式ページ・ヘルプ、官公庁の資料など）を、名前とURLで並べる。開いて中身を確かめたページだけを載せる。
 - 事実の扱い
   - 料金、プラン名、機能の有無、法律・制度、サポート期限など、変わりうる事実は書く前にWebで公式情報を確認する。確認できなければ具体的な数字や名前を書かず、「最新の情報は公式サイトで確認」と書く。
   - 統計の数字、調査結果、実在する顧客の事例を作らない。例を出すときは「たとえば」と仮の状況にする。
@@ -33,12 +37,12 @@ Orcaの定期実行（automation「お役立ち記事の作成（月・木）」
 
 ## 3. ファイルの作り方
 
-既存の記事 `components/articles/ArticleWebCompanyGuide.tsx` を雛形にする（Helmet、JSON-LD 3つ、PageHeader、本文、FAQ、関連する支援事例（`<ArticleWorks service="<key>"/>`）、関連記事、関連サービス、著者欄）。関連する支援事例は、記事と同じサービスの事例へのリンクで、事例のページを孤立させないために必ず入れる。
+既存の記事 `components/articles/ArticleWebCompanyGuide.tsx` を雛形にする（Helmet、JSON-LD 3つ、PageHeader、この記事の結論（`<ArticleSummary service="<key>">…</ArticleSummary>`）、本文、FAQ、出典（`<ArticleSources service="<key>" items={[{ label, url }]}/>`）、関連する支援事例（`<ArticleWorks service="<key>"/>`）、関連記事、関連サービス、著者欄）。関連する支援事例は、記事と同じサービスの事例へのリンクで、事例のページを孤立させないために必ず入れる。
 
 導入文のすぐ下（最初のh2の直前）に目次 `<ArticleToc service="<key>" items={[...]}/>` を必ず入れる。本文の大見出しに上から `id="sec-1"`、`id="sec-2"`…を、よくある質問に `id="faq"` を付け、items に同じ順で `{ id, label }` を書く（label は見出しの先頭の番号を除いた文字）。関連する支援事例・関連記事・関連サービスは目次に入れない。
 
 - ファイル名：`components/articles/Article<英語のPascalCase>.tsx`
-- `title`：検索向けのタイトル。地域名を入れてよい。32字前後。
+- `title`：検索向けのタイトル。地域名を入れない。狙う検索語を先頭に、32字前後。
 - `pageTitle`：画面に出す見出し。地域名を入れない。
 - `description`：120字前後。地域名を入れてよい。
 - `canonical`：`https://www.arcle.net/articles/<slug>`（slugは topics.md のもの）
@@ -55,7 +59,7 @@ Orcaの定期実行（automation「お役立ち記事の作成（月・木）」
 
 1. `npm run build` が通ること（prerender まで含む）。
 2. `dist/articles/<slug>.html` ができていること。
-3. `node scripts/check-article.mjs <slug>` がすべて OK になること（title・description・canonical・h1・字数・本文の地域名・sitemap）。
+3. `node scripts/check-article.mjs <slug>` がすべて OK になること（title・description・canonical・h1・字数・地域名・目次・結論・出典・sitemap）。
 4. コミットメッセージは1行の日本語（例：「お役立ち記事『〜』を追加」）。Co-Authored-By は入れない。
 5. `git push origin HEAD:main` で公開する（Vercelが自動でデプロイする）。
 6. プッシュ後、`gh api repos/momonga1192/momonga1192/commits/<sha>/statuses --jq '.[0].state'` が success になるまで数分おきに確認し、`curl -s https://www.arcle.net/articles/<slug>` で公開を確かめる。

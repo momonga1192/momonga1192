@@ -6,8 +6,9 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
 
-const title = '愛知・東海の中小企業向け｜生成AIで議事録を作る手順';
+const title = '生成AIで議事録を作る手順｜録音・指示文・確認の3つのコツ';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = '生成AIで議事録を作る手順と注意点';
 const description = '愛知・東海の中小企業向けに、生成AIで議事録を作る手順を解説します。録音と文字起こしの準備、要約を頼むときの指示文の例、情報漏えいを防ぐ注意点、AIが間違えやすい箇所の確認方法、社内に定着させるコツまで、今日から試せる形でまとめました。';
@@ -80,6 +81,7 @@ const ArticleAIMeetingMinutes: React.FC = () => {
             <span className={ac.tag.ai}>生成AI</span>
             <time dateTime={published} className={ac.date}>{published}</time>
           </div>
+          <ArticleSummary service="ai">生成AIに任せられるのは、文字起こしの整理と、決定事項・宿題の抜き出しです。何が決まったかの判断と、数字・日付・名前の確認は人が行います。効果を出すには、参加者の了承を取ったうえでの聞き取りやすい録音、使い回せる指示文、決まった観点での確認の3つをそろえます。使ってよいツールと入力してはいけない情報を先に決め、社内の定例会議1つから試します。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">会議のあとに録音を聞き直し、発言をまとめて議事録に仕上げる作業は、思った以上に時間がかかります。生成AIを使えば、文字起こしから要点の整理までの下書きを短い時間で作れます。ただし、録音のしかたや指示の出し方、情報の扱いを決めずに始めると、使えない下書きができたり、社外に出してはいけない情報を入力してしまったりします。この記事では、生成AIで議事録を作るための準備から確認、社内での定着までを順に整理します。</p>
 
           <ArticleToc service="ai" items={[{"id":"sec-1","label":"生成AIに任せられること、人が担うこと"},{"id":"sec-2","label":"議事録を作る三つの方法を比べる"},{"id":"sec-3","label":"生成AIで議事録を作る手順"},{"id":"sec-4","label":"情報漏えいを防ぐために決めておくこと"},{"id":"sec-5","label":"AIの議事録で間違えやすい箇所を確認する"},{"id":"sec-6","label":"社内で定着させるコツ"},{"id":"sec-7","label":"まとめ：下書きはAI、判断と確認は人"},{"id":"faq","label":"よくある質問"}]}/>

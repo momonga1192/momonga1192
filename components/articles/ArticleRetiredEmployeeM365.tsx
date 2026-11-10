@@ -6,8 +6,9 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
 
-const title = '愛知・東海の中小企業向け｜退職者のMicrosoft 365アカウントの止め方';
+const title = '退職者のMicrosoft 365アカウントの止め方｜引き継ぎの5つの手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = '退職者のMicrosoft 365アカウントの止め方とデータの引き継ぎ';
 const description = '愛知・東海の中小企業向けに、退職者のMicrosoft 365アカウントの止め方を解説します。退職日のサインイン停止、メールを共有メールボックスにして引き継ぐ方法、OneDriveのファイルの移し方、ライセンスの支払いを止める手順まで、チェックリスト付きでまとめました。';
@@ -60,6 +61,7 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
             <span className={ac.tag.josys}>情シス代行</span>
             <time dateTime={published} className={ac.date}>{published}</time>
           </div>
+          <ArticleSummary service="josys">退職者のMicrosoft 365アカウントは、すぐに削除せず、サインインを止め、メールとファイルを引き継いでから片付けます。メールは共有メールボックスにすると過去のやり取りを残せますが、アカウントを削除しないことと、変換の前後にパスワードを変えることが必要です。ライセンスは外すだけでなく契約の数を減らさないと、料金がかかり続けることがあります。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">社員が退職したあと、その人のMicrosoft 365のアカウントをどうすればよいか迷う会社は少なくありません。すぐに削除すると、取引先とのメールや作りかけの資料が消えてしまうかもしれません。反対に放置すると、退職者が社外から会社のメールやファイルを見られる状態が続き、ライセンスの料金も払い続けることになります。この記事では、IT担当者がいない会社でも進められるよう、退職日にアカウントを止める手順から、メールとファイルの引き継ぎ、ライセンスの後片付けまでを順に整理します。</p>
 
           <ArticleToc service="josys" items={[{"id":"sec-1","label":"退職者のアカウントで最初に決めること"},{"id":"sec-2","label":"退職日にサインインを止める手順"},{"id":"sec-3","label":"メールの引き継ぎ方を選ぶ"},{"id":"sec-4","label":"OneDriveのファイルを引き継ぐ"},{"id":"sec-5","label":"ライセンスとアカウントを片付ける"},{"id":"sec-6","label":"退職時のアカウント手続きチェックリスト"},{"id":"sec-7","label":"まとめ：止める・引き継ぐ・片付けるの順で進める"},{"id":"faq","label":"よくある質問"}]}/>

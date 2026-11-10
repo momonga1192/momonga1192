@@ -6,8 +6,9 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
 
-const title = '愛知・東海の中小企業向けホームページ制作会社の選び方';
+const title = 'ホームページ制作会社の選び方｜見積もり前に確認する5つの点';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = '中小企業向け ホームページ制作会社の選び方';
 const description = '愛知・東海でホームページ制作を検討する中小企業向けに、制作会社の選び方を解説します。依頼前の準備、見積りの比較、更新のしやすさ、スマホ対応、公開後のサポート、ドメイン名義、SEOの範囲や契約条件まで、実務で使える確認項目をまとめました。';
@@ -59,6 +60,7 @@ const ArticleWebCompanyGuide: React.FC = () => {
             <span className={ac.tag.web}>Web制作</span>
             <time dateTime={published} className={ac.date}>{published}</time>
           </div>
+          <ArticleSummary service="web">ホームページ制作会社は、見積もりの金額だけでなく、目的と必要なページを決めたうえで、制作・更新・保守・契約終了時の条件を同じ表で比べて選びます。更新のしかた、スマホ対応、サポート、ドメインやデータの権利、SEOの対応も確認します。説明に納得できるか、社内で無理なく運用できるかも判断に含めます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">ホームページ制作を検討する中小企業にとって、制作会社の選び方は悩みやすいテーマです。見た目や金額だけでは、公開後に更新を続けられるか、困ったときに相談できるかまでは分かりません。IT担当者がいない会社でも比較できるよう、依頼前の準備から見積り、契約、公開までの確認ポイントを順に整理します。</p>
 
           <ArticleToc service="web" items={[{"id":"sec-1","label":"ホームページ制作の依頼前に目的を決める"},{"id":"sec-2","label":"ホームページ制作会社の選び方は見積りの条件から"},{"id":"sec-3","label":"更新・スマホ・サポート・権利・SEOを確認する"},{"id":"sec-4","label":"地元の制作会社に頼むメリットと判断基準"},{"id":"sec-5","label":"よくある失敗を契約前に防ぐ"},{"id":"sec-6","label":"相談から公開までの依頼の流れ"},{"id":"sec-7","label":"まとめ：同じ条件で比べ、運用まで決める"},{"id":"faq","label":"よくある質問"}]}/>

@@ -6,8 +6,9 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
 
-const title = '愛知・東海の中小企業向け｜CopilotとChatGPTの違いと選び方';
+const title = 'CopilotとChatGPTの違いと選び方｜比較表で整理';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = 'Microsoft 365 CopilotとChatGPTの違いと選び方';
 const description = '愛知・東海の中小企業向けに、Microsoft 365 CopilotとChatGPTの違いと選び方を解説します。無料のCopilot Chatと有料版の違い、ChatGPTの法人向けプラン、社内データの扱い、自社に合う方の判断基準、試し方まで比較表とチェックリストで整理しました。';
@@ -59,6 +60,7 @@ const ArticleCopilotVsChatGPT: React.FC = () => {
             <span className={ac.tag.ai}>生成AI</span>
             <time dateTime={published} className={ac.date}>{published}</time>
           </div>
+          <ArticleSummary service="ai">Microsoft 365 Copilotは、メールやファイルなど社内の情報を生かし、いつものアプリの中で働く生成AIです。ChatGPTは、AIの画面に情報を持ち込んで幅広い作業を相談する生成AIです。社内の仕事がMicrosoft 365にまとまっているならCopilot、そうでなければChatGPTが候補です。どちらも法人向けの契約で会社の管理下に置き、少人数で試してから決めます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">生成AIを業務に取り入れようとすると、多くの会社が「Microsoft 365 CopilotとChatGPTのどちらを選べばよいか」で迷います。どちらも文章の下書きや要約、アイデア出しに使えますが、得意な場面や社内データとのつながり方、管理のしかたが違います。しかもCopilotには無料で使えるものと有料のものがあり、名前だけでは区別がつきにくくなっています。この記事では、二つの違いを整理し、自社に合う方を判断する基準と、小さく試して決める手順をまとめます。</p>
 
           <ArticleToc service="ai" items={[{"id":"sec-1","label":"違いをひとことで言うと「どこで使うか」"},{"id":"sec-2","label":"Copilotには無料版と有料版がある"},{"id":"sec-3","label":"ChatGPTは個人向けと法人向けを分けて考える"},{"id":"sec-4","label":"比較表で違いを整理する"},{"id":"sec-5","label":"自社に合うのはどちらか判断する"},{"id":"sec-6","label":"導入前に決めておくこと"},{"id":"sec-7","label":"小さく試して決める手順"},{"id":"sec-8","label":"まとめ：仕事のある場所で選び、試してから決める"},{"id":"faq","label":"よくある質問"}]}/>

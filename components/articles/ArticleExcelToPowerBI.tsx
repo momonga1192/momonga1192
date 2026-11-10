@@ -6,8 +6,9 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
+import ArticleSummary from './ArticleSummary';
 
-const title = '愛知・東海のExcel集計自動化｜Power BIで月次報告';
+const title = 'Excel集計を自動化する手順｜Power BIで月次報告を作る';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = 'Excel集計を自動化する｜Power BIで月次報告';
 const description = '愛知・東海の中小企業向けに、Excel集計を自動化し、Power BIで月次報告を作る手順を解説。KPIと元データの責任者の決め方から、取り込み・整形・モデル作成・更新・共有、よくある失敗と小さく始める判断基準まで紹介します。';
@@ -59,6 +60,7 @@ const ArticleExcelToPowerBI: React.FC = () => {
             <span className={ac.tag.data}>データ活用</span>
             <time dateTime={date} className={ac.date}>{date}</time>
           </div>
+          <ArticleSummary service="data">Excelの手集計をPower BIで自動化するときは、先にKPIの定義と元データの持ち主を決めます。そのうえで取り込み・整形・集計をPower BIに任せ、更新と共有の手順を運用に組み込みます。最初は1つの部門・1つの報告書・1つのKPIに絞り、今の手集計と数字を照らし合わせてから広げます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">Excel集計の自動化を進めたいのに、毎月のコピーと貼り付けから抜け出せない。そんな中小企業では、Power BIで月次報告を自動化する仕組みが選択肢になります。Power BIは、複数のデータを集めて数字やグラフで確認できるようにするBI（経営情報を分析・可視化する）ツールです。この記事では、専任のIT担当者がいない会社でも検討できるよう、準備から更新・共有までの流れを説明します。</p>
 
           <ArticleToc service="data" items={[{"id":"sec-1","label":"Excel集計の自動化で見直す手集計の問題"},{"id":"sec-2","label":"始める前にKPIと元データの持ち主を決める"},{"id":"sec-3","label":"Power BIで月次報告を自動化する全体像"},{"id":"sec-4","label":"更新の自動化と共有を運用に組み込む"},{"id":"sec-5","label":"よくある失敗と、着手前の判断基準"},{"id":"sec-6","label":"小さく始める進め方とまとめ"},{"id":"faq","label":"よくある質問"}]}/>

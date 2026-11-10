@@ -4,7 +4,8 @@
 // 前提: gcloud auth application-default login 済み（Search Console）、
 //       ga4-reader へのトークン作成者権限（GA4。scripts/ga4.sh と同じ仕組み）
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, renameSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -101,6 +102,9 @@ for (let i = 2 * maxN - 1; i >= 0; i--) {
 
 const JOSYS = /情シス|ｉｔ|\bit\b|サポート|パソコン|\bpc\b|ネットワーク|一宮|稲沢|尾張|名古屋|岐阜|三重|愛知|東海/i;
 const BRAND = /arcle|アークル/i;
+// AIの答えから来た訪問の参照元（ChatGPT・Perplexity・Gemini・Copilot・Claude など）
+const AI_SOURCES = 'chatgpt|openai|perplexity|gemini|bard|copilot|claude\\.ai|you\\.com|felo\\.ai|genspark|grok|deepseek|phind|meta\\.ai';
+const aiFilter = { filter: { fieldName: 'sessionSource', stringFilter: { matchType: 'PARTIAL_REGEXP', value: AI_SOURCES, caseSensitive: false } } };
 const EVENTS = ['it_check_banner_click', 'it_check_start', 'it_check_complete', 'generate_lead'];
 
 async function rangeData(n) {
@@ -109,7 +113,8 @@ async function rangeData(n) {
   const scStart = addDays(scEnd, -(n - 1));
   const scPrevStart = addDays(scStart, -n), scPrevEnd = addDays(scStart, -1);
   const totals = (s, e) => ga({ start: s, end: e, mets: ['sessions', 'activeUsers', 'screenPageViews', 'keyEvents'] }).then((r) => r[0]?.m || [0, 0, 0, 0]);
-  const [cur, prev, sources, pages, events, leads, scCur, scPrev, queries, prior, scPages] = await Promise.all([
+  const aiTotal = (s, e) => ga({ start: s, end: e, mets: ['sessions'], filter: aiFilter }).then((r) => r[0]?.m[0] || 0);
+  const [cur, prev, sources, pages, events, leads, scCur, scPrev, queries, prior, scPages, aiCur, aiPrev, aiSources, aiPages] = await Promise.all([
     totals(start, gaEnd),
     totals(prevStart, prevEnd),
     ga({ start, end: gaEnd, dims: ['sessionSourceMedium'], mets: ['sessions', 'engagedSessions'], limit: 10 }),
@@ -120,7 +125,11 @@ async function rangeData(n) {
     sc(scPrevStart, scPrevEnd),
     sc(scStart, scEnd, ['query'], 100),
     sc(addDays(scStart, -28), addDays(scStart, -1), ['query'], 1000),
-    sc(scStart, scEnd, ['page'], 15)
+    sc(scStart, scEnd, ['page'], 15),
+    aiTotal(start, gaEnd),
+    aiTotal(prevStart, prevEnd),
+    ga({ start, end: gaEnd, dims: ['sessionSource'], mets: ['sessions'], filter: aiFilter, limit: 10 }),
+    ga({ start, end: gaEnd, dims: ['landingPage'], mets: ['sessions'], filter: aiFilter, limit: 10 })
   ]);
   const known = new Set(prior.map((r) => r.keys[0]));
   const ev = Object.fromEntries(events.map((r) => [r.d[0], r.m[0]]));
@@ -143,6 +152,11 @@ async function rangeData(n) {
       query: r.keys[0], clicks: r.clicks, impressions: r.impressions, position: Math.round(r.position * 10) / 10,
       isNew: !known.has(r.keys[0]), isLocal: JOSYS.test(r.keys[0]) && !BRAND.test(r.keys[0]), isBrand: BRAND.test(r.keys[0])
     })),
+    ai: {
+      sessions: [aiCur, aiPrev],
+      sources: aiSources.map((r) => ({ name: r.d[0], sessions: r.m[0] })),
+      pages: aiPages.map((r) => ({ path: r.d[0], sessions: r.m[0] }))
+    },
     searchPages: scPages.map((r) => ({ url: r.keys[0], clicks: r.clicks, impressions: r.impressions, position: Math.round(r.position * 10) / 10 }))
   };
 }
@@ -156,12 +170,41 @@ const [todaySoFar, meishi, meishiLeads] = await Promise.all([
   ga({ start: CAMPAIGN_START, end: today, mets: ['eventCount'], filter: { andGroup: { expressions: [eventIs('generate_lead'), { filter: { fieldName: 'customEvent:campaign', stringFilter: { value: 'meishi' } } }] } } }).then((r) => r[0]?.m[0] || 0).catch(() => 0)
 ]);
 
+// AIの答えに出たか（scripts/ai-citations.mjs の記録）。最新の回の質問ごとの結果と、回ごとの推移をまとめる
+function aiCitations() {
+  const file = join(homedir(), '.local', 'state', 'arcle-report', 'ai-citations.jsonl');
+  if (!existsSync(file)) return null;
+  const rows = readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+  if (!rows.length) return null;
+  const dates = [...new Set(rows.map((r) => r.date))].sort();
+  const last = dates.at(-1);
+  const latest = rows.filter((r) => r.date === last);
+  const groups = {};
+  for (const r of latest) {
+    const g = (groups[`${r.engine}|${r.question}`] ||= { engine: r.engine, question: r.question, service: r.service, tries: 0, mentioned: 0, cited: 0, answer: '' });
+    g.tries++; g.mentioned += r.mentioned ? 1 : 0; g.cited += r.cited ? 1 : 0;
+    if (!g.answer || (r.mentioned && !g.mentionedAnswer)) { g.answer = r.answer.slice(0, 400); g.mentionedAnswer = r.mentioned; }
+  }
+  const domainCount = {};
+  for (const r of latest.filter((x) => x.service !== 'brand')) for (const d of r.domains) domainCount[d] = (domainCount[d] || 0) + 1;
+  return {
+    last, engines: [...new Set(latest.map((r) => r.engine))],
+    results: Object.values(groups).map(({ mentionedAnswer, ...g }) => g),
+    domains: Object.entries(domainCount).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([domain, count]) => ({ domain, count })),
+    history: dates.map((date) => {
+      const rs = rows.filter((r) => r.date === date && r.service !== 'brand');
+      return { date, answers: rs.length, mentioned: rs.filter((r) => r.mentioned).length, cited: rs.filter((r) => r.cited).length };
+    })
+  };
+}
+
 const data = {
   generatedAt: jstNow().toISOString().slice(0, 16).replace('T', ' '),
   today, gaStart: GA_START, gaEnd, scEnd, scLagDays: daysBetween(scEnd, today),
   todaySoFar: { sessions: todaySoFar[0], users: todaySoFar[1] },
   campaign: { name: '名刺キャンペーン', start: CAMPAIGN_START, sessions: meishi[0], users: meishi[1], leads: meishiLeads },
   daily: { ga: gaDaily, sc: scDaily },
+  aiCitations: aiCitations(),
   ranges
 };
 

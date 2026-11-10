@@ -6,7 +6,8 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
-const title = "愛知・東海の中小企業へ｜TableauとPower BIの選び方";
+import ArticleSummary from './ArticleSummary';
+const title = 'TableauとPower BIの選び方｜中小企業が比べる4つの点';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = "中小企業のためのTableauとPower BIの選び方";
 const description = "愛知・東海の中小企業向けにTableauとPower BIの選び方を解説。目的、既存環境、共有方法、運用体制の比較表から、試作の進め方や集計ルール、導入後の確認まで整理します。IT担当者がいない会社でも選定を進める実務ガイドです。";
@@ -48,6 +49,7 @@ const ArticleBIToolChoice: React.FC = () => {
             <time dateTime="2026-03-06" className={ac.dateJa}>公開日 2026-03-06</time>
             <time dateTime="2026-10-31" className={ac.dateJa}>更新日 2026-10-31</time>
           </div>
+          <ArticleSummary service="data">TableauとPower BIは、機能の多さではなく、目的・今使っている環境・共有のしかた・運用する人の4点で選びます。Microsoft 365が中心の会社はPower BIが候補になり、可視化や探索的な分析を重視するならTableauも候補です。どちらを選ぶ場合も、自社のデータで小さく試し、数字が合い、更新でき、会議で使われるかを確かめてから決めます。</ArticleSummary>
     <p className={ac.p}>TableauとPower BIのどちらを選ぶべきか迷う中小企業では、機能の多さより「毎月の仕事で使い続けられるか」を先に考えることが大切です。BIとは、業務データを集計してグラフなどで判断に使える形にする仕組みです。ツールを導入しても、更新する人や数字の定義が決まっていなければ定着しません。データ活用を始めたい経営者・総務担当者に向けて、比較の準備から小さな試作、導入後の運用まで解説します。</p>
     <ArticleToc service="data" items={[{"id":"sec-1","label":"中小企業のBIツール選定は、使う会議から考える"},{"id":"sec-2","label":"TableauとPower BIを比較する判断基準"},{"id":"sec-3","label":"共有方法と費用は閲覧者まで含めて確認する"},{"id":"sec-4","label":"試作の前にデータと集計ルールをそろえる"},{"id":"sec-5","label":"同じデータで小さく試し、運用まで評価する"},{"id":"sec-6","label":"まとめ：機能より続けられる仕組みで選ぶ"},{"id":"faq","label":"よくある質問"}]}/>
     <h2 id="sec-1" className={ac.h2.data}>中小企業のBIツール選定は、使う会議から考える</h2>

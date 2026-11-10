@@ -6,7 +6,8 @@ import { services } from '../next/theme';
 import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
-const title = "愛知・東海の中小企業へ｜ChatGPT導入の社内ルール";
+import ArticleSummary from './ArticleSummary';
+const title = 'ChatGPT導入の社内ルール｜最初に決める4つの項目';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = "中小企業のChatGPT導入と社内ルールの作り方";
 const description = "愛知・東海の中小企業向けに、ChatGPT導入前の社内ルールを解説。入力禁止情報、利用目的、アカウント権限、記録とレビューの決め方を整理します。運用例とチェックリスト、誤入力時の対応まで、総務担当者が使える形で紹介します。";
@@ -48,6 +49,7 @@ const ArticleChatGPTPolicy: React.FC = () => {
             <time dateTime="2026-03-06" className={ac.dateJa}>公開日 2026-03-06</time>
             <time dateTime="2026-10-27" className={ac.dateJa}>更新日 2026-10-27</time>
           </div>
+          <ArticleSummary service="ai">ChatGPTの社内ルールは、入力してはいけない情報、使ってよい目的、アカウントの権限、記録と見直しの4項目から作れます。顧客情報や契約情報は安易に入力せず、生成された文章は人が確認するのが基本です。まず禁止する情報を自社の業務に置き換えて書き出し、利用する環境と責任者を決め、限られた業務で試しながら見直します。</ArticleSummary>
     <p className={ac.p}>中小企業がChatGPTを導入する際は、使い方の研修と一緒に社内ルールを作ることが大切です。生成AIは文章作成や要約を助ける一方、顧客情報の入力や誤った回答の転用によって問題が起こる可能性があります。専任のIT担当者がいなくても、入力してよい情報、利用できる業務、承認する人を決めるところから始められます。導入を検討する経営者・総務担当者に向けて、現場で使える運用方法を整理します。</p>
     <ArticleToc service="ai" items={[{"id":"sec-1","label":"ChatGPTの社内ルールは四つの項目から始める"},{"id":"sec-2","label":"入力禁止情報を具体例と比較表で共有する"},{"id":"sec-3","label":"利用目的と生成結果を確認する手順を決める"},{"id":"sec-4","label":"承認する利用環境とアカウント権限を整える"},{"id":"sec-5","label":"記録・誤入力時の対応と研修を運用に組み込む"},{"id":"sec-6","label":"まとめ：一枚のルールと相談先を用意する"},{"id":"faq","label":"よくある質問"}]}/>
     <h2 id="sec-1" className={ac.h2.ai}>ChatGPTの社内ルールは四つの項目から始める</h2>

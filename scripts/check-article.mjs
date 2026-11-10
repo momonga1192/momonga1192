@@ -23,6 +23,10 @@ const checks = [
   ['h1が1つ', (body.match(/<h1[\s>]/g) ?? []).length === 1],
   ['本文4,000字以上', text.length >= 4000],
   ['本文に地域名なし', regions.length === 0],
+  ['titleに地域名なし', !/愛知|東海|一宮|名古屋|岐阜|三重/.test(html.match(/<title[^>]*>([^<]*)<\/title>/)?.[1] ?? '')],
+  ['結論がある', article.includes('aria-label="この記事の結論"')],
+  // 出典は 2026-11-10 からのルール。それより前の記事は、出典の記録が残っていないものがあるので問わない
+  ['出典がある', article.includes('id="sources"') || (html.match(/"datePublished":"(\d{4}-\d{2}-\d{2})"/)?.[1] ?? '9999') < '2026-11-10'],
   ['目次がある', /<nav aria-label="目次"/.test(article) && article.includes('href="#sec-1"') && article.includes('id="sec-1"')],
   ['sitemapに登録', readFileSync('public/sitemap.xml', 'utf8').includes(`/articles/${slug}<`)]
 ];
