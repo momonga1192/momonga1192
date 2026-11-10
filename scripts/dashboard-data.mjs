@@ -74,6 +74,7 @@ async function sc(start, end, dims = [], rowLimit = 25) {
 const jstNow = () => new Date(Date.now() + 9 * 3600e3);
 const addDays = (ymd, n) => new Date(Date.parse(ymd + 'T00:00:00Z') + n * 86400e3).toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400e3);
+const md = (ymd) => `${Number(ymd.slice(5, 7))}/${Number(ymd.slice(8, 10))}`;
 const today = jstNow().toISOString().slice(0, 10);
 const gaEnd = addDays(today, -1);
 
@@ -199,7 +200,13 @@ function aiCitations() {
 }
 
 // ページの診断（scripts/geo-audit.mjs の結果）と、記事・サービスページの手直しの順番（じんらいの「リライト優先度」のまね）。
-// Search Consoleの直近90日のページ別の表示・順位から A〜D に分ける
+// Search Consoleの直近90日のページ別の表示・順位から A〜D に分ける。
+// 直してから WAIT_DAYS 日たっていないページは、Googleが読み直すまで数字が変わらないので A・B から外す。
+// あわせて、同じ検索語に2つ以上のページが出ているもの（重なり）を拾う
+const WAIT_DAYS = 60;
+const sitemapFile = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'sitemap.xml');
+const sitemapXml = existsSync(sitemapFile) ? readFileSync(sitemapFile, 'utf8') : '';
+const lastmod = Object.fromEntries([...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)].map((m) => [new URL(m[1]).pathname, m[2]]));
 const STATE = join(homedir(), '.local', 'state', 'arcle-report');
 const readJson = (name) => { const f = join(STATE, name); return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : null; };
 const geoAudit = readJson('geo-audit.json');
@@ -217,6 +224,20 @@ async function rewritePlan() {
     const s = stats[pathOf(r.keys[0])];
     if (s) s.queries[r.keys[1]] = (s.queries[r.keys[1]] || 0) + r.impressions;
   }
+  // 検索語ごとに、出ているページを集める（屋号での検索は複数のページが出て当たり前なので除く）
+  const titles = Object.fromEntries(geoAudit.pages.map((p) => [p.path, p.title]));
+  const byQuery = {};
+  for (const r of byPageQuery) {
+    if (BRAND.test(r.keys[1])) continue;
+    const path = pathOf(r.keys[0]);
+    const q = (byQuery[r.keys[1]] ||= {});
+    const e = (q[path] ||= { path, title: titles[path] || null, impressions: 0, clicks: 0, posSum: 0 });
+    e.impressions += r.impressions; e.clicks += r.clicks; e.posSum += r.position * r.impressions;
+  }
+  const overlaps = Object.entries(byQuery).filter(([, pages]) => Object.keys(pages).length >= 2).map(([query, pages]) => {
+    const list = Object.values(pages).map(({ posSum, ...e }) => ({ ...e, position: Math.round((posSum / e.impressions) * 10) / 10 })).sort((a, b) => a.position - b.position);
+    return { query, impressions: list.reduce((n, e) => n + e.impressions, 0), pages: list };
+  }).sort((a, b) => b.impressions - a.impressions).slice(0, 30);
   const rows = geoAudit.pages.filter((p) => p.type === 'article' || p.type === 'service').map((p) => {
     const s = stats[p.path] || { impressions: 0, clicks: 0, posSum: 0, queries: {} };
     const position = s.impressions ? Math.round((s.posSum / s.impressions) * 10) / 10 : null;
@@ -227,13 +248,22 @@ async function rewritePlan() {
     else if (s.impressions >= 10 && position <= 8 && ctr < 0.03) { rank = 'B'; reason = '上位に出ているのにクリックが少ない。タイトルと説明文を直す'; }
     else if (s.impressions < 5 && age >= 45) { rank = 'C'; reason = '検索にほとんど出ていない。狙う言葉を見直すか、ほかのページからリンクを足す'; }
     else { rank = 'D'; reason = age < 45 ? '公開から日が浅いので様子を見る' : '今のままでよい'; }
+    // 直したばかりのページは、直す前の数字で A・B になっているだけなので、様子を見るほうへ回す
+    const editedAt = p.dateModified || lastmod[p.path] || null;
+    const waitUntil = editedAt && addDays(editedAt, WAIT_DAYS);
+    let heldRank = null;
+    if ((rank === 'A' || rank === 'B') && waitUntil && waitUntil > today) {
+      heldRank = rank; rank = 'D';
+      reason = `${md(editedAt)}に直したばかり。${md(waitUntil)}ごろまで様子を見る（直す前の数字では${heldRank}：${reason}）`;
+    }
     return {
+      editedAt, heldRank,
       path: p.path, title: p.title, type: p.type, rank, reason, impressions: s.impressions, clicks: s.clicks, position,
       queries: Object.entries(s.queries).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([q]) => q),
       score: p.score, fails: p.fails
     };
   });
-  return { start, end: scEnd, rows: rows.sort((a, b) => a.rank.localeCompare(b.rank) || b.impressions - a.impressions || a.score - b.score) };
+  return { start, end: scEnd, waitDays: WAIT_DAYS, overlaps, rows: rows.sort((a, b) => a.rank.localeCompare(b.rank) || b.impressions - a.impressions || a.score - b.score) };
 }
 const rewrite = await rewritePlan();
 

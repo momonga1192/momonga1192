@@ -233,6 +233,11 @@
         <p class="sub" id="rewrite-sub">Search Consoleの直近90日の表示と順位から分けています。A：すぐ直す　B：タイトルと説明文を直す　C：狙う言葉やリンクを見直す　D：様子を見る・今のままでよい</p>
         <div class="scroll" id="rewrite" style="max-height:520px;overflow:auto"></div>
       </div>
+      <div class="card" style="margin-bottom:12px">
+        <h2>同じ検索語に出ている複数のページ</h2>
+        <p class="sub" id="overlap-sub">1つの検索語に2つ以上のページが出ていると、評価が分かれてどちらも上がりにくくなります</p>
+        <div class="scroll" id="overlaps" style="max-height:420px;overflow:auto"></div>
+      </div>
     </section>
 
     <section class="grid two">
@@ -267,7 +272,8 @@
           <li>増減は、同じ長さの直前の期間と比べています。</li>
           <li>「AIの答えに出たか」は、同じ質問をClaudeとCodex（ChatGPTの代わり）にWeb検索つきで2回ずつ聞いた結果です。「名前」はArcleの名前が答えにあった回数、「出典」はarcle.netが出典に入った回数です。AIの答えは毎回変わるので、1回の結果より月ごとの推移を見ます。</li>
           <li>「ページの診断」は、構造化データ・よくある質問・記事の結論・出典・一文の長さ・具体的な数字などを、ページの種類ごとに見て採点しています。毎朝7時に本番のサイトで測ります。</li>
-          <li>「手直しの順番」は、A：表示が5回以上で8〜30位、B：表示が10回以上で8位以内なのにクリック率3%未満、C：表示が5回未満で公開から45日以上、D：それ以外、です。</li>
+          <li>「手直しの順番」は、A：表示が5回以上で8〜30位、B：表示が10回以上で8位以内なのにクリック率3%未満、C：表示が5回未満で公開から45日以上、D：それ以外、です。直してから60日たっていないページは、Googleが読み直すまで数字が変わらないので、A・BでもDに回します（更新日は、記事はページの更新日、サービスページはサイトマップの日付）。</li>
+          <li>「同じ検索語に出ている複数のページ」は、直近90日のSearch Consoleで、1つの検索語に2つ以上のページが出たものです。検索の少ない言葉はSearch Consoleが出さないので、ここに出ない重なりもあります。</li>
           <li>検索語の「情シス・地域」は、情シス・ITサポート・パソコン・地域名などを含むもの。「新」は、その前の28日に表示がなかった語です。</li>
         </ul>
       </div>
@@ -730,7 +736,28 @@ function renderRewrite() {
     { label: '順位', num: true, get: (r) => r.position ?? '—' },
     { label: '診断', num: true, get: (r) => `${r.score}点` }
   ], R.rows);
-  $('rewrite-sub').textContent = `Search Consoleの${md(R.start)}〜${md(R.end)}の表示と順位から分けています。A：すぐ直す　B：タイトルと説明文を直す　C：狙う言葉やリンクを見直す　D：様子を見る・今のままでよい`;
+  $('rewrite-sub').textContent = `Search Consoleの${md(R.start)}〜${md(R.end)}の表示と順位から分けています。A：すぐ直す　B：タイトルと説明文を直す　C：狙う言葉やリンクを見直す　D：様子を見る・今のままでよい。直してから${R.waitDays}日たっていないページは、A・BでもDに回します`;
+  renderOverlaps(R);
+}
+
+function renderOverlaps(R) {
+  const host = $('overlaps'), rows = R.overlaps || [];
+  $('overlap-sub').textContent = `1つの検索語に2つ以上のページが出ていると、評価が分かれてどちらも上がりにくくなります。${md(R.start)}〜${md(R.end)}のSearch Consoleから（屋号での検索は除く）。出したいページを1つに決め、ほかのページはタイトルや見出しからその言葉を外すか、出したいページへリンクします`;
+  if (!rows.length) { host.replaceChildren(el('div', { class: 'empty' }, 'この期間は、重なっている検索語はありません')); return; }
+  table(host, [
+    { label: '検索語', cls: 'q', get: (r) => r.query },
+    { label: '出ているページ（順位の高い順）', cls: 'q', get: (r) => {
+      const f = document.createDocumentFragment();
+      r.pages.forEach((p) => {
+        const d = el('div', { class: 'fails' });
+        d.append(el('a', { href: 'https://www.arcle.net' + p.path, target: '_blank', rel: 'noopener noreferrer' }, p.title || pageLabel(p.path)));
+        d.append(`　${p.position}位・表示${fmt(p.impressions)}・クリック${fmt(p.clicks)}`);
+        f.append(d);
+      });
+      return f;
+    } },
+    { label: '表示', num: true, get: (r) => fmt(r.impressions) }
+  ], rows);
 }
 
 function renderQueries() {
