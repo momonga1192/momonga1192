@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
 const title = '生成AIで議事録を作る手順｜録音・指示文・確認の3つのコツ';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -14,6 +15,7 @@ const pageTitle = '生成AIで議事録を作る手順と注意点';
 const description = '愛知・東海の中小企業向けに、生成AIで議事録を作る手順を解説します。録音と文字起こしの準備、要約を頼むときの指示文の例、情報漏えいを防ぐ注意点、AIが間違えやすい箇所の確認方法、社内に定着させるコツまで、今日から試せる形でまとめました。';
 const canonical = 'https://www.arcle.net/articles/ai-meeting-minutes-guide';
 const published = '2026-10-28';
+const modified = '2026-11-11';
 const faqs = [
   { q: '会議を録音するときは、参加者に断る必要がありますか？', a: '会議の冒頭で、録音して議事録づくりに使うことを伝え、了承を得てから始めましょう。社外の方が参加する会議では、事前の案内に書いておくと安心です。録音を断られた場合は、メモを取って後から生成AIで整える方法に切り替えます。' },
   { q: '無料版の生成AIに会議の内容を入力してもよいですか？', a: '社内で利用を認めたツールとアカウントだけを使うのが原則です。無料版や個人のアカウントでは、入力した内容の扱いを会社として管理できない場合があります。どのツールを使ってよいか、入力してはいけない情報は何かを先に社内ルールで決めておきましょう。' },
@@ -56,7 +58,7 @@ const ArticleAIMeetingMinutes: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: published, dateModified: published,
+          datePublished: published, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -79,7 +81,8 @@ const ArticleAIMeetingMinutes: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.ai}>生成AI</span>
-            <time dateTime={published} className={ac.date}>{published}</time>
+            <time dateTime={published} className={ac.dateJa}>公開日 {published}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="ai">生成AIに任せられるのは、文字起こしの整理と、決定事項・宿題の抜き出しです。何が決まったかの判断と、数字・日付・名前の確認は人が行います。効果を出すには、参加者の了承を取ったうえでの聞き取りやすい録音、使い回せる指示文、決まった観点での確認の3つをそろえます。使ってよいツールと入力してはいけない情報を先に決め、社内の定例会議1つから試します。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">会議のあとに録音を聞き直し、発言をまとめて議事録に仕上げる作業は、思った以上に時間がかかります。生成AIを使えば、文字起こしから要点の整理までの下書きを短い時間で作れます。ただし、録音のしかたや指示の出し方、情報の扱いを決めずに始めると、使えない下書きができたり、社外に出してはいけない情報を入力してしまったりします。この記事では、生成AIで議事録を作るための準備から確認、社内での定着までを順に整理します。</p>
@@ -179,6 +182,11 @@ const ArticleAIMeetingMinutes: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="ai" items={[
+            { label: "Google Meet ヘルプ「Google Meet で文字起こしを使用する」", url: "https://support.google.com/meet/answer/12849897?hl=ja" },
+            { label: "Microsoft Learn「Teams 会議、イベント、通話の記録と文字起こし」", url: "https://learn.microsoft.com/ja-jp/microsoftteams/recording-transcription-overview" },
+            { label: "個人情報保護委員会「生成AIサービスの利用に関する注意喚起等について」", url: "https://www.ppc.go.jp/news/careful_information/230602_AI_utilize_alert/" }
+          ]}/>
           <ArticleWorks service="ai"/>
     <section className={ac.related}>
             <h2 className={ac.h2Flat.ai}>関連記事</h2>

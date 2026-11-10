@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 const title = 'ChatGPT導入の社内ルール｜最初に決める4つの項目';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = "中小企業のChatGPT導入と社内ルールの作り方";
@@ -23,7 +24,7 @@ const ArticleChatGPTPolicy: React.FC = () => {
         <link rel="canonical" href={canonical}/>
         <script type="application/ld+json">{JSON.stringify({
             '@context': 'https://schema.org', '@type': 'Article',
-            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-10-27',
+            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-11-11',
             author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
             publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
             mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -47,7 +48,7 @@ const ArticleChatGPTPolicy: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.ai}>{service.name}</span>
             <time dateTime="2026-03-06" className={ac.dateJa}>公開日 2026-03-06</time>
-            <time dateTime="2026-10-27" className={ac.dateJa}>更新日 2026-10-27</time>
+            <time dateTime="2026-11-11" className={ac.dateJa}>更新日 2026-11-11</time>
           </div>
           <ArticleSummary service="ai">ChatGPTの社内ルールは、入力してはいけない情報、使ってよい目的、アカウントの権限、記録と見直しの4項目から作れます。顧客情報や契約情報は安易に入力せず、生成された文章は人が確認するのが基本です。まず禁止する情報を自社の業務に置き換えて書き出し、利用する環境と責任者を決め、限られた業務で試しながら見直します。</ArticleSummary>
     <p className={ac.p}>中小企業がChatGPTを導入する際は、使い方の研修と一緒に社内ルールを作ることが大切です。生成AIは文章作成や要約を助ける一方、顧客情報の入力や誤った回答の転用によって問題が起こる可能性があります。専任のIT担当者がいなくても、入力してよい情報、利用できる業務、承認する人を決めるところから始められます。導入を検討する経営者・総務担当者に向けて、現場で使える運用方法を整理します。</p>
@@ -81,7 +82,7 @@ const ArticleChatGPTPolicy: React.FC = () => {
     <p className={ac.p}>OpenAIの公式ドキュメントでは、ChatGPT Enterpriseについて、業務データを既定で学習に使わないことや、アクセス制御などを案内しています。ただし、学習に使われないことだけで、社内のすべての資料を自由に入力してよいとはいえません。保存や外部連携の条件と、会社の承認は別に確認する必要があります。</p>
     <p className={ac.p}>利用申請には、所属、利用目的、扱う情報、確認責任者を記入します。管理者権限は設定や利用者を変更できる権限なので、必要な人に限定してください。認証情報を複数人で共有する運用は避け、利用者ごとの管理を基本にします。入社・異動・退職に合わせた権限変更を、既存の社内手続きへ組み込むと漏れを減らせます。</p>
     <p className={ac.p}>追加のツール連携やファイル共有も確認対象です。外部連携とは、別のサービスや社内データへ接続する機能です。便利だからと社員が独自に有効化すると、当初のルールで想定していない情報が扱われる可能性があります。機能を追加するときは、接続先、対象データ、利用者を確認してから許可する流れを作りましょう。</p>
-    <p className="text-sm text-sumi-muted mb-4">参考：<a href="https://learn.chatgpt.com/docs/enterprise/work-admin-faq" className="underline underline-offset-4">OpenAI公式ドキュメント：ChatGPTの管理とプライバシー</a></p>
+    <p className="text-sm text-sumi-muted mb-4">参考：<a href="https://openai.com/enterprise-privacy/" className="underline underline-offset-4">OpenAI公式：法人向けChatGPTのプライバシー（Enterprise privacy at OpenAI）</a></p>
 
     <h2 id="sec-5" className={ac.h2.ai}>記録・誤入力時の対応と研修を運用に組み込む</h2>
     <p className={ac.p}>ログは利用や操作の記録です。記録を確認する目的は、社員を監視することではなく、ルール違反や改善が必要な場面を見つけることだと説明します。契約や設定で確認できる範囲は異なるため、全会話を必ず取得できるとは想定しません。利用日、業務、確認者、困った点を簡単に報告する方法もあります。</p>
@@ -98,6 +99,10 @@ const ArticleChatGPTPolicy: React.FC = () => {
     <div className={ac.faq}>
     {faqs.map((faq) => <div key={faq.question}><h3 className={ac.faqQ}>{faq.question}</h3><p>{faq.answer}</p></div>)}
     </div></section>
+    <ArticleSources service="ai" items={[
+      { label: "OpenAI「Enterprise privacy at OpenAI」", url: "https://openai.com/enterprise-privacy/" },
+      { label: "個人情報保護委員会「生成AIサービスの利用に関する注意喚起等について」", url: "https://www.ppc.go.jp/news/careful_information/230602_AI_utilize_alert/" }
+    ]}/>
     <ArticleWorks service="ai"/>
     <section className={ac.related}><h2 className={headingClass}>関連記事</h2><div className="space-y-3"><a href="/articles/ichinomiya-josys-outsourcing-guide" className={ac.relatedLink}>中小企業向け 情シス代行の選び方</a>
     <a href="/articles/sme-bi-tableau-powerbi" className={ac.relatedLink}>TableauとPower BIはどちらを選ぶべき？</a>

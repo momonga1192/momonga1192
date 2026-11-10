@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
 const title = 'CopilotとChatGPTの違いと選び方｜比較表で整理';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -14,8 +15,9 @@ const pageTitle = 'Microsoft 365 CopilotとChatGPTの違いと選び方';
 const description = '愛知・東海の中小企業向けに、Microsoft 365 CopilotとChatGPTの違いと選び方を解説します。無料のCopilot Chatと有料版の違い、ChatGPTの法人向けプラン、社内データの扱い、自社に合う方の判断基準、試し方まで比較表とチェックリストで整理しました。';
 const canonical = 'https://www.arcle.net/articles/copilot-vs-chatgpt-sme';
 const published = '2026-10-31';
+const modified = '2026-11-11';
 const faqs = [
-  { q: 'Microsoft 365を使っていれば、Copilotは追加費用なしで使えますか？', a: '対象のMicrosoft 365のプランを使い、会社のアカウントでサインインしていれば、Copilot Chatは追加料金なしで使えます。WordやOutlookなどのアプリの中で、社内のメールやファイルを踏まえて使うには、有料のMicrosoft 365 Copilotのライセンスが別に必要です。対象のプランや料金は、Microsoftの公式サイトで確認してください。' },
+  { q: 'Microsoft 365を使っていれば、Copilotは追加費用なしで使えますか？', a: '対象のMicrosoft 365のプランを使い、会社のアカウントでサインインしていれば、Copilot Chatは追加料金なしで使えます。社内のメールやファイルを自動で踏まえて答えさせるには、有料のMicrosoft 365 Copilotのライセンスが別に必要です。対象のプランや料金は、Microsoftの公式サイトで確認してください。' },
   { q: 'CopilotとChatGPTを両方契約する必要はありますか？', a: '最初から両方を契約する必要はありません。まず無料で使えるCopilot Chatや少人数での試用で、自社の業務にどちらが合うかを確かめましょう。部署によって使い方が大きく違う場合は、全社の標準を一つ決めたうえで、必要な部署だけもう一方を追加する方法もあります。' },
   { q: '社員が個人のChatGPTアカウントを仕事に使ってもよいですか？', a: '会社として管理できないため、業務での利用は会社で契約したアカウントに限るのが基本です。個人向けプランでは、設定によって入力した内容がモデルの改善に使われる場合があります。どのツールとアカウントを使ってよいかを、社内ルールで先に決めておきましょう。' },
   { q: '導入すれば、すぐに業務時間が減りますか？', a: '効果は、使う業務を絞り、使い方をそろえられるかで変わります。導入しただけでは使われないこともよくあります。メールの下書きや会議の要約など、繰り返し発生する業務を一つ選び、使い方の例を共有してから広げると、効果を確かめやすくなります。' }
@@ -35,7 +37,7 @@ const ArticleCopilotVsChatGPT: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: published, dateModified: published,
+          datePublished: published, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -58,7 +60,8 @@ const ArticleCopilotVsChatGPT: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.ai}>生成AI</span>
-            <time dateTime={published} className={ac.date}>{published}</time>
+            <time dateTime={published} className={ac.dateJa}>公開日 {published}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="ai">Microsoft 365 Copilotは、メールやファイルなど社内の情報を生かし、いつものアプリの中で働く生成AIです。ChatGPTは、AIの画面に情報を持ち込んで幅広い作業を相談する生成AIです。社内の仕事がMicrosoft 365にまとまっているならCopilot、そうでなければChatGPTが候補です。どちらも法人向けの契約で会社の管理下に置き、少人数で試してから決めます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">生成AIを業務に取り入れようとすると、多くの会社が「Microsoft 365 CopilotとChatGPTのどちらを選べばよいか」で迷います。どちらも文章の下書きや要約、アイデア出しに使えますが、得意な場面や社内データとのつながり方、管理のしかたが違います。しかもCopilotには無料で使えるものと有料のものがあり、名前だけでは区別がつきにくくなっています。この記事では、二つの違いを整理し、自社に合う方を判断する基準と、小さく試して決める手順をまとめます。</p>
@@ -71,10 +74,10 @@ const ArticleCopilotVsChatGPT: React.FC = () => {
 
           <h2 id="sec-2" className={heading}>2. Copilotには無料版と有料版がある</h2>
           <p className={paragraph}>「Copilot」という名前は、Microsoftのいくつかのサービスに使われています。法人で検討するときに押さえておきたいのは、次の二つです。</p>
-          <h3 className={subheading}>Microsoft 365 Copilot Chat（追加料金なし）</h3>
-          <p className={paragraph}>対象のMicrosoft 365のプランを契約していれば、会社のアカウント（Microsoft Entra ID、Microsoftの法人向けのアカウントの仕組み）でサインインした社員は、Copilot Chatを追加料金なしで使えます。Webの情報をもとに答えるチャット型のAIで、入力した内容と答えには、会社が結んでいるMicrosoftとの契約の条件が適用されます。Microsoftはこれを「エンタープライズ データ保護」と呼んでいます。ただし、Copilot Chatで作った「エージェント」（特定の作業を任せる設定済みのAI）を使う場合は、利用量に応じた料金がかかります。</p>
+          <h3 className={subheading}>Microsoft Copilot Chat（追加料金なし）</h3>
+          <p className={paragraph}>対象のMicrosoft 365のプランを契約していれば、会社のアカウント（Microsoft Entra ID、Microsoftの法人向けのアカウントの仕組み）でサインインした社員は、Copilot Chatを追加料金なしで使えます。以前は「Microsoft 365 Copilot Chat」と呼ばれていましたが、今は「Microsoft Copilot Chat」という名前です。Webの情報をもとに答えるチャット型のAIで、Copilotのアプリやブラウザのほか、OutlookとTeamsの中でも使えます。社内の情報を使うときは、ファイルを渡すか、OutlookやTeamsで開いているメールやチャットの範囲で答えます。入力した内容と答えには、会社が結んでいるMicrosoftとの契約の条件が適用されます。Microsoftはこれを「エンタープライズ データ保護」と呼んでいます。「エージェント」（特定の作業を任せる設定済みのAI）は、指示と公開されているWebサイトをもとに答えるものなら含まれていますが、社内のデータを使うものなどは利用量に応じた料金がかかります。</p>
           <h3 className={subheading}>Microsoft 365 Copilot（有料ライセンス）</h3>
-          <p className={paragraph}>有料のライセンスを追加すると、WordやTeamsなどのアプリの中でCopilotを使えるようになり、社内のメールやファイル、会議の内容を踏まえた答えが返ってくるようになります。300ユーザーまでの組織向けには「Microsoft 365 Copilot Business」というプランが用意されており、利用中のMicrosoft 365のビジネス向けプランに追加する形で契約します。料金やキャンペーンは時期によって変わるため、最新の情報はMicrosoftの公式サイトで確認してください。</p>
+          <p className={paragraph}>有料のライセンスを追加すると、WordやExcelなどのアプリの中でCopilotのすべての機能を優先して使えるようになり、社内のメールやファイル、会議の内容を自動で踏まえた答えが返ってくるようになります。なお、契約しているプランによっては、有料のライセンスがなくても、WordやExcelなどのCopilotを混み具合に左右される「標準のアクセス」で使える場合があります。300ユーザーまでの組織向けには「Microsoft 365 Copilot Business」というプランが用意されており、利用中のMicrosoft 365のビジネス向けプランに追加する形で契約します。料金やキャンペーンは時期によって変わるため、最新の情報はMicrosoftの公式サイトで確認してください。</p>
           <p className={paragraph}>Microsoftの公式文書では、有料版のCopilotが社内のデータを参照するときも、プロンプト（AIへの指示文）や答え、参照したデータは、土台となる大規模言語モデルのトレーニングには使われないと説明されています。まだCopilotを試していない会社は、まず追加料金なしのCopilot Chatから触ってみると、社内での反応をつかみやすくなります。</p>
 
           <h2 id="sec-3" className={heading}>3. ChatGPTは個人向けと法人向けを分けて考える</h2>
@@ -90,8 +93,8 @@ const ArticleCopilotVsChatGPT: React.FC = () => {
               <thead className={ac.thead}><tr><th scope="col" className="p-4 text-left">観点</th><th scope="col" className="p-4 text-left">Copilot Chat（追加料金なし）</th><th scope="col" className="p-4 text-left">Microsoft 365 Copilot（有料）</th><th scope="col" className="p-4 text-left">ChatGPT（法人向けプラン）</th></tr></thead>
               <tbody>
                 {[
-                  ['使う場所', 'Copilotのチャット画面（ブラウザなど）', 'Word、Excel、PowerPoint、Outlook、Teamsの中', 'ChatGPTの画面（ブラウザ、アプリ）'],
-                  ['社内データとのつながり', 'Webの情報をもとに答える', '本人が見られるメール、予定、チャット、ファイルを踏まえて答える', '連携機能で外部サービスとつなげる。基本は情報を画面に持ち込む'],
+                  ['使う場所', 'Copilotのアプリ・ブラウザ、OutlookとTeamsの中', 'Word、Excel、PowerPoint、Outlook、Teamsの中', 'ChatGPTの画面（ブラウザ、アプリ）'],
+                  ['社内データとのつながり', 'Webの情報をもとに答える。社内の情報は、渡したファイルや開いているメールの範囲で使う', '本人が見られるメール、予定、チャット、ファイルを踏まえて答える', '連携機能で外部サービスとつなげる。基本は情報を画面に持ち込む'],
                   ['入力した内容の扱い', '会社の契約条件が適用される', '土台のモデルのトレーニングには使われないと公式に説明', '初期設定ではトレーニングに使わないと公式に説明'],
                   ['前提になる契約', '対象のMicrosoft 365のプラン', 'Microsoft 365のプランに有料ライセンスを追加', 'Microsoft 365の契約は不要'],
                   ['向いている会社', 'まず無料で試したい会社', '社内の情報がMicrosoft 365に集まっている会社', 'Microsoft 365以外の道具が中心の会社、幅広い用途で使いたい会社']
@@ -168,6 +171,11 @@ const ArticleCopilotVsChatGPT: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="ai" items={[
+            { label: "Microsoft Learn「Microsoft Copilot とは?」", url: "https://learn.microsoft.com/ja-jp/copilot/plan/copilot-overview" },
+            { label: "Microsoft Learn「Microsoft Copilot のデータ、プライバシー、セキュリティ」", url: "https://learn.microsoft.com/ja-jp/copilot/plan/microsoft-365-copilot-privacy" },
+            { label: "OpenAI ヘルプ「ChatGPT Business overview」", url: "https://help.openai.com/en/articles/8792828" }
+          ]}/>
           <ArticleWorks service="ai"/>
     <section className={ac.related}>
             <h2 className={ac.h2Flat.ai}>関連記事</h2>

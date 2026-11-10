@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
 const title = 'ホームページは月額制と買い切りどちらがいい？総額の比べ方';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -14,6 +15,7 @@ const pageTitle = 'ホームページは月額制と買い切りのどちらが�
 const description = '愛知・東海の中小企業向けに、ホームページの月額制と買い切り制作を比較。初期費用だけでなく総額、更新費、サーバー・ドメイン代、最低契約期間や解約時のデータの扱いまで、会社に合う選び方と契約前の確認事項を解説します。';
 const canonical = 'https://www.arcle.net/articles/monthly-vs-one-time-website';
 const date = '2026-10-27';
+const modified = '2026-11-11';
 const heading = ac.h2.web;
 const paragraph = ac.p;
 const faqs = [
@@ -53,7 +55,7 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: date, dateModified: date,
+          datePublished: date, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -77,7 +79,8 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.web}>Web制作</span>
-            <time dateTime={date} className={ac.date}>{date}</time>
+            <time dateTime={date} className={ac.dateJa}>公開日 {date}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="web">ホームページの月額制と買い切りは、初期費用ではなく、同じ利用期間の総額（月額×利用月数に初期費用や追加費用を足したもの）で比べます。月額制は初期費用を抑えられる一方、利用中の支払いが続きます。あわせて、誰が更新するか、最低契約期間、契約が終わったあとにデータやドメインを使い続けられるかを確認して選びます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">
@@ -159,6 +162,9 @@ const ArticleWebMonthlyVsOneTime: React.FC = () => {
               {faqs.map((item) => <div key={item.q}><h3 className={ac.faqQ}>{item.q}</h3><p>{item.a}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="web" items={[
+            { label: "JPRS「種類と対象（JPドメイン名の種類）」", url: "https://jprs.jp/about/jp-dom/spec/" }
+          ]}/>
           <ArticleWorks service="web"/>
     <section className={ac.related}>
             <h2 className={ac.h2Flat.web}>関連記事</h2>

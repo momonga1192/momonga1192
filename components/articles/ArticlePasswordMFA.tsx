@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
 const title = 'パスワード管理と多要素認証の始め方｜社内ルールとチェックリスト';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -14,6 +15,7 @@ const pageTitle = '中小企業のパスワード管理と多要素認証の始�
 const description = '愛知・東海の中小企業向けに、パスワード管理と多要素認証の始め方を解説します。社内のパスワードルールの決め方、保管と共有の方法、認証方式の選び方、Microsoft 365やGoogle Workspaceでの導入手順、機種変更や退職時の注意点まで、チェックリスト付きでまとめました。';
 const canonical = 'https://www.arcle.net/articles/sme-password-management-mfa';
 const published = '2026-10-29';
+const modified = '2026-11-11';
 const faqs = [
   { q: 'パスワードは定期的に変更したほうがよいですか？', a: '総務省の「国民のためのサイバーセキュリティサイト」では、流出や乗っ取りの事実がなければ定期的な変更は必要ないとしています。それよりも、サービスごとに使い回しのない固有のパスワードを設定することが大切です。流出の連絡を受けたときや、不審なログインに気づいたときはすぐに変更します。' },
   { q: '社員の個人のスマホに認証アプリを入れてもらってもよいですか？', a: '会社として認めるかどうかを先に決めておきましょう。個人のスマホを使う場合は、本人の了承を得ること、機種変更や紛失のときの連絡先、退職時の扱いを周知しておくと安心です。スマホを使えない社員がいる場合は、セキュリティキーなど別の方式を用意できるか検討します。' },
@@ -36,7 +38,7 @@ const ArticlePasswordMFA: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: published, dateModified: published,
+          datePublished: published, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -59,7 +61,8 @@ const ArticlePasswordMFA: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.josys}>情シス代行</span>
-            <time dateTime={published} className={ac.date}>{published}</time>
+            <time dateTime={published} className={ac.dateJa}>公開日 {published}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="josys">会社のパスワードは、長く、推測されにくく、使い回さないものにし、安全な方法で保管するのが基本です。定期的な変更より、流出したときにすぐ変えられる体制を整えます。そのうえで多要素認証を加えると、パスワードが漏れたときの被害を大きく減らせます。まず仕事で使うサービスを一覧にし、管理者アカウントの多要素認証から始めます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">メール、会計ソフト、ネットバンキング、取引先とのファイル共有など、仕事で使うサービスにはどれもIDとパスワードがあります。IT担当者がいない会社では、パスワードの決め方も保管のしかたも社員任せになりがちです。この記事では、社内のパスワードルールの決め方から、多要素認証の選び方と導入手順、つまずきやすい点まで、今日から始められる順に整理します。</p>
@@ -181,6 +184,11 @@ const ArticlePasswordMFA: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="josys" items={[
+            { label: "IPA「情報セキュリティ6か条 解説編」", url: "https://www.ipa.go.jp/security/guide/sme/ug65p90000019cbk-att/jouhousecurity6kajou(kaisetsuhen)_r16.pdf" },
+            { label: "総務省「安全なパスワードの設定・管理」", url: "https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/security/business/staff/06/" },
+            { label: "Microsoft Learn「Microsoft Entra ID のセキュリティの既定値を構成する」", url: "https://learn.microsoft.com/ja-jp/entra/fundamentals/security-defaults" }
+          ]}/>
           <ArticleWorks service="josys"/>
     <section className={ac.related}>
             <h2 className={ac.h2Flat.josys}>関連記事</h2>

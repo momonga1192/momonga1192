@@ -15,6 +15,7 @@ const pageTitle = 'freeeの会計データをPower BIで見る手順';
 const description = '愛知・東海の中小企業向けに、freee会計のデータをPower BIで見る手順を解説します。仕訳帳のCSVの書き出し、つなぎ方の選び方、部門や品目のタグの付け方、取り込みと整形、毎月の更新、試算表と数字が合わないときの確認方法までまとめました。';
 const canonical = 'https://www.arcle.net/articles/freee-data-power-bi';
 const published = '2026-11-05';
+const modified = '2026-11-10';
 const faqs = [
   { q: 'freeeのレポート機能だけでは足りませんか？', a: '試算表や月次推移など、freeeの画面で確認できることは多くあります。会計の数字だけを見るならfreeeで十分な場合もあります。販売管理のExcelや勤怠の記録など、会計以外のデータと並べて見たいときや、見たい切り口を毎月同じ画面で共有したいときに、Power BIを検討するとよいでしょう。' },
   { q: 'Power BIを使うには費用がかかりますか？', a: 'レポートを作るPower BI Desktopは無料で使えます。作ったレポートを社内の人とWeb上で共有するには、有料のライセンスが必要になるのが基本です。必要なライセンスは見る人の人数や共有のしかたで変わるため、最新の料金と条件はMicrosoftの公式サイトで確認してください。' },
@@ -36,7 +37,7 @@ const ArticleFreeePowerBI: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: published, dateModified: published,
+          datePublished: published, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -59,7 +60,8 @@ const ArticleFreeePowerBI: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.data}>データ活用</span>
-            <time dateTime={published} className={ac.date}>{published}</time>
+            <time dateTime={published} className={ac.dateJa}>公開日 {published}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="data">freeeの会計データをPower BIで見るなら、仕訳帳をCSVで書き出して決めた場所に置き、Power BIでまとめて取り込む方法が始めやすい選択です。その前に、見たい数字とタグの付け方をそろえておくと、部門別・取引先別に分析できます。毎月の更新手順を決め、試算表と照らし合わせてから共有します。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">freee会計で日々の記帳を進めていると、「部門ごとの利益を毎月並べて見たい」「販売管理のExcelと合わせて分析したい」と感じる場面が出てきます。そんなときの選択肢の一つが、Power BIです。Power BIは、Microsoftが提供するBIツール（データを集めてグラフや表で見られるようにするツール）です。この記事では、freeeの会計データをPower BIで見るための、つなぎ方の選び方から書き出し、取り込み、毎月の更新までを順に説明します。</p>

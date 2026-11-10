@@ -24,7 +24,7 @@ const ArticleJosysGuide: React.FC = () => {
         <link rel="canonical" href={canonical}/>
         <script type="application/ld+json">{JSON.stringify({
             '@context': 'https://schema.org', '@type': 'Article',
-            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-11-06',
+            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-11-10',
             author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
             publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
             mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -48,7 +48,7 @@ const ArticleJosysGuide: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.josys}>{service.name}</span>
             <time dateTime="2026-03-06" className={ac.dateJa}>公開日 2026-03-06</time>
-            <time dateTime="2026-11-06" className={ac.dateJa}>更新日 2026-11-06</time>
+            <time dateTime="2026-11-10" className={ac.dateJa}>更新日 2026-11-10</time>
           </div>
           <ArticleSummary service="josys">情シス代行は、月額料金だけでなく、任せる作業の範囲、現地に来てもらえるか、受付時間と緊急時の連絡、情報を社内に残せる体制を同じ条件で比べて選びます。委託の前に、毎月の作業と放置している課題を書き出して棚卸しすると、必要な支援と見積もりの条件がそろいます。管理者の権限は必要な範囲に絞り、変更を承認する社内の責任者を決めます。</ArticleSummary>
     <p className={ac.p}>中小企業が情シス代行を選ぶときは、月額料金だけでなく「誰の、どの仕事を、どこまで任せるか」を決めることが大切です。情シスとは、社内のパソコンやアカウント、ネットワークなどを管理する情報システム部門のことです。専任者がいない会社では、総務担当者や詳しい社員に対応が集中し、本来の仕事が止まってしまいます。外部への委託を検討する経営者・総務担当者に向けて、比較から引き継ぎまでの判断基準を整理します。</p>

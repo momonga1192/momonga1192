@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
 const title = 'Excel集計を自動化する手順｜Power BIで月次報告を作る';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -14,6 +15,7 @@ const pageTitle = 'Excel集計を自動化する｜Power BIで月次報告';
 const description = '愛知・東海の中小企業向けに、Excel集計を自動化し、Power BIで月次報告を作る手順を解説。KPIと元データの責任者の決め方から、取り込み・整形・モデル作成・更新・共有、よくある失敗と小さく始める判断基準まで紹介します。';
 const canonical = 'https://www.arcle.net/articles/excel-report-automation-power-bi';
 const date = '2026-10-27';
+const modified = '2026-11-11';
 const faqs = [
   { question: 'Excelをすべて廃止しないと自動化できませんか？', answer: '廃止する必要はありません。入力や元データの保管にはExcelを使い、繰り返す取り込み・整形・集計をPower QueryやPower BIに任せる方法があります。まず列名と保存場所をそろえましょう。' },
   { question: 'Power BIを導入すれば月次報告は完全に自動になりますか？', answer: '元データの準備、接続環境、更新設定が整って初めて継続的に更新できます。数値の確定や異常値の確認は人の役割として残し、更新に失敗した場合の連絡先も決めておきます。' },
@@ -34,7 +36,7 @@ const ArticleExcelToPowerBI: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: date, dateModified: date,
+          datePublished: date, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -58,7 +60,8 @@ const ArticleExcelToPowerBI: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.data}>データ活用</span>
-            <time dateTime={date} className={ac.date}>{date}</time>
+            <time dateTime={date} className={ac.dateJa}>公開日 {date}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="data">Excelの手集計をPower BIで自動化するときは、先にKPIの定義と元データの持ち主を決めます。そのうえで取り込み・整形・集計をPower BIに任せ、更新と共有の手順を運用に組み込みます。最初は1つの部門・1つの報告書・1つのKPIに絞り、今の手集計と数字を照らし合わせてから広げます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">Excel集計の自動化を進めたいのに、毎月のコピーと貼り付けから抜け出せない。そんな中小企業では、Power BIで月次報告を自動化する仕組みが選択肢になります。Power BIは、複数のデータを集めて数字やグラフで確認できるようにするBI（経営情報を分析・可視化する）ツールです。この記事では、専任のIT担当者がいない会社でも検討できるよう、準備から更新・共有までの流れを説明します。</p>
@@ -140,6 +143,11 @@ const ArticleExcelToPowerBI: React.FC = () => {
               {faqs.map(({ question, answer }) => <div key={question}><h3 className={ac.faqQ}>{question}</h3><p>{answer}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="data" items={[
+            { label: "Microsoft Learn「Power BI でのデータの更新」", url: "https://learn.microsoft.com/ja-jp/power-bi/connect-data/refresh-data" },
+            { label: "Microsoft Learn「Power Query とは」", url: "https://learn.microsoft.com/ja-jp/power-query/power-query-what-is-power-query" },
+            { label: "Microsoft Learn「Power BI から Web に発行する」", url: "https://learn.microsoft.com/ja-jp/power-bi/collaborate-share/service-publish-to-web" }
+          ]}/>
           <ArticleWorks service="data"/>
     <section className={ac.related}>
             <h2 className={heading}>関連記事</h2>

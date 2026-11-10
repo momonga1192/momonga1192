@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
 const title = '退職者のMicrosoft 365アカウントの止め方｜引き継ぎの5つの手順';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -14,6 +15,7 @@ const pageTitle = '退職者のMicrosoft 365アカウントの止め方とデー
 const description = '愛知・東海の中小企業向けに、退職者のMicrosoft 365アカウントの止め方を解説します。退職日のサインイン停止、メールを共有メールボックスにして引き継ぐ方法、OneDriveのファイルの移し方、ライセンスの支払いを止める手順まで、チェックリスト付きでまとめました。';
 const canonical = 'https://www.arcle.net/articles/retired-employee-m365-account';
 const published = '2026-11-02';
+const modified = '2026-11-11';
 const faqs = [
   { q: '退職者のアカウントは、すぐに削除したほうがよいですか？', a: 'すぐに削除するより、まずサインインを止めて、メールとファイルの引き継ぎを済ませてから削除するほうが安全です。Microsoftの公式ドキュメントでは、削除したアカウントは30日以内なら復元できると案内されていますが、期間を過ぎるとデータは戻せません。共有メールボックスに変換した場合や転送を設定した場合は、アカウントを削除しないでください。' },
   { q: '退職者のメールアドレスに届くメールを、後任者が受け取るにはどうすればよいですか？', a: '方法は二つあります。一つは、退職者のメールボックスを共有メールボックスに変換し、後任者に閲覧の権限を付ける方法です。過去のメールもそのまま見られます。もう一つは、新しく届くメールだけを後任者に転送する方法です。転送の場合は、アカウントとライセンスを残しておく必要があります。' },
@@ -36,7 +38,7 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: published, dateModified: published,
+          datePublished: published, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -59,7 +61,8 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.josys}>情シス代行</span>
-            <time dateTime={published} className={ac.date}>{published}</time>
+            <time dateTime={published} className={ac.dateJa}>公開日 {published}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="josys">退職者のMicrosoft 365アカウントは、すぐに削除せず、サインインを止め、メールとファイルを引き継いでから片付けます。メールは共有メールボックスにすると過去のやり取りを残せますが、アカウントを削除しないことと、変換の前後にパスワードを変えることが必要です。ライセンスは外すだけでなく契約の数を減らさないと、料金がかかり続けることがあります。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">社員が退職したあと、その人のMicrosoft 365のアカウントをどうすればよいか迷う会社は少なくありません。すぐに削除すると、取引先とのメールや作りかけの資料が消えてしまうかもしれません。反対に放置すると、退職者が社外から会社のメールやファイルを見られる状態が続き、ライセンスの料金も払い続けることになります。この記事では、IT担当者がいない会社でも進められるよう、退職日にアカウントを止める手順から、メールとファイルの引き継ぎ、ライセンスの後片付けまでを順に整理します。</p>
@@ -157,6 +160,11 @@ const ArticleRetiredEmployeeM365: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="josys" items={[
+            { label: "Microsoft Learn「元従業員を削除する - 概要」", url: "https://learn.microsoft.com/ja-jp/microsoft-365/admin/add-users/remove-former-employee" },
+            { label: "Microsoft Learn「ユーザー メールボックスを共有メールボックスに変換する」", url: "https://learn.microsoft.com/ja-jp/microsoft-365/admin/email/convert-user-mailbox-to-shared-mailbox" },
+            { label: "Microsoft Learn「組織からユーザーを削除する」", url: "https://learn.microsoft.com/ja-jp/microsoft-365/admin/add-users/delete-a-user" }
+          ]}/>
           <ArticleWorks service="josys"/>
     <section className={ac.related}>
             <h2 className={ac.h2Flat.josys}>関連記事</h2>

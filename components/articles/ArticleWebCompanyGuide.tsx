@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
 const title = 'ホームページ制作会社の選び方｜見積もり前に確認する5つの点';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -14,6 +15,7 @@ const pageTitle = '中小企業向け ホームページ制作会社の選び方
 const description = '愛知・東海でホームページ制作を検討する中小企業向けに、制作会社の選び方を解説します。依頼前の準備、見積りの比較、更新のしやすさ、スマホ対応、公開後のサポート、ドメイン名義、SEOの範囲や契約条件まで、実務で使える確認項目をまとめました。';
 const canonical = 'https://www.arcle.net/articles/website-company-guide-aichi-tokai';
 const published = '2026-10-27';
+const modified = '2026-11-11';
 const faqs = [
   { q: '依頼前に掲載する文章をすべて用意する必要がありますか？', a: '完成した原稿がなくても、会社案内、商品資料、写真と、誰に何を伝えたいかを整理すれば相談できます。取材や文章作成をどこまで依頼できるか、見積りに含まれる範囲を確認しましょう。' },
   { q: 'ホームページは自社で更新できたほうがよいですか？', a: '更新頻度と担当者の時間で判断します。頻繁なお知らせは自社更新、文章や写真の変更は制作会社への依頼という分担もできます。操作の実演を見て、引き継ぎや操作説明の有無も確認してください。' },
@@ -35,7 +37,7 @@ const ArticleWebCompanyGuide: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: published, dateModified: published,
+          datePublished: published, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -58,7 +60,8 @@ const ArticleWebCompanyGuide: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.web}>Web制作</span>
-            <time dateTime={published} className={ac.date}>{published}</time>
+            <time dateTime={published} className={ac.dateJa}>公開日 {published}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="web">ホームページ制作会社は、見積もりの金額だけでなく、目的と必要なページを決めたうえで、制作・更新・保守・契約終了時の条件を同じ表で比べて選びます。更新のしかた、スマホ対応、サポート、ドメインやデータの権利、SEOの対応も確認します。説明に納得できるか、社内で無理なく運用できるかも判断に含めます。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">ホームページ制作を検討する中小企業にとって、制作会社の選び方は悩みやすいテーマです。見た目や金額だけでは、公開後に更新を続けられるか、困ったときに相談できるかまでは分かりません。IT担当者がいない会社でも比較できるよう、依頼前の準備から見積り、契約、公開までの確認ポイントを順に整理します。</p>
@@ -149,6 +152,10 @@ const ArticleWebCompanyGuide: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="web" items={[
+            { label: "Google 検索セントラル「SEO 業者の利用を検討する」", url: "https://developers.google.com/search/docs/fundamentals/do-i-need-seo?hl=ja" },
+            { label: "Google 検索セントラル「Google 公式 SEO スターター ガイド」", url: "https://developers.google.com/search/docs/fundamentals/seo-starter-guide?hl=ja" }
+          ]}/>
           <ArticleWorks service="web"/>
     <section className={ac.related}>
             <h2 className={ac.h2Flat.web}>関連記事</h2>

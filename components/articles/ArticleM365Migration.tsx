@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
 const title = 'Microsoft 365の導入・移行手順｜中小企業の6つのステップ';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -14,6 +15,7 @@ const pageTitle = '中小企業のMicrosoft 365導入・移行手順';
 const description = '愛知・東海の中小企業向けに、Microsoft 365の導入・移行手順を解説。アカウント・メール・ファイル・PCの棚卸し、プラン選定、多要素認証、バックアップ、入退社時の管理まで、担当者が確認できるチェックリスト付きで紹介します。';
 const canonical = 'https://www.arcle.net/articles/microsoft-365-migration-sme';
 const published = '2026-10-27';
+const modified = '2026-11-11';
 const heading = ac.h2.josys;
 const paragraph = ac.p;
 const list = 'list-disc pl-6 text-[#30343F] leading-[2] space-y-2';
@@ -34,7 +36,7 @@ const ArticleM365Migration: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: published, dateModified: published,
+          datePublished: published, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -57,7 +59,8 @@ const ArticleM365Migration: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.josys}>情シス代行</span>
-            <time dateTime={published} className={ac.date}>{published}</time>
+            <time dateTime={published} className={ac.dateJa}>公開日 {published}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="josys">Microsoft 365への移行は、アカウント・メール・ファイル・パソコンの棚卸しから始めます。プランは業務に必要な機能から選び、メールとファイルは保存先と権限を決めてから移します。あわせて多要素認証、バックアップ、入退社の手順を整えます。契約やデータのコピーが終わった時点ではなく、社員が仕事を続けられ、会社が管理を引き継げた時点を完了とします。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">中小企業でMicrosoft 365の導入を進めるとき、最初に必要なのは契約ではなく、現在の仕事とデータの整理です。メールが届かない、共有資料が見つからないといった混乱を避けるため、何を移し、誰が確認し、いつ切り替えるかを決めます。この記事では、IT担当者がいない会社の経営者・総務担当者に向けて、Microsoft 365の移行手順と導入後の管理を解説します。</p>
@@ -158,6 +161,11 @@ const ArticleM365Migration: React.FC = () => {
               {faqs.map(({ question, answer }) => <div key={question}><h3 className={ac.faqQ}>{question}</h3><p>{answer}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="josys" items={[
+            { label: "Microsoft「一般法人向け Microsoft 365: プランと機能」", url: "https://www.microsoft.com/ja-jp/microsoft-365/business/microsoft-365-plans-and-pricing" },
+            { label: "Microsoft Learn「Ways to migrate multiple email accounts to Microsoft 365」", url: "https://learn.microsoft.com/ja-jp/exchange/mailbox-migration/mailbox-migration" },
+            { label: "Microsoft サポート「Microsoft 365 アカウントの多要素認証を設定する」", url: "https://support.microsoft.com/ja-jp/office/account-management/set-up-your-microsoft-365-sign-in-for-multi-factor-authentication" }
+          ]}/>
           <ArticleWorks service="josys"/>
     <section className={ac.related}>
             <h2 className={ac.h2Flat.josys}>関連記事</h2>

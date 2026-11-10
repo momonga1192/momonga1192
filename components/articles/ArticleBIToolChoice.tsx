@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 const title = 'TableauとPower BIの選び方｜中小企業が比べる4つの点';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
 const pageTitle = "中小企業のためのTableauとPower BIの選び方";
@@ -23,7 +24,7 @@ const ArticleBIToolChoice: React.FC = () => {
         <link rel="canonical" href={canonical}/>
         <script type="application/ld+json">{JSON.stringify({
             '@context': 'https://schema.org', '@type': 'Article',
-            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-10-31',
+            headline: title, description, datePublished: '2026-03-06', dateModified: '2026-11-11',
             author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
             publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
             mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -47,7 +48,7 @@ const ArticleBIToolChoice: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.data}>{service.name}</span>
             <time dateTime="2026-03-06" className={ac.dateJa}>公開日 2026-03-06</time>
-            <time dateTime="2026-10-31" className={ac.dateJa}>更新日 2026-10-31</time>
+            <time dateTime="2026-11-11" className={ac.dateJa}>更新日 2026-11-11</time>
           </div>
           <ArticleSummary service="data">TableauとPower BIは、機能の多さではなく、目的・今使っている環境・共有のしかた・運用する人の4点で選びます。Microsoft 365が中心の会社はPower BIが候補になり、可視化や探索的な分析を重視するならTableauも候補です。どちらを選ぶ場合も、自社のデータで小さく試し、数字が合い、更新でき、会議で使われるかを確かめてから決めます。</ArticleSummary>
     <p className={ac.p}>TableauとPower BIのどちらを選ぶべきか迷う中小企業では、機能の多さより「毎月の仕事で使い続けられるか」を先に考えることが大切です。BIとは、業務データを集計してグラフなどで判断に使える形にする仕組みです。ツールを導入しても、更新する人や数字の定義が決まっていなければ定着しません。データ活用を始めたい経営者・総務担当者に向けて、比較の準備から小さな試作、導入後の運用まで解説します。</p>
@@ -103,6 +104,11 @@ const ArticleBIToolChoice: React.FC = () => {
     <div className={ac.faq}>
     {faqs.map((faq) => <div key={faq.question}><h3 className={ac.faqQ}>{faq.question}</h3><p>{faq.answer}</p></div>)}
     </div></section>
+    <ArticleSources service="data" items={[
+      { label: "Microsoft Learn「Power BI サービスのライセンスの種類別機能」", url: "https://learn.microsoft.com/ja-jp/power-bi/fundamentals/service-features-license-type" },
+      { label: "Tableau ヘルプ「Tableau 製品の概要」", url: "https://help.tableau.com/current/tableau/ja-jp/tableau_product_overview.htm" },
+      { label: "Tableau ヘルプ「パーミッション、サイト ロール、ライセンス」", url: "https://help.tableau.com/current/online/ja-jp/permission_license_siterole.htm" }
+    ]}/>
     <ArticleWorks service="data"/>
     <section className={ac.related}><h2 className={headingClass}>関連記事</h2><div className="space-y-3"><a href="/articles/excel-report-automation-power-bi" className={ac.relatedLink}>Excel集計をPower BIで自動化する進め方</a>
     <a href="/articles/ichinomiya-josys-outsourcing-guide" className={ac.relatedLink}>中小企業向け 情シス代行の選び方</a>

@@ -7,6 +7,7 @@ import { ac, promoHeroSrc } from './articleComic';
 import ArticleWorks from '../works/ArticleWorks';
 import ArticleToc from './ArticleToc';
 import ArticleSummary from './ArticleSummary';
+import ArticleSources from './ArticleSources';
 
 const title = '売上データの見える化を始める手順｜Excelでできる6つのステップ';
 // 画面の見出しには地域名を出さない（地域名はtitleとmetaだけ）
@@ -14,6 +15,7 @@ const pageTitle = '売上データの見える化を始める手順';
 const description = '愛知・東海の中小企業向けに、売上データの見える化を始める手順を解説します。最初に見る数字の決め方、集計しやすい元データの整え方、Excelのピボットテーブルでの集計とグラフ化、前年同月比や顧客別の読み方、社内で見る習慣のつくり方までまとめました。';
 const canonical = 'https://www.arcle.net/articles/sales-data-visualization-first-steps';
 const published = '2026-10-30';
+const modified = '2026-11-11';
 const faqs = [
   { q: '売上の見える化は、BIツールがないと始められませんか？', a: 'Excelのピボットテーブルとグラフだけでも始められます。まずは月別や顧客別の集計を作り、毎月見る数字が決まってから、更新の手間や共有のしかたに合わせてBIツールを検討する順番がおすすめです。' },
   { q: '販売管理システムのデータは、どうやって取り出せばよいですか？', a: '多くの販売管理システムには、売上の明細をCSVなどの形式で書き出す機能があります。メニューの名前や出力できる項目はシステムごとに違うため、操作マニュアルやシステムの提供元に「売上明細を1行1取引で出力する方法」を確認してください。' },
@@ -35,7 +37,7 @@ const ArticleSalesVisualization: React.FC = () => {
         <link rel="canonical" href={canonical} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
-          datePublished: published, dateModified: published,
+          datePublished: published, dateModified: modified,
           author: { '@type': 'Person', name: '栗原 勇太', url: 'https://www.arcle.net/company/message' },
           publisher: { '@type': 'Organization', name: 'Arcle', logo: { '@type': 'ImageObject', url: 'https://www.arcle.net/images/ogp.png' } },
           mainEntityOfPage: canonical, image: 'https://www.arcle.net/images/ogp.png'
@@ -58,7 +60,8 @@ const ArticleSalesVisualization: React.FC = () => {
         <div className={ac.sheet}>
           <div className="flex flex-wrap items-center gap-3 mb-8">
             <span className={ac.tag.data}>データ活用</span>
-            <time dateTime={published} className={ac.date}>{published}</time>
+            <time dateTime={published} className={ac.dateJa}>公開日 {published}</time>
+            <time dateTime={modified} className={ac.dateJa}>更新日 {modified}</time>
           </div>
           <ArticleSummary service="data">売上の見える化は、答えたい問いを決め、月別ともう1つの切り口に絞って始めるのが近道です。いちばん手間がかかるのは、元データを1行1取引の明細にそろえる準備です。ここが整えば、Excelのピボットテーブルだけでも前年同月比や上位の顧客を確かめられます。まず直近2年分の売上明細を書き出し、月別の推移を1枚のグラフにします。</ArticleSummary>
           <p className="text-[#30343F] leading-[2] mb-8">「売上は毎月集計しているのに、増えた理由も減った理由もよく分からない」。そんな悩みを持つ会社は少なくありません。売上の見える化とは、売上の数字を月や顧客、商品ごとに分けて、表やグラフでひと目で分かる形にすることです。大がかりなシステムがなくても、Excelと手元のデータから始められます。この記事では、最初に見る数字の決め方から、元データの整え方、Excelでの集計、数字の読み方、社内で見る習慣づくりまでを順に整理します。</p>
@@ -114,7 +117,7 @@ const ArticleSalesVisualization: React.FC = () => {
           <h2 id="sec-4" className={heading}>4. Excelのピボットテーブルで集計とグラフを作る</h2>
           <p className={paragraph}>元データが整ったら、Excelのピボットテーブルで集計します。ピボットテーブルは、関数を書かずに、項目を選ぶだけで合計や件数を集計できる機能です。手順は次のとおりです。</p>
           <ol className="list-decimal pl-6 text-[#30343F] leading-[2] space-y-3">
-            <li><strong className="text-sumi">元データをテーブルにする：</strong>明細の範囲を選び、テーブルとして書式設定します。テーブルにしておくと、行を追加したときに集計の範囲が自動で広がります。</li>
+            <li><strong className="text-sumi">元データをテーブルにする：</strong>明細の範囲を選び、テーブルとして書式設定します。テーブルにしておくと、行を追加してからピボットテーブルを更新するだけで、追加した行も集計に入ります。</li>
             <li><strong className="text-sumi">ピボットテーブルを作る：</strong>テーブル内のセルを選んでピボットテーブルを挿入し、新しいシートに置きます。</li>
             <li><strong className="text-sumi">月別に集計する：</strong>行に売上日、値に金額を入れます。日付は月や四半期、年の単位にグループ化できます。</li>
             <li><strong className="text-sumi">切り口を足す：</strong>行を顧客名や商品分類に替えたり、列に年を入れて前年と並べたりします。金額の多い順に並べ替えると、上位がすぐに分かります。</li>
@@ -160,6 +163,11 @@ const ArticleSalesVisualization: React.FC = () => {
               {faqs.map((faq) => <div key={faq.q}><h3 className={ac.faqQ}>{faq.q}</h3><p>{faq.a}</p></div>)}
             </div>
           </section>
+          <ArticleSources service="data" items={[
+            { label: "Microsoft サポート「ピボットテーブルを作成してワークシート データを分析する」", url: "https://support.microsoft.com/ja-jp/excel/get-started/create-a-pivottable-to-analyze-worksheet-data" },
+            { label: "Microsoft Learn「Power BI Desktop を始めよう」", url: "https://learn.microsoft.com/ja-jp/power-bi/fundamentals/desktop-getting-started" },
+            { label: "Microsoft Learn「Power BI サービスのライセンスの種類別機能」", url: "https://learn.microsoft.com/ja-jp/power-bi/fundamentals/service-features-license-type" }
+          ]}/>
           <ArticleWorks service="data"/>
     <section className={ac.related}>
             <h2 className={ac.h2Flat.data}>関連記事</h2>
