@@ -200,7 +200,7 @@
       </div>
       <div class="card">
         <h2>AIの答えにArcleが出たか</h2>
-        <p class="sub" id="ai-cite-sub">見込み客が聞きそうな質問をAIに聞いた結果（毎月1日）</p>
+        <p class="sub" id="ai-cite-sub">見込み客が聞きそうな質問をClaudeとCodexに聞いた結果（毎月1日）</p>
         <div id="ai-cite"></div>
       </div>
     </section>
@@ -235,7 +235,7 @@
           <li>自分のアクセス（<code>?internal=1</code> を開いたブラウザ・UM350の開発サーバー経由）は除いています。</li>
           <li>Search Consoleは2〜3日遅れて確定するので、検索の数字は確定している最後の日までです。</li>
           <li>増減は、同じ長さの直前の期間と比べています。</li>
-          <li>「AIの答えに出たか」は、同じ質問を各AIに2回ずつ聞いた結果です。「名前」はArcleの名前が答えにあった回数、「出典」はarcle.netが出典に入った回数です。AIの答えは毎回変わるので、1回の結果より月ごとの推移を見ます。</li>
+          <li>「AIの答えに出たか」は、同じ質問をClaudeとCodex（ChatGPTの代わり）にWeb検索つきで2回ずつ聞いた結果です。「名前」はArcleの名前が答えにあった回数、「出典」はarcle.netが出典に入った回数です。AIの答えは毎回変わるので、1回の結果より月ごとの推移を見ます。</li>
           <li>検索語の「情シス・地域」は、情シス・ITサポート・パソコン・地域名などを含むもの。「新」は、その前の28日に表示がなかった語です。</li>
         </ul>
       </div>
@@ -585,12 +585,12 @@ function render() {
   ], R.searchPages.slice(0, 12));
 }
 
-const ENGINE_NAMES = { gemini: 'Gemini', chatgpt: 'ChatGPT', perplexity: 'Perplexity' };
+const ENGINE_NAMES = { claude: 'Claude', codex: 'Codex（ChatGPT）' };
 function renderCitations() {
   const C = DATA.aiCitations, host = $('ai-cite');
   host.replaceChildren();
   if (!C) {
-    host.append(el('div', { class: 'empty' }, 'まだ記録がありません。AIのキーを .env.local に入れると、毎月1日に記録します（scripts/ai-citations.mjs）。'));
+    host.append(el('div', { class: 'empty' }, 'まだ記録がありません。毎月1日の朝に、ClaudeとCodexに聞いて記録します（scripts/ai-citations.mjs）。'));
     return;
   }
   $('ai-cite-sub').textContent = `見込み客が聞きそうな質問をAIに聞いた結果（${md(C.last)}・${C.engines.map((e) => ENGINE_NAMES[e] || e).join('・')}）`;
