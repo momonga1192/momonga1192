@@ -164,7 +164,7 @@
   </url>
   <url>
     <loc>https://www.arcle.net/articles</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -243,6 +243,12 @@
   <url>
     <loc>https://www.arcle.net/articles/freee-data-power-bi</loc>
     <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.arcle.net/articles/josys-cost-vs-in-house</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

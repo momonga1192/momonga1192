@@ -7,6 +7,13 @@ import { serviceByName, services } from '../next/theme';
 
 export const articles = [
   {
+    title: '情シス代行の料金と社内IT担当の採用費用の比べ方',
+    description: '情シス代行の料金が決まる要素、採用で給与のほかにかかる社会保険料の会社負担、年額にそろえて比べる5つの手順、少人数の会社の判断の目安をまとめました。',
+    href: '/articles/josys-cost-vs-in-house',
+    published: '2026-11-12',
+    tag: '情シス代行'
+  },
+  {
     title: 'freeeの会計データをPower BIで見る手順',
     description: 'freeeとPower BIのつなぎ方の選び方、仕訳帳のCSVの書き出し、タグの付け方、取り込みと毎月の更新、試算表と数字が合わないときの確認方法をまとめました。',
     href: '/articles/freee-data-power-bi',

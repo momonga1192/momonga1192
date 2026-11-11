@@ -20,6 +20,7 @@ import ArticleSalesVisualization from './components/articles/ArticleSalesVisuali
 import ArticleCopilotVsChatGPT from './components/articles/ArticleCopilotVsChatGPT';
 import ArticleRetiredEmployeeM365 from './components/articles/ArticleRetiredEmployeeM365';
 import ArticleFreeePowerBI from './components/articles/ArticleFreeePowerBI';
+import ArticleJosysCostVsInHouse from './components/articles/ArticleJosysCostVsInHouse';
 import WorksIndex from './components/works/WorksIndex';
 import WorkDetail from './components/works/WorkDetail';
 import HomeComic from './components/next/HomeComic';
@@ -115,6 +116,7 @@ export const AppContent: React.FC = () => (
         <Route path="/articles/copilot-vs-chatgpt-sme" element={<ArticleCopilotVsChatGPT />} />
         <Route path="/articles/retired-employee-m365-account" element={<ArticleRetiredEmployeeM365 />} />
         <Route path="/articles/freee-data-power-bi" element={<ArticleFreeePowerBI />} />
+        <Route path="/articles/josys-cost-vs-in-house" element={<ArticleJosysCostVsInHouse />} />
         <Route path="/works" element={<WorksIndex />} />
         <Route path="/works/:slug" element={<WorkDetail />} />
         <Route path="/lp/josys-rescue" element={<JosysRescue />} />
