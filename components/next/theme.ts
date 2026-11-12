@@ -32,7 +32,7 @@ export const services: {
     name: '情シス代行',
     en: 'IT Management',
     href: '/josys',
-    lead: 'IT担当者がいない会社の「IT部門」として、PCやネットワークのトラブル対応から、Microsoft 365の管理、セキュリティ対策までまとめてお引き受けします。',
+    lead: 'IT担当者がいない会社の「IT部門」として、PCやネットワークのトラブル対応から、Microsoft 365の管理、セキュリティ対策までを月額3万円〜（税抜）でお引き受けします。愛知・岐阜・三重へは訪問にも対応します。',
     points: ['PC・プリンタのトラブル対応', 'Microsoft 365・アカウント管理', 'セキュリティ対策・ルールづくり'],
     worry: 'PCやメールのトラブルを、\n詳しい社員が片手間で対応している',
     text: 'text-svc-josys',

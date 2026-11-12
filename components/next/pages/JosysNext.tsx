@@ -142,7 +142,7 @@ const JosysNext: React.FC = () => (
           "@type": "Service",
           "name": "情シス代行サービス",
           "provider": { "@id": "https://www.arcle.net/#organization" },
-          "description": "IT専任担当者不在の企業向けに、ITヘルプデスク・システム導入・セキュリティ対策・クラウド支援を包括サポート",
+          "description": "IT専任の担当者がいない中小企業に代わって、ITヘルプデスク・PCの初期設定・システム導入・セキュリティ対策・クラウド支援を月額3万円〜（税抜）で引き受ける情シス代行。愛知県一宮市を拠点に、愛知・岐阜・三重へは訪問し、そのほかの地域はリモートで対応します。",
           "areaServed": areas.flatMap((a) => [{ "@type": "State", "name": a.pref }, ...a.cities.map((c) => ({ "@type": "City", "name": c, "containedInPlace": { "@type": "State", "name": a.pref } }))]),
           "offers": [
             { "@type": "Offer", "name": "ライトプラン", "price": "30000", "priceCurrency": "JPY", "description": "IT相談窓口・簡易トラブルシューティング" },
@@ -166,8 +166,8 @@ const JosysNext: React.FC = () => (
       }
       lead={
         <>
-          <p>あなたの会社の「見えない情シス部門」として。<br />技術と信頼で、ビジネスの成長を足元から支えます。</p>
-          <p className="mt-3">愛知県一宮市を拠点に、愛知・岐阜・三重の中小企業のIT担当を代行します。</p>
+          <p>IT専任の担当者がいない中小企業に代わって、ヘルプデスク・PCの初期設定・Microsoft 365などの導入・セキュリティ対策を、月額3万円〜（税抜）でお引き受けします。</p>
+          <p className="mt-3">愛知県一宮市を拠点に、愛知・岐阜・三重へは訪問し、そのほかの地域はリモートで対応します。</p>
           <div className="mt-8 flex flex-wrap gap-4">
             <a href='/contact' className={`${comicBtnShape} bg-[#111] text-white shadow-[5px_5px_0_#F2B544] hover:shadow-[2px_2px_0_#F2B544]`}>
               まずは無料で相談する<ArrowRight className="w-4 h-4" strokeWidth={3} aria-hidden="true" />
