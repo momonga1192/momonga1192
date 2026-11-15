@@ -27,7 +27,6 @@
 
 | slug | タグ | 仮タイトル（地域名なし） | 狙う検索語 |
 |---|---|---|---|
-| pc-replacement-steps-sme | 情シス代行 | 会社のパソコンを入れ替えるときの段取り（データ移行・設定・廃棄） | パソコン 入れ替え 会社 手順 / PC 入れ替え データ移行 業者 |
 | shared-mailbox-info-address | 情シス代行 | info@などの共有メールアドレスを複数人で管理する方法 | 共有メールボックス 使い方 / info@ 複数人 管理 |
 | genai-data-protection-settings | 生成AI | ChatGPTに入力した情報を学習させない設定 | ChatGPT 学習させない 設定 / 法人 情報漏えい |
 | it-handover-when-staff-leaves | 情シス代行 | ITに詳しい社員が辞めるときの引き継ぎチェックリスト | IT担当 退職 引き継ぎ / 社内SE 辞める 困る |
@@ -68,3 +67,4 @@
 | retired-employee-m365-account | 情シス代行 | 退職者のMicrosoft 365アカウントの止め方とデータの引き継ぎ | 2026-11-02 |
 | freee-data-power-bi | データ活用 | freeeの会計データをPower BIで見る手順 | 2026-11-05 |
 | josys-cost-vs-in-house | 情シス代行 | 情シス代行の料金と社内IT担当の採用費用の比べ方 | 2026-11-12 |
+| pc-replacement-steps-sme | 情シス代行 | 会社のパソコンを入れ替えるときの段取り（データ移行・設定・廃棄） | 2026-11-16 |

@@ -7,6 +7,13 @@ import { serviceByName, services } from '../next/theme';
 
 export const articles = [
   {
+    title: '会社のパソコンを入れ替えるときの段取り',
+    description: '今のパソコンの洗い出し、新しいパソコンの設定、データ移行で移らないもの、配る日の確認、古いパソコンのデータ消去と処分までを、段取り表付きでまとめました。',
+    href: '/articles/pc-replacement-steps-sme',
+    published: '2026-11-16',
+    tag: '情シス代行'
+  },
+  {
     title: '情シス代行の料金と社内IT担当の採用費用の比べ方',
     description: '情シス代行の料金が決まる要素、採用で給与のほかにかかる社会保険料の会社負担、年額にそろえて比べる5つの手順、少人数の会社の判断の目安をまとめました。',
     href: '/articles/josys-cost-vs-in-house',
