@@ -22,6 +22,7 @@ import ArticleRetiredEmployeeM365 from './components/articles/ArticleRetiredEmpl
 import ArticleFreeePowerBI from './components/articles/ArticleFreeePowerBI';
 import ArticleJosysCostVsInHouse from './components/articles/ArticleJosysCostVsInHouse';
 import ArticlePcReplacementSteps from './components/articles/ArticlePcReplacementSteps';
+import ArticleSharedMailbox from './components/articles/ArticleSharedMailbox';
 import WorksIndex from './components/works/WorksIndex';
 import WorkDetail from './components/works/WorkDetail';
 import HomeComic from './components/next/HomeComic';
@@ -119,6 +120,7 @@ export const AppContent: React.FC = () => (
         <Route path="/articles/freee-data-power-bi" element={<ArticleFreeePowerBI />} />
         <Route path="/articles/josys-cost-vs-in-house" element={<ArticleJosysCostVsInHouse />} />
         <Route path="/articles/pc-replacement-steps-sme" element={<ArticlePcReplacementSteps />} />
+        <Route path="/articles/shared-mailbox-info-address" element={<ArticleSharedMailbox />} />
         <Route path="/works" element={<WorksIndex />} />
         <Route path="/works/:slug" element={<WorkDetail />} />
         <Route path="/lp/josys-rescue" element={<JosysRescue />} />

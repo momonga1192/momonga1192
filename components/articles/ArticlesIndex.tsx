@@ -7,6 +7,13 @@ import { serviceByName, services } from '../next/theme';
 
 export const articles = [
   {
+    title: 'info@などの共有メールアドレスを複数人で管理する方法',
+    description: 'パスワードを回し合う運用の問題、Microsoft 365の共有メールボックスとGoogleグループの共同トレイの比べ方、切り替えの5つの手順、二重返信を防ぐルールをまとめました。',
+    href: '/articles/shared-mailbox-info-address',
+    published: '2026-11-19',
+    tag: '情シス代行'
+  },
+  {
     title: '会社のパソコンを入れ替えるときの段取り',
     description: '今のパソコンの洗い出し、新しいパソコンの設定、データ移行で移らないもの、配る日の確認、古いパソコンのデータ消去と処分までを、段取り表付きでまとめました。',
     href: '/articles/pc-replacement-steps-sme',
